@@ -22,7 +22,7 @@ export interface IBaseFiliere { //data linked
 export interface IBaseSymbol { //data linked
     id: string;
     name: string;
-    imgs: {
+    imgs?: {
         id: string,
         url: string
     }[]

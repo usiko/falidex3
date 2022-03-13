@@ -1,188 +1,188 @@
 [{
         "circulaireId": "circulaire-0",
-        "colorId": [
+        "colorIds": [
             "color-0"
         ]
     },
     {
         "circulaireId": "circulaire-1",
-        "colorId": [
+        "colorIds": [
             "color-1"
         ]
     },
     {
         "circulaireId": "circulaire-2",
-        "colorId": [
+        "colorIds": [
             "color-12"
         ]
     },
     {
         "circulaireId": "circulaire-4",
-        "colorId": [
+        "colorIds": [
             "color-15"
         ]
     },
     {
         "circulaireId": "circulaire-5",
-        "colorId": [
+        "colorIds": [
             "color-16"
         ]
     },
     {
         "circulaireId": "circulaire-6",
-        "colorId": [
+        "colorIds": [
             "color-17"
         ]
     },
     {
         "circulaireId": "circulaire-3",
-        "colorId": [
+        "colorIds": [
             "color-14"
         ]
     },
     {
         "circulaireId": "circulaire-7",
-        "colorId": [
+        "colorIds": [
             "color-6"
         ]
     },
     {
         "circulaireId": "circulaire-8",
-        "colorId": [
+        "colorIds": [
             "color-0"
         ]
     },
     {
         "circulaireId": "circulaire-10",
-        "colorId": [
+        "colorIds": [
             "color-10"
         ]
     },
     {
         "circulaireId": "circulaire-9",
-        "colorId": [
+        "colorIds": [
             "color-11"
         ]
     },
     {
         "circulaireId": "circulaire-11",
-        "colorId": [
+        "colorIds": [
             "color-10",
             "color-14"
         ]
     },
     {
         "circulaireId": "circulaire-13",
-        "colorId": [
+        "colorIds": [
             "color-9"
         ]
     },
     {
         "circulaireId": "circulaire-14",
-        "colorId": [
+        "colorIds": [
             "color-5"
         ]
     },
     {
         "circulaireId": "circulaire-15",
-        "colorId": [
+        "colorIds": [
             "color-8"
         ]
     },
     {
         "circulaireId": "circulaire-16",
-        "colorId": [
+        "colorIds": [
             "color-1"
         ]
     },
     {
         "circulaireId": "circulaire-17",
-        "colorId": [
+        "colorIds": [
             "color-3"
         ]
     },
     {
         "circulaireId": "circulaire-12",
-        "colorId": [
+        "colorIds": [
             "color-5",
             "color-7"
         ]
     },
     {
         "circulaireId": "circulaire-18",
-        "colorId": [
+        "colorIds": [
             "color-2"
         ]
     },
     {
         "circulaireId": "circulaire-19",
-        "colorId": [
+        "colorIds": [
             "color-2"
         ]
     },
     {
         "circulaireId": "circulaire-20",
-        "colorId": [
+        "colorIds": [
             "color-14"
         ]
     },
     {
         "circulaireId": "circulaire-21",
-        "colorId": [
+        "colorIds": [
             "color-15"
         ]
     },
     {
         "circulaireId": "circulaire-22",
-        "colorId": [
+        "colorIds": [
             "color-13"
         ]
     },
     {
         "circulaireId": "circulaire-24",
-        "colorId": [
+        "colorIds": [
             "color-0",
             "color-9"
         ]
     },
     {
         "circulaireId": "circulaire-25",
-        "colorId": [
+        "colorIds": [
             "color-5",
             "color-10"
         ]
     },
     {
         "circulaireId": "circulaire-26",
-        "colorId": [
+        "colorIds": [
             "color-5",
             "color-0"
         ]
     },
     {
         "circulaireId": "circulaire-27",
-        "colorId": [
+        "colorIds": [
             "color-1",
             "color-0"
         ]
     },
     {
         "circulaireId": "circulaire-28",
-        "colorId": [
+        "colorIds": [
             "color-1",
             "color-15"
         ]
     },
     {
         "circulaireId": "circulaire-29",
-        "colorId": [
+        "colorIds": [
             "color-0",
             "color-7"
         ]
     },
     {
         "circulaireId": "circulaire-30",
-        "colorId": [
+        "colorIds": [
             "color-18",
             "color-4",
             "color-18"
@@ -190,7 +190,7 @@
     },
     {
         "circulaireId": "circulaire-30",
-        "colorId": [
+        "colorIds": [
             "color-18",
             "color-4",
             "color-18"

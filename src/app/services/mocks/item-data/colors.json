@@ -1,96 +1,96 @@
  [{
          "id": "color-0",
          "name": "rouge",
-         "couleur": "#ff0000"
+         "colorData": "#ff0000"
      },
      {
          "id": "color-1",
          "name": "vert",
-         "couleur": "#03a903"
+         "colorData": "#03a903"
      },
      {
          "id": "color-2",
          "name": "vert pomme",
-         "couleur": "#34c924"
+         "colorData": "#34c924"
      },
      {
          "id": "color-3",
          "name": "vert fonce",
-         "couleur": "#196B19"
+         "colorData": "#196B19"
      },
      {
          "id": "color-4",
          "name": "moiré vert",
-         "couleur": "#6B8E23"
+         "colorData": "#6B8E23"
      },
      {
          "id": "color-5",
          "name": "bleu",
-         "couleur": "#0000ff"
+         "colorData": "#0000ff"
      },
      {
          "id": "color-6",
          "name": "bleu",
-         "couleur": "#318ce7"
+         "colorData": "#318ce7"
      },
      {
          "id": "color-7",
          "name": "noir",
-         "couleur": "#000000"
+         "colorData": "#000000"
      },
      {
          "id": "color-8",
          "name": "gris",
-         "couleur": "#555555"
+         "colorData": "#555555"
      },
      {
          "id": "color-9",
          "name": "blanc",
-         "couleur": "#ffffff"
+         "colorData": "#ffffff"
      },
      {
          "id": "color-10",
          "name": "jaune",
-         "couleur": "#ffff00"
+         "colorData": "#ffff00"
      },
      {
          "id": "color-11",
          "name": "orange",
-         "couleur": "#ffa500"
+         "colorData": "#ffa500"
      },
      {
          "id": "color-12",
          "name": "rose",
-         "couleur": "#ffc0cb"
+         "colorData": "#ffc0cb"
      },
      {
          "id": "color-13",
          "name": "rose",
-         "couleur": "#f07977"
+         "colorData": "#f07977"
      },
      {
          "id": "color-14",
          "name": "violet",
-         "couleur": "#6e22b4"
+         "colorData": "#6e22b4"
      },
      {
          "id": "color-15",
          "name": "marron",
-         "couleur": "#800000"
+         "colorData": "#800000"
      },
      {
          "id": "color-16",
          "name": "bordeaux",
-         "couleur": "#6D071A"
+         "colorData": "#6D071A"
      },
      {
          "id": "color-17",
          "name": "fushia",
-         "couleur": "#ca2c92"
+         "colorData": "#ca2c92"
      },
      {
          "id": "color-18",
          "name": "amarante",
-         "couleur": "#91283b"
+         "colorData": "#91283b"
      }
  ]
