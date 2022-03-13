@@ -1,0 +1,45 @@
+[{
+        "name": "à l'endroit",
+        "id": "position-0"
+    },
+    {
+        "name": "à l'envers",
+        "id": "position-1"
+    },
+    {
+        "name": "de travers",
+        "id": "position-2"
+    },
+    {
+        "name": "sur circulaire",
+        "id": "position-3"
+    },
+    {
+        "name": "sur velours",
+        "id": "position-4"
+    },
+    {
+        "name": "sur ruban elu",
+        "id": "position-5"
+    },
+    {
+        "name": "sur ruban d'asso",
+        "id": "position-6"
+    },
+    {
+        "name": "sur ruban bleu",
+        "id": "position-7"
+    },
+    {
+        "name": "sur ruban rose",
+        "id": "position-8"
+    },
+    {
+        "name": "seul",
+        "id": "position-9"
+    },
+    {
+        "name": "sur ruban aux couleur armée",
+        "id": "position-10"
+    }
+]

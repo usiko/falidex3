@@ -1,0 +1,253 @@
+ [{
+         "name": "medecine",
+         "id": "filiere-0"
+     },
+     {
+         "name": "infirmier",
+         "id": "filiere-1"
+     },
+     {
+         "name": "pharmacie",
+         "id": "filiere-2"
+     },
+     {
+         "name": "preparateur en pharmacie",
+         "id": "filiere-3"
+     },
+     {
+         "name": "dentaire",
+         "id": "filiere-4"
+     },
+     {
+         "name": "vétérinaire",
+         "id": "filiere-5"
+     },
+     {
+         "name": "sage femme",
+         "id": "filiere-6"
+     },
+     {
+         "name": "paramedical",
+         "id": "filiere-7"
+     },
+     {
+         "name": "kinésithérapeute",
+         "id": "filiere-8"
+     },
+     {
+         "name": "ergothérapeute",
+         "id": "filiere-9"
+     },
+     {
+         "name": "ostéopathe",
+         "id": "filiere-10"
+     },
+     {
+         "name": "PACES, prepa santé",
+         "id": "filiere-11"
+     },
+     {
+         "name": "droit",
+         "id": "filiere-12"
+     },
+     {
+         "name": "Sciences économie et gestion",
+         "id": "filiere-13"
+     },
+     {
+         "name": "gestion",
+         "id": "filiere-14"
+     },
+     {
+         "name": "IAE",
+         "id": "filiere-15"
+     },
+     {
+         "name": "tourisme",
+         "id": "filiere-16"
+     },
+     {
+         "name": "ingemedia",
+         "id": "filiere-17"
+     },
+     {
+         "name": "lettres et sciences humaines",
+         "id": "filiere-18"
+     },
+     {
+         "name": "geographie",
+         "id": "filiere-19"
+     },
+     {
+         "name": "histoire",
+         "id": "filiere-20"
+     },
+     {
+         "name": "LEA",
+         "id": "filiere-21"
+     },
+     {
+         "name": "langues",
+         "id": "filiere-22"
+     },
+     {
+         "name": "philosophie",
+         "id": "filiere-23"
+     },
+     {
+         "name": "psychologie",
+         "id": "filiere-24"
+     },
+     {
+         "name": "sociologie",
+         "id": "filiere-25"
+     },
+     {
+         "name": "archéologie",
+         "id": "filiere-26"
+     },
+     {
+         "name": "ethnologie",
+         "id": "filiere-27"
+     },
+     {
+         "name": "histoire de l'art",
+         "id": "filiere-28"
+     },
+     {
+         "name": "Architecture",
+         "id": "filiere-29"
+     },
+     {
+         "name": "beau arts, arts plastiques",
+         "id": "filiere-30"
+     },
+     {
+         "name": "cinéma ou audiovisuel",
+         "id": "filiere-31"
+     },
+     {
+         "name": "theatre, art du spéctacle",
+         "id": "filiere-32"
+     },
+     {
+         "name": "filière/art numerique",
+         "id": "filiere-33"
+     },
+     {
+         "name": "IUT/BTS",
+         "id": "filiere-34"
+     },
+     {
+         "name": "IUP",
+         "id": "filiere-35"
+     },
+     {
+         "name": "sciences",
+         "id": "filiere-36"
+     },
+     {
+         "name": "oenologie",
+         "id": "filiere-37"
+     },
+     {
+         "name": "filieres sportive",
+         "id": "filiere-38"
+     },
+     {
+         "name": "AES",
+         "id": "filiere-39"
+     },
+     {
+         "name": "class préparatoire",
+         "id": "filiere-40"
+     },
+     {
+         "name": "théologie",
+         "id": "filiere-41"
+     },
+     {
+         "name": "musicologie",
+         "id": "filiere-42"
+     },
+     {
+         "name": "école notariale",
+         "id": "filiere-43"
+     },
+     {
+         "name": "sciences politique",
+         "id": "filiere-44"
+     },
+     {
+         "name": "école de commerce",
+         "id": "filiere-45"
+     },
+     {
+         "name": "communication",
+         "id": "filiere-46"
+     },
+     {
+         "name": "social",
+         "id": "filiere-47"
+     },
+     {
+         "name": "second degrés",
+         "id": "filiere-48"
+     },
+     {
+         "name": "journalisme",
+         "id": "filiere-49"
+     },
+     {
+         "name": "ingénieur",
+         "id": "filiere-50"
+     },
+     {
+         "name": "école militaire",
+         "id": "filiere-51"
+     },
+     {
+         "name": "agricole",
+         "id": "filiere-52"
+     },
+     {
+         "name": "agro alimentaire",
+         "id": "filiere-53"
+     },
+     {
+         "name": "espe",
+         "id": "filiere-54"
+     },
+     {
+         "name": "miashs",
+         "id": "filiere-55"
+     },
+     {
+         "name": "bac L",
+         "id": "filiere-56"
+     },
+     {
+         "name": "bac ES",
+         "id": "filiere-57"
+     },
+     {
+         "name": "bac S spé bio",
+         "id": "filiere-58"
+     },
+     {
+         "name": "bac S spé math ou phisique",
+         "id": "filiere-59"
+     },
+     {
+         "name": "bac S option techno",
+         "id": "filiere-60"
+     },
+     {
+         "name": "autres bacs",
+         "id": "filiere-61"
+     },
+     {
+         "name": "bac international",
+         "id": "filiere-62"
+     }
+ ]

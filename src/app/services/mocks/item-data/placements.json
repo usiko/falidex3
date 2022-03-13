@@ -1,0 +1,33 @@
+ [{
+         "name": "libre",
+         "id": "placement-0"
+     },
+     {
+         "name": "libre sous conditions",
+         "id": "placement-1"
+     },
+     {
+         "name": "par l'assemblée",
+         "id": "placement-2"
+     },
+     {
+         "name": "par l'association",
+         "id": "placement-3"
+     },
+     {
+         "name": "par le/la partenaire",
+         "id": "placement-4"
+     },
+     {
+         "name": "par les très anciens faluchard de la ville",
+         "id": "placement-5"
+     },
+     {
+         "name": "par le Grand Maître",
+         "id": "placement-6"
+     },
+     {
+         "name": "offert",
+         "id": "placement-7"
+     }
+ ]
