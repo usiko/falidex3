@@ -1,26 +1,27 @@
-export interface IBaseCirculaire { //data linked
+export interface IBaseCollectionData {
     id: string;
+}
+
+export interface IBaseCirculaire extends IBaseCollectionData { //data linked
     name: string;
     matiere: string;
 }
 
-export interface IBaseCirculaireColor { //linked to color
+export interface IBaseCirculaireColor extends IBaseCollectionData { //linked to color
     circulaireId: string;
     colorIds: string[]
 }
-export interface IBaseColor {  //linked to circulaire color
-    id: string
+export interface IBaseColor extends IBaseCollectionData {  //linked to circulaire color
     name: string;
     colorData: string //couleur hexa rgb ou autre
 }
 
-export interface IBaseFiliere { //data linked
-    id: string,
+export interface IBaseFiliere extends IBaseCollectionData { //data linked
+
     name: string
 }
 
-export interface IBaseSymbol { //data linked
-    id: string;
+export interface IBaseSymbol extends IBaseCollectionData { //data linked
     name: string;
     imgs?: {
         id: string,
@@ -28,19 +29,16 @@ export interface IBaseSymbol { //data linked
     }[]
 
 }
-export interface IBaseSignification {  //data linked
-    id: string,
+export interface IBaseSignification extends IBaseCollectionData {  //data linked
     content: string
 
 }
 
-export interface IBasePlacement { //data linked
+export interface IBasePlacement extends IBaseCollectionData { //data linked
     name: string;
-    id: string;
 
 }
-export interface IBasePosition { //data linked
-    id: string,
+export interface IBasePosition extends IBaseCollectionData { //data linked
     name: string
 }
 
