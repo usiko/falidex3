@@ -19,31 +19,42 @@ export class DataStoreService {
 
     constructor(private store: SubjectsStoreService) { }
 
-    loadCirculaires(): Observable<IBaseCirculaire[]> {
+    loadCollection(): void {
+        this.dispactIntoSubject(this.loadCirculaires(), this.store.circulaires$);
+        this.dispactIntoSubject(this.loadCirculairesColors(), this.store.circulairesColors$);
+        this.dispactIntoSubject(this.loadColors(), this.store.colors$);
+        this.dispactIntoSubject(this.loadFilieres(), this.store.filieres$);
+        this.dispactIntoSubject(this.loadSymbols(), this.store.symboles$);
+        this.dispactIntoSubject(this.loadPlacements(), this.store.placements$);
+        this.dispactIntoSubject(this.loadPositions(), this.store.positions$);
+        this.dispactIntoSubject(this.loadSignifications(), this.store.circulaires$);
+    }
+
+    private loadCirculaires(): Observable<IBaseCirculaire[]> {
         return of(Circulaires)
     }
 
-    loadCirculairesColors(): Observable<IBaseCirculaireColor[]> {
+    private loadCirculairesColors(): Observable<IBaseCirculaireColor[]> {
         return of(CirculairesColors)
     }
 
-    loadColors(): Observable<IBaseColor[]> {
+    private loadColors(): Observable<IBaseColor[]> {
         return of(Colors)
     }
 
-    loadFilieres(): Observable<IBaseFiliere[]> {
+    private loadFilieres(): Observable<IBaseFiliere[]> {
         return of(Filieres)
     }
-    loadSignifications(): Observable<IBaseSignification[]> {
+    private loadSignifications(): Observable<IBaseSignification[]> {
         return of(Significations)
     }
-    loadSymbols(): Observable<IBaseSymbol[]> {
+    private loadSymbols(): Observable<IBaseSymbol[]> {
         return of(Symbols)
     }
-    loadPlacements(): Observable<IBasePlacement[]> {
+    private loadPlacements(): Observable<IBasePlacement[]> {
         return of(Placements)
     }
-    loadPositions(): Observable<IBasePosition[]> {
+    private loadPositions(): Observable<IBasePosition[]> {
         return of(Positions)
     }
 
@@ -66,14 +77,5 @@ export class DataStoreService {
     }
 
 
-    loadCollection(): void {
-        this.dispactIntoSubject(this.loadCirculaires(), this.store.circulaires$);
-        this.dispactIntoSubject(this.loadCirculairesColors(), this.store.circulairesColors$);
-        this.dispactIntoSubject(this.loadColors(), this.store.colors$);
-        this.dispactIntoSubject(this.loadFilieres(), this.store.filieres$);
-        this.dispactIntoSubject(this.loadSymbols(), this.store.symboles$);
-        this.dispactIntoSubject(this.loadPlacements(), this.store.placements$);
-        this.dispactIntoSubject(this.loadPositions(), this.store.positions$);
-        this.dispactIntoSubject(this.loadSignifications(), this.store.circulaires$);
-    }
+
 }
