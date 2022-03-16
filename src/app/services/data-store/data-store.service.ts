@@ -31,31 +31,31 @@ export class DataStoreService {
     }
 
     private loadCirculaires(): Observable<IBaseCirculaire[]> {
-        return of(Circulaires)
+        return of(Circulaires);
     }
 
     private loadCirculairesColors(): Observable<IBaseCirculaireColor[]> {
-        return of(CirculairesColors)
+        return of(CirculairesColors);
     }
 
     private loadColors(): Observable<IBaseColor[]> {
-        return of(Colors)
+        return of(Colors);
     }
 
     private loadFilieres(): Observable<IBaseFiliere[]> {
-        return of(Filieres)
+        return of(Filieres);
     }
     private loadSignifications(): Observable<IBaseSignification[]> {
-        return of(Significations)
+        return of(Significations);
     }
     private loadSymbols(): Observable<IBaseSymbol[]> {
-        return of(Symbols)
+        return of(Symbols);
     }
     private loadPlacements(): Observable<IBasePlacement[]> {
-        return of(Placements)
+        return of(Placements);
     }
     private loadPositions(): Observable<IBasePosition[]> {
-        return of(Positions)
+        return of(Positions);
     }
 
     private dispactIntoSubject(obs: Observable<IBaseCollectionData[]>, subjects: BehaviorSubject<IBaseCollectionData[]>) {
@@ -73,7 +73,7 @@ export class DataStoreService {
             )
             .subscribe(items => {
                 subjects.next(items);
-            })
+            });
     }
 
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IBaseCirculaire, IBaseCirculaireColor, IBaseColor, IBaseFiliere, IBasePlacement, IBasePosition, IBaseSignification, IBaseSymbol } from 'src/app/models/base-data-models';
+import { IBaseCirculaire, IBaseCirculaireColor, IBaseCollectionData, IBaseColor, IBaseFiliere, IBasePlacement, IBasePosition, IBaseSignification, IBaseSymbol } from 'src/app/models/base-data-models';
 import { IRelationData } from 'src/app/models/base-relations.models';
 
 @Injectable({
@@ -20,8 +20,15 @@ export class SubjectsStoreService {
     public significations$ = new BehaviorSubject<IBaseSignification[]>([]);
     public symboles$ = new BehaviorSubject<IBaseSymbol[]>([]);
 
+
+
     // links
 
     public dataRelations$ = new BehaviorSubject<IRelationData[]>([]);
     public currentDataRelations$ = new BehaviorSubject<IRelationData>(null);
+
+    public getItemById(id: string, subject: BehaviorSubject<IBaseCollectionData[]>): IBaseCollectionData {
+        const items = subject.getValue();
+        return items.find(item => item.id === id);
+    }
 }
