@@ -12,15 +12,8 @@ import { SubStoreService } from './services/data-store/sub-store/sub-store.servi
     styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-    public appPages = [
-        { title: 'Inbox', url: '/folder/Inbox', icon: 'mail' },
-        { title: 'Outbox', url: '/folder/Outbox', icon: 'paper-plane' },
-        { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
-        { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
-        { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
-        { title: 'Spam', url: '/folder/Spam', icon: 'warning' },
-    ];
-    public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+    public appPages: { title: string, url: string, icon?: string, src?: string, disabled?: boolean }[];
+
     constructor(
         private loaderStoreService: DataLoaderStoreService,
         private circulaireService: CirculaireCollectionService,
@@ -44,7 +37,60 @@ export class AppComponent implements OnInit {
             console.log(items);
         });
         this.initData();
+        this.setMenu();
 
+    }
+
+    setMenu() {
+        const appPages: { title: string, url: string, icon?: string, src?: string, disabled?: boolean }[] = [
+            {
+                title: 'Acceuil',
+                url: '/',
+                icon: 'home'
+            }];
+        /*if (this.databuilder.getSymboles().length !== 0) {
+            appPages.push(
+                {
+                    title: 'Insignes/emblemes',
+                    url: '/symboles',
+                    icon: 'medal',
+                });
+        }
+        if (this.databuilder.getFilieres().length !== 0) {
+            appPages.push(
+                {
+                    title: 'Filières',
+                    url: '/filieres',
+                    icon: 'school'
+                });
+        }
+        if (this.databuilder.getSpes().length !== 0) {
+            appPages.push(
+                {
+                    title: 'Toutes les spés',
+                    url: '/spes',
+                    src: 'assets/svg/file-info.svg'
+                });
+        }
+        if (this.databuilder.getFileCode().length !== 0) {
+            appPages.push(
+                {
+                    title: 'Codes',
+                    url: '/codes',
+                    icon: 'paper',
+                    disabled: true
+                });
+        }
+        if (this.databuilder.getSymboles().length !== 0 || this.databuilder.getFilieres().length !== 0) {
+            appPages.push(
+                {
+                    title: 'Revisions',
+                    url: '/revisions',
+                    icon: 'bulb',
+                    disabled: false
+                });
+        }*/
+        this.appPages = appPages;
     }
 
     private initData() {
