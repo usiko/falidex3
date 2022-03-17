@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CirculaireCollectionService } from './services/collection-item/circulaire/circulaire-collection.service';
+import { FiliereCollectionService } from './services/collection-item/filiere/filiere-collection.service';
 import { SignificationCollectionService } from './services/collection-item/signification/signification-collection.service';
-import { DataStoreService } from './services/data-store/data-store.service';
+import { SymbolCollectionService } from './services/collection-item/symbol/symbol-collection.service';
+import { DataLoaderStoreService } from './services/data-store/loader/data-loader-store.service';
+import { SubStoreService } from './services/data-store/sub-store/sub-store.service';
+
 @Component({
     selector: 'app-root',
     templateUrl: 'app.component.html',
@@ -18,14 +22,38 @@ export class AppComponent implements OnInit {
     ];
     public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
     constructor(
-        private storeService: DataStoreService,
+        private loaderStoreService: DataLoaderStoreService,
         private circulaireService: CirculaireCollectionService,
-        private significationsService: SignificationCollectionService
+        private significationsService: SignificationCollectionService,
+        private filieresService: FiliereCollectionService,
+        private symbolService: SymbolCollectionService,
+        private subStore: SubStoreService
     ) { }
 
     ngOnInit() {
-        this.storeService.loadCollection();
+        this.circulaireService.collection$.subscribe(items => {
+            console.log(items);
+        });
+        this.significationsService.collection$.subscribe(items => {
+            console.log(items);
+        });
+        this.filieresService.collection$.subscribe(items => {
+            console.log(items);
+        });
+        this.symbolService.collection$.subscribe(items => {
+            console.log(items);
+        });
+        this.initData();
+
+    }
+
+    private initData() {
         this.circulaireService.init();
         this.significationsService.init();
+        this.filieresService.init();
+        this.symbolService.init();
+        this.subStore.init();
+        this.loaderStoreService.loadCollection();
+        this.loaderStoreService.loadRelations();
     }
 }
