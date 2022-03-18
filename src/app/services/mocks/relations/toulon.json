@@ -1,5 +1,6 @@
 {
     "name": "toulon",
+    "id": "tln",
     "relations": [{
             "placementId": "placement-1",
             "positionId": "position-3",

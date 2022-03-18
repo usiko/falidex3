@@ -1,5 +1,6 @@
 {
     "name": "national",
+    "id": "nat",
     "relations": [{
             "placementId": "placement-1",
             "positionId": "position-3",

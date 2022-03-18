@@ -21,6 +21,7 @@ export interface IRelationContentSpe {
 
 export interface IRelationData {
     name: string;
+    id: string;
     relations: IRelationItem[];
     specificites?: IRelationContentSpe[];
 
