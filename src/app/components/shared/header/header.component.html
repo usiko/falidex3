@@ -1,0 +1,49 @@
+<ng-container *ngIf="searchable">
+    <ion-toolbar color="secondary">
+        <ion-buttons slot="start">
+            <ion-menu-button menu="navigation" color="light"></ion-menu-button>
+        </ion-buttons>
+        <ion-title color="light" *ngIf="searchText==''">
+            <div class="title-content">
+                <div class="titleStyle">{{title}}</div>
+                <ion-badge *ngIf="length!=undefined" mode="ios" color="dark">{{length}}</ion-badge>
+            </div>
+
+        </ion-title>
+        <ion-title *ngIf="searchText!=''">
+            <div class="title-content">
+                <div class="titleStyle">Recherche {{title}}</div>
+                <ion-badge *ngIf="length!=undefined" mode="ios" color="dark">{{length}}</ion-badge>
+            </div>
+        </ion-title>
+        <ion-buttons slot="end">
+
+            <ion-button (click)="toggleSearch()">
+                <ion-icon color="light" *ngIf="!isSearching" slot="icon-only" name="search" (click)="toggleSearch()"></ion-icon>
+                <ion-icon color="light" *ngIf="isSearching" slot="icon-only" name="ios-arrow-up" (click)="toggleSearch()"></ion-icon>
+
+            </ion-button>
+            <ion-button (click)="toggleFilterMenu()" *ngIf="isSearching && filterable">
+                <ion-icon color="light" name="add"></ion-icon>
+            </ion-button>
+
+        </ion-buttons>
+
+    </ion-toolbar>
+    <ion-toolbar color="secondary" [hidden]="!isSearching">
+        <ion-searchbar [value]="searchText" (ionChange)="search($event)" animated></ion-searchbar>
+    </ion-toolbar>
+</ng-container>
+<ng-container *ngIf="!searchable">
+    <ion-toolbar color="secondary">
+        <ion-buttons slot="start">
+            <ion-menu-button menu="navigation"></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            <div class="title-content">
+                <div class="titleStyle">{{title}}</div>
+                <ion-badge *ngIf="length!=undefined" mode="ios" color="dark">{{length}}</ion-badge>
+            </div>
+        </ion-title>
+    </ion-toolbar>
+</ng-container>

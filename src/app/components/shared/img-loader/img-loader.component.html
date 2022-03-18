@@ -1,0 +1,8 @@
+<div class="img-container">
+	<div class="loading" *ngIf="loading">
+		<ion-spinner color="light"></ion-spinner>
+	</div>
+
+	<ion-img [ngStyle]="{'object-fit':objectFit}" *ngIf="src" [class.img-hidden]="loading" [src]="src"
+		(ionImgDidLoad)="imgLoaded()" (ionError)="imgError()"></ion-img>
+</div>

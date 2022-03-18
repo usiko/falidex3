@@ -1,0 +1,22 @@
+<ion-header>
+    <app-header title="insignes/emblemes" (onsearch)="search($event)" [filterable]="true" [searchable]="true" [length]="(items$|async).length"></app-header>
+</ion-header>
+
+<ion-content [scrollEvents]="true" (ionScroll)="scrolling($event)">
+    <ion-fab *ngIf="showScrollTopBtn" (click)="scrollToTop()" vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="dark">
+            <ion-icon name="ios-arrow-up"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <ion-list>
+        <ion-item *ngFor="let item of (items$|async)">{{item.name}}</ion-item>
+    </ion-list>
+    <!--<app-list-data [dataLength]="dataLength" [itemLength]="listData.length" [loading]="loading" (ongetMore)="getMore()">
+        <ng-container slot="list">
+            <app-symbole-item [navigation]="true" *ngFor="let item of listData" [item]="item"></app-symbole-item>
+        </ng-container>
+        <ng-container slot="gallery">
+            <app-symbole-item-gallery [navigation]="true" *ngFor="let item of listData" [item]="item"></app-symbole-item-gallery>
+        </ng-container>
+    </app-list-data>-->
+</ion-content>
