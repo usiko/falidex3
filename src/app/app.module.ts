@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { ComponentModule } from './components/component.module';
+import { EventService } from './services/event/event.service';
 
 @NgModule({
     declarations: [
@@ -27,10 +28,13 @@ import { ComponentModule } from './components/component.module';
         AppRoutingModule,
         ComponentModule
     ],
-    providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+    providers: [
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        EventService
+    ],
     bootstrap: [AppComponent],
     schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
+        //CUSTOM_ELEMENTS_SCHEMA
     ]
 })
 export class AppModule { }

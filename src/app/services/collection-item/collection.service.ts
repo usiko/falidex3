@@ -12,6 +12,9 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
     protected baseCollection$: BehaviorSubject<BaseModel[]>;
     protected currentRelation$: BehaviorSubject<IRelationData>;
     public collection$ = new BehaviorSubject<LinkedModel[]>([]);
+    public partialCollection$ = new BehaviorSubject<LinkedModel[]>([]);
+    public totalCount: number = 0;
+    private partialCollectonParameters = { from: 0, to: 20 }
 
     private runBuild$ = new Subject(); // debouncing assemblage données
     constructor() {
@@ -36,6 +39,28 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
             this.runBuild$.next();
         });
         this.bindSubjectToBuild(this.baseCollection$);
+
+        this.collection$.subscribe((items) => {
+            this.totalCount = items.length;
+            this.updatePartial();
+        })
+
+
+    }
+
+    setPartial(from: number, to: number) {
+        this.partialCollectonParameters.from = from;
+        this.partialCollectonParameters.to = to;
+        this.updatePartial();
+    }
+
+    private updatePartial() {
+        if (this.collection$.getValue()) {
+            this.partialCollection$.next(this.collection$.getValue().splice(this.partialCollectonParameters.from, this.partialCollectonParameters.to));
+        }
+        else {
+            this.partialCollection$.next([])
+        }
 
     }
 
