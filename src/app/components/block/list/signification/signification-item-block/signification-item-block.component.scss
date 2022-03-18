@@ -1,0 +1,42 @@
+:host {
+    display: block;
+    position: relative;
+    text-align: center;
+}
+
+ion-item {
+    --inner-padding-end: 0px !important;
+    --inner-padding-start: 0px !important;
+    --inner-padding-top: 0px !important;
+    --inner-padding-bottom: 0px !important;
+    --padding-start: 0px !important;
+    ion-label {
+        margin: 0;
+        padding-bottom: 16px;
+    }
+    .decernement {
+        background: var(--ion-color-secondary);
+        color: var(--ion-color-light);
+        width: 100%;
+        .title {
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+    .text-content {
+        font-style: italic;
+        color: var(--ion-color-dark);
+        padding: 8px 0;
+        text-align: center;
+    }
+    .position {
+        padding: 8px 0px;
+        font-weight: bold;
+        width: 100%;
+        text-align: center;
+    }
+    .spe {
+        text-align: center;
+        font-size: 0.7em;
+    }
+}

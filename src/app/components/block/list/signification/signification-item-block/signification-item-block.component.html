@@ -1,0 +1,21 @@
+<ion-item>
+    <ion-label>
+        <div class="decernement" *ngIf="signification.placement">
+
+            <div class="title">
+                Décernement <span class="subtitle">{{signification.placement.name}}</span>
+            </div>
+        </div>
+        <div>
+            <div *ngIf="signification.positions && signification.positions.length>0" class="position">
+                {{signification.positions|postitionNameList}}</div>
+
+            <div class="text-content">{{signification.content}}</div>
+            <div>
+                <div class="spe" *ngIf="signification.spe">
+                    <ion-icon name="star"></ion-icon> Spécificité de la ville
+                </div>
+            </div>
+        </div>
+    </ion-label>
+</ion-item>
