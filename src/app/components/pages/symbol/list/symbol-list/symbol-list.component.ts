@@ -1,26 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import { ISubBaseSymbol } from 'src/app/models/sub-base-data-models';
 import { SymbolCollectionService } from 'src/app/services/collection-item/symbol/symbol-collection.service';
+import { PageItemList } from '../../../pages-list';
 
 @Component({
     selector: 'app-symbol-list',
     templateUrl: './symbol-list.component.html',
     styleUrls: ['./symbol-list.component.scss'],
 })
-export class SymbolListComponent implements OnInit {
+export class SymbolListComponent extends PageItemList<ISubBaseSymbol> implements OnInit {
     showScrollTopBtn = true;
-    constructor(private service: SymbolCollectionService) { }
-    items$ = this.service.collection$
-    ngOnInit() { }
-    search(ev) {
-
-    }
-    scrolling(ev) {
-
+    constructor(protected collectionService: SymbolCollectionService) {
+        super();
     }
 
-    scrollToTop() {
-
+    ngOnInit() {
+        super.init();
     }
+
 
 
 }

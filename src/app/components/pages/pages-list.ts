@@ -1,14 +1,14 @@
 
 import { IonContent } from '@ionic/angular';
 
-import { Subscription, } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { BehaviorSubject, Subscription, } from 'rxjs';
+import { ISubBaseCollectionData } from 'src/app/models/sub-base-data-models';
 import { ICollectionItem } from 'src/app/services/collection-item/collection.service';
 import { EventService } from 'src/app/services/event/event.service';
 
-export class PageListParent {
+export class PageItemList<Item extends ISubBaseCollectionData> {
     protected content: IonContent;
-    protected dataService: ICollectionItem<any, any>;
+    protected collectionService: ICollectionItem<Item, any>;
     protected events: EventService;
     private filterSubscription = new Subscription();
 
@@ -23,29 +23,17 @@ export class PageListParent {
     protected subscribers = new Subscription();
     public showScrollTopBtn = false;
     public loading = false;
-    public listData: any[] = [];
+    public items$ = new BehaviorSubject<Item[]>([]);
+    public emptyItems = [];
     public dataLength = null;
 
     init() {
         this.initService();
         this.initEmptyList();
-        this.dataService.partialCollection$.pipe(
-            debounceTime(350)
-        ).subscribe(items => {
-
-
-            /* return of(this.currentContainer).pipe(map(container => {
-                 if (this.sizePage) {
-                     this.offset += this.sizePage;
-                 }
-                 return container;
-             }));*/
-
-            this.listData = items;
-
+        this.items$ = this.collectionService.partialCollection$;
+        this.items$.subscribe(() => {
             this.loading = false;
-
-            this.dataLength = this.dataService.totalCount;
+            this.dataLength = this.collectionService.totalCount;
         }, (err) => {
             this.loading = false;
         });
@@ -71,28 +59,28 @@ export class PageListParent {
     }
 
     initFilter() {
-        //const filters = this.dataService.getFilters();
-        //this.dataService.resetPage();
+        //const filters = this.collectionService.getFilters();
+        //this.collectionService.resetPage();
         this.pageNumber = 1;
         if (this.pageSize) {
-            this.dataService.setPartial(0, this.pageSize * this.pageNumber);
+            this.collectionService.setPartial(0, this.pageSize * this.pageNumber);
         }
         this.events.publish('filtersMenu', true);
         // this.events.publish('setFilters', filters);
         this.events.publish('resetFilters');
-        this.dataService.setPartial(0, this.pageNumber * this.pageSize)
+        this.collectionService.setPartial(0, this.pageNumber * this.pageSize)
 
 
     }
     search(search: string) {
         this.scrollToTop();
-        /*this.dataService.resetPage();
+        /*this.collectionService.resetPage();
         this.pageNumber = 1;
-        this.dataService.changePageSize(this.pageSize * this.pageNumber);
+        this.collectionService.changePageSize(this.pageSize * this.pageNumber);
         if (search && search.length > 0) {
-            this.dataService.addFilter({ name: FilterName.name, value: search });
+            this.collectionService.addFilter({ name: FilterName.name, value: search });
         } else {
-            this.dataService.removeFilter(FilterName.name);
+            this.collectionService.removeFilter(FilterName.name);
         }*/
 
     }
@@ -100,7 +88,7 @@ export class PageListParent {
     /**
      * showing scrolltop btn
      */
-    scrolling(event: CustomEvent) {
+    scrolling(event: any /*CustomEvent*/) {
         this.showScrollTopBtn = (event.detail.scrollTop > 500);
 
 
@@ -121,17 +109,17 @@ export class PageListParent {
             case FilterName.circulaireMat:
 
                 if (value.length === 2) {
-                    this.dataService.removeFilter(name);
+                    this.collectionService.removeFilter(name);
                 } else {
-                    this.dataService.addFilter({ name, value });
+                    this.collectionService.addFilter({ name, value });
                 }
 
                 break;
             case FilterName.spe:
                 if (value === 'all') {
-                    this.dataService.removeFilter(name);
+                    this.collectionService.removeFilter(name);
                 } else {
-                    this.dataService.addFilter({ name, value });
+                    this.collectionService.addFilter({ name, value });
                 }
                 break;
         }*/
@@ -150,10 +138,10 @@ export class PageListParent {
         }
         if (reset) {
             this.listData = [];
-            this.dataService.resetPage();
+            this.collectionService.resetPage();
         }
 
-        const sub = this.dataService.getList().debounceTime(350).subscribe(data => {
+        const sub = this.collectionService.getList().debounceTime(350).subscribe(data => {
             console.log(data);
             this.listData.push(...data.data);
             this.dataLength = data.count;
@@ -175,19 +163,19 @@ export class PageListParent {
     }
 
     initEmptyList() {
-        this.listData = [];
+        this.emptyItems = [];
         for (let i = 0; i < 30; i++) {
-            this.listData.push(null);
+            this.emptyItems.push(null);
         }
     }
 
     getMore() {
         this.loading = true;
         this.pageNumber++;
-        //this.dataService.changePageSize(this.pageNumber * this.pageSize);
+        //this.collectionService.changePageSize(this.pageNumber * this.pageSize);
     }
     initService() {
-        /*this.dataService.initData();
-        this.dataService.resetFilter();*/
+        /*this.collectionService.initData();
+        this.collectionService.resetFilter();*/
     }
 }
