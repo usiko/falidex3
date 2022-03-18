@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { CirculaireCollectionService } from './services/collection-item/circulaire/circulaire-collection.service';
 import { FiliereCollectionService } from './services/collection-item/filiere/filiere-collection.service';
 import { SignificationCollectionService } from './services/collection-item/signification/signification-collection.service';
 import { SymbolCollectionService } from './services/collection-item/symbol/symbol-collection.service';
 import { DataLoaderStoreService } from './services/data-store/loader/data-loader-store.service';
 import { SubStoreService } from './services/data-store/sub-store/sub-store.service';
+import { DataRelationsService } from './services/relations/data-relations.service';
 
 @Component({
     selector: 'app-root',
@@ -14,13 +16,17 @@ import { SubStoreService } from './services/data-store/sub-store/sub-store.servi
 export class AppComponent implements OnInit {
     public appPages: { title: string, url: string, icon?: string, src?: string, disabled?: boolean }[];
 
+    public relationsData$ = new BehaviorSubject<{ name: string, id: string }[]>([])
+    public currentRelationsData$ = new BehaviorSubject<{ name: string, id: string }>(null)
+
     constructor(
         private loaderStoreService: DataLoaderStoreService,
         private circulaireService: CirculaireCollectionService,
         private significationsService: SignificationCollectionService,
         private filieresService: FiliereCollectionService,
         private symbolService: SymbolCollectionService,
-        private subStore: SubStoreService
+        private subStore: SubStoreService,
+        private relationService: DataRelationsService
     ) { }
 
     ngOnInit() {
@@ -38,6 +44,14 @@ export class AppComponent implements OnInit {
         });
         this.initData();
         this.setMenu();
+
+
+        this.relationService.getRelationList().subscribe(items => {
+            this.relationsData$.next(items);
+        })
+        this.relationService.getCurrentRelation().subscribe(item => {
+            this.currentRelationsData$.next(item);
+        })
 
     }
 
@@ -101,5 +115,9 @@ export class AppComponent implements OnInit {
         this.subStore.init();
         this.loaderStoreService.loadCollection();
         this.loaderStoreService.loadRelations();
+    }
+
+    public setCurrentRelation(event) {
+        this.relationService.setCurrentRelation(event.detail.value);
     }
 }

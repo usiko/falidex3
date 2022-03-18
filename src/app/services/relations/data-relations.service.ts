@@ -37,7 +37,7 @@ export class DataRelationsService {
     setCurrentRelation(id: string) {
         const relations = this.relations.getValue();
         const find = relations.find(item => {
-            item.id === id;
+            return item.id === id;
         });
         if (find) {
             this.currentRelation.next(find);
