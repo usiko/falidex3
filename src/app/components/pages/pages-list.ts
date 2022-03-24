@@ -12,6 +12,7 @@ import { EventService } from 'src/app/services/event/event.service';
 export class PageItemList<Item extends ICollectionData> {
     @ViewChild(IonContent, null) content: IonContent;
     protected collectionService: ICollectionItem<IBaseCollectionData, Item>;
+    protected collection$ = new BehaviorSubject<Item[]>([]) // fullCollection
     protected events: EventService;
     //protected content;
     private filterSubscription = new Subscription();
@@ -34,13 +35,16 @@ export class PageItemList<Item extends ICollectionData> {
     init() {
         this.initService();
         this.initEmptyList();
-        this.items$ = this.collectionService.partialCollection$;
+        this.collection$ = this.collectionService.collection$;
         this.items$.subscribe(() => {
             this.loading = false;
-            this.dataLength = this.collectionService.totalCount;
         }, (err) => {
             this.loading = false;
         });
+        this.collection$.subscribe(items => {
+            this.dataLength = items.length;
+            this.updatePartial()
+        })
 
     }
     ionViewDidEnter() {
@@ -181,12 +185,18 @@ export class PageItemList<Item extends ICollectionData> {
         this.updatePartial();
     }
 
-    private updatePartial() {
-        console.log('updatePartial', this.pageNumber * this.pageSize)
-        this.collectionService.setPartial(0, this.pageNumber * this.pageSize)
-    }
     initService() {
         /*this.collectionService.initData();
         this.collectionService.resetFilter();*/
     }
+
+    private updatePartial() {
+        console.log('updatePartial', this.pageNumber * this.pageSize)
+        this.setPartial(0, this.pageNumber * this.pageSize)
+    }
+
+    private setPartial(from: number, to: number) {
+        this.items$.next(this.collection$.getValue().slice(from, to))
+    }
+
 }
