@@ -1,0 +1,18 @@
+<div class="symbole-gallery-item" [routerLink]="['/symboles/details',item.id]" (click)="click()" *ngIf="item && navigation">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</div>
+<div class="symbole-gallery-item" *ngIf="item && !navigation" (click)="click()">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</div>
+
+<ng-template #content>
+    <div class="symbole-content">
+        <app-img-loader [src]="(item.imgs && item.imgs[0])?'http://resources.falidex.fr'+item.imgs[0].url:null">
+        </app-img-loader>
+        <div class="title-item">
+            <div>
+                {{item.name}}
+            </div>
+        </div>
+    </div>
+</ng-template>

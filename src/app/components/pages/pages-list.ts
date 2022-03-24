@@ -2,13 +2,15 @@
 import { IonContent } from '@ionic/angular';
 
 import { BehaviorSubject, Subscription, } from 'rxjs';
+import { IBaseCollectionData } from 'src/app/models/base-data-models';
+import { ICollectionData } from 'src/app/models/linked-data-models';
 import { ISubBaseCollectionData } from 'src/app/models/sub-base-data-models';
 import { ICollectionItem } from 'src/app/services/collection-item/collection.service';
 import { EventService } from 'src/app/services/event/event.service';
 
-export class PageItemList<Item extends ISubBaseCollectionData> {
+export class PageItemList<Item extends ICollectionData> {
     protected content: IonContent;
-    protected collectionService: ICollectionItem<Item, any>;
+    protected collectionService: ICollectionItem<IBaseCollectionData, Item>;
     protected events: EventService;
     private filterSubscription = new Subscription();
 

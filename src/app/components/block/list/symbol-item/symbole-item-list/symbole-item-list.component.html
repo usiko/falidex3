@@ -1,0 +1,100 @@
+<ion-item *ngIf="item && navigation" lines="none" [routerLink]="['/symboles/details',item.id]" (click)="click()" detail>
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</ion-item>
+<ion-item *ngIf="item && !navigation" lines="none" (click)="click()">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</ion-item>
+<ng-template #content>
+    <ion-thumbnail slot="start">
+        <app-img-loader [src]="(item.imgs && item.imgs[0])?'http://resources.falidex.fr'+item.imgs[0].url:null">
+        </app-img-loader>
+    </ion-thumbnail>
+    <ion-label>
+        <h3>{{item.name}}</h3>
+
+        <p *ngIf="circulairesFilieresLink.length>0" class="filiere">
+            <ng-container *ngIf="circulairesFilieresLink.length>2">
+                <div class="content">
+                    <div class="flex">
+                        <ion-icon color="secondary" *ngIf="circulairesFilieresLink[0].spe && showSpe" name="star">
+                        </ion-icon>
+                        <div>
+                            Sur {{circulairesFilieresLink[0].circulaire.name}}, {{circulairesFilieresLink[0].filiere.name}}
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="flex">
+                        <div>
+                            Et {{circulairesFilieresLink.length-1}} autres circulaire et filières
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="circulairesFilieresLink.length<=2">
+                <div class="content" *ngFor="let circFil of circulairesFilieresLink">
+                    <div class="flex">
+                        <ion-icon color="secondary" *ngIf="circFil.spe && showSpe" name="star"></ion-icon>
+                        <div>sur {{circFil.circulaire.name}}, {{circFil.filiere.name}}</div>
+                    </div>
+                </div>
+            </ng-container>
+        </p>
+        <p *ngIf="significationsLink && significationsLink.length>0" class="signification">
+            <ng-container *ngIf="significationsLink.length>2">
+                <div class="content">
+                    <div class="flex">
+                        <ion-icon *ngIf="significationsLink[0].spe && showSpe" name="star"></ion-icon>
+                        <div>
+                            <ng-container *ngIf="significationsLink[0].position">
+                                {{significationsLink[0].position.name}}
+                            </ng-container>
+                            {{significationsLink[0].signification.content}}
+                        </div>
+
+
+                    </div>
+                </div>
+                <span class="content">
+					<div class="flex">
+						<div>
+							Et {{significationsLink.length-1}} autres significations
+						</div>
+					</div>
+				</span>
+            </ng-container>
+            <ng-container *ngIf="significationsLink.length<=2">
+                <div class="content" *ngFor="let signification of significationsLink">
+                    <div class="flex">
+                        <ion-icon color="secondary" *ngIf="signification.spe && showSpe" name="star">
+                        </ion-icon>
+
+                        <div>
+                            <ng-container *ngIf="signification.position">
+                                <ng-container>
+                                    {{signification.position.name}}
+                                </ng-container>
+                            </ng-container>
+                            {{signification.signification.content}}
+                        </div>
+
+                    </div>
+                </div>
+            </ng-container>
+        </p>
+
+    </ion-label>
+</ng-template>
+<ion-item *ngIf="!item">
+    <ion-thumbnail slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+    </ion-thumbnail>
+    <ion-label>
+        <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </h3>
+        <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        </p>
+    </ion-label>
+</ion-item>
