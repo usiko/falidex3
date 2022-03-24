@@ -11,7 +11,7 @@ export class ListItem<T extends ICollectionData> implements OnChanges {
     @Output() onclick = new EventEmitter<never>();
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['items$']) {
+        if (changes['item']) {
             this.itemChange();
         }
     }

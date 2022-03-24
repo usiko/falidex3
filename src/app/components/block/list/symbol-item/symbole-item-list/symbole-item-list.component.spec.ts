@@ -1,24 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { SymboleItemListComponent } from './symbole-item-list.component';
 
-import { SymboleItemComponent } from './symbole-item.component';
+
 
 describe('SymboleItemComponent', () => {
-  let component: SymboleItemComponent;
-  let fixture: ComponentFixture<SymboleItemComponent>;
+    let component: SymboleItemListComponent;
+    let fixture: ComponentFixture<SymboleItemListComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SymboleItemComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [SymboleItemListComponent],
+            imports: [IonicModule.forRoot()]
+        }).compileComponents();
 
-    fixture = TestBed.createComponent(SymboleItemComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  }));
+        fixture = TestBed.createComponent(SymboleItemListComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

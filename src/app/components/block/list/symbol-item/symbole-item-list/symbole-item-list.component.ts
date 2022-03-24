@@ -32,7 +32,8 @@ export class SymboleItemListComponent extends ListItem<ISymbol> implements OnIni
 
     protected itemChange(): void {
         this.circulairesFilieresLink = [];
-        this.significationsLink = []
+        this.significationsLink = [];
+        console.log('item change', this.item)
         if (this.item.links) {
             for (const link of this.item.links) {
                 if (link.signification) {
@@ -44,6 +45,7 @@ export class SymboleItemListComponent extends ListItem<ISymbol> implements OnIni
                     )
                 }
             }
+            console.log(this.item, this.circulairesFilieresLink, this.significationsLink)
         }
     }
 

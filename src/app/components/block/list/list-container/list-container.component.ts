@@ -36,6 +36,7 @@ export class LisContainerComponent implements OnInit {
         this.listMode = listMode;
     }
     getMore(event) {
+        console.log('get more')
         this.targetScroll = event.target;
         this.ongetMore.emit();
     }

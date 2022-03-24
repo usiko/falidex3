@@ -56,7 +56,7 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
 
     private updatePartial() {
         if (this.collection$.getValue()) {
-            this.partialCollection$.next(this.collection$.getValue().splice(this.partialCollectonParameters.from, this.partialCollectonParameters.to));
+            this.partialCollection$.next(this.collection$.getValue().slice(this.partialCollectonParameters.from, this.partialCollectonParameters.to));
         }
         else {
             this.partialCollection$.next([])

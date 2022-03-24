@@ -11,14 +11,14 @@ export class ImgLoaderComponent implements OnInit {
 
     @Input() set src(src: string) {
         this.loading = true;
-        console.log('img change', src, this.errorSrc, this.ownsrc);
+        //console.log('img change', src, this.errorSrc, this.ownsrc);
         if (src) {
             this.ownsrc = src;
-            console.log('img change', src, this.errorSrc, this.ownsrc);
+            //console.log('img change', src, this.errorSrc, this.ownsrc);
         }
         else {
             this.ownsrc = this.errorSrc;
-            console.log('img change', src, this.errorSrc, this.ownsrc);
+            //console.log('img change', src, this.errorSrc, this.ownsrc);
         }
     }
 

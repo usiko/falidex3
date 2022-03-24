@@ -1,4 +1,5 @@
 
+import { Injectable, ViewChild } from '@angular/core';
 import { IonContent } from '@ionic/angular';
 
 import { BehaviorSubject, Subscription, } from 'rxjs';
@@ -7,14 +8,15 @@ import { ICollectionData } from 'src/app/models/linked-data-models';
 import { ISubBaseCollectionData } from 'src/app/models/sub-base-data-models';
 import { ICollectionItem } from 'src/app/services/collection-item/collection.service';
 import { EventService } from 'src/app/services/event/event.service';
-
+@Injectable()
 export class PageItemList<Item extends ICollectionData> {
-    protected content: IonContent;
+    @ViewChild(IonContent, null) content: IonContent;
     protected collectionService: ICollectionItem<IBaseCollectionData, Item>;
     protected events: EventService;
+    //protected content;
     private filterSubscription = new Subscription();
 
-    protected pageSize;
+    protected pageSize = 20;
 
     private pageNumber = 1;
 
@@ -65,12 +67,12 @@ export class PageItemList<Item extends ICollectionData> {
         //this.collectionService.resetPage();
         this.pageNumber = 1;
         if (this.pageSize) {
-            this.collectionService.setPartial(0, this.pageSize * this.pageNumber);
+            this.updatePartial();
         }
         this.events.publish('filtersMenu', true);
         // this.events.publish('setFilters', filters);
         this.events.publish('resetFilters');
-        this.collectionService.setPartial(0, this.pageNumber * this.pageSize)
+
 
 
     }
@@ -172,9 +174,16 @@ export class PageItemList<Item extends ICollectionData> {
     }
 
     getMore() {
+        console.log('get more');
         this.loading = true;
         this.pageNumber++;
-        //this.collectionService.changePageSize(this.pageNumber * this.pageSize);
+
+        this.updatePartial();
+    }
+
+    private updatePartial() {
+        console.log('updatePartial', this.pageNumber * this.pageSize)
+        this.collectionService.setPartial(0, this.pageNumber * this.pageSize)
     }
     initService() {
         /*this.collectionService.initData();
