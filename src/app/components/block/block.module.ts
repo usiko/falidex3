@@ -4,29 +4,28 @@ import { AppSharedModule } from '../shared/shared.module';
 import { CirculaireDetailsBlockComponent } from './details/circulaire/circulaire-details-block/circulaire-details-block.component';
 import { FiliereDetailsBlockComponent } from './details/filiere/filiere-details-block/filiere-details-block.component';
 import { SymboleDetailsBlockComponent } from './details/symbole/symbole-details-block/symbole-details-block.component';
-import { CirculaireFiliereViewComponent } from './filiere-view/circulaire-filiere-view.component';
-import { SignificationItemBlockComponent } from './list/signification/signification-item-block/signification-item-block.component';
+import { BlockListModule } from './list/block-list.module';
 
 
 @NgModule({
     imports: [
         SharedModule,
         AppSharedModule,
+        BlockListModule
 
     ],
     exports: [
-        CirculaireFiliereViewComponent,
         FiliereDetailsBlockComponent,
-        SignificationItemBlockComponent,
         CirculaireDetailsBlockComponent,
         SymboleDetailsBlockComponent,
-        SharedModule
+        SharedModule,
+        BlockListModule
     ],
-    declarations: [CirculaireFiliereViewComponent,
-        SymboleDetailsBlockComponent,
-        CirculaireDetailsBlockComponent,
+    declarations: [
         FiliereDetailsBlockComponent,
-        SignificationItemBlockComponent],
+        CirculaireDetailsBlockComponent,
+        SymboleDetailsBlockComponent
+    ],
     providers: []
 })
 export class BlockModule { }

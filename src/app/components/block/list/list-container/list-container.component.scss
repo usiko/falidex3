@@ -1,0 +1,18 @@
+ion-list {
+    &.gallery {
+        display: flex;
+        flex-wrap: wrap;
+        &::ng-deep {
+            >*:not(ion-list-header) {
+                width: 33%;
+            }
+        }
+    }
+}
+
+ion-infinite-scroll {
+    ion-infinite-scroll-content {
+        margin-top: 20px;
+        --color: var(--ion-color-secondary);
+    }
+}

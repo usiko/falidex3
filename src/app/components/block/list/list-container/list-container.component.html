@@ -1,0 +1,21 @@
+<ion-list [class.gallery]="listMode == 'gallery'" [class.list]="listMode == 'list'" color="light">
+    <ion-list-header lines="inset" color="light" *ngIf="showListMode">
+        <ion-label>Affichage</ion-label>
+        <ion-buttons>
+            <ion-button [color]="listMode == 'list'?'secondary':'dark'" (click)="switchListMode('list')">
+                <ion-icon slot="icon-only" name="list-box"></ion-icon>
+            </ion-button>
+            <ion-button [color]="listMode == 'gallery'?'secondary':'dark'" (click)="switchListMode('gallery')">
+                <ion-icon slot="icon-only" name="images"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-list-header>
+
+    <ng-content select="[slot='list']" *ngIf="listMode == 'list'"></ng-content>
+    <ng-content select="[slot='gallery']" *ngIf="listMode == 'gallery'"></ng-content>
+</ion-list>
+
+<ion-infinite-scroll [disabled]="itemLength>=dataLength || dataLength==0" threshold="120px" (ionInfinite)="getMore($event)">
+    <ion-infinite-scroll-content color="primary" loadingSpinner="circular" loadingText="attends...">
+    </ion-infinite-scroll-content>
+</ion-infinite-scroll>
