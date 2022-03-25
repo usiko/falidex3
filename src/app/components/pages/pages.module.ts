@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared.module';
 import { BlockModule } from '../block/block.module';
 import { AppSharedModule } from '../shared/shared.module';
+import { FilierePagesModule } from './filiere/filiere-page.module';
 import { HomePage } from './home/home.page';
-import { SymbolListComponent } from './symbol/list/symbol-list.component';
+import { SymbolPagesModule } from './symbol/symbol-page.module';
 
 
 
@@ -12,20 +12,15 @@ import { SymbolListComponent } from './symbol/list/symbol-list.component';
     imports: [
         SharedModule,
         AppSharedModule,
-        BlockModule
-
-        /*RouterModule.forChild([
-            {
-                path: '',
-                component: HomePage
-            }
-        ]),*/
+        BlockModule,
+        SymbolPagesModule,
+        FilierePagesModule
 
     ],
     exports: [
 
     ],
-    declarations: [SymbolListComponent, HomePage],
+    declarations: [HomePage],
     providers: [
 
     ]
