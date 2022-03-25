@@ -1,11 +1,12 @@
 import { Component, NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { SymbolListComponent } from './components/pages/symbol/list/symbol-list/symbol-list.component';
+import { HomePage } from './components/pages/home/home.page';
+import { SymbolListComponent } from './components/pages/symbol/list/symbol-list.component';
 
 const routes: Routes = [
 
-    /*{ path: '', component: HomePage },
-    { path: 'list', component: ListPage },
+    { path: '', component: HomePage },
+    /*{ path: 'list', component: ListPage },
     { path: 'spes', component: SpesComponent },
     { path: 'spe/:id', component: SpeDetailsComponent },
 
@@ -15,7 +16,7 @@ const routes: Routes = [
     { path: 'circulaires', loadChildren: './components/pages/circulaires/circulaires-routing.module#CirculairesRoutingModule' },
     { path: 'spes', loadChildren: './components/pages/spe/spe-routing.module#SpeRoutingModule' },
     { path: 'codes', loadChildren: './components/pages/filecode/filecode-routing.module#FilecodeRoutingModule' }*/
-    { path: '', component: SymbolListComponent }
+    { path: 'symbols', component: SymbolListComponent }
 
     /*{ path: 'symboles', children: symboleRoutes },
     { path: 'filieres', children: filiereRoutes },

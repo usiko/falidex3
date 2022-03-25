@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared.module';
 import { BlockModule } from '../block/block.module';
 import { AppSharedModule } from '../shared/shared.module';
+import { HomePage } from './home/home.page';
 import { SymbolListComponent } from './symbol/list/symbol-list.component';
 
 
@@ -24,7 +25,7 @@ import { SymbolListComponent } from './symbol/list/symbol-list.component';
     exports: [
 
     ],
-    declarations: [SymbolListComponent],
+    declarations: [SymbolListComponent, HomePage],
     providers: [
 
     ]

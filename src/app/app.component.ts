@@ -30,20 +30,13 @@ export class AppComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.circulaireService.collection$.subscribe(items => {
-            console.log(items);
-        });
-        this.significationsService.collection$.subscribe(items => {
-            console.log(items);
-        });
         this.filieresService.collection$.subscribe(items => {
-            console.log(items);
+            this.setMenu();
         });
         this.symbolService.collection$.subscribe(items => {
-            console.log(items);
+            this.setMenu();
         });
         this.initData();
-        this.setMenu();
 
 
         this.relationService.getRelationList().subscribe(items => {
@@ -62,15 +55,15 @@ export class AppComponent implements OnInit {
                 url: '/',
                 icon: 'home'
             }];
-        /*if (this.databuilder.getSymboles().length !== 0) {
+        if (this.symbolService.collection$.getValue().length > 0) {
             appPages.push(
                 {
                     title: 'Insignes/emblemes',
-                    url: '/symboles',
+                    url: '/symbols',
                     icon: 'medal',
                 });
         }
-        if (this.databuilder.getFilieres().length !== 0) {
+        if (this.filieresService.collection$.getValue().length > 0) {
             appPages.push(
                 {
                     title: 'Filières',
@@ -78,7 +71,7 @@ export class AppComponent implements OnInit {
                     icon: 'school'
                 });
         }
-        if (this.databuilder.getSpes().length !== 0) {
+        /*if (this.databuilder.getSpes().length !== 0) {
             appPages.push(
                 {
                     title: 'Toutes les spés',
