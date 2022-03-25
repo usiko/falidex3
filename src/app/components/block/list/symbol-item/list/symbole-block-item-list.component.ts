@@ -15,10 +15,7 @@ export class SymbolBlockItemListComponent extends ListItem<ISymbol> implements O
     @Input() showSpe = true;
     @Input() navigation = false;
 
-    // Todo -> pipe
-    public circulairesFilieresLink: ICollectionLink[] = []
 
-    public significationsLink: ICollectionLink[] = []
 
     constructor() {
         super()
@@ -28,25 +25,6 @@ export class SymbolBlockItemListComponent extends ListItem<ISymbol> implements O
 
     click() {
         this.onclick.emit();
-    }
-
-    protected itemChange(): void {
-        this.circulairesFilieresLink = [];
-        this.significationsLink = [];
-        console.log('item change', this.item)
-        if (this.item.links) {
-            for (const link of this.item.links) {
-                if (link.signification) {
-                    this.significationsLink.push(link)
-                }
-                if (link.filiere && link.circulaire) {
-                    this.circulairesFilieresLink.push(
-                        link
-                    )
-                }
-            }
-            console.log(this.item, this.circulairesFilieresLink, this.significationsLink)
-        }
     }
 
 }
