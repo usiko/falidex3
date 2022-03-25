@@ -1,0 +1,53 @@
+<ion-item *ngIf="item && navigation" lines="none" [routerLink]="['/filieres/details',item.id]" detail>
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</ion-item>
+<ion-item *ngIf="item && !navigation" lines="none">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</ion-item>
+<ng-template #content>
+    <ng-container *ngIf="(item.links|filterLink:['circulaire','symbols']) as circSymboles">
+        <ion-thumbnail *ngIf="circSymboles.length>0" slot="start">
+            <app-img-loader [src]="(circSymboles[0].symbols.imgs && circSymboles[0].symbols.imgs[0])?'http://resources.falidex.fr'+circSymboles[0].symbols.imgs[0].url:null">
+            </app-img-loader>
+        </ion-thumbnail>
+    </ng-container>
+
+    <ion-label>
+        <ng-container *ngIf="(item.links|filterLink:['circulaire','symbols']) as circSymboles">
+            <app-circulaire-representation *ngIf="circSymboles[0].circulaire && circSymboles[0].circulaire.colors" [circulaire]="circSymboles[0].circulaire" [cssClass]="'vertical'"></app-circulaire-representation>
+        </ng-container>
+        <div>
+            <h3>
+                <div>{{item.name}}</div>
+            </h3>
+            <ng-container *ngIf="(item.links|filterLink:['circulaire','symbols']) as circSymboles">
+                <p *ngIf="circSymboles && circSymboles.length>0" class="circSymb">
+                    <ng-container *ngIf="circSymboles.length>2">
+                        <span class="content">
+                            <ion-icon color="secondary" *ngIf="circSymboles[0].spe && showSpe" name="star">
+                            </ion-icon>
+                            <span><span *ngIf="circSymboles[0].symbols">
+                                {{circSymboles[0].symbols.name}} sur
+                            </span> {{circSymboles[0].circulaire.name}}
+                        </span>
+                        </span>
+                        <span class="content">
+                            <span>Et {{circSymboles.length-1}} autres représentations</span>
+                        </span>
+
+                    </ng-container>
+                    <ng-container *ngIf="circSymboles && circSymboles.length<=2">
+                        <span class="content" *ngFor="let circSymb of circSymboles">
+                            <ion-icon color="secondary" *ngIf="circSymb.spe && showSpe" name="star">
+                            </ion-icon>
+                            <span><span *ngIf="circSymb.symbols">
+                                {{circSymb.symbols.name}} sur
+                            </span> {{circSymb.circulaire.name}}</span>
+                        </span>
+                    </ng-container>
+                </p>
+            </ng-container>
+        </div>
+    </ion-label>
+
+</ng-template>
