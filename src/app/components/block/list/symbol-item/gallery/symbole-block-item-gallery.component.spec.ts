@@ -1,20 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-import { SymboleItemListComponent } from './symbole-item-list.component';
 
+import { SymbolBlockItemGalleryComponent } from './symbole-block-item-gallery.component';
 
-
-describe('SymboleItemComponent', () => {
-    let component: SymboleItemListComponent;
-    let fixture: ComponentFixture<SymboleItemListComponent>;
+describe('SymbolBlockItemGalleryComponent', () => {
+    let component: SymbolBlockItemGalleryComponent;
+    let fixture: ComponentFixture<SymbolBlockItemGalleryComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [SymboleItemListComponent],
+            declarations: [SymbolBlockItemGalleryComponent],
             imports: [IonicModule.forRoot()]
         }).compileComponents();
 
-        fixture = TestBed.createComponent(SymboleItemListComponent);
+        fixture = TestBed.createComponent(SymbolBlockItemGalleryComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     }));

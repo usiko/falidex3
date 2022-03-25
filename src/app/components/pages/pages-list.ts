@@ -5,7 +5,6 @@ import { IonContent } from '@ionic/angular';
 import { BehaviorSubject, Subscription, } from 'rxjs';
 import { IBaseCollectionData } from 'src/app/models/base-data-models';
 import { ICollectionData } from 'src/app/models/linked-data-models';
-import { ISubBaseCollectionData } from 'src/app/models/sub-base-data-models';
 import { ICollectionItem } from 'src/app/services/collection-item/collection.service';
 import { EventService } from 'src/app/services/event/event.service';
 @Injectable()
@@ -42,6 +41,7 @@ export class PageItemList<Item extends ICollectionData> {
             this.loading = false;
         });
         this.collection$.subscribe(items => {
+            this.pageNumber = 1;
             this.dataLength = items.length;
             this.updatePartial()
         })

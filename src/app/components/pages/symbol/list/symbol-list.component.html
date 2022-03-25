@@ -11,10 +11,10 @@
     <ng-container *ngIf="(items$|async) as items">
         <app-list-container [dataLength]="dataLength" [itemLength]="items.length" [loading]="loading" (ongetMore)="getMore()">
             <ng-container slot="list">
-                <app-symbole-item-list [navigation]="true" *ngFor="let item of items" [item]="item"></app-symbole-item-list>
+                <app-block-symbol-item-list [navigation]="true" *ngFor="let item of items" [item]="item"></app-block-symbol-item-list>
             </ng-container>
             <ng-container slot="gallery">
-                <app-symbole-item-gallery [navigation]="true" *ngFor="let item of items" [item]="item"></app-symbole-item-gallery>
+                <app-symbol-block-item-gallery [navigation]="true" *ngFor="let item of items" [item]="item"></app-symbol-block-item-gallery>
             </ng-container>
         </app-list-container>
     </ng-container>

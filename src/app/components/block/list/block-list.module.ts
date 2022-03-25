@@ -3,7 +3,7 @@ import { SharedModule } from 'src/app/shared.module';
 import { AppSharedModule } from '../../shared/shared.module';
 import { LisContainerComponent } from './list-container/list-container.component';
 import { SignificationItemBlockComponent } from './signification/signification-item-block/signification-item-block.component';
-import { SymboleItemModule } from './symbol-item/symbole-item.module';
+import { SymboleBlockItemModule } from './symbol-item/symbole-block-item.module';
 
 
 
@@ -11,12 +11,12 @@ import { SymboleItemModule } from './symbol-item/symbole-item.module';
     imports: [
         SharedModule,
         AppSharedModule,
-        SymboleItemModule
+        SymboleBlockItemModule
     ],
     exports: [
         LisContainerComponent,
         SignificationItemBlockComponent,
-        SymboleItemModule
+        SymboleBlockItemModule
     ],
     declarations: [LisContainerComponent, SignificationItemBlockComponent],
     providers: []

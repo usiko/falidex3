@@ -5,11 +5,11 @@ import { ListItem } from '../../list-item';
 
 
 @Component({
-    selector: 'app-symbole-item-list',
-    templateUrl: './symbole-item-list.component.html',
-    styleUrls: ['./symbole-item-list.component.scss'],
+    selector: 'app-block-symbol-item-list',
+    templateUrl: './symbole-block-item-list.component.html',
+    styleUrls: ['./symbole-block-item-list.component.scss'],
 })
-export class SymboleItemListComponent extends ListItem<ISymbol> implements OnInit {
+export class SymbolBlockItemListComponent extends ListItem<ISymbol> implements OnInit {
 
     @Input() item: ISymbol;
     @Input() showSpe = true;
