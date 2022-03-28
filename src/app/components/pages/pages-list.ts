@@ -1,5 +1,5 @@
 
-import { Injectable, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Injectable, ViewChild } from '@angular/core';
 import { IonContent } from '@ionic/angular';
 
 import { BehaviorSubject, Subscription, } from 'rxjs';
@@ -14,7 +14,8 @@ export class PageItemList<Item extends ICollectionData> {
     @ViewChild(IonContent, null) content: IonContent;
     protected collectionService: ICollectionItem<IBaseCollectionData, Item>;
     protected listManagerService: ListManagerService<Item>;
-    protected collection$ = new BehaviorSubject<Item[]>([]) // fullCollection
+    protected collection$;
+    protected changeDetector: ChangeDetectorRef;
     protected events: EventService;
     //protected content;
     private filterSubscription = new Subscription();
@@ -41,15 +42,27 @@ export class PageItemList<Item extends ICollectionData> {
         this.initService();
         this.initEmptyList();
         this.collection$ = this.collectionService.collection$;
-        this.listManagerService.setCollection(this.collection$);
-        this.items$ = this.listManagerService.items$;
+        this.collection$.subscribe(collection => {
+            this.listManagerService.setCollection(collection);
+            console.log('update items', this.items$.getValue(), this.collection$.getValue());
+        })
+
+
+
         this.items$
-            .pipe(debounceTime(5000))
             .subscribe(() => {
+                console.log('update items', this.items$.getValue(), this.collection$.getValue())
                 this.loading = false;
+                this.changeDetector.detectChanges();
             }, (err) => {
                 this.loading = false;
+                this.changeDetector.detectChanges();
             });
+        this.listManagerService.items$
+            .pipe(debounceTime(500))
+            .subscribe(items => {
+                this.items$.next(items)
+            })
         this.collection$.subscribe(items => {
             this.dataLength = items.length;
         });
@@ -197,6 +210,14 @@ export class PageItemList<Item extends ICollectionData> {
     initService() {
         /*this.collectionService.initData();
         this.collectionService.resetFilter();*/
+    }
+
+    setSort(property: string, order: string) {
+        this.listManagerService.setSort(property, order);
+    }
+
+    trackByFn(index, item) {
+        return item.id;
     }
 
 

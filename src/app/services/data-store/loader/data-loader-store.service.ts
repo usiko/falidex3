@@ -40,8 +40,9 @@ export class DataLoaderStoreService {
 
     loadRelations(): void {
         of([TLNRelation, NATRelation]).subscribe((items) => {
+            console.log('relation loaded');
             this.store.dataRelations$.next(items);
-
+            console.log('relation selected');
             this.store.currentDataRelations$.next(items[0]);
         });
     }

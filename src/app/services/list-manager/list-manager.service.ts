@@ -5,7 +5,6 @@ import { ICollectionData } from 'src/app/models/linked-data-models';
 
 @Injectable()
 export class ListManagerService<Item extends ICollectionData> {
-    private collection$ = new BehaviorSubject<Item[]>([]) // fullCollection
     private partialParam = {
         from: 0,
         to: 0
@@ -13,22 +12,20 @@ export class ListManagerService<Item extends ICollectionData> {
 
     public items$ = new BehaviorSubject<Item[]>([]);
 
-    public currentSorts: any[];
+    public currentSorts: {
+        property: string,
+        order: string
+    }
     public currentFilters: any[];
 
-    private collectionSubscription = new Subscription();
-    private filterSubscription = new Subscription();
     protected pageSize = 20;
 
     private pageNumber = 1;
 
-
-    setCollection(collection: BehaviorSubject<Item[]>) {
-        this.collection$ = collection;
-        this.collectionSubscription.unsubscribe();
-        this.collectionSubscription.add(this.collection$.subscribe(items => {
-            this.updateItems()
-        }));
+    public collection: Item[] = [];
+    setCollection(collection: Item[]) {
+        this.collection = collection;
+        this.updateItems()
     }
 
     setPageSize(pageSize: number) {
@@ -39,6 +36,14 @@ export class ListManagerService<Item extends ICollectionData> {
     setPageNumber(pageNumber: number) {
         this.pageNumber = pageNumber;
         this.updatePartial();
+    }
+
+    setSort(property: string, order: string) {
+        this.currentSorts = {
+            property,
+            order
+        };
+        this.updateItems();
     }
     private updatePartial() {
         this.setPartial(0, this.pageNumber * this.pageSize)
@@ -51,14 +56,17 @@ export class ListManagerService<Item extends ICollectionData> {
     }
 
     private updateItems() {
-        this.items$.next(this.collection$.getValue()
-            .slice(this.partialParam.from, this.partialParam.to)
-            .filter((item) => {
-                return true;
+        let collection = this.collection.slice();
+        if (this.currentSorts && this.currentSorts.property) {
+            collection = collection.sort((a, b) => {
+                const aProp: string = a[this.currentSorts.property];
+                const bProp: string = b[this.currentSorts.property];
+                if (aProp.toLowerCase() < bProp.toLowerCase()) { return -1; }
+                if (aProp.toLowerCase() > bProp.toLowerCase()) { return 1; }
             })
-            .sort((item) => {
-                return 1;
-            })
-        )
+        }
+        collection = collection.slice(this.partialParam.from, this.partialParam.to);
+        console.log('list manager update', this.currentSorts, this.collection, collection)
+        this.items$.next(collection)
     }
 }

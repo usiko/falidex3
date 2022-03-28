@@ -11,7 +11,7 @@
     <ng-container *ngIf="(items$|async) as items">
         <app-list-container [dataLength]="dataLength" [itemLength]="items.length" [showListMode]="false" [loading]="loading" (ongetMore)="getMore()">
             <ng-container slot="list">
-                <app-filiere-block-item-list [item]="item" *ngFor="let item of items"></app-filiere-block-item-list>
+                <app-filiere-block-item-list [item]="item" *ngFor="let item of items; trackBy:trackByFn"></app-filiere-block-item-list>
             </ng-container>
         </app-list-container>
     </ng-container>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, Inject, ChangeDetectorRef } from '@angular/core';
 import { CiculaireMatiereEnum } from 'src/app/models/circulaire-matiere.enum';
 import { IFiliere } from 'src/app/models/linked-data-models';
 import { FiliereCollectionService } from 'src/app/services/collection-item/filiere/filiere-collection.service';
@@ -21,13 +21,16 @@ export class FiliereListComponent extends PageItemList<IFiliere> implements OnIn
     constructor(
         protected collectionService: FiliereCollectionService,
         protected events: EventService,
-        protected listManagerService: ListManagerService<IFiliere>
+        protected listManagerService: ListManagerService<IFiliere>,
+        protected changeDetector: ChangeDetectorRef
     ) {
         super();
     }
 
     ngOnInit() {
+        this.setSort('name', 'asc');
         super.init();
+
     }
 
 }

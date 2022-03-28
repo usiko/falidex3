@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ISymbol } from 'src/app/models/linked-data-models';
 import { ISubBaseSymbol } from 'src/app/models/sub-base-data-models';
 import { SymbolCollectionService } from 'src/app/services/collection-item/symbol/symbol-collection.service';
@@ -18,11 +18,14 @@ export class SymbolListComponent extends PageItemList<ISymbol> implements OnInit
     constructor(
         protected collectionService: SymbolCollectionService,
         protected events: EventService,
-        protected listManagerService: ListManagerService<ISymbol>) {
+        protected listManagerService: ListManagerService<ISymbol>,
+        protected changeDetector: ChangeDetectorRef
+    ) {
         super();
     }
 
     ngOnInit() {
+        this.setSort('name', 'asc');
         super.init();
     }
 
