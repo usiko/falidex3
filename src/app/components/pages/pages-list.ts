@@ -3,14 +3,17 @@ import { Injectable, ViewChild } from '@angular/core';
 import { IonContent } from '@ionic/angular';
 
 import { BehaviorSubject, Subscription, } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { IBaseCollectionData } from 'src/app/models/base-data-models';
 import { ICollectionData } from 'src/app/models/linked-data-models';
 import { ICollectionItem } from 'src/app/services/collection-item/collection.service';
 import { EventService } from 'src/app/services/event/event.service';
+import { ListManagerService } from 'src/app/services/list-manager/list-manager.service';
 @Injectable()
 export class PageItemList<Item extends ICollectionData> {
     @ViewChild(IonContent, null) content: IonContent;
     protected collectionService: ICollectionItem<IBaseCollectionData, Item>;
+    protected listManagerService: ListManagerService<Item>;
     protected collection$ = new BehaviorSubject<Item[]>([]) // fullCollection
     protected events: EventService;
     //protected content;
@@ -31,20 +34,27 @@ export class PageItemList<Item extends ICollectionData> {
     public emptyItems = [];
     public dataLength = null;
 
+
+
+
     init() {
         this.initService();
         this.initEmptyList();
         this.collection$ = this.collectionService.collection$;
-        this.items$.subscribe(() => {
-            this.loading = false;
-        }, (err) => {
-            this.loading = false;
-        });
+        this.listManagerService.setCollection(this.collection$);
+        this.items$ = this.listManagerService.items$;
+        this.items$
+            .pipe(debounceTime(5000))
+            .subscribe(() => {
+                this.loading = false;
+            }, (err) => {
+                this.loading = false;
+            });
         this.collection$.subscribe(items => {
-            this.pageNumber = 1;
             this.dataLength = items.length;
-            this.updatePartial()
-        })
+        });
+        this.listManagerService.setPageNumber(this.pageNumber);
+        this.listManagerService.setPageSize(this.pageSize);
 
     }
     ionViewDidEnter() {
@@ -69,13 +79,13 @@ export class PageItemList<Item extends ICollectionData> {
     initFilter() {
         //const filters = this.collectionService.getFilters();
         //this.collectionService.resetPage();
-        this.pageNumber = 1;
-        if (this.pageSize) {
-            this.updatePartial();
-        }
-        this.events.publish('filtersMenu', true);
-        // this.events.publish('setFilters', filters);
-        this.events.publish('resetFilters');
+        /* this.pageNumber = 1;
+         if (this.pageSize) {
+             this.updatePartial();
+         }
+         this.events.publish('filtersMenu', true);
+         // this.events.publish('setFilters', filters);
+         this.events.publish('resetFilters');*/
 
 
 
@@ -181,8 +191,7 @@ export class PageItemList<Item extends ICollectionData> {
         console.log('get more');
         this.loading = true;
         this.pageNumber++;
-
-        this.updatePartial();
+        this.listManagerService.setPageNumber(this.pageNumber);
     }
 
     initService() {
@@ -190,13 +199,6 @@ export class PageItemList<Item extends ICollectionData> {
         this.collectionService.resetFilter();*/
     }
 
-    private updatePartial() {
-        console.log('updatePartial', this.pageNumber * this.pageSize)
-        this.setPartial(0, this.pageNumber * this.pageSize)
-    }
 
-    private setPartial(from: number, to: number) {
-        this.items$.next(this.collection$.getValue().slice(from, to))
-    }
 
 }
