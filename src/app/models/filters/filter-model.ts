@@ -1,6 +1,14 @@
 export interface ICollectionFilter {
-    key: string
+    property: string,
+    value: any,
+    operator: FilterOperatorEnum
+    valueGetter?: () => any
 }
-export interface ILinkCollectionFilter {
+
+export enum FilterOperatorEnum {
+    contain = 'Contain',
+    equal = 'equal',
+    different = 'different',
+    exclude = 'exclude'
 
 }

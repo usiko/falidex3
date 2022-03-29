@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy, Inject, ChangeDetectorRef } from '@angular/core';
 import { CiculaireMatiereEnum } from 'src/app/models/circulaire-matiere.enum';
 import { IFiliere } from 'src/app/models/linked-data-models';
+import { SortEnum } from 'src/app/models/sort/sort.model';
 import { FiliereCollectionService } from 'src/app/services/collection-item/filiere/filiere-collection.service';
 import { EventService } from 'src/app/services/event/event.service';
 import { ListManagerService } from 'src/app/services/list-manager/list-manager.service';
@@ -28,7 +29,7 @@ export class FiliereListComponent extends PageItemList<IFiliere> implements OnIn
     }
 
     ngOnInit() {
-        this.setSort('name', 'asc');
+        this.setSort('name', SortEnum.asc);
         super.init();
 
     }

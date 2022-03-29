@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ISymbol } from 'src/app/models/linked-data-models';
+import { SortEnum } from 'src/app/models/sort/sort.model';
 import { ISubBaseSymbol } from 'src/app/models/sub-base-data-models';
 import { SymbolCollectionService } from 'src/app/services/collection-item/symbol/symbol-collection.service';
 import { EventService } from 'src/app/services/event/event.service';
@@ -25,7 +26,7 @@ export class SymbolListComponent extends PageItemList<ISymbol> implements OnInit
     }
 
     ngOnInit() {
-        this.setSort('name', 'asc');
+        this.setSort('name', SortEnum.asc);
         super.init();
     }
 

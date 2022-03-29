@@ -5,7 +5,9 @@ import { IonContent } from '@ionic/angular';
 import { BehaviorSubject, Subscription, } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { IBaseCollectionData } from 'src/app/models/base-data-models';
+import { FilterOperatorEnum } from 'src/app/models/filters/filter-model';
 import { ICollectionData } from 'src/app/models/linked-data-models';
+import { SortEnum } from 'src/app/models/sort/sort.model';
 import { ICollectionItem } from 'src/app/services/collection-item/collection.service';
 import { EventService } from 'src/app/services/event/event.service';
 import { ListManagerService } from 'src/app/services/list-manager/list-manager.service';
@@ -23,6 +25,8 @@ export class PageItemList<Item extends ICollectionData> {
     protected pageSize = 20;
 
     private pageNumber = 1;
+
+    private searchFilterIndex: number;
 
 
     // protected filterDebouncer: Subject<any> = new Subject();
@@ -105,6 +109,12 @@ export class PageItemList<Item extends ICollectionData> {
     }
     search(search: string) {
         this.scrollToTop();
+        if (this.searchFilterIndex !== undefined) {
+            this.listManagerService.updateFilter(this.searchFilterIndex, 'name', search, FilterOperatorEnum.contain);
+        }
+        else {
+            this.searchFilterIndex = this.listManagerService.addFilter('name', search, FilterOperatorEnum.contain);
+        }
         /*this.collectionService.resetPage();
         this.pageNumber = 1;
         this.collectionService.changePageSize(this.pageSize * this.pageNumber);
@@ -212,7 +222,7 @@ export class PageItemList<Item extends ICollectionData> {
         this.collectionService.resetFilter();*/
     }
 
-    setSort(property: string, order: string) {
+    setSort(property: string, order: SortEnum) {
         this.listManagerService.setSort(property, order);
     }
 
