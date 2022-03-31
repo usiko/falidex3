@@ -7,7 +7,9 @@ import { HomePage } from './home/home.page';
 import { SymbolPagesModule } from './symbol/symbol-page.module';
 
 
-
+/**
+ * all page, routing components
+ */
 @NgModule({
     imports: [
         SharedModule,

@@ -7,7 +7,9 @@ import { SignificationItemBlockComponent } from './signification/signification-i
 import { SymboleBlockItemModule } from './symbol-item/symbole-block-item.module';
 
 
-
+/** 
+ * all reussable block of list page
+ */
 @NgModule({
     imports: [
         SharedModule,

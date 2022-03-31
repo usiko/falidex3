@@ -3,6 +3,9 @@ import { PagesModule } from './pages/pages.module';
 import { AppSharedModule } from './shared/shared.module';
 import { SidebarModule } from './sidebar/sidebar.module';
 
+/**
+ * all components modules
+ */
 @NgModule({
     imports: [
         SidebarModule,

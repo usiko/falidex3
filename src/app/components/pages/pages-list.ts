@@ -11,21 +11,66 @@ import { SortEnum } from 'src/app/models/sort/sort.model';
 import { ICollectionItem } from 'src/app/services/collection-item/collection.service';
 import { EventService } from 'src/app/services/event/event.service';
 import { ListManagerService } from 'src/app/services/list-manager/list-manager.service';
+
+/**
+ * Parent of all list pages
+ */
 @Injectable()
 export class PageItemList<Item extends ICollectionData> {
+
+    /**
+     * main page container
+     */
     @ViewChild(IonContent, null) content: IonContent;
+
+    /**
+     * Must import service in child
+     * data service
+     */
     protected collectionService: ICollectionItem<IBaseCollectionData, Item>;
+
+    /**
+     * Must import service in child
+     * list manager service
+     */
     protected listManagerService: ListManagerService<Item>;
-    protected collection$;
+
+    /**
+     * Must import service in child
+     * angular changedetector, to update manualy view
+     */
     protected changeDetector: ChangeDetectorRef;
+
+
+    /**
+     * Must import service in child
+     * Global event service
+     */
     protected events: EventService;
+
+
+    /**
+     * collection subject of data to show, dircetly from data store,  without any change
+     */
+    protected collection$: BehaviorSubject<Item[]>;
+  
     //protected content;
     private filterSubscription = new Subscription();
 
+
+    /**
+     * current number of items to show per page
+     */
     protected pageSize = 20;
 
+    /**
+     * current page, start on 1
+     */
     private pageNumber = 1;
 
+    /**
+     * index of search filter, used to find, remove or update searh text filter
+     */
     private searchFilterIndex: number;
 
 
@@ -33,15 +78,38 @@ export class PageItemList<Item extends ICollectionData> {
 
     protected pageSubscribers = new Subscription();
     protected subscribers = new Subscription();
+
+    /**
+     * show a scrolltop bouton
+     */
     public showScrollTopBtn = false;
+
+    /**
+     * current data loading state
+     */
     public loading = false;
+
+
+    /**
+     * list of items to show, filtered, sorted, sliced
+     */
     public items$ = new BehaviorSubject<Item[]>([]);
+
+
     public emptyItems = [];
+
+    /**
+     * lentgh total of items
+     * (probably useless now)
+     */
     public dataLength = null;
 
 
 
 
+    /**
+     * init the the component
+     */
     init() {
         this.initService();
         this.initEmptyList();
@@ -74,6 +142,10 @@ export class PageItemList<Item extends ICollectionData> {
         this.listManagerService.setPageSize(this.pageSize);
 
     }
+
+    /**
+     * event of back into this view
+     */
     ionViewDidEnter() {
         this.pageSubscribers = new Subscription();
         /*this.filterSubscription.add(this.events.getObs('filtersChange').subscribe((data: { name: FilterName, value: any }) => {
@@ -83,6 +155,10 @@ export class PageItemList<Item extends ICollectionData> {
         }));*/
         this.initFilter();
     }
+
+    /**
+     * event of leaving view
+     */
     ionViewWillLeave() {
         this.events.publish('filtersMenu', false);
         this.filterSubscription.unsubscribe();
@@ -107,6 +183,11 @@ export class PageItemList<Item extends ICollectionData> {
 
 
     }
+
+    /**
+     * searching in list
+     * @param search string
+     */
     search(search: string) {
         this.scrollToTop();
         if (this.searchFilterIndex !== undefined) {
@@ -199,10 +280,16 @@ export class PageItemList<Item extends ICollectionData> {
 
     }*/
 
+    /**
+     * destroying view
+     */
     onDestroy() {
         this.subscribers.unsubscribe();
     }
 
+    /**
+     * show an empty list loading at the first show
+     */
     initEmptyList() {
         this.emptyItems = [];
         for (let i = 0; i < 30; i++) {
@@ -210,6 +297,9 @@ export class PageItemList<Item extends ICollectionData> {
         }
     }
 
+    /**
+     * load more data from collection
+     */
     getMore() {
         console.log('get more');
         this.loading = true;
@@ -222,11 +312,22 @@ export class PageItemList<Item extends ICollectionData> {
         this.collectionService.resetFilter();*/
     }
 
+    /**
+     * setting a sorting of list
+     * @param property string, 
+     * @param order SortEnum
+     */
     setSort(property: string, order: SortEnum) {
         this.listManagerService.setSort(property, order);
     }
 
-    trackByFn(index, item) {
+    /**
+     * track by forngfor list
+     * @param index number, index in list
+     * @param item Item current item iterrated
+     * 
+     */
+    trackByFn(index:Number, item:Item) {
         return item.id;
     }
 

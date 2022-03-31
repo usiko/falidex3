@@ -6,7 +6,9 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { NavigationComponent } from './navigation/navigation.component';
 
 
-
+/**
+ * side menu bar module
+ */
 @NgModule({
     imports: [
         IonicModule, AppRoutingModule, CommonModule

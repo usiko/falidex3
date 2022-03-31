@@ -6,7 +6,9 @@ import { FiliereDetailsBlockComponent } from './details/filiere/filiere-details-
 import { SymboleDetailsBlockComponent } from './details/symbole/symbole-details-block/symbole-details-block.component';
 import { BlockListModule } from './list/block-list.module';
 
-
+/**
+ * All reusable block of pages
+ */
 @NgModule({
     imports: [
         SharedModule,

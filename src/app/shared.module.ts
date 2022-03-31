@@ -7,6 +7,9 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
+/**
+ * all basic element to share in the whole app
+ */
 @NgModule({
     imports: [
         HttpClientModule,
