@@ -7,6 +7,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "doc": "npx compodoc -p tsconfig.doc.json",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -35,6 +36,7 @@
     "@angular/compiler-cli": "~13.2.2",
     "@angular/language-service": "~13.2.2",
     "@ionic/angular-toolkit": "^6.0.0",
+    "@compodoc/compodoc": "1.1.19",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
