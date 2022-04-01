@@ -3,3 +3,11 @@ ion-select {
     justify-content: center;
     max-width: 100%;
 }
+
+ion-icon {
+    transition: opacity 750ms;
+}
+
+ion-label {
+    transition: opacity 750ms;
+}

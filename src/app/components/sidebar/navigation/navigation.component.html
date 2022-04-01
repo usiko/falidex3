@@ -1,38 +1,18 @@
 <ion-list color="light">
-    <!--<ion-item lines="none">
-        <ion-icon slot="start" name='settings'></ion-icon>
-        <ion-select placeholder="changer" (ionChange)="changeCluster($event)" [value]="currentCluster.id" *ngIf="dataClusters && dataClusters.length>1">
-            <ion-select-option *ngFor="let cluster of dataClusters" [disabled]="cluster.disabled" [value]="cluster.id"> Code {{cluster.name}}</ion-select-option>
-        </ion-select>
-    </ion-item>-->
-
-</ion-list>
-
-<ion-list color="light">
     <ion-item *ngIf="installable" class="install" (click)="installApp()">
         <ion-icon color="primary" slot="start" name="download"></ion-icon>
         Installe moi
     </ion-item>
-    <ng-container *ngFor="let p of pages">
-        <ng-container *ngIf="!p.disabled">
+    <ng-container *ngFor="let p of pages; trackBy:trackByFnMenu">
+        <ng-container>
             <ion-menu-toggle auto-hide="false">
-                <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+                <ion-item [class.disabled-item]="p.disabled" [routerDirection]="'root'" [routerLink]="p.disabled?null:[p.url]">
                     <ion-icon color="secondary" slot="start" [name]="p.icon" [src]="p.src"></ion-icon>
                     <ion-label>
                         {{p.title}}
                     </ion-label>
                 </ion-item>
             </ion-menu-toggle>
-        </ng-container>
-        <ng-container *ngIf="p.disabled">
-
-            <ion-item class="disabled-item">
-                <ion-icon color="secondary" slot="start" [name]="p.icon" [src]="p.src"></ion-icon>
-                <ion-label>
-                    {{p.title}}
-                </ion-label>
-            </ion-item>
-
         </ng-container>
     </ng-container>
 

@@ -4,34 +4,47 @@ import { Component, Input, OnInit } from '@angular/core';
  * navigation menu
  */
 @Component({
-    selector: 'app-navigation',
-    templateUrl: './navigation.component.html',
-    styleUrls: ['./navigation.component.scss'],
+  selector: 'app-navigation',
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit {
+  /**
+   * list of page to navigate
+   */
+  @Input() pages: {
+    title: string;
+    url: string;
+    icon?: string;
+    src?: string;
+    disabled?: boolean;
+  }[] = [];
 
-    /**
-     * list of page to navigate
-     */
-    @Input() pages: { title: string, url: string, icon?: string, src?: string, disabled?: boolean }[] = [];
+  /**
+   * show pwa install button
+   */
+  public installable: boolean = true;
 
-    /**
-     * show pwa install button
-     */
-    public installable: boolean = true;
-    
-    constructor() { }
+  constructor() {}
 
-    ngOnInit() {
-        /*this.install.isInstallable().subscribe((data: boolean) => {
+  ngOnInit() {
+    /*this.install.isInstallable().subscribe((data: boolean) => {
             console.log("isInstallable", data)
             this.installable = data;
         })*/
+  }
 
-    }
+  installApp() {
+    //this.install.promptInstall();
+  }
 
-    installApp() {
-        //this.install.promptInstall();
-    }
-
+  /**
+   * track by forngfor list
+   * @param index number, index in list
+   * @param item Item current item iterrated
+   *
+   */
+  public trackByFnMenu(index: Number, item: any) {
+    return index;
+  }
 }

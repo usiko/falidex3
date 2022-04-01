@@ -50,28 +50,29 @@ export class AppComponent implements OnInit {
     }
 
     setMenu() {
+        
         const appPages: { title: string, url: string, icon?: string, src?: string, disabled?: boolean }[] = [
             {
                 title: 'Acceuil',
                 url: '/',
                 icon: 'home'
-            }];
-        if (this.symbolService.collection$.getValue().length > 0) {
-            appPages.push(
-                {
-                    title: 'Insignes/emblemes',
-                    url: '/symbols',
-                    icon: 'medal',
-                });
-        }
-        if (this.filieresService.collection$.getValue().length > 0) {
-            appPages.push(
-                {
-                    title: 'Filières',
-                    url: '/filieres',
-                    icon: 'school'
-                });
-        }
+            },
+            {
+                title: 'Insignes/emblemes',
+                url: '/symbols',
+                icon: 'medal',
+                disabled:this.symbolService.collection$.getValue().length ==0
+            },
+            {
+                title: 'Filières',
+                url: '/filieres',
+                icon: 'school',
+                disabled:this.filieresService.collection$.getValue().length == 0
+            }
+        
+        ];
+    
+        
         /*if (this.databuilder.getSpes().length !== 0) {
             appPages.push(
                 {

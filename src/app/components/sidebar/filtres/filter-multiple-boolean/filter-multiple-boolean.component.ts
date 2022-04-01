@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { FilterBoolean } from 'src/app/services/filters/filters.types';
+
 
 @Component({
     selector: 'app-filter-multiple-boolean',
@@ -8,7 +8,8 @@ import { FilterBoolean } from 'src/app/services/filters/filters.types';
 })
 export class FilterMultipleBooleanComponent implements OnInit {
     @Input() value: string[];
-    @Input() filters: FilterBoolean[] = [];
+    @Input() filters: any[] = [];
+   // @Input() filters: FilterBoolean[] = [];
     @Output() onchange = new EventEmitter();
     constructor() { }
 

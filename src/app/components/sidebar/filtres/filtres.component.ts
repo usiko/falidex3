@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 
-import { Filter } from 'src/app/services/filters/filters.types';
 
 @Component({
     selector: 'app-filtres',
@@ -9,10 +8,15 @@ import { Filter } from 'src/app/services/filters/filters.types';
 })
 export class FiltresComponent implements OnInit, OnDestroy {
 
-    @Input() filters: Filter[] = [];
+    /*@Input() filters: Filter[] = [];
     @Output() onfilterChange = new EventEmitter<{
         name: string,
         value: Filter
+    }>();*/
+    @Input() filters: any[] = [];
+    @Output() onfilterChange = new EventEmitter<{
+        name: string,
+        value: any
     }>();
     constructor() { }
 

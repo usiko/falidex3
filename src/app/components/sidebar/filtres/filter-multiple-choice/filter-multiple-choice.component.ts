@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FilterChoice } from 'src/app/services/filters/filters.types';
+
 
 @Component({
     selector: 'app-filter-multiple-choice',
@@ -10,7 +10,8 @@ export class FilterMultipleChoiceComponent implements OnInit {
 
     constructor() { }
     @Input() value: string;
-    @Input() choices: FilterChoice[];
+    @Input() choices: any[];
+    //@Input() choices: FilterChoice[];
     @Output() onchange = new EventEmitter();
     ngOnInit() {
 
