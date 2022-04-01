@@ -20,15 +20,15 @@
             </ion-content>
         </ion-menu>
         <ion-router-outlet id="main-content"></ion-router-outlet>
-        <!--<ion-menu *ngIf="menuFilters" side="end" menuId="filters">
-			<ion-header>
-				<ion-toolbar color="secondary">
-					<ion-title>Filtres</ion-title>
-				</ion-toolbar>
-			</ion-header>
-			<ion-content>
-				<app-filtres [filters]="filters" (onfilterChange)="filterChange($event)"></app-filtres>
-			</ion-content>
-		</ion-menu>-->
+        <ion-menu *ngIf="menuFilters" side="end" menuId="filters">
+            <ion-header>
+                <ion-toolbar color="secondary">
+                    <ion-title>Filtres</ion-title>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content>
+                <app-filtres></app-filtres>
+            </ion-content>
+        </ion-menu>
     </ion-split-pane>
 </ion-app>

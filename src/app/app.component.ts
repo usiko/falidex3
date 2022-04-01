@@ -17,7 +17,8 @@ export class AppComponent implements OnInit {
     public appPages: { title: string, url: string, icon?: string, src?: string, disabled?: boolean }[];
 
     public relationsData$ = new BehaviorSubject<{ name: string, id: string }[]>([])
-    public currentRelationsData$ = new BehaviorSubject<{ name: string, id: string }>(null)
+    public currentRelationsData$ = new BehaviorSubject<{ name: string, id: string }>(null);
+    public menuFilters = false;
 
     constructor(
         private loaderStoreService: DataLoaderStoreService,
