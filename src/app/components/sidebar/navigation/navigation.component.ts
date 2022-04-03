@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { InstallAppService } from 'src/app/services/install/install-app.service';
 
 /**
  * navigation menu
@@ -25,17 +26,17 @@ export class NavigationComponent implements OnInit {
    */
   public installable: boolean = true;
 
-  constructor() {}
+  constructor(private install:InstallAppService) {}
 
   ngOnInit() {
-    /*this.install.isInstallable().subscribe((data: boolean) => {
+    this.install.isInstallable().subscribe((data: boolean) => {
             console.log("isInstallable", data)
             this.installable = data;
-        })*/
+        })
   }
 
   installApp() {
-    //this.install.promptInstall();
+    this.install.promptInstall();
   }
 
   /**
