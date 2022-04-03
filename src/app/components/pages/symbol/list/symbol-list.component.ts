@@ -4,6 +4,7 @@ import { SortEnum } from 'src/app/models/sort/sort.model';
 import { ISubBaseSymbol } from 'src/app/models/sub-base-data-models';
 import { SymbolCollectionService } from 'src/app/services/collection-item/symbol/symbol-collection.service';
 import { EventService } from 'src/app/services/event/event.service';
+import { FilterService } from 'src/app/services/filter/filter.service';
 import { ListManagerService } from 'src/app/services/list-manager/list-manager.service';
 import { PageItemList } from '../../pages-list';
 
@@ -12,7 +13,7 @@ import { PageItemList } from '../../pages-list';
     selector: 'app-symbol-list',
     templateUrl: './symbol-list.component.html',
     styleUrls: ['./symbol-list.component.scss'],
-    providers: [ListManagerService]
+    providers: [ListManagerService,FilterService]
 })
 export class SymbolListComponent extends PageItemList<ISymbol> implements OnInit {
     showScrollTopBtn = true;

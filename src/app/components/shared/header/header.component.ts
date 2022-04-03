@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 //import { MenuController, Events } from '@ionic/angular';
-import { IonSearchbar } from '@ionic/angular';
+import { IonSearchbar, MenuController } from '@ionic/angular';
+import { EventService } from 'src/app/services/event/event.service';
 
 @Component({
     selector: 'app-header',
@@ -18,7 +19,7 @@ export class HeaderComponent /* implements OnInit, AfterViewInit, OnDestroy*/ {
 
     public searchText = '';
     public isSearching = false;
-    //constructor(private menu: MenuController, private events: Events) { }
+    constructor(private eventService:EventService) { }
 
 
     ngOnInit() {
@@ -49,8 +50,7 @@ export class HeaderComponent /* implements OnInit, AfterViewInit, OnDestroy*/ {
         }
     }
     toggleFilterMenu() {
-
-        //this.menu.toggle('filters');
+        this.eventService.publish('filtersMenu', true);
     }
 
     ngOnDestroy() {

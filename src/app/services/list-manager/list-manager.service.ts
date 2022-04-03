@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ValueAccessor } from '@ionic/angular/directives/control-value-accessors/value-accessor';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { FilterOperatorEnum, ICollectionFilter } from 'src/app/models/filters/filter-model';
 import { ICollectionData } from 'src/app/models/linked-data-models';
 import { Sort, SortEnum } from 'src/app/models/sort/sort.model';
-import { ICollectionItem } from '../collection-item/collection.service';
+import { FilterService } from '../filter/filter.service';
 
 
 @Injectable()
@@ -24,6 +23,29 @@ export class ListManagerService<Item extends ICollectionData> {
     private pageNumber = 1;
 
     public collection: Item[] = [];
+
+    public subscriptions = new Subscription();
+
+    constructor(private filterService: FilterService)
+    {
+        
+    }
+
+    init()
+    {
+        this.filterService.init();
+        this.subscriptions.add(
+            this.filterService.filters$.subscribe(filters => {
+                this.currentFilters = filters;
+                this.updateItems();
+            })
+        );
+    }
+
+    destroy()
+    {
+        this.subscriptions.unsubscribe();
+    }
     setCollection(collection: Item[]) {
         this.collection = collection;
         this.updateItems()
@@ -45,6 +67,15 @@ export class ListManagerService<Item extends ICollectionData> {
             order
         };
         this.updateItems();
+    }
+
+
+    
+    /**
+     * binding filters from store
+     */
+    public setFilters(){
+        this.filterService.getFilters();
     }
 
     addFilter(property: string, value: any, operator: FilterOperatorEnum, valueGetter?: () => any): number {
@@ -86,6 +117,8 @@ export class ListManagerService<Item extends ICollectionData> {
         this.updateItems();
     }
 
+   
+
     private updateItems() {
         let collection = this.collection.slice();
         // apply filter
@@ -122,7 +155,7 @@ export class ListManagerService<Item extends ICollectionData> {
         }
         collection = collection.slice(this.partialParam.from, this.partialParam.to);
         console.log('list manager update', this.currentSorts, this.collection, collection)
-        this.items$.next(collection)
+        this.items$.next(collection);
     }
 
     private applyFilters(item: ICollectionData): boolean {

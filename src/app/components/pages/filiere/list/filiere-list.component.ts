@@ -4,6 +4,7 @@ import { IFiliere } from 'src/app/models/linked-data-models';
 import { SortEnum } from 'src/app/models/sort/sort.model';
 import { FiliereCollectionService } from 'src/app/services/collection-item/filiere/filiere-collection.service';
 import { EventService } from 'src/app/services/event/event.service';
+import { FilterService } from 'src/app/services/filter/filter.service';
 import { ListManagerService } from 'src/app/services/list-manager/list-manager.service';
 import { PageItemList } from '../../pages-list';
 
@@ -13,7 +14,7 @@ import { PageItemList } from '../../pages-list';
     selector: 'app-filiere-list',
     templateUrl: './filiere-list.component.html',
     styleUrls: ['./filiere-list.component.scss'],
-    providers: [ListManagerService]
+    providers: [ListManagerService,FilterService]
 })
 export class FiliereListComponent extends PageItemList<IFiliere> implements OnInit {
     showScrollTopBtn = true;

@@ -1,4 +1,7 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { ICollectionFilter } from 'src/app/models/filters/filter-model';
+import { FilterStoreService } from 'src/app/services/data-store/filter-store/filter-store.service';
 
 
 @Component({
@@ -13,14 +16,11 @@ export class FiltresComponent implements OnInit, OnDestroy {
         name: string,
         value: Filter
     }>();*/
-    @Input() filters: any[] = [];
-    @Output() onfilterChange = new EventEmitter<{
-        name: string,
-        value: any
-    }>();
-    constructor() { }
+    public filters$:BehaviorSubject<ICollectionFilter[]>
+    constructor(private filterStore:FilterStoreService) { }
 
     ngOnInit() {
+       this.filters$ = this.filterStore.currentFilter$
 
     }
 
@@ -29,11 +29,6 @@ export class FiltresComponent implements OnInit, OnDestroy {
 
     }
 
-    filterChange(name: string, filter: any) {
-        this.onfilterChange.emit({
-            name,
-            value: filter
-        });
-    }
+   
 
 }

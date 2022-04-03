@@ -6,61 +6,84 @@ import { ICollectionFilter } from 'src/app/models/filters/filter-model';
   providedIn: 'root',
 })
 export class FilterStoreService {
-  collectionFilters$ = new BehaviorSubject<Map<string, ICollectionFilter[]>>(
-    new Map()
-  );
+  collectionFilters$ = new BehaviorSubject<
+    Map<number, BehaviorSubject<ICollectionFilter[]>>
+  >(new Map());
+
+  /**
+   * only for filters page
+   */
   currentFilter$: BehaviorSubject<ICollectionFilter[]> = new BehaviorSubject(
     []
   );
-  private currentFilterId: string;
+  private currentFilterId: number;
+  private lastIndex = 0;
 
-    
-    
+  createStoreFilter() {
+    const index = this.lastIndex;
+    this.addCollectionFilter(index, []);
+    this.lastIndex++;
+    return index;
+  }
+
   /**
-   * @param  {string} id
+   * @param  {number} id
    */
-  setCurrentFilter(id: string) {
-    if (this.collectionFilters$.getValue().has(id)) {
-      this.currentFilterId = id;
+  getCurrentFilter(id: number): BehaviorSubject<ICollectionFilter[]> {
+    const map = this.collectionFilters$.getValue();
+      if (map.has(id)) {
+          this.updateCurrentFilter(id);
+      return map.get(id);
     }
   }
+
   /**
-   * @param  {string} id
+   * @param  {number} id
+   */
+  private updateCurrentFilter(id: number) {
+    if (this.collectionFilters$.getValue().has(id)) {
+      this.currentFilterId = id;
+      this.currentFilter$.next(
+        this.collectionFilters$.getValue().get(this.currentFilterId).getValue()
+      );
+    }
+  }
+
+  /**
+   * @param  {number} id
    * @param  {ICollectionFilter[]} filters
    */
-  addCollectionFilter(id: string, filters: ICollectionFilter[]) {
+  addCollectionFilter(id: number, filters: ICollectionFilter[]) {
     const map = this.collectionFilters$.getValue();
     if (!map.has(id)) {
-      map.set(id, filters);
+      map.set(id, new BehaviorSubject(filters));
     }
     this.collectionFilters$.next(map);
   }
+
   /**
-   * @param  {string} id
+   * @param  {number} id
    */
-  removeCollectionFilter(id: string) {
+  removeCollectionFilter(id: number) {
     const map = this.collectionFilters$.getValue();
     if (map.has(id)) {
+      const subject = map.get(id);
+      subject.complete();
+      subject.unsubscribe();
       map.delete(id);
     }
     this.collectionFilters$.next(map);
   }
+
   /**
-   * @param  {string} id
+   * @param  {number} id
    * @param  {ICollectionFilter[]} filters
    */
-  updateCollectionFilter(id: string, filters: ICollectionFilter[]) {
+  updateCollectionFilter(id: number, filters: ICollectionFilter[]) {
     const map = this.collectionFilters$.getValue();
     if (map.has(id)) {
-      map.set(id, filters);
+      const subject = map.get(id);
+      subject.next(filters);
     }
-    this.collectionFilters$.next(map);
-  }
-  /**
-   */
-  private updateFilter() {
-    this.currentFilter$.next(
-      this.collectionFilters$.getValue().get(this.currentFilterId)
-    );
   }
 }

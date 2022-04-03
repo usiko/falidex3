@@ -1,6 +1,7 @@
 <ion-app>
-    <ion-split-pane contentId="main-content">
-        <ion-menu side="start" menuId="navigation" contentId="main-content" type="overlay">
+
+    <ion-menu (ionDidClose)='menuClose()' side="start" menuId="navigation" contentId="main-content" type="overlay">
+        <ng-container *ngIf="!menuFilters">
             <ion-header>
                 <ion-toolbar>
                     <ion-item lines="none">
@@ -18,9 +19,8 @@
             <ion-content>
                 <app-navigation [pages]="appPages"></app-navigation>
             </ion-content>
-        </ion-menu>
-        <ion-router-outlet id="main-content"></ion-router-outlet>
-        <ion-menu *ngIf="menuFilters" side="end" menuId="filters">
+        </ng-container>
+        <ng-container *ngIf="menuFilters">
             <ion-header>
                 <ion-toolbar color="secondary">
                     <ion-title>Filtres</ion-title>
@@ -29,6 +29,11 @@
             <ion-content>
                 <app-filtres></app-filtres>
             </ion-content>
-        </ion-menu>
-    </ion-split-pane>
+        </ng-container>
+
+    </ion-menu>
+
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+
+
 </ion-app>

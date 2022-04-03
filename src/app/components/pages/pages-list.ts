@@ -76,8 +76,8 @@ export class PageItemList<Item extends ICollectionData> {
 
     // protected filterDebouncer: Subject<any> = new Subject();
 
-    protected pageSubscribers = new Subscription();
-    protected subscribers = new Subscription();
+    //protected pageSubscribers = new Subscription();
+    //protected subscribers = new Subscription();
 
     /**
      * show a scrolltop bouton
@@ -111,7 +111,7 @@ export class PageItemList<Item extends ICollectionData> {
      * init the the component
      */
     init() {
-        this.initService();
+        this.listManagerService.init();
         this.initEmptyList();
         this.collection$ = this.collectionService.collection$;
         this.collection$.subscribe(collection => {
@@ -147,42 +147,29 @@ export class PageItemList<Item extends ICollectionData> {
      * event of back into this view
      */
     ionViewDidEnter() {
-        this.pageSubscribers = new Subscription();
+        //this.pageSubscribers = new Subscription();
         /*this.filterSubscription.add(this.events.getObs('filtersChange').subscribe((data: { name: FilterName, value: any }) => {
             if (this.listData) {
                 this.filterChange(data.name, data.value);
             }
         }));*/
-        this.initFilter();
+        this.listManagerService.setFilters();
     }
 
     /**
      * event of leaving view
      */
     ionViewWillLeave() {
-        this.events.publish('filtersMenu', false);
-        this.filterSubscription.unsubscribe();
-        if (this.pageSubscribers) {
+        
+        
+        /*if (this.pageSubscribers) {
             this.pageSubscribers.unsubscribe();
-        }
+        }*/
 
 
     }
 
-    initFilter() {
-        //const filters = this.collectionService.getFilters();
-        //this.collectionService.resetPage();
-        /* this.pageNumber = 1;
-         if (this.pageSize) {
-             this.updatePartial();
-         }
-         this.events.publish('filtersMenu', true);
-         // this.events.publish('setFilters', filters);
-         this.events.publish('resetFilters');*/
 
-
-
-    }
 
     /**
      * searching in list
@@ -284,7 +271,8 @@ export class PageItemList<Item extends ICollectionData> {
      * destroying view
      */
     onDestroy() {
-        this.subscribers.unsubscribe();
+        this.listManagerService.destroy();
+        //this.subscribers.unsubscribe();
     }
 
     /**
@@ -307,10 +295,7 @@ export class PageItemList<Item extends ICollectionData> {
         this.listManagerService.setPageNumber(this.pageNumber);
     }
 
-    initService() {
-        /*this.collectionService.initData();
-        this.collectionService.resetFilter();*/
-    }
+
 
     /**
      * setting a sorting of list
