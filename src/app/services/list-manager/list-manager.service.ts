@@ -78,7 +78,7 @@ export class ListManagerService<Item extends ICollectionData> {
         this.filterService.getFilters();
     }
 
-    addFilter(property: string, value: any, operator: FilterOperatorEnum, valueGetter?: () => any): number {
+    addFilter(property: string, value: any, operator: FilterOperatorEnum, propertyGetter?: () => any): number {
         const index = this.currentFilters.push({
             property,
             value,
@@ -88,13 +88,13 @@ export class ListManagerService<Item extends ICollectionData> {
         return index - 1;
 
     }
-    updateFilter(index: number, property: string, value: any, operator: FilterOperatorEnum, valueGetter?: () => any) {
+    updateFilter(index: number, property: string, value: any, operator: FilterOperatorEnum, propertyGetter?: () => any) {
         const filter = this.currentFilters[index];
         if (filter) {
             filter.property = property;
             filter.value = value;
             filter.operator = operator;
-            filter.valueGetter = valueGetter;
+            filter.valueGetter = propertyGetter;
             this.updateItems();
         }
 
