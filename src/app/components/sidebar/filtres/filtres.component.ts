@@ -23,7 +23,7 @@ export class FiltresComponent implements OnInit, OnDestroy {
     }
 
     filterChange() {
-        this.filtersList$.next(this.filtersList$.getValue())
+        this.filterStore.updateCurrentDataFilter(this.filtersList$.getValue())
     }
 
     ngOnDestroy() {}

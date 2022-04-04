@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
-import { IDisplayFilters, DisplayFilters } from 'src/app/models/filters/filter-model'
+import { IDisplayFilters, DisplayFilters, ICollectionFilter } from 'src/app/models/filters/filter-model'
 import { ICollectionData } from 'src/app/models/linked-data-models'
 
 @Injectable({
@@ -31,6 +31,11 @@ export class FilterStoreService {
         if (map.has(id)) {
             this.updateCurrentFilter(id)
             return map.get(id)
+        }
+    }
+    public updateCurrentDataFilter(filters: IDisplayFilters<ICollectionData>[]) {
+        if (this.collectionDisplayFilters$.getValue().has(this.currentFilterId)) {
+            this.collectionDisplayFilters$.getValue().get(this.currentFilterId).next(filters)
         }
     }
 
