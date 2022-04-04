@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 export class FilterService implements OnDestroy {
 	public filters$ = new BehaviorSubject<ICollectionFilter[]>([]);
 	public displayFilters$ = new BehaviorSubject<IDisplayFilters[]>([]);
+	private currentBindDisplayFilters$: BehaviorSubject<IDisplayFilters[]>;
 	private storeIndex: number;
 
 	/**
@@ -28,6 +29,7 @@ export class FilterService implements OnDestroy {
 		this.filterSubscription.unsubscribe();
 		const subject = this.store.getCurrentFilter(this.storeIndex);
 		if (subject) {
+			this.currentBindDisplayFilters$ = subject;
 			this.filterSubscription.add(
 				subject.pipe(
 					map((filters: IDisplayFilters[]) => {
@@ -44,9 +46,11 @@ export class FilterService implements OnDestroy {
 		}
 	}
 
-    setDisplayFilters(filters: IDisplayFilters[]) {
-        
-    }
+	setDisplayFilters(filters: IDisplayFilters[]) {
+		if (this.currentBindDisplayFilters$) {
+			this.currentBindDisplayFilters$.next(filters);
+		}
+	}
 	ngOnDestroy(): void {
 		this.filterSubscription.unsubscribe();
 		this.store.removeCollectionFilter(this.storeIndex);
