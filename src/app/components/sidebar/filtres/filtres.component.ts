@@ -1,25 +1,30 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { ICollectionFilter, IDisplayFilters } from 'src/app/models/filters/filter-model';
-import { FilterStoreService } from 'src/app/services/data-store/filter-store/filter-store.service';
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { BehaviorSubject } from 'rxjs'
+import { ICollectionFilter, IDisplayFilters } from 'src/app/models/filters/filter-model'
+import { ICollectionData } from 'src/app/models/linked-data-models'
+import { FilterStoreService } from 'src/app/services/data-store/filter-store/filter-store.service'
 
 @Component({
-	selector: 'app-filtres',
-	templateUrl: './filtres.component.html',
-	styleUrls: ['./filtres.component.scss'],
+    selector: 'app-filtres',
+    templateUrl: './filtres.component.html',
+    styleUrls: ['./filtres.component.scss'],
 })
 export class FiltresComponent implements OnInit, OnDestroy {
-	/*@Input() filters: Filter[] = [];
+    /*@Input() filters: Filter[] = [];
     @Output() onfilterChange = new EventEmitter<{
         name: string,
         value: Filter
     }>();*/
-	public filters$: BehaviorSubject<IDisplayFilters[]>;
-	constructor(private filterStore: FilterStoreService) {}
+    public filtersList$: BehaviorSubject<IDisplayFilters<ICollectionData>[]>
+    constructor(private filterStore: FilterStoreService) {}
 
-	ngOnInit() {
-		this.filters$ = this.filterStore.currentDisplayFilter$;
-	}
+    ngOnInit() {
+        this.filtersList$ = this.filterStore.currentDisplayFilter$
+    }
 
-	ngOnDestroy() {}
+    filterChange() {
+        this.filtersList$.next(this.filtersList$.getValue())
+    }
+
+    ngOnDestroy() {}
 }

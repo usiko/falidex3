@@ -16,7 +16,7 @@ export class ListManagerService<Item extends ICollectionData> {
     public items$ = new BehaviorSubject<Item[]>([])
 
     public currentSorts: Sort
-    public currentFilters: ICollectionFilter[] = []
+    public currentFilters: ICollectionFilter<Item>[] = []
 
     protected pageSize = 20
 
@@ -71,22 +71,22 @@ export class ListManagerService<Item extends ICollectionData> {
         this.filterService.getFilters()
     }
 
-    addFilter(property: string, value: any, operator: FilterOperatorEnum, propertyGetter?: () => any): number {
+    addFilter(propertyToFilter: string, value: any, operator: FilterOperatorEnum, linkToFilter?: () => any): number {
         const index = this.currentFilters.push({
-            property,
+            propertyToFilter,
             value,
             operator,
         })
         this.updateItems()
         return index - 1
     }
-    updateFilter(index: number, property: string, value: any, operator: FilterOperatorEnum, propertyGetter?: () => any) {
+    updateFilter(index: number, property: string, value: any, operator: FilterOperatorEnum, linkToFilter?: () => any) {
         const filter = this.currentFilters[index]
         if (filter) {
-            filter.property = property
+            filter.propertyToFilter = property
             filter.value = value
             filter.operator = operator
-            filter.propertyGetter = propertyGetter
+            filter.linkToFilter = linkToFilter
             this.updateItems()
         }
     }
@@ -97,7 +97,7 @@ export class ListManagerService<Item extends ICollectionData> {
         }
     }
 
-    setDisplayFilters(displayFilters: IDisplayFilters[]) {
+    setDisplayFilters(displayFilters: IDisplayFilters<Item>[]) {
         this.filterService.setDisplayFilters(displayFilters)
     }
     private updatePartial() {
@@ -146,19 +146,25 @@ export class ListManagerService<Item extends ICollectionData> {
         this.items$.next(collection)
     }
 
-    private applyFilters(item: ICollectionData): boolean {
+    private applyFilters(item: Item): boolean {
         for (const filter of this.currentFilters) {
             const value = filter.value
-            if (item[filter.property] && value) {
+            let compared
+            if (filter.propertyGetter) {
+                compared = filter.propertyGetter(item)
+            } else {
+                compared = item[filter.propertyToFilter]
+            }
+            if (compared && value) {
                 switch (filter.operator) {
                     case FilterOperatorEnum.contain:
-                        return item[filter.property].includes(value)
+                        return compared.includes(value)
                     case FilterOperatorEnum.different:
-                        return item[filter.property] !== value
+                        return compared !== value
                     case FilterOperatorEnum.equal:
-                        return item[filter.property] === value
+                        return compared === value
                     case FilterOperatorEnum.exclude:
-                        return !item[filter.property].includes(value)
+                        return !compared.includes(value)
                 }
             }
         }
