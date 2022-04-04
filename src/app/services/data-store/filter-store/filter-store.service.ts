@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ICollectionFilter } from 'src/app/models/filters/filter-model';
+import { IDisplayFilterModel, } from 'src/app/models/filters/filter-model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilterStoreService {
   collectionFilters$ = new BehaviorSubject<
-    Map<number, BehaviorSubject<ICollectionFilter[]>>
+    Map<number, BehaviorSubject<IDisplayFilterModel[]>>
   >(new Map());
 
   /**
    * only for filters page
    */
-  currentFilter$: BehaviorSubject<ICollectionFilter[]> = new BehaviorSubject(
+  currentFilter$: BehaviorSubject<IDisplayFilterModel[]> = new BehaviorSubject(
     []
   );
   private currentFilterId: number;
@@ -29,7 +29,7 @@ export class FilterStoreService {
   /**
    * @param  {number} id
    */
-  getCurrentFilter(id: number): BehaviorSubject<ICollectionFilter[]> {
+  getCurrentFilter(id: number): BehaviorSubject<IDisplayFilterModel[]> {
     const map = this.collectionFilters$.getValue();
       if (map.has(id)) {
           this.updateCurrentFilter(id);
@@ -51,9 +51,9 @@ export class FilterStoreService {
 
   /**
    * @param  {number} id
-   * @param  {ICollectionFilter[]} filters
+   * @param  {IDisplayFilterModel[]} filters
    */
-  addCollectionFilter(id: number, filters: ICollectionFilter[]) {
+  addCollectionFilter(id: number, filters: IDisplayFilterModel[]) {
     const map = this.collectionFilters$.getValue();
     if (!map.has(id)) {
       map.set(id, new BehaviorSubject(filters));
@@ -77,9 +77,9 @@ export class FilterStoreService {
 
   /**
    * @param  {number} id
-   * @param  {ICollectionFilter[]} filters
+   * @param  {IDisplayFilterModel[]} filters
    */
-  updateCollectionFilter(id: number, filters: ICollectionFilter[]) {
+  updateCollectionFilter(id: number, filters: IDisplayFilterModel[]) {
     const map = this.collectionFilters$.getValue();
     if (map.has(id)) {
       const subject = map.get(id);

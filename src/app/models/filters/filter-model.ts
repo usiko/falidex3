@@ -12,3 +12,20 @@ export enum FilterOperatorEnum {
     exclude = 'exclude'
 
 }
+
+export interface IDisplayFilterModel{
+    label: string, 
+    filters: {
+        label: string,
+        filter:ICollectionFilter
+    }
+    
+}
+
+export interface IDisplayToggleFilter
+{
+    valuestomatch: any;
+    }
+
+
+

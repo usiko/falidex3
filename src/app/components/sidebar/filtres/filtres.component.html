@@ -1,7 +1,7 @@
 <ion-list color="light">
     {{filters$|async|json}}
-    <!--<ng-container *ngFor="let filter of filters">
-        <ion-list-header *ngIf="filter.label" color="dark">
+    <ng-container *ngFor="let filter of (filters$|async)">
+        <!--<ion-list-header *ngIf="filter.label" color="dark">
             {{filter.label}}
         </ion-list-header>
         <ng-container *ngIf="filter.multipleChoices">
@@ -9,8 +9,8 @@
         </ng-container>
         <ng-container *ngIf="filter.filterBooleans">
             <app-filter-multiple-boolean [value]="filter.value" [filters]="filter.filterBooleans" (onchange)="filterChange(filter.name, $event)"></app-filter-multiple-boolean>
-        </ng-container>
+        </ng-container>-->
 
-    </ng-container>-->
+    </ng-container>
 
 </ion-list>

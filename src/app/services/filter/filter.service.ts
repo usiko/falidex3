@@ -1,10 +1,11 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { IDisplayFilterModel } from 'src/app/models/filters/filter-model';
 import { FilterStoreService } from '../data-store/filter-store/filter-store.service';
 
 @Injectable()
 export class FilterService implements OnDestroy {
-  public filters$ = new BehaviorSubject<any[]>([]);
+  public filters$ = new BehaviorSubject<IDisplayFilterModel[]>([]);
   private storeIndex: number;
 
   /**

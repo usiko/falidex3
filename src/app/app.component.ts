@@ -41,33 +41,13 @@ export class AppComponent implements OnInit {
     private symbolService: SymbolCollectionService,
     private subStore: SubStoreService,
     private relationService: DataRelationsService,
-      private eventService: EventService,
-    private menu:MenuController
-
+    private eventService: EventService,
+    private menu: MenuController
   ) {}
 
   ngOnInit() {
-    this.filieresService.collection$.subscribe((items) => {
-      this.setMenu();
-    });
-    this.symbolService.collection$.subscribe((items) => {
-      this.setMenu();
-    });
+    this.initListeners();
     this.initData();
-
-    this.relationService.getRelationList().subscribe((items) => {
-      this.relationsData$.next(items);
-    });
-    this.relationService.getCurrentRelation().subscribe((item) => {
-      this.currentRelationsData$.next(item);
-    });
-      this.eventService.getObs('filtersMenu').subscribe((state:boolean) => {
-          this.menuFilters = state;
-          if (this.menuFilters)
-          {
-            this.menu.open('navigation')
-        }
-    });
   }
 
   setMenu() {
@@ -79,7 +59,7 @@ export class AppComponent implements OnInit {
       disabled?: boolean;
     }[] = [
       {
-        title: 'Acceuil',
+        title: 'Accueil',
         url: '/',
         icon: 'home',
       },
@@ -125,6 +105,18 @@ export class AppComponent implements OnInit {
         }*/
     this.appPages = appPages;
   }
+
+  public setCurrentRelation(event) {
+    this.relationService.setCurrentRelation(event.detail.value);
+  }
+
+  public menuClose() {
+    if (this.menuFilters) {
+      this.menuFilters = false;
+    }
+    console.log('close menu');
+  }
+
   private initData() {
     this.circulaireService.init();
     this.significationsService.init();
@@ -135,15 +127,27 @@ export class AppComponent implements OnInit {
     this.loaderStoreService.loadRelations();
   }
 
-  public setCurrentRelation(event) {
-    this.relationService.setCurrentRelation(event.detail.value);
-  }
+    private initListeners() {
+      // updating menu from data
+    this.filieresService.collection$.subscribe((items) => {
+      this.setMenu();
+    });
+    this.symbolService.collection$.subscribe((items) => {
+      this.setMenu();
+    });
+        
     
-    public menuClose(){
-        if (this.menuFilters)
-        {
-            this.menuFilters = false;
-            }
-        console.log('close menu');
-    }
+    this.relationService.getRelationList().subscribe((items) => {
+      this.relationsData$.next(items);
+    });
+    this.relationService.getCurrentRelation().subscribe((item) => {
+      this.currentRelationsData$.next(item);
+    });
+    this.eventService.getObs('filtersMenu').subscribe((state: boolean) => {
+      this.menuFilters = state;
+      if (this.menuFilters) {
+        this.menu.open('navigation');
+      }
+    });
+  }
 }

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ICollectionFilter } from 'src/app/models/filters/filter-model';
+import { ICollectionFilter, IDisplayFilterModel } from 'src/app/models/filters/filter-model';
 import { FilterStoreService } from 'src/app/services/data-store/filter-store/filter-store.service';
 
 
@@ -16,7 +16,7 @@ export class FiltresComponent implements OnInit, OnDestroy {
         name: string,
         value: Filter
     }>();*/
-    public filters$:BehaviorSubject<ICollectionFilter[]>
+    public filters$:BehaviorSubject<IDisplayFilterModel[]>
     constructor(private filterStore:FilterStoreService) { }
 
     ngOnInit() {
