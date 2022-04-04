@@ -78,6 +78,11 @@ export class ListManagerService<Item extends ICollectionData> {
         this.filterService.getFilters();
     }
 
+    public setDisplayFilters()
+    {
+        
+    }
+
     addFilter(property: string, value: any, operator: FilterOperatorEnum, propertyGetter?: () => any): number {
         const index = this.currentFilters.push({
             property,
