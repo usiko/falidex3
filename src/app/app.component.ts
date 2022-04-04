@@ -11,73 +11,68 @@ import { EventService } from './services/event/event.service';
 import { DataRelationsService } from './services/relations/data-relations.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
+	selector: 'app-root',
+	templateUrl: 'app.component.html',
+	styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  public appPages: {
-    title: string;
-    url: string;
-    icon?: string;
-    src?: string;
-    disabled?: boolean;
-  }[];
+	public appPages: {
+		title: string;
+		url: string;
+		icon?: string;
+		src?: string;
+		disabled?: boolean;
+	}[];
 
-  public relationsData$ = new BehaviorSubject<{ name: string; id: string }[]>(
-    []
-  );
-  public currentRelationsData$ = new BehaviorSubject<{
-    name: string;
-    id: string;
-  }>(null);
-  public menuFilters = false;
+	public relationsData$ = new BehaviorSubject<{ name: string; id: string }[]>([]);
+	public currentRelationsData$ = new BehaviorSubject<{
+		name: string;
+		id: string;
+	}>(null);
 
-  constructor(
-    private loaderStoreService: DataLoaderStoreService,
-    private circulaireService: CirculaireCollectionService,
-    private significationsService: SignificationCollectionService,
-    private filieresService: FiliereCollectionService,
-    private symbolService: SymbolCollectionService,
-    private subStore: SubStoreService,
-    private relationService: DataRelationsService,
-    private eventService: EventService,
-    private menu: MenuController
-  ) {}
+	constructor(
+		private loaderStoreService: DataLoaderStoreService,
+		private circulaireService: CirculaireCollectionService,
+		private significationsService: SignificationCollectionService,
+		private filieresService: FiliereCollectionService,
+		private symbolService: SymbolCollectionService,
+		private subStore: SubStoreService,
+		private relationService: DataRelationsService
+	) {}
 
-  ngOnInit() {
-    this.initListeners();
-    this.initData();
-  }
+	ngOnInit() {
+		this.initListeners();
+		this.initData();
+	}
 
-  setMenu() {
-    const appPages: {
-      title: string;
-      url: string;
-      icon?: string;
-      src?: string;
-      disabled?: boolean;
-    }[] = [
-      {
-        title: 'Accueil',
-        url: '/',
-        icon: 'home',
-      },
-      {
-        title: 'Insignes/emblemes',
-        url: '/symbols',
-        icon: 'medal',
-        disabled: this.symbolService.collection$.getValue().length == 0,
-      },
-      {
-        title: 'Filières',
-        url: '/filieres',
-        icon: 'school',
-        disabled: this.filieresService.collection$.getValue().length == 0,
-      },
-    ];
+	setMenu() {
+		const appPages: {
+			title: string;
+			url: string;
+			icon?: string;
+			src?: string;
+			disabled?: boolean;
+		}[] = [
+			{
+				title: 'Accueil',
+				url: '/',
+				icon: 'home',
+			},
+			{
+				title: 'Insignes/emblemes',
+				url: '/symbols',
+				icon: 'medal',
+				disabled: this.symbolService.collection$.getValue().length == 0,
+			},
+			{
+				title: 'Filières',
+				url: '/filieres',
+				icon: 'school',
+				disabled: this.filieresService.collection$.getValue().length == 0,
+			},
+		];
 
-    /*if (this.databuilder.getSpes().length !== 0) {
+		/*if (this.databuilder.getSpes().length !== 0) {
             appPages.push(
                 {
                     title: 'Toutes les spés',
@@ -103,51 +98,37 @@ export class AppComponent implements OnInit {
                     disabled: false
                 });
         }*/
-    this.appPages = appPages;
-  }
+		this.appPages = appPages;
+	}
 
-  public setCurrentRelation(event) {
-    this.relationService.setCurrentRelation(event.detail.value);
-  }
+	public setCurrentRelation(event) {
+		this.relationService.setCurrentRelation(event.detail.value);
+	}
 
-  public menuClose() {
-    if (this.menuFilters) {
-      this.menuFilters = false;
-    }
-    console.log('close menu');
-  }
+	private initData() {
+		this.circulaireService.init();
+		this.significationsService.init();
+		this.filieresService.init();
+		this.symbolService.init();
+		this.subStore.init();
+		this.loaderStoreService.loadCollection();
+		this.loaderStoreService.loadRelations();
+	}
 
-  private initData() {
-    this.circulaireService.init();
-    this.significationsService.init();
-    this.filieresService.init();
-    this.symbolService.init();
-    this.subStore.init();
-    this.loaderStoreService.loadCollection();
-    this.loaderStoreService.loadRelations();
-  }
+	private initListeners() {
+		// updating menu from data
+		this.filieresService.collection$.subscribe((items) => {
+			this.setMenu();
+		});
+		this.symbolService.collection$.subscribe((items) => {
+			this.setMenu();
+		});
 
-    private initListeners() {
-      // updating menu from data
-    this.filieresService.collection$.subscribe((items) => {
-      this.setMenu();
-    });
-    this.symbolService.collection$.subscribe((items) => {
-      this.setMenu();
-    });
-        
-    
-    this.relationService.getRelationList().subscribe((items) => {
-      this.relationsData$.next(items);
-    });
-    this.relationService.getCurrentRelation().subscribe((item) => {
-      this.currentRelationsData$.next(item);
-    });
-    this.eventService.getObs('filtersMenu').subscribe((state: boolean) => {
-      this.menuFilters = state;
-      if (this.menuFilters) {
-        this.menu.open('navigation');
-      }
-    });
-  }
+		this.relationService.getRelationList().subscribe((items) => {
+			this.relationsData$.next(items);
+		});
+		this.relationService.getCurrentRelation().subscribe((item) => {
+			this.currentRelationsData$.next(item);
+		});
+	}
 }
