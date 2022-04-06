@@ -1,14 +1,16 @@
 <ion-list color="light">
-    <ng-container *ngFor="let filter of filters">
-        <ion-list-header *ngIf="filter.label" color="dark">
-            {{filter.label}}
+    <ng-container *ngFor="let filters of (filtersList$|async)">
+        <ion-list-header *ngIf="filters.label && filters.filters.length>0" color="dark">
+            {{filters.label}}
         </ion-list-header>
-        <ng-container *ngIf="filter.multipleChoices">
-            <app-filter-multiple-choice [value]="filter.value" [choices]="filter.multipleChoices" (onchange)="filterChange(filter.name, $event)"></app-filter-multiple-choice>
+        <ng-container>
+            <ion-item *ngFor="let filter of filters.filters">
+                <ion-label>{{filter.label}}</ion-label>
+                <ion-toggle (ionChange)="filterChange()" slot="start" color="secondary" [(ngModel)]="filter.enabled"></ion-toggle>
+                <!--<ion-checkbox slot="start" color="secondary" [value]="filter.value"></ion-checkbox>-->
+            </ion-item>
         </ng-container>
-        <ng-container *ngIf="filter.filterBooleans">
-            <app-filter-multiple-boolean [value]="filter.value" [filters]="filter.filterBooleans" (onchange)="filterChange(filter.name, $event)"></app-filter-multiple-boolean>
-        </ng-container>
+
 
     </ng-container>
 

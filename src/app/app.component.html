@@ -1,34 +1,35 @@
 <ion-app>
-    <ion-split-pane contentId="main-content">
-        <ion-menu side="start" menuId="navigation" contentId="main-content" type="overlay">
-            <ion-header>
-                <ion-toolbar>
-                    <ion-item lines="none">
-                        <ion-icon slot="start" name='book'></ion-icon>
-                        <ng-container *ngIf="(relationsData$|async) as relations">
-                            <ion-select placeholder="changer" (ionChange)="setCurrentRelation($event)" [value]="(currentRelationsData$|async).id" *ngIf="relations && relations.length>1">
-                                <ion-select-option *ngFor="let relation of (relationsData$|async)" [value]="relation.id"> Code {{relation.name}}</ion-select-option>
-                            </ion-select>
 
-                        </ng-container>
+    <ion-menu side="start" menuId="navigation" contentId="main-content" type="overlay">
+        <ion-header>
+            <ion-toolbar>
+                <ion-item lines="none">
+                    <ion-icon slot="start" name='book'></ion-icon>
+                    <ng-container *ngIf="(relationsData$|async) as relations">
+                        <ion-select placeholder="changer" (ionChange)="setCurrentRelation($event)" [value]="(currentRelationsData$|async).id" *ngIf="relations && relations.length>1 && (currentRelationsData$|async)">
+                            <ion-select-option *ngFor="let relation of (relationsData$|async)" [value]="relation.id"> Code {{relation.name}}</ion-select-option>
+                        </ion-select>
 
-                    </ion-item>
-                </ion-toolbar>
-            </ion-header>
-            <ion-content>
-                <app-navigation [pages]="appPages"></app-navigation>
-            </ion-content>
+                    </ng-container>
+
+                </ion-item>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content>
+            <app-navigation [pages]="appPages"></app-navigation>
+        </ion-content>
+    </ion-menu>
+    <ion-menu  side="end" menuId="filters" contentId="main-content" type="overlay">
+        <ion-header>
+            <ion-toolbar color="secondary">
+                <ion-title>Filtres</ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content>
+            <app-filtres></app-filtres>
+        </ion-content>
         </ion-menu>
-        <ion-router-outlet id="main-content"></ion-router-outlet>
-        <ion-menu *ngIf="menuFilters" side="end" menuId="filters">
-            <ion-header>
-                <ion-toolbar color="secondary">
-                    <ion-title>Filtres</ion-title>
-                </ion-toolbar>
-            </ion-header>
-            <ion-content>
-                <app-filtres></app-filtres>
-            </ion-content>
-        </ion-menu>
-    </ion-split-pane>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+
+
 </ion-app>

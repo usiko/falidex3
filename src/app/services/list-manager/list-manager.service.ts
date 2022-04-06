@@ -1,32 +1,68 @@
 import { Injectable } from '@angular/core';
-import { ValueAccessor } from '@ionic/angular/directives/control-value-accessors/value-accessor';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { FilterOperatorEnum, ICollectionFilter } from 'src/app/models/filters/filter-model';
-import { ICollectionData } from 'src/app/models/linked-data-models';
+import { FilterOperatorEnum, ICollectionFilter, IDataFilter, ILinkFilters, LinkFilters } from 'src/app/models/filters/filter-model';
+import { ICollectionData, ICollectionLink } from 'src/app/models/linked-data-models';
 import { Sort, SortEnum } from 'src/app/models/sort/sort.model';
-import { ICollectionItem } from '../collection-item/collection.service';
-
+import { IDisplayFilters } from '../../models/filters/filter-model';
+import { FilterService } from '../filter/filter.service';
 
 @Injectable()
 export class ListManagerService<Item extends ICollectionData> {
     private partialParam = {
         from: 0,
-        to: 0
-    }
+        to: 0,
+    };
 
     public items$ = new BehaviorSubject<Item[]>([]);
 
     public currentSorts: Sort;
-    public currentFilters: ICollectionFilter[] = [];
+    public currentCollectionFilters: ICollectionFilter<Item>[] = [];
+    public currentLinkFilters: ILinkFilters[] = [];
 
     protected pageSize = 20;
 
     private pageNumber = 1;
 
     public collection: Item[] = [];
+
+    public subscriptions = new Subscription();
+
+    private dataSize = 0;
+
+    constructor(private filterService: FilterService) {}
+
+    init() {
+        this.filterService.init();
+        this.subscriptions.add(
+            this.filterService.collectionfilters$.subscribe((filters) => {
+                console.log('update collection');
+                for (const filter of filters) {
+                    const index = this.currentCollectionFilters.findIndex((item) => item.idFilter == filter.idFilter);
+                    if (index > -1) {
+                        this.currentCollectionFilters[index] = filter;
+                    }
+                }
+                this.updateItems();
+            })
+        );
+        this.subscriptions.add(
+            this.filterService.linksfilters$.subscribe((filters) => {
+                this.currentLinkFilters = filters;
+                this.updateItems();
+            })
+        );
+    }
+
+    destroy() {
+        this.subscriptions.unsubscribe();
+    }
+
+    getDataSize(): number {
+        return this.dataSize;
+    }
     setCollection(collection: Item[]) {
         this.collection = collection;
-        this.updateItems()
+        this.updateItems();
     }
 
     setPageSize(pageSize: number) {
@@ -42,42 +78,51 @@ export class ListManagerService<Item extends ICollectionData> {
     setSort(property: string, order: SortEnum) {
         this.currentSorts = {
             property,
-            order
+            order,
         };
         this.updateItems();
     }
 
-    addFilter(property: string, value: any, operator: FilterOperatorEnum, valueGetter?: () => any): number {
-        const index = this.currentFilters.push({
-            property,
-            value,
-            operator
+    /**
+     * binding filters from store
+     */
+    public setFilters() {
+        this.filterService.getFilters();
+    }
+
+    addFilter(propertyToFilter: string, values: any[], operator: FilterOperatorEnum, linkToFilter?: () => any): number {
+        const index = this.currentCollectionFilters.push({
+            propertyToFilter,
+            values,
+            operator,
         });
         this.updateItems();
         return index - 1;
-
     }
-    updateFilter(index: number, property: string, value: any, operator: FilterOperatorEnum, valueGetter?: () => any) {
-        const filter = this.currentFilters[index];
+    updateFilter(index: number, property: string, values: any[], operator: FilterOperatorEnum, linkToFilter?: () => any) {
+        console.log('update filter', index, property);
+        const filter = this.currentCollectionFilters[index];
         if (filter) {
-            filter.property = property;
-            filter.value = value;
+            filter.propertyToFilter = property;
+            filter.values = values;
             filter.operator = operator;
-            filter.valueGetter = valueGetter;
+            filter.linkToFilter = linkToFilter;
             this.updateItems();
         }
-
-
     }
     removeFilter(index) {
-        if (this.currentFilters[index]) {
-            this.currentFilters.splice(index, 0);
+        console.log('removefilter');
+        if (this.currentCollectionFilters[index]) {
+            this.currentCollectionFilters.splice(index, 0);
             this.updateItems();
         }
+    }
 
+    setDisplayFilters(displayFilters: IDisplayFilters<Item>[]) {
+        this.filterService.setDisplayFilters(displayFilters);
     }
     private updatePartial() {
-        this.setPartial(0, this.pageNumber * this.pageSize)
+        this.setPartial(0, this.pageNumber * this.pageSize);
     }
 
     private setPartial(from: number, to: number) {
@@ -87,14 +132,19 @@ export class ListManagerService<Item extends ICollectionData> {
     }
 
     private updateItems() {
-        let collection = this.collection.slice();
-        // apply filter
+        let collection = this.collection.map((item) => {
+            return { ...item };
+        });
+        //aply link filter
+        collection = collection.map((item) => {
+            item.links = item.links.slice().filter((link) => this.applyLinksFilters(link));
+            return item;
+        });
 
-        if (this.currentFilters.length != 0) {
-            collection = collection.filter(item => {
-                return this.applyFilters(item);
-            })
-        }
+        // apply collection filter
+        collection = collection.filter((item) => {
+            return this.applyCollectionFilters(item) && item.links.length > 0;
+        });
 
         //apply sort
         if (this.currentSorts && this.currentSorts.property) {
@@ -104,45 +154,86 @@ export class ListManagerService<Item extends ICollectionData> {
                 if (aProp.toLowerCase() < bProp.toLowerCase()) {
                     if (this.currentSorts.order == SortEnum.asc) {
                         return -1;
-                    }
-                    else {
+                    } else {
                         return 1;
                     }
-
                 }
                 if (aProp.toLowerCase() > bProp.toLowerCase()) {
                     if (this.currentSorts.order == SortEnum.asc) {
                         return 1;
-                    }
-                    else {
+                    } else {
                         return -1;
                     }
                 }
-            })
+            });
         }
+        this.dataSize = collection.length;
         collection = collection.slice(this.partialParam.from, this.partialParam.to);
-        console.log('list manager update', this.currentSorts, this.collection, collection)
-        this.items$.next(collection)
+        console.log('list manager update', this.currentSorts, this.collection, collection);
+        this.items$.next(collection);
     }
 
-    private applyFilters(item: ICollectionData): boolean {
-        for (const filter of this.currentFilters) {
-            const value = filter.value;
-            if (item[filter.property] && value) {
-                switch (filter.operator) {
-                    case FilterOperatorEnum.contain:
-                        return item[filter.property].includes(value);
-                    case FilterOperatorEnum.different:
-                        return item[filter.property] !== value;
-                    case FilterOperatorEnum.equal:
-                        return item[filter.property] === value;
-                    case FilterOperatorEnum.exclude:
-                        return !item[filter.property].includes(value);
-                }
+    private applyCollectionFilters(item: Item): boolean {
+        // il faut dans un premier temps filtrer les links pas les items
+        for (const filter of this.currentCollectionFilters) {
+            let compared;
+            if (filter.propertyGetter) {
+                compared = filter.propertyGetter(item);
+            } else {
+                compared = item[filter.propertyToFilter];
             }
 
+            const result = this.applyFilter(compared, filter);
+            if (!result) {
+                return false;
+            }
         }
 
         return true;
+    }
+
+    private applyLinksFilters(item: ICollectionLink) {
+        for (const filter of this.currentLinkFilters) {
+            const compared = filter.propertyGetter(item);
+
+            const result = this.applyFilter(compared, filter);
+            if (!result) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private applyFilter(compared, filter: IDataFilter<any>) {
+        let result = true;
+        if (filter.values && filter.values.length > 0) {
+            switch (filter.operator) {
+                case FilterOperatorEnum.contain:
+                    if (compared) {
+                        result =
+                            filter.values.findIndex((val) => {
+                                return compared.includes(val);
+                            }) !== -1;
+                    }
+                    break;
+                case FilterOperatorEnum.different:
+                    result = !filter.values.includes(compared);
+                    break;
+                case FilterOperatorEnum.equal:
+                    result = filter.values.includes(compared);
+                    break;
+                case FilterOperatorEnum.exclude:
+                    if (compared) {
+                        result =
+                            filter.values.findIndex((val) => {
+                                return compared.includes(val);
+                            }) == -1;
+                    }
+
+                    break;
+            }
+            console.log('compare', compared, filter.values, filter.operator, result);
+        }
+        return result;
     }
 }
