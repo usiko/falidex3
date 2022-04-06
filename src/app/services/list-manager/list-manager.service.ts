@@ -118,15 +118,18 @@ export class ListManagerService<Item extends ICollectionData> {
     }
 
     private updateItems() {
-        let collection = this.collection.slice();
-        // apply collection filter
-        collection = collection.filter((item) => {
-            return this.applyCollectionFilters(item);
+        let collection = this.collection.map((item) => {
+            return { ...item };
+        });
+        //aply link filter
+        collection = collection.map((item) => {
+            item.links = item.links.slice().filter((link) => this.applyLinksFilters(link));
+            return item;
         });
 
-        collection = collection.map((item) => {
-            item.links = item.links.filter((link) => this.applyLinksFilters(link));
-            return item;
+        // apply collection filter
+        collection = collection.filter((item) => {
+            return this.applyCollectionFilters(item) && item.links.length > 0;
         });
 
         //apply sort
@@ -158,7 +161,6 @@ export class ListManagerService<Item extends ICollectionData> {
     private applyCollectionFilters(item: Item): boolean {
         // il faut dans un premier temps filtrer les links pas les items
         for (const filter of this.currentCollectionFilters) {
-            const values = filter.values;
             let compared;
             if (filter.propertyGetter) {
                 compared = filter.propertyGetter(item);
@@ -177,7 +179,6 @@ export class ListManagerService<Item extends ICollectionData> {
 
     private applyLinksFilters(item: ICollectionLink) {
         for (const filter of this.currentLinkFilters) {
-            const values = filter.values;
             const compared = filter.propertyGetter(item);
 
             const result = this.applyFilter(compared, filter);
@@ -211,7 +212,7 @@ export class ListManagerService<Item extends ICollectionData> {
                         }) == -1;
                     break;
             }
-            console.log(compared, filter.values, filter.operator, result);
+            console.log('compare', compared, filter.values, filter.operator, result);
             return result;
         }
     }

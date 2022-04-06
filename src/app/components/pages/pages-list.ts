@@ -152,7 +152,7 @@ export class PageItemList<Item extends ICollectionData> {
         }*/
     }
 
-    protected initDisplayFilters(filters: IDisplayFilters<Item>[]) {
+    protected initDisplayFilters(filters: IDisplayFilters<any>[]) {
         this.listManagerService.setDisplayFilters(filters);
     }
 

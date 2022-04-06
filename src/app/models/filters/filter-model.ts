@@ -84,6 +84,35 @@ export class ExludeCollectionFilter<Item extends ICollectionData> extends Collec
     }
 }
 
+//---
+
+export class ContainLinkFilter extends LinkFilters implements ILinkFilters {
+    constructor(options?: Partial<ILinkFilters>) {
+        super(options);
+        this.operator = FilterOperatorEnum.contain;
+    }
+}
+
+export class EqualLinkFilter extends LinkFilters implements ILinkFilters {
+    constructor(options?: Partial<ILinkFilters>) {
+        super(options);
+        this.operator = FilterOperatorEnum.equal;
+    }
+}
+export class DifferentLinkFilter extends LinkFilters implements ILinkFilters {
+    constructor(options?: Partial<ILinkFilters>) {
+        super(options);
+        this.operator = FilterOperatorEnum.different;
+    }
+}
+
+export class ExludeLinkFilter extends LinkFilters implements ILinkFilters {
+    constructor(options?: Partial<ILinkFilters>) {
+        super(options);
+        this.operator = FilterOperatorEnum.exclude;
+    }
+}
+
 export enum FilterOperatorEnum {
     contain = 'Contain',
     equal = 'equal',
@@ -91,7 +120,7 @@ export enum FilterOperatorEnum {
     exclude = 'exclude',
 }
 
-export class DisplayFilters<Item extends ICollectionData> implements IDisplayFilters<Item> {
+export class DisplayFilters<Item> implements IDisplayFilters<Item> {
     label: string;
     filters: IDisplayFilterItem<Item>[] = [];
     constructor(options?: Partial<IDisplayFilters<Item>>) {
@@ -134,10 +163,10 @@ export enum FilterDisplayTypeEnum {
     toggle = 'toggle',
 }
 
-export class DisplayFilterItem<Item extends ICollectionData> {
+export class DisplayFilterItem<Item> {
     public type: FilterDisplayTypeEnum;
     public label: string;
-    public filter: ICollectionFilter<Item>;
+    public filter: IDataFilter<Item>;
     public enabled: boolean;
     constructor(options: Partial<IDisplayFilterItem<Item>>) {
         if (options) {
@@ -145,7 +174,7 @@ export class DisplayFilterItem<Item extends ICollectionData> {
                 this.label = options.label;
             }
             if (options.filter) {
-                this.filter = new CollectionFilter<Item>(options.filter);
+                this.filter = options.filter;
             }
             if (options.enabled) {
                 this.enabled = options.enabled;
@@ -160,7 +189,7 @@ export class DisplayFilterItem<Item extends ICollectionData> {
 /**
  * filters you can enable or disable
  */
-export class DisplayToggleFilter<Item extends ICollectionData> extends DisplayFilterItem<Item> implements IDisplayFilterItem<Item> {
+export class DisplayToggleFilter<Item> extends DisplayFilterItem<Item> implements IDisplayFilterItem<Item> {
     constructor(options: Partial<IDisplayFilterItem<Item>>) {
         super(options);
         this.type = FilterDisplayTypeEnum.toggle;
