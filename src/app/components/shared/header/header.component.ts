@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 //import { MenuController, Events } from '@ionic/angular';
 import { IonSearchbar } from '@ionic/angular';
+import { EventService } from 'src/app/services/event/event.service';
 import { ILoadingBarState } from '../../../models/global.model';
 
 @Component({
@@ -21,14 +22,20 @@ export class HeaderComponent /* implements OnInit, AfterViewInit, OnDestroy*/ {
 	public isSearching = false;
 
 	public loadingState: ILoadingBarState = { enable: false };
-	constructor(private events: Events) {}
+	constructor(private events: EventService) {}
 
 	ngOnInit() {
 		if (this.autoFocus && !this.isSearching) {
 			this.toggleSearch();
 		}
-		this.events.getObs('loadingBarState').subscribe((state: ILoadingBarState) => {
-			this.loadingState = state;
+        this.events.getObs('loadingBarState').subscribe((state: ILoadingBarState) => {
+            console.log(state);
+            if (state)
+            {
+               
+                this.loadingState = state;
+               }
+			
 		});
 	}
 	ngAfterViewInit() {

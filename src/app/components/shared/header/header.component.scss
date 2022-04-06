@@ -24,4 +24,15 @@ ion-toolbar {
         --icon-color: var(--ion-color-secondary) !important;
         --color: var(--ion-color-secondary) !important;
     }
+    &.barloader {
+        height: 0px;
+        transition: height 300ms;
+        &.enable {
+            height: 56px;
+        }
+        ion-title {
+            font-size: 0.8em;
+            text-align: center;
+        }
+    }
 }

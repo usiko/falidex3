@@ -27,9 +27,18 @@ export class DataRelationsService {
 
     getCurrentRelation(): Observable<{ name: string, id: string }> {
         return this.currentRelation.pipe(map(item => {
-            return {
-                name: item.name,
-                id: item.id
+            if (item)
+            {
+                return {
+                    name: item.name,
+                    id: item.id
+                }
+            }
+            else {
+                return {
+                    name: null,
+                    id: null
+                }
             }
         }));
     }

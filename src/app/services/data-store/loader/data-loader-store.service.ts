@@ -13,7 +13,7 @@ import TLNRelation from '../../mocks/relations/toulon.json';
 import NATRelation from '../../mocks/relations/national.json';
 
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, take, map } from 'rxjs/operators';
+import { catchError, take, map, mergeMap, delay, tap } from 'rxjs/operators';
 import {
 	IBaseCirculaire,
 	IBaseCirculaireColor,
@@ -29,6 +29,8 @@ import {
 } from 'src/app/models/base-data-models';
 import { StoreService } from '../base-store/store.service';
 import { ILoadingBarState } from '../../../models/global.model';
+import { EventService } from '../../event/event.service';
+import { IRelationData } from 'src/app/models/base-relations.models';
 
 @Injectable({
 	providedIn: 'root',
@@ -36,112 +38,138 @@ import { ILoadingBarState } from '../../../models/global.model';
 export class DataLoaderStoreService {
 	constructor(private store: StoreService, private event: EventService) {}
 
-	loadData(): void {
-		of()
+    loadData(): void {
+
+		of(null)
 			.pipe(
-				switchMap(() => {
-					this.displayLoading({
+                mergeMap(() => {
+					return this.dispactIntoSubject(this.loadPlacements(), this.store.placements$);
+                }),
+                tap(() => {
+                    this.displayLoading({
 						enable: true,
 						value: 0,
-						buffer: 0.8,
+						buffer: 0.08,
 						message: 'Accrochage des grelots',
 					});
-					return this.dispactIntoSubject(this.loadPlacements(), this.store.placements$);
-				}),
-				switchMap(() => {
-					this.displayLoading({
+                }),
+                mergeMap(() => {					
+					return this.dispactIntoSubject(this.loadSymbolsAccessory(), this.store.symbolesAccessories$);
+                }),
+                tap(() => {
+                    this.displayLoading({
 						enable: true,
-						value: 0.8,
-						buffer: 1.6,
+						value: 0.08,
+						buffer: 0.16,
 						message: 'Tocardisation des tocards',
 					});
-					return this.dispactIntoSubject(this.loadSymbolsAccessory(), this.store.symbolesAccessories$);
-				}),
-				switchMap(() => {
-					this.displayLoading({
+                }),
+				mergeMap(() => {
+					return this.dispactIntoSubject(this.loadPositions(), this.store.positions$);
+                }),
+                tap(() => {
+                    this.displayLoading({
 						enable: true,
-						value: 1.6,
-						buffer: 3,
+						value: 0.16,
+						buffer: 0.3,
 						message: 'Cuisson de la faluche',
 					});
-					return this.dispactIntoSubject(this.loadPositions(), this.store.positions$);
-				}),
-				switchMap(() => {
-					this.displayLoading({
+                }),
+				mergeMap(() => {
+					return this.dispactIntoSubject(this.loadCirculaires(), this.store.circulaires$);
+                }),
+                tap(() => {
+                    this.displayLoading({
 						enable: true,
-						value: 3,
-						buffer: 3.8,
+						value: 0.3,
+						buffer: 0.38,
 						message: 'Drama satin/velours',
 					});
-					this.dispactIntoSubject(this.loadCirculaires(), this.store.circulaires$);
-				}),
-				switchMap(() => {
-					this.displayLoading({
+                }),
+				mergeMap(() => {
+					return this.dispactIntoSubject(this.loadCirculairesColors(), this.store.circulairesColors$);
+                }),
+                tap(() => {
+                    this.displayLoading({
 						enable: true,
-						value: 3.8,
-						buffer: 4.6,
+						value: 0.38,
+						buffer: 0.46,
 						message: 'Coloriage des rubans',
 					});
-					return this.dispactIntoSubject(this.loadCirculairesColors(), this.store.circulairesColors$);
-				}),
-				switchMap(() => {
-					this.displayLoading({
+                }),
+				mergeMap(() => {
+					return this.dispactIntoSubject(this.loadColors(), this.store.colors$);
+                }),
+                tap(() => {
+                    this.displayLoading({
 						enable: true,
-						value: 4.6,
-						buffer: 5.4,
+						value: 0.46,
+						buffer: 0.54,
 						message: 'Couture des circulaires',
 					});
-					return this.dispactIntoSubject(this.loadColors(), this.store.colors$);
-				}),
-				switchMap(() => {
-					this.displayLoading({
+                }),
+				mergeMap(() => {
+					
+					return this.dispactIntoSubject(this.loadFilieres(), this.store.filieres$);
+                }),
+                tap(() => {
+                    this.displayLoading({
 						enable: true,
-						value: 5.4,
-						buffer: 6.2,
+						value: 0.54,
+						buffer: 0.62,
 						message: 'Décuvage des PMs',
 					});
-					return this.dispactIntoSubject(this.loadFilieres(), this.store.filieres$);
-				}),
-				switchMap(() => {
-					this.displayLoading({
+                }),
+				mergeMap(() => {
+					
+					return this.dispactIntoSubject(this.loadSymbols(), this.store.symboles$);
+                }),
+                tap(() => {
+                    this.displayLoading({
 						enable: true,
-						value: 6.2,
-						buffer: 7,
+						value: 0.62,
+						buffer: 0.7,
 						message: 'Décernement des singes',
 					});
-					return this.dispactIntoSubject(this.loadSymbols(), this.store.symboles$);
-				}),
-				switchMap(() => {
-					this.displayLoading({
-						enable: true,
-						value: 7,
-						buffer: 7.8,
-						message: 'Prepatation des pichets',
-					});
+                }),
+				mergeMap(() => {
 					return this.dispactIntoSubject(this.loadSymbolsSens(), this.store.symbolesSens$);
 				}),
-
-				switchMap(() => {
-					this.displayLoading({
+                tap(() => {
+                    this.displayLoading({
 						enable: true,
-						value: 7.8,
-						buffer: 8.6,
+						value: 0.7,
+						buffer: 0.78,
+						message: 'Prepatation des pichets',
+					});
+                }), 
+				mergeMap(() => {
+					
+					return this.dispactIntoSubject(this.loadSignifications(), this.store.significations$);
+                }),
+                tap(() => {
+                    this.displayLoading({
+						enable: true,
+                        value: 0.78,
+						buffer: 0.86,
 						message: 'Tarte aux pommes',
 					});
-					return this.dispactIntoSubject(this.loadSignifications(), this.store.significations$);
-				}),
+                }),
 
-				switchMap(() => {
-					this.displayLoading({
+				mergeMap(() => {
+					return this.loadRelations();
+                }),
+                tap(() => {
+                    this.displayLoading({
 						enable: true,
-						value: 8.6,
+						value: 0.86,
 						buffer: 1,
 						message: 'Lecture du code',
 					});
-					return this.loadRelations();
-				})
+                })
 			)
-			.subscribe(() => {
+            .subscribe(() => {
+                console.log('colleciton loaded')
 				this.displayLoading({
 					enable: true,
 					value: 1,
@@ -159,13 +187,15 @@ export class DataLoaderStoreService {
 			});
 	}
 
-	private loadRelations(): Observable<never> {
-		of([TLNRelation, NATRelation]).pipe(
+	private loadRelations(): Observable<IRelationData[]> {
+        return of([TLNRelation, NATRelation]).pipe(
+            delay(750),
 			map((items) => {
 				console.log('relation loaded');
 				this.store.dataRelations$.next(items);
 				console.log('relation selected');
-				this.store.currentDataRelations$.next(items[0]);
+                this.store.currentDataRelations$.next(items[0]);
+                return items;
 			})
 		);
 	}
@@ -205,8 +235,9 @@ export class DataLoaderStoreService {
 	}
 
 	private dispactIntoSubject(obs: Observable<IBaseCollectionData[]>, subject: BehaviorSubject<IBaseCollectionData[]>) {
-		obs.pipe(
-			take(1),
+		return obs.pipe(
+            take(1),
+            delay(750),
 			map((items) => {
 				console.log(items.length, 'items loaded');
 				subject.next(items);
@@ -220,7 +251,8 @@ export class DataLoaderStoreService {
 		);
 	}
 
-	private displayLoading(loadingState: ILoadingBarState) {
-		this.event.publish('loadingStateBar', loadingState);
+    private displayLoading(loadingState: ILoadingBarState) {
+        console.log('displayLoading',loadingState);
+		this.event.publish('loadingBarState', loadingState);
 	}
 }
