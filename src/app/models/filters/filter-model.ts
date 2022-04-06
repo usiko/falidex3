@@ -1,20 +1,11 @@
 import { ICollectionData, ICollectionLink } from '../linked-data-models';
 
-export interface ICollectionFilter<Item extends ICollectionData> {
-    propertyToFilter: string; // where to compare
-    values: any[]; // value given (sarch text or anything else)
+export class DataFilter<Item> implements IDataFilters<Item> {
     operator: FilterOperatorEnum;
-    linkToFilter?: (links: ICollectionLink[]) => ICollectionLink[];
     propertyGetter?: (item: Item) => any;
-}
-
-export class CollectionFilter<Item extends ICollectionData> implements ICollectionFilter<Item> {
-    public operator: FilterOperatorEnum;
-    public propertyToFilter: string;
-    public values: any[]; // value given (sarch text or anything else)
-    public linkToFilter?: (links: ICollectionLink[]) => ICollectionLink[];
-    public propertyGetter?: (item: Item) => any;
-    constructor(options?: Partial<ICollectionFilter<Item>>) {
+    values: any[]; // value given (sarch text or anything else)
+    type?: 'link' | 'collection';
+    constructor(options?: Partial<IDataFilters<Item>>) {
         if (options) {
             if (options.values) {
                 this.values = options.values;
@@ -22,16 +13,46 @@ export class CollectionFilter<Item extends ICollectionData> implements ICollecti
             if (options.operator) {
                 this.operator = options.operator;
             }
+            if (options.propertyGetter) {
+                this.propertyGetter = options.propertyGetter;
+            }
+        }
+    }
+}
+export interface IDataFilters<Item> {
+    operator: FilterOperatorEnum;
+    propertyGetter?: (item: Item) => any;
+    values: any[]; // value given (sarch text or anything else)
+    type?: 'link' | 'collection';
+}
+export class LinkFilters extends DataFilter<ICollectionLink> {
+    constructor(options?: Partial<IDataFilters<ICollectionLink>>) {
+        super(options);
+        this.type = 'link';
+    }
+}
+
+export interface ICollectionFilter<Item extends ICollectionData> extends IDataFilters<Item> {
+    propertyToFilter: string; // where to compare
+    linkToFilter?: (links: ICollectionLink[]) => ICollectionLink[];
+}
+
+export class CollectionFilter<Item extends ICollectionData> extends DataFilter<Item> implements ICollectionFilter<Item> {
+    public propertyToFilter: string;
+
+    public linkToFilter?: (links: ICollectionLink[]) => ICollectionLink[];
+
+    constructor(options?: Partial<ICollectionFilter<Item>>) {
+        super(options);
+        if (options) {
             if (options.propertyToFilter) {
                 this.propertyToFilter = options.propertyToFilter;
             }
             if (options.linkToFilter) {
                 this.linkToFilter = options.linkToFilter;
             }
-            if (options.propertyGetter) {
-                this.propertyGetter = options.propertyGetter;
-            }
         }
+        this.type = 'collection';
     }
 }
 
