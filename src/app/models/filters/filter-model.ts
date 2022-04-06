@@ -1,11 +1,11 @@
 import { ICollectionData, ICollectionLink } from '../linked-data-models';
 
-export class DataFilter<Item> implements IDataFilters<Item> {
+export class DataFilter<Item> implements IDataFilter<Item> {
     operator: FilterOperatorEnum;
     propertyGetter?: (item: Item) => any;
     values: any[]; // value given (sarch text or anything else)
     type?: 'link' | 'collection';
-    constructor(options?: Partial<IDataFilters<Item>>) {
+    constructor(options?: Partial<IDataFilter<Item>>) {
         if (options) {
             if (options.values) {
                 this.values = options.values;
@@ -19,20 +19,21 @@ export class DataFilter<Item> implements IDataFilters<Item> {
         }
     }
 }
-export interface IDataFilters<Item> {
+export interface IDataFilter<Item> {
     operator: FilterOperatorEnum;
     propertyGetter?: (item: Item) => any;
     values: any[]; // value given (sarch text or anything else)
     type?: 'link' | 'collection';
 }
+export interface ILinkFilters extends IDataFilter<ICollectionLink> {}
 export class LinkFilters extends DataFilter<ICollectionLink> {
-    constructor(options?: Partial<IDataFilters<ICollectionLink>>) {
+    constructor(options?: Partial<IDataFilter<ICollectionLink>>) {
         super(options);
         this.type = 'link';
     }
 }
 
-export interface ICollectionFilter<Item extends ICollectionData> extends IDataFilters<Item> {
+export interface ICollectionFilter<Item extends ICollectionData> extends IDataFilter<Item> {
     propertyToFilter: string; // where to compare
     linkToFilter?: (links: ICollectionLink[]) => ICollectionLink[];
 }
@@ -111,20 +112,20 @@ export class DisplayFilters<Item extends ICollectionData> implements IDisplayFil
         }
     }
 
-    getCollectionFilters(): ICollectionFilter<Item>[] {
+    getCollectionFilters(): IDataFilter<Item>[] {
         return this.filters.map((item) => item.filter);
     }
 }
 
-export interface IDisplayFilters<Item extends ICollectionData> {
+export interface IDisplayFilters<Item> {
     label: string;
     filters: IDisplayFilterItem<Item>[];
-    getCollectionFilters(): ICollectionFilter<Item>[];
+    getCollectionFilters(): IDataFilter<Item>[];
 }
 
-export interface IDisplayFilterItem<Item extends ICollectionData> {
+export interface IDisplayFilterItem<Item> {
     label: string;
-    filter: ICollectionFilter<Item>;
+    filter: IDataFilter<Item>;
     type: FilterDisplayTypeEnum;
     enabled: boolean;
 }

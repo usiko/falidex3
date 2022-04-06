@@ -1,13 +1,15 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { IDisplayFilters, ICollectionFilter } from 'src/app/models/filters/filter-model';
+import { IDisplayFilters, ICollectionFilter, ILinkFilters, IDataFilter, LinkFilters } from 'src/app/models/filters/filter-model';
 import { ICollectionData } from 'src/app/models/linked-data-models';
 import { FilterStoreService } from '../data-store/filter-store/filter-store.service';
 
 @Injectable()
 export class FilterService implements OnDestroy {
-    public filters$ = new BehaviorSubject<ICollectionFilter<ICollectionData>[]>([]);
+    public collectionfilters$ = new BehaviorSubject<ICollectionFilter<ICollectionData>[]>([]);
+    public linksfilters$ = new BehaviorSubject<ILinkFilters[]>([]);
+
     public displayFilters$ = new BehaviorSubject<IDisplayFilters<ICollectionData>[]>([]);
     private currentBindDisplayFilters$: BehaviorSubject<IDisplayFilters<ICollectionData>[]>;
     private storeIndex: number;
@@ -39,10 +41,10 @@ export class FilterService implements OnDestroy {
             console.log('filter sub', this.storeIndex);
             this.filterSubscription = subject
                 .pipe(
-                    map((filters: IDisplayFilters<ICollectionData>[]) => {
+                    map((filters: IDisplayFilters<any>[]) => {
                         console.log('want to update filters');
                         this.displayFilters$.next(filters);
-                        return filters.reduce((acc: ICollectionFilter<ICollectionData>[], item) => {
+                        return filters.reduce((acc: IDataFilter<any>[], item) => {
                             const filters = item.filters
                                 .filter((el) => {
                                     return !el.enabled && el.filter;
@@ -55,9 +57,12 @@ export class FilterService implements OnDestroy {
                         }, []);
                     })
                 )
-                .subscribe((filters: ICollectionFilter<ICollectionData>[]) => {
+                .subscribe((filters: IDataFilter<any>[]) => {
                     console.log('update filters', filters);
-                    this.filters$.next(filters);
+                    const collection = <ICollectionFilter<any>[]>filters.filter((item) => item.type == 'collection');
+                    const links = <LinkFilters[]>filters.filter((item) => item.type == 'link');
+                    this.collectionfilters$.next(collection);
+                    this.linksfilters$.next(links);
                 });
         }
     }
