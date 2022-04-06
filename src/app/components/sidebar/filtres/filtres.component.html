@@ -1,5 +1,4 @@
 <ion-list color="light">
-    {{filtersList$|async|json}}
     <ng-container *ngFor="let filters of (filtersList$|async)">
         <ion-list-header *ngIf="filters.label && filters.filters.length>0" color="dark">
             {{filters.label}}

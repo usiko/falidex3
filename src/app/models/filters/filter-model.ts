@@ -5,6 +5,7 @@ export class DataFilter<Item> implements IDataFilter<Item> {
     propertyGetter?: (item: Item) => any;
     values: any[]; // value given (sarch text or anything else)
     type?: 'link' | 'collection';
+    idFilter?: string;
     constructor(options?: Partial<IDataFilter<Item>>) {
         if (options) {
             if (options.values) {
@@ -17,6 +18,7 @@ export class DataFilter<Item> implements IDataFilter<Item> {
                 this.propertyGetter = options.propertyGetter;
             }
         }
+        this.idFilter = 'filter-' + new Date().getTime();
     }
 }
 export interface IDataFilter<Item> {
@@ -24,6 +26,7 @@ export interface IDataFilter<Item> {
     propertyGetter?: (item: Item) => any;
     values: any[]; // value given (sarch text or anything else)
     type?: 'link' | 'collection';
+    idFilter?: string;
 }
 export interface ILinkFilters extends IDataFilter<ICollectionLink> {}
 export class LinkFilters extends DataFilter<ICollectionLink> {

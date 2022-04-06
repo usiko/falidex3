@@ -35,7 +35,13 @@ export class ListManagerService<Item extends ICollectionData> {
         this.filterService.init();
         this.subscriptions.add(
             this.filterService.collectionfilters$.subscribe((filters) => {
-                this.currentCollectionFilters = filters;
+                console.log('update collection');
+                for (const filter of filters) {
+                    const index = this.currentCollectionFilters.findIndex((item) => item.idFilter == filter.idFilter);
+                    if (index > -1) {
+                        this.currentCollectionFilters[index] = filter;
+                    }
+                }
                 this.updateItems();
             })
         );
@@ -94,6 +100,7 @@ export class ListManagerService<Item extends ICollectionData> {
         return index - 1;
     }
     updateFilter(index: number, property: string, values: any[], operator: FilterOperatorEnum, linkToFilter?: () => any) {
+        console.log('update filter', index, property);
         const filter = this.currentCollectionFilters[index];
         if (filter) {
             filter.propertyToFilter = property;
@@ -104,6 +111,7 @@ export class ListManagerService<Item extends ICollectionData> {
         }
     }
     removeFilter(index) {
+        console.log('removefilter');
         if (this.currentCollectionFilters[index]) {
             this.currentCollectionFilters.splice(index, 0);
             this.updateItems();
