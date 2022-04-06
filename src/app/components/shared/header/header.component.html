@@ -33,6 +33,15 @@
     <ion-toolbar color="secondary" [hidden]="!isSearching">
         <ion-searchbar [value]="searchText" (ionChange)="search($event)" animated></ion-searchbar>
     </ion-toolbar>
+    <ion-toolbar class="barloader" [class.enable]="loadingState.enable">
+        <ng-container *ngIf="loadingState.enable">
+            <ion-title color="secondary" *ngIf="loadingState.message">
+                {{loadingState.message}}
+                <ng-container *ngIf="loadingState.value!==1">...</ng-container>
+            </ion-title>
+            <ion-progress-bar color="secondary" [value]="loadingState.value" [buffer]="loadingState.buffer"></ion-progress-bar>
+        </ng-container>
+    </ion-toolbar>
 </ng-container>
 <ng-container *ngIf="!searchable">
     <ion-toolbar color="secondary">
