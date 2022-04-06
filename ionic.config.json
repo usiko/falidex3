@@ -1,5 +1,7 @@
 {
   "name": "falidex",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
