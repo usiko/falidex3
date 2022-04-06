@@ -1,8 +1,7 @@
-
 import { ChangeDetectorRef, Injectable, ViewChild } from '@angular/core';
 import { IonContent } from '@ionic/angular';
 
-import { BehaviorSubject, Subscription, } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { IBaseCollectionData } from 'src/app/models/base-data-models';
 import { FilterOperatorEnum } from 'src/app/models/filters/filter-model';
@@ -11,13 +10,13 @@ import { SortEnum } from 'src/app/models/sort/sort.model';
 import { ICollectionItem } from 'src/app/services/collection-item/collection.service';
 import { EventService } from 'src/app/services/event/event.service';
 import { ListManagerService } from 'src/app/services/list-manager/list-manager.service';
+import { IDisplayFilters } from '../../models/filters/filter-model';
 
 /**
  * Parent of all list pages
  */
 @Injectable()
 export class PageItemList<Item extends ICollectionData> {
-
     /**
      * main page container
      */
@@ -41,22 +40,19 @@ export class PageItemList<Item extends ICollectionData> {
      */
     protected changeDetector: ChangeDetectorRef;
 
-
     /**
      * Must import service in child
      * Global event service
      */
     protected events: EventService;
 
-
     /**
      * collection subject of data to show, dircetly from data store,  without any change
      */
     protected collection$: BehaviorSubject<Item[]>;
-  
+
     //protected content;
     private filterSubscription = new Subscription();
-
 
     /**
      * current number of items to show per page
@@ -73,11 +69,10 @@ export class PageItemList<Item extends ICollectionData> {
      */
     private searchFilterIndex: number;
 
-
     // protected filterDebouncer: Subject<any> = new Subject();
 
-    protected pageSubscribers = new Subscription();
-    protected subscribers = new Subscription();
+    //protected pageSubscribers = new Subscription();
+    //protected subscribers = new Subscription();
 
     /**
      * show a scrolltop bouton
@@ -89,12 +84,10 @@ export class PageItemList<Item extends ICollectionData> {
      */
     public loading = false;
 
-
     /**
      * list of items to show, filtered, sorted, sliced
      */
     public items$ = new BehaviorSubject<Item[]>([]);
-
 
     public emptyItems = [];
 
@@ -104,84 +97,61 @@ export class PageItemList<Item extends ICollectionData> {
      */
     public dataLength = null;
 
-
-
-
     /**
      * init the the component
      */
     init() {
-        this.initService();
+        this.listManagerService.init();
         this.initEmptyList();
         this.collection$ = this.collectionService.collection$;
-        this.collection$.subscribe(collection => {
+        this.collection$.subscribe((collection) => {
             this.listManagerService.setCollection(collection);
             console.log('update items', this.items$.getValue(), this.collection$.getValue());
-        })
+        });
 
-
-
-        this.items$
-            .subscribe(() => {
-                console.log('update items', this.items$.getValue(), this.collection$.getValue())
+        this.items$.subscribe(
+            () => {
+                this.dataLength = this.listManagerService.getDataSize();
+                console.log('update items', this.items$.getValue(), this.collection$.getValue());
                 this.loading = false;
                 this.changeDetector.detectChanges();
-            }, (err) => {
+            },
+            (err) => {
                 this.loading = false;
                 this.changeDetector.detectChanges();
-            });
-        this.listManagerService.items$
-            .pipe(debounceTime(500))
-            .subscribe(items => {
-                this.items$.next(items)
-            })
-        this.collection$.subscribe(items => {
-            this.dataLength = items.length;
+            }
+        );
+        this.listManagerService.items$.pipe(debounceTime(500)).subscribe((items) => {
+            this.items$.next(items);
         });
         this.listManagerService.setPageNumber(this.pageNumber);
         this.listManagerService.setPageSize(this.pageSize);
-
     }
 
     /**
      * event of back into this view
      */
     ionViewDidEnter() {
-        this.pageSubscribers = new Subscription();
+        //this.pageSubscribers = new Subscription();
         /*this.filterSubscription.add(this.events.getObs('filtersChange').subscribe((data: { name: FilterName, value: any }) => {
             if (this.listData) {
                 this.filterChange(data.name, data.value);
             }
         }));*/
-        this.initFilter();
+        this.listManagerService.setFilters();
     }
 
     /**
      * event of leaving view
      */
     ionViewWillLeave() {
-        this.events.publish('filtersMenu', false);
-        this.filterSubscription.unsubscribe();
-        if (this.pageSubscribers) {
+        /*if (this.pageSubscribers) {
             this.pageSubscribers.unsubscribe();
-        }
-
-
+        }*/
     }
 
-    initFilter() {
-        //const filters = this.collectionService.getFilters();
-        //this.collectionService.resetPage();
-        /* this.pageNumber = 1;
-         if (this.pageSize) {
-             this.updatePartial();
-         }
-         this.events.publish('filtersMenu', true);
-         // this.events.publish('setFilters', filters);
-         this.events.publish('resetFilters');*/
-
-
-
+    protected initDisplayFilters(filters: IDisplayFilters<any>[]) {
+        this.listManagerService.setDisplayFilters(filters);
     }
 
     /**
@@ -191,10 +161,9 @@ export class PageItemList<Item extends ICollectionData> {
     search(search: string) {
         this.scrollToTop();
         if (this.searchFilterIndex !== undefined) {
-            this.listManagerService.updateFilter(this.searchFilterIndex, 'name', search, FilterOperatorEnum.contain);
-        }
-        else {
-            this.searchFilterIndex = this.listManagerService.addFilter('name', search, FilterOperatorEnum.contain);
+            this.listManagerService.updateFilter(this.searchFilterIndex, 'name', [search], FilterOperatorEnum.contain);
+        } else {
+            this.searchFilterIndex = this.listManagerService.addFilter('name', [search], FilterOperatorEnum.contain);
         }
         /*this.collectionService.resetPage();
         this.pageNumber = 1;
@@ -204,15 +173,13 @@ export class PageItemList<Item extends ICollectionData> {
         } else {
             this.collectionService.removeFilter(FilterName.name);
         }*/
-
     }
 
     /**
      * showing scrolltop btn
      */
     scrolling(event: any /*CustomEvent*/) {
-        this.showScrollTopBtn = (event.detail.scrollTop > 500);
-
+        this.showScrollTopBtn = event.detail.scrollTop > 500;
 
         /**
          * scrolling to top
@@ -284,7 +251,8 @@ export class PageItemList<Item extends ICollectionData> {
      * destroying view
      */
     onDestroy() {
-        this.subscribers.unsubscribe();
+        this.listManagerService.destroy();
+        //this.subscribers.unsubscribe();
     }
 
     /**
@@ -307,14 +275,9 @@ export class PageItemList<Item extends ICollectionData> {
         this.listManagerService.setPageNumber(this.pageNumber);
     }
 
-    initService() {
-        /*this.collectionService.initData();
-        this.collectionService.resetFilter();*/
-    }
-
     /**
      * setting a sorting of list
-     * @param property string, 
+     * @param property string,
      * @param order SortEnum
      */
     setSort(property: string, order: SortEnum) {
@@ -325,12 +288,9 @@ export class PageItemList<Item extends ICollectionData> {
      * track by forngfor list
      * @param index number, index in list
      * @param item Item current item iterrated
-     * 
+     *
      */
-    trackByFn(index:Number, item:Item) {
+    trackByFn(index: Number, item: Item) {
         return item.id;
     }
-
-
-
 }

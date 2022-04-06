@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map,filter } from 'rxjs/operators';
 import { IRelationData } from 'src/app/models/base-relations.models';
 import { SubStoreService } from '../data-store/sub-store/sub-store.service';
 
@@ -26,7 +26,11 @@ export class DataRelationsService {
     }
 
     getCurrentRelation(): Observable<{ name: string, id: string }> {
-        return this.currentRelation.pipe(map(item => {
+        return this.currentRelation.pipe(
+            filter(item => {
+                return !!item
+            }),
+            map(item => {
             return {
                 name: item.name,
                 id: item.id
