@@ -111,6 +111,7 @@ export class PageItemList<Item extends ICollectionData> {
 
         this.items$.subscribe(
             () => {
+                this.dataLength = this.listManagerService.getDataSize();
                 console.log('update items', this.items$.getValue(), this.collection$.getValue());
                 this.loading = false;
                 this.changeDetector.detectChanges();
@@ -122,9 +123,6 @@ export class PageItemList<Item extends ICollectionData> {
         );
         this.listManagerService.items$.pipe(debounceTime(500)).subscribe((items) => {
             this.items$.next(items);
-        });
-        this.collection$.subscribe((items) => {
-            this.dataLength = items.length;
         });
         this.listManagerService.setPageNumber(this.pageNumber);
         this.listManagerService.setPageSize(this.pageSize);

@@ -27,6 +27,8 @@ export class ListManagerService<Item extends ICollectionData> {
 
     public subscriptions = new Subscription();
 
+    private dataSize = 0;
+
     constructor(private filterService: FilterService) {}
 
     init() {
@@ -47,6 +49,10 @@ export class ListManagerService<Item extends ICollectionData> {
 
     destroy() {
         this.subscriptions.unsubscribe();
+    }
+
+    getDataSize(): number {
+        return this.dataSize;
     }
     setCollection(collection: Item[]) {
         this.collection = collection;
@@ -153,6 +159,7 @@ export class ListManagerService<Item extends ICollectionData> {
                 }
             });
         }
+        this.dataSize = collection.length;
         collection = collection.slice(this.partialParam.from, this.partialParam.to);
         console.log('list manager update', this.currentSorts, this.collection, collection);
         this.items$.next(collection);
@@ -191,13 +198,15 @@ export class ListManagerService<Item extends ICollectionData> {
 
     private applyFilter(compared, filter: IDataFilter<any>) {
         let result = true;
-        if (compared && filter.values && filter.values.length > 0) {
+        if (filter.values && filter.values.length > 0) {
             switch (filter.operator) {
                 case FilterOperatorEnum.contain:
-                    result =
-                        filter.values.findIndex((val) => {
-                            return compared.includes(val);
-                        }) !== -1;
+                    if (compared) {
+                        result =
+                            filter.values.findIndex((val) => {
+                                return compared.includes(val);
+                            }) !== -1;
+                    }
                     break;
                 case FilterOperatorEnum.different:
                     result = !filter.values.includes(compared);
@@ -206,14 +215,17 @@ export class ListManagerService<Item extends ICollectionData> {
                     result = filter.values.includes(compared);
                     break;
                 case FilterOperatorEnum.exclude:
-                    result =
-                        filter.values.findIndex((val) => {
-                            return compared.includes(val);
-                        }) == -1;
+                    if (compared) {
+                        result =
+                            filter.values.findIndex((val) => {
+                                return compared.includes(val);
+                            }) == -1;
+                    }
+
                     break;
             }
             console.log('compare', compared, filter.values, filter.operator, result);
-            return result;
         }
+        return result;
     }
 }

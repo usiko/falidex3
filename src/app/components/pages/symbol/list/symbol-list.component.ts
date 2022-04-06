@@ -5,7 +5,13 @@ import { SymbolCollectionService } from 'src/app/services/collection-item/symbol
 import { EventService } from 'src/app/services/event/event.service';
 import { FilterService } from 'src/app/services/filter/filter.service';
 import { ListManagerService } from 'src/app/services/list-manager/list-manager.service';
-import { DifferentLinkFilter, DisplayFilters, DisplayToggleFilter, ExludeLinkFilter } from '../../../../models/filters/filter-model';
+import {
+    DifferentLinkFilter,
+    DisplayFilters,
+    DisplayToggleFilter,
+    EqualLinkFilter,
+    ExludeLinkFilter,
+} from '../../../../models/filters/filter-model';
 import { PageItemList } from '../../pages-list';
 
 @Component({
@@ -30,13 +36,38 @@ export class SymbolListComponent extends PageItemList<ISymbol> implements OnInit
         super.init();
         this.initDisplayFilters([
             new DisplayFilters<any>({
+                label: 'Represente',
+                filters: [
+                    new DisplayToggleFilter<ICollectionLink>({
+                        label: 'Une fillière',
+                        enabled: true,
+                        filter: new EqualLinkFilter({
+                            values: [undefined],
+                            propertyGetter: (link) => {
+                                return link.filiere;
+                            },
+                        }),
+                    }),
+                    new DisplayToggleFilter<ICollectionLink>({
+                        label: 'Une signification',
+                        enabled: true,
+                        filter: new EqualLinkFilter({
+                            values: [undefined],
+                            propertyGetter: (link) => {
+                                return link.signification;
+                            },
+                        }),
+                    }),
+                ],
+            }),
+            new DisplayFilters<any>({
                 label: 'Type de circulaire',
                 filters: [
                     new DisplayToggleFilter<ICollectionLink>({
                         label: 'velours',
                         enabled: true,
                         filter: new ExludeLinkFilter({
-                            values: ['VELOURS'],
+                            values: ['VELOURS', undefined],
                             propertyGetter: (link) => {
                                 return link.circulaire?.matiere;
                             },
@@ -46,7 +77,7 @@ export class SymbolListComponent extends PageItemList<ISymbol> implements OnInit
                         label: 'satin',
                         enabled: true,
                         filter: new ExludeLinkFilter({
-                            values: ['SATIN'],
+                            values: ['SATIN', undefined],
                             propertyGetter: (link) => {
                                 return link.circulaire?.matiere;
                             },
@@ -60,8 +91,8 @@ export class SymbolListComponent extends PageItemList<ISymbol> implements OnInit
                     new DisplayToggleFilter({
                         label: 'commun',
                         enabled: true,
-                        filter: new DifferentLinkFilter({
-                            values: [false, null, undefined],
+                        filter: new EqualLinkFilter({
+                            values: [true],
                             propertyGetter: (link) => {
                                 return link.spe;
                             },
