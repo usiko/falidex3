@@ -1,16 +1,16 @@
-import { ChangeDetectorRef, Injectable, ViewChild } from '@angular/core'
-import { IonContent } from '@ionic/angular'
+import { ChangeDetectorRef, Injectable, ViewChild } from '@angular/core';
+import { IonContent } from '@ionic/angular';
 
-import { BehaviorSubject, Subscription } from 'rxjs'
-import { debounceTime } from 'rxjs/operators'
-import { IBaseCollectionData } from 'src/app/models/base-data-models'
-import { FilterOperatorEnum } from 'src/app/models/filters/filter-model'
-import { ICollectionData } from 'src/app/models/linked-data-models'
-import { SortEnum } from 'src/app/models/sort/sort.model'
-import { ICollectionItem } from 'src/app/services/collection-item/collection.service'
-import { EventService } from 'src/app/services/event/event.service'
-import { ListManagerService } from 'src/app/services/list-manager/list-manager.service'
-import { IDisplayFilters } from '../../models/filters/filter-model'
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { IBaseCollectionData } from 'src/app/models/base-data-models';
+import { FilterOperatorEnum } from 'src/app/models/filters/filter-model';
+import { ICollectionData } from 'src/app/models/linked-data-models';
+import { SortEnum } from 'src/app/models/sort/sort.model';
+import { ICollectionItem } from 'src/app/services/collection-item/collection.service';
+import { EventService } from 'src/app/services/event/event.service';
+import { ListManagerService } from 'src/app/services/list-manager/list-manager.service';
+import { IDisplayFilters } from '../../models/filters/filter-model';
 
 /**
  * Parent of all list pages
@@ -20,54 +20,54 @@ export class PageItemList<Item extends ICollectionData> {
     /**
      * main page container
      */
-    @ViewChild(IonContent, null) content: IonContent
+    @ViewChild(IonContent, null) content: IonContent;
 
     /**
      * Must import service in child
      * data service
      */
-    protected collectionService: ICollectionItem<IBaseCollectionData, Item>
+    protected collectionService: ICollectionItem<IBaseCollectionData, Item>;
 
     /**
      * Must import service in child
      * list manager service
      */
-    protected listManagerService: ListManagerService<Item>
+    protected listManagerService: ListManagerService<Item>;
 
     /**
      * Must import service in child
      * angular changedetector, to update manualy view
      */
-    protected changeDetector: ChangeDetectorRef
+    protected changeDetector: ChangeDetectorRef;
 
     /**
      * Must import service in child
      * Global event service
      */
-    protected events: EventService
+    protected events: EventService;
 
     /**
      * collection subject of data to show, dircetly from data store,  without any change
      */
-    protected collection$: BehaviorSubject<Item[]>
+    protected collection$: BehaviorSubject<Item[]>;
 
     //protected content;
-    private filterSubscription = new Subscription()
+    private filterSubscription = new Subscription();
 
     /**
      * current number of items to show per page
      */
-    protected pageSize = 20
+    protected pageSize = 20;
 
     /**
      * current page, start on 1
      */
-    private pageNumber = 1
+    private pageNumber = 1;
 
     /**
      * index of search filter, used to find, remove or update searh text filter
      */
-    private searchFilterIndex: number
+    private searchFilterIndex: number;
 
     // protected filterDebouncer: Subject<any> = new Subject();
 
@@ -77,57 +77,57 @@ export class PageItemList<Item extends ICollectionData> {
     /**
      * show a scrolltop bouton
      */
-    public showScrollTopBtn = false
+    public showScrollTopBtn = false;
 
     /**
      * current data loading state
      */
-    public loading = false
+    public loading = false;
 
     /**
      * list of items to show, filtered, sorted, sliced
      */
-    public items$ = new BehaviorSubject<Item[]>([])
+    public items$ = new BehaviorSubject<Item[]>([]);
 
-    public emptyItems = []
+    public emptyItems = [];
 
     /**
      * lentgh total of items
      * (probably useless now)
      */
-    public dataLength = null
+    public dataLength = null;
 
     /**
      * init the the component
      */
     init() {
-        this.listManagerService.init()
-        this.initEmptyList()
-        this.collection$ = this.collectionService.collection$
+        this.listManagerService.init();
+        this.initEmptyList();
+        this.collection$ = this.collectionService.collection$;
         this.collection$.subscribe((collection) => {
-            this.listManagerService.setCollection(collection)
-            console.log('update items', this.items$.getValue(), this.collection$.getValue())
-        })
+            this.listManagerService.setCollection(collection);
+            console.log('update items', this.items$.getValue(), this.collection$.getValue());
+        });
 
         this.items$.subscribe(
             () => {
-                console.log('update items', this.items$.getValue(), this.collection$.getValue())
-                this.loading = false
-                this.changeDetector.detectChanges()
+                console.log('update items', this.items$.getValue(), this.collection$.getValue());
+                this.loading = false;
+                this.changeDetector.detectChanges();
             },
             (err) => {
-                this.loading = false
-                this.changeDetector.detectChanges()
+                this.loading = false;
+                this.changeDetector.detectChanges();
             }
-        )
+        );
         this.listManagerService.items$.pipe(debounceTime(500)).subscribe((items) => {
-            this.items$.next(items)
-        })
+            this.items$.next(items);
+        });
         this.collection$.subscribe((items) => {
-            this.dataLength = items.length
-        })
-        this.listManagerService.setPageNumber(this.pageNumber)
-        this.listManagerService.setPageSize(this.pageSize)
+            this.dataLength = items.length;
+        });
+        this.listManagerService.setPageNumber(this.pageNumber);
+        this.listManagerService.setPageSize(this.pageSize);
     }
 
     /**
@@ -140,7 +140,7 @@ export class PageItemList<Item extends ICollectionData> {
                 this.filterChange(data.name, data.value);
             }
         }));*/
-        this.listManagerService.setFilters()
+        this.listManagerService.setFilters();
     }
 
     /**
@@ -153,7 +153,7 @@ export class PageItemList<Item extends ICollectionData> {
     }
 
     protected initDisplayFilters(filters: IDisplayFilters<Item>[]) {
-        this.listManagerService.setDisplayFilters(filters)
+        this.listManagerService.setDisplayFilters(filters);
     }
 
     /**
@@ -161,11 +161,11 @@ export class PageItemList<Item extends ICollectionData> {
      * @param search string
      */
     search(search: string) {
-        this.scrollToTop()
+        this.scrollToTop();
         if (this.searchFilterIndex !== undefined) {
-            this.listManagerService.updateFilter(this.searchFilterIndex, 'name', search, FilterOperatorEnum.contain)
+            this.listManagerService.updateFilter(this.searchFilterIndex, 'name', [search], FilterOperatorEnum.contain);
         } else {
-            this.searchFilterIndex = this.listManagerService.addFilter('name', search, FilterOperatorEnum.contain)
+            this.searchFilterIndex = this.listManagerService.addFilter('name', [search], FilterOperatorEnum.contain);
         }
         /*this.collectionService.resetPage();
         this.pageNumber = 1;
@@ -181,21 +181,21 @@ export class PageItemList<Item extends ICollectionData> {
      * showing scrolltop btn
      */
     scrolling(event: any /*CustomEvent*/) {
-        this.showScrollTopBtn = event.detail.scrollTop > 500
+        this.showScrollTopBtn = event.detail.scrollTop > 500;
 
         /**
          * scrolling to top
          */
     }
     scrollToTop() {
-        this.content.scrollToTop(350)
+        this.content.scrollToTop(350);
     }
 
     /**
      * adding new filter to service
      */
     filterChange(name, value) {
-        this.scrollToTop()
+        this.scrollToTop();
         /*switch (name) {
             case FilterName.circulaireMat:
 
@@ -253,7 +253,7 @@ export class PageItemList<Item extends ICollectionData> {
      * destroying view
      */
     onDestroy() {
-        this.listManagerService.destroy()
+        this.listManagerService.destroy();
         //this.subscribers.unsubscribe();
     }
 
@@ -261,9 +261,9 @@ export class PageItemList<Item extends ICollectionData> {
      * show an empty list loading at the first show
      */
     initEmptyList() {
-        this.emptyItems = []
+        this.emptyItems = [];
         for (let i = 0; i < 30; i++) {
-            this.emptyItems.push(null)
+            this.emptyItems.push(null);
         }
     }
 
@@ -271,10 +271,10 @@ export class PageItemList<Item extends ICollectionData> {
      * load more data from collection
      */
     getMore() {
-        console.log('get more')
-        this.loading = true
-        this.pageNumber++
-        this.listManagerService.setPageNumber(this.pageNumber)
+        console.log('get more');
+        this.loading = true;
+        this.pageNumber++;
+        this.listManagerService.setPageNumber(this.pageNumber);
     }
 
     /**
@@ -283,7 +283,7 @@ export class PageItemList<Item extends ICollectionData> {
      * @param order SortEnum
      */
     setSort(property: string, order: SortEnum) {
-        this.listManagerService.setSort(property, order)
+        this.listManagerService.setSort(property, order);
     }
 
     /**
@@ -293,6 +293,6 @@ export class PageItemList<Item extends ICollectionData> {
      *
      */
     trackByFn(index: Number, item: Item) {
-        return item.id
+        return item.id;
     }
 }
