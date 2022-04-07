@@ -52,7 +52,6 @@ export class PageItemList<Item extends ICollectionData> {
     protected collection$: BehaviorSubject<Item[]>;
 
     //protected content;
-    private filterSubscription = new Subscription();
 
     /**
      * current number of items to show per page
@@ -97,6 +96,8 @@ export class PageItemList<Item extends ICollectionData> {
      */
     public dataLength = null;
 
+    private subscription = new Subscription();
+
     /**
      * init the the component
      */
@@ -105,21 +106,30 @@ export class PageItemList<Item extends ICollectionData> {
         this.listManagerService.init(this.collection$);
         this.initEmptyList();
 
-        this.items$.subscribe(
-            () => {
-                this.dataLength = this.listManagerService.getDataSize();
-                console.log('update items', this.items$.getValue(), this.collection$.getValue());
-                this.loading = false;
-                this.changeDetector.detectChanges();
-            },
-            (err) => {
-                this.loading = false;
-                this.changeDetector.detectChanges();
-            }
+        this.subscription.add(
+            this.items$.subscribe(
+                () => {
+                    this.dataLength = this.listManagerService.getDataSize();
+                    console.log('update items', this.items$.getValue(), this.collection$.getValue());
+                    this.loading = false;
+                    this.changeDetector.detectChanges();
+                },
+                (err) => {
+                    this.loading = false;
+                    this.changeDetector.detectChanges();
+                }
+            )
         );
-        this.listManagerService.items$.pipe(debounceTime(500)).subscribe((items) => {
-            this.items$.next(items);
-        });
+        this.subscription.add(
+            this.listManagerService.filterChange.subscribe(() => {
+                this.filterChange();
+            })
+        );
+        this.subscription.add(
+            this.listManagerService.items$.pipe(debounceTime(500)).subscribe((items) => {
+                this.items$.next(items);
+            })
+        );
         this.listManagerService.setPageNumber(this.pageNumber);
         this.listManagerService.setPageSize(this.pageSize);
     }
@@ -180,26 +190,8 @@ export class PageItemList<Item extends ICollectionData> {
     /**
      * adding new filter to service
      */
-    filterChange(name, value) {
+    filterChange() {
         this.scrollToTop();
-        /*switch (name) {
-            case FilterName.circulaireMat:
-
-                if (value.length === 2) {
-                    this.collectionService.removeFilter(name);
-                } else {
-                    this.collectionService.addFilter({ name, value });
-                }
-
-                break;
-            case FilterName.spe:
-                if (value === 'all') {
-                    this.collectionService.removeFilter(name);
-                } else {
-                    this.collectionService.addFilter({ name, value });
-                }
-                break;
-        }*/
     }
 
     /**
@@ -207,6 +199,7 @@ export class PageItemList<Item extends ICollectionData> {
      */
     onDestroy() {
         this.listManagerService.destroy();
+        this.subscription.unsubscribe();
         //this.subscribers.unsubscribe();
     }
 

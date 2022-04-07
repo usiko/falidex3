@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { FilterOperatorEnum, ICollectionFilter, IDataFilter, ILinkFilters, LinkFilters } from 'src/app/models/filters/filter-model';
 import { ICollectionData, ICollectionLink } from 'src/app/models/linked-data-models';
 import { Sort, SortEnum } from 'src/app/models/sort/sort.model';
@@ -27,6 +27,8 @@ export class ListManagerService<Item extends ICollectionData> {
 
     private dataSize = 0;
 
+    public filterChange = new Subject<never>();
+
     constructor(private filterService: FilterService<Item>) {}
 
     init(collectionSuject$: BehaviorSubject<Item[]>) {
@@ -35,7 +37,7 @@ export class ListManagerService<Item extends ICollectionData> {
 
         this.subscriptions.add(
             this.filterService.filteredCollection$.subscribe((filtered) => {
-                console.log('filtered', filtered);
+                this.filterChange.next();
                 this.updateItems();
             })
         );
