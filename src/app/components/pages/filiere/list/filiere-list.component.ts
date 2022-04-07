@@ -1,13 +1,6 @@
-import { Component, OnInit, ViewChild, OnDestroy, Inject, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CiculaireMatiereEnum } from 'src/app/models/circulaire-matiere.enum';
-import {
-    DifferentLinkFilter,
-    DisplayFilters,
-    DisplayToggleFilter,
-    EqualLinkFilter,
-    ExludeLinkFilter,
-} from 'src/app/models/filters/filter-model';
-import { ICollectionLink, IFiliere } from 'src/app/models/linked-data-models';
+import { IFiliere } from 'src/app/models/linked-data-models';
 import { SortEnum } from 'src/app/models/sort/sort.model';
 import { FiliereCollectionService } from 'src/app/services/collection-item/filiere/filiere-collection.service';
 import { EventService } from 'src/app/services/event/event.service';

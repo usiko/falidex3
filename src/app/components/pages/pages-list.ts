@@ -156,6 +156,10 @@ export class PageItemList<Item extends ICollectionData> {
         }*/
     }
 
+    /**
+     * initializing showed filter in menu
+     * @param  {IDisplayFilters<any>[]} filters
+     */
     protected initDisplayFilters(filters: IDisplayFilters<any>[]) {
         this.listManagerService.setDisplayFilters(filters);
     }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
-import { FilterOperatorEnum, ICollectionFilter, IDataFilter, ILinkFilters, LinkFilters } from 'src/app/models/filters/filter-model';
-import { ICollectionData, ICollectionLink } from 'src/app/models/linked-data-models';
+import { FilterOperatorEnum } from 'src/app/models/filters/filter-model';
+import { ICollectionData } from 'src/app/models/linked-data-models';
 import { Sort, SortEnum } from 'src/app/models/sort/sort.model';
 import { IDisplayFilters } from '../../models/filters/filter-model';
 import { FilterService } from '../filter/filter.service';
@@ -31,6 +31,9 @@ export class ListManagerService<Item extends ICollectionData> {
 
     constructor(private filterService: FilterService<Item>) {}
 
+    /**
+     * @param  {BehaviorSubject<Item[]>} collectionSuject$
+     */
     init(collectionSuject$: BehaviorSubject<Item[]>) {
         this.collection$ = collectionSuject$;
         this.filterService.init(this.collection$);
@@ -42,25 +45,39 @@ export class ListManagerService<Item extends ICollectionData> {
             })
         );
     }
-
+    /**
+     */
     destroy() {
         this.subscriptions.unsubscribe();
     }
 
+    /**
+     * @returns number
+     */
     getDataSize(): number {
         return this.dataSize;
     }
 
+    /**
+     * @param  {number} pageSize
+     */
     setPageSize(pageSize: number) {
         this.pageSize = pageSize;
         this.updatePartial();
     }
 
+    /**
+     * @param  {number} pageNumber
+     */
     setPageNumber(pageNumber: number) {
         this.pageNumber = pageNumber;
         this.updatePartial();
     }
 
+    /**
+     * @param  {string} property
+     * @param  {SortEnum} order
+     */
     setSort(property: string, order: SortEnum) {
         this.currentSorts = {
             property,
@@ -76,29 +93,60 @@ export class ListManagerService<Item extends ICollectionData> {
         this.filterService.getFilters();
     }
 
+    /**
+     * @param  {string} propertyToFilter
+     * @param  {any[]} values
+     * @param  {FilterOperatorEnum} operator
+     * @param  {()=>any} linkToFilter?
+     * @returns number
+     */
     addFilter(propertyToFilter: string, values: any[], operator: FilterOperatorEnum, linkToFilter?: () => any): number {
         return this.filterService.addCollectionFilter(propertyToFilter, values, operator, linkToFilter);
     }
+
+    /**
+     * @param  {number} index
+     * @param  {string} property
+     * @param  {any[]} values
+     * @param  {FilterOperatorEnum} operator
+     * @param  {()=>any} linkToFilter?
+     */
     updateFilter(index: number, property: string, values: any[], operator: FilterOperatorEnum, linkToFilter?: () => any) {
         this.filterService.updateCollectionFilter(index, property, values, operator);
     }
+
+    /**
+     * @param  {} index
+     */
     removeFilter(index) {
         this.filterService.removeCollectionFilter(index);
     }
 
+    /**
+     * @param  {IDisplayFilters<Item>[]} displayFilters
+     */
     setDisplayFilters(displayFilters: IDisplayFilters<Item>[]) {
         this.filterService.setDisplayFilters(displayFilters);
     }
+
+    /**
+     */
     private updatePartial() {
         this.setPartial(0, this.pageNumber * this.pageSize);
     }
 
+    /**
+     * @param  {number} from
+     * @param  {number} to
+     */
     private setPartial(from: number, to: number) {
         this.partialParam.from = from;
         this.partialParam.to = to;
         this.updateItems();
     }
 
+    /**
+     */
     private updateItems() {
         //apply sort
         let collection = this.filterService.filteredCollection$.getValue();

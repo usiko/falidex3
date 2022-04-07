@@ -1,18 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ICollectionLink, ISymbol } from 'src/app/models/linked-data-models';
+import { ISymbol } from 'src/app/models/linked-data-models';
 import { SortEnum } from 'src/app/models/sort/sort.model';
 import { SymbolCollectionService } from 'src/app/services/collection-item/symbol/symbol-collection.service';
 import { EventService } from 'src/app/services/event/event.service';
 import { FilterPreset } from 'src/app/services/filter/filter.preset';
 import { FilterService } from 'src/app/services/filter/filter.service';
 import { ListManagerService } from 'src/app/services/list-manager/list-manager.service';
-import {
-    DifferentLinkFilter,
-    DisplayFilters,
-    DisplayToggleFilter,
-    EqualLinkFilter,
-    ExludeLinkFilter,
-} from '../../../../models/filters/filter-model';
 import { PageItemList } from '../../pages-list';
 
 @Component({

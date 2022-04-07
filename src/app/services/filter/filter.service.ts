@@ -1,13 +1,13 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import {
-    IDisplayFilters,
-    ICollectionFilter,
-    ILinkFilters,
-    IDataFilter,
-    LinkFilters,
     FilterOperatorEnum,
+    ICollectionFilter,
+    IDataFilter,
+    IDisplayFilters,
+    ILinkFilters,
+    LinkFilters,
 } from 'src/app/models/filters/filter-model';
 import { ICollectionData, ICollectionLink } from 'src/app/models/linked-data-models';
 import { FilterStoreService } from '../data-store/filter-store/filter-store.service';
@@ -31,6 +31,9 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
 
     constructor(private store: FilterStoreService) {}
 
+    /**
+     * @param  {BehaviorSubject<Item[]>} collectionSuject$
+     */
     init(collectionSuject$: BehaviorSubject<Item[]>) {
         this.collection$ = collectionSuject$;
         this.storeIndex = this.store.createStoreFilter();
@@ -60,6 +63,8 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
         this.getFilters();
     }
 
+    /**
+     */
     getFilters() {
         const subject = this.store.getCurrentFilter(this.storeIndex);
         console.log('get filters binding', this.storeIndex);
@@ -99,12 +104,22 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
         }
     }
 
+    /**
+     * @param  {IDisplayFilters<ICollectionData>[]} filters
+     */
     setDisplayFilters(filters: IDisplayFilters<ICollectionData>[]) {
         if (this.currentBindDisplayFilters$) {
             this.currentBindDisplayFilters$.next(filters);
         }
     }
 
+    /**
+     * @param  {string} propertyToFilter
+     * @param  {any[]} values
+     * @param  {FilterOperatorEnum} operator
+     * @param  {()=>any} linkToFilter?
+     * @returns number
+     */
     addCollectionFilter(propertyToFilter: string, values: any[], operator: FilterOperatorEnum, linkToFilter?: () => any): number {
         const filters = this.collectionfilters$.getValue();
         const index = filters.push({
@@ -116,6 +131,13 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
         return index - 1;
     }
 
+    /**
+     * @param  {number} index
+     * @param  {string} property
+     * @param  {any[]} values
+     * @param  {FilterOperatorEnum} operator
+     * @param  {()=>any} linkToFilter?
+     */
     updateCollectionFilter(index: number, property: string, values: any[], operator: FilterOperatorEnum, linkToFilter?: () => any) {
         const filters = this.collectionfilters$.getValue();
         const filter = filters[index];
@@ -128,7 +150,10 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
         this.collectionfilters$.next(filters);
     }
 
-    removeCollectionFilter(index) {
+    /**
+     * @param  {number} index
+     */
+    removeCollectionFilter(index: number) {
         const filters = this.collectionfilters$.getValue();
         if (filters[index]) {
             filters.splice(index, 0);
@@ -136,6 +161,8 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
         }
     }
 
+    /**
+     */
     private applyFiltersOnCollection() {
         console.log('filtered', this.collection$);
         if (this.collection$) {
@@ -156,6 +183,10 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
         }
     }
 
+    /**
+     * @param  {Item} item
+     * @returns boolean
+     */
     private applyCollectionFilters(item: Item): boolean {
         // il faut dans un premier temps filtrer les links pas les items
         for (const filter of this.collectionfilters$.getValue()) {
@@ -175,6 +206,9 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
         return true;
     }
 
+    /**
+     * @param  {ICollectionLink} item
+     */
     private applyLinksFilters(item: ICollectionLink) {
         for (const filter of this.linksfilters$.getValue()) {
             const compared = filter.propertyGetter(item);
@@ -187,6 +221,10 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
         return true;
     }
 
+    /**
+     * @param  {} compared
+     * @param  {IDataFilter<any>} filter
+     */
     private applyFilters(compared, filter: IDataFilter<any>) {
         let result = true;
         if (filter.values && filter.values.length > 0) {
@@ -220,6 +258,9 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
         return result;
     }
 
+    /**
+     * @returns void
+     */
     ngOnDestroy(): void {
         console.log('filter unsub', this.storeIndex);
         if (this.filterSubscription) {
