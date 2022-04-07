@@ -16,38 +16,26 @@ export class ListManagerService<Item extends ICollectionData> {
     public items$ = new BehaviorSubject<Item[]>([]);
 
     public currentSorts: Sort;
-    public currentCollectionFilters: ICollectionFilter<Item>[] = [];
-    public currentLinkFilters: ILinkFilters[] = [];
 
     protected pageSize = 20;
 
     private pageNumber = 1;
 
-    public collection: Item[] = [];
+    public collection$: BehaviorSubject<Item[]>;
 
     public subscriptions = new Subscription();
 
     private dataSize = 0;
 
-    constructor(private filterService: FilterService) {}
+    constructor(private filterService: FilterService<Item>) {}
 
-    init() {
-        this.filterService.init();
+    init(collectionSuject$: BehaviorSubject<Item[]>) {
+        this.collection$ = collectionSuject$;
+        this.filterService.init(this.collection$);
+
         this.subscriptions.add(
-            this.filterService.collectionfilters$.subscribe((filters) => {
-                console.log('update collection');
-                for (const filter of filters) {
-                    const index = this.currentCollectionFilters.findIndex((item) => item.idFilter == filter.idFilter);
-                    if (index > -1) {
-                        this.currentCollectionFilters[index] = filter;
-                    }
-                }
-                this.updateItems();
-            })
-        );
-        this.subscriptions.add(
-            this.filterService.linksfilters$.subscribe((filters) => {
-                this.currentLinkFilters = filters;
+            this.filterService.filteredCollection$.subscribe((filtered) => {
+                console.log('filtered', filtered);
                 this.updateItems();
             })
         );
@@ -59,10 +47,6 @@ export class ListManagerService<Item extends ICollectionData> {
 
     getDataSize(): number {
         return this.dataSize;
-    }
-    setCollection(collection: Item[]) {
-        this.collection = collection;
-        this.updateItems();
     }
 
     setPageSize(pageSize: number) {
@@ -91,31 +75,13 @@ export class ListManagerService<Item extends ICollectionData> {
     }
 
     addFilter(propertyToFilter: string, values: any[], operator: FilterOperatorEnum, linkToFilter?: () => any): number {
-        const index = this.currentCollectionFilters.push({
-            propertyToFilter,
-            values,
-            operator,
-        });
-        this.updateItems();
-        return index - 1;
+        return this.filterService.addCollectionFilter(propertyToFilter, values, operator, linkToFilter);
     }
     updateFilter(index: number, property: string, values: any[], operator: FilterOperatorEnum, linkToFilter?: () => any) {
-        console.log('update filter', index, property);
-        const filter = this.currentCollectionFilters[index];
-        if (filter) {
-            filter.propertyToFilter = property;
-            filter.values = values;
-            filter.operator = operator;
-            filter.linkToFilter = linkToFilter;
-            this.updateItems();
-        }
+        this.filterService.updateCollectionFilter(index, property, values, operator);
     }
     removeFilter(index) {
-        console.log('removefilter');
-        if (this.currentCollectionFilters[index]) {
-            this.currentCollectionFilters.splice(index, 0);
-            this.updateItems();
-        }
+        this.filterService.removeCollectionFilter(index);
     }
 
     setDisplayFilters(displayFilters: IDisplayFilters<Item>[]) {
@@ -132,21 +98,8 @@ export class ListManagerService<Item extends ICollectionData> {
     }
 
     private updateItems() {
-        let collection = this.collection.map((item) => {
-            return { ...item };
-        });
-        //aply link filter
-        collection = collection.map((item) => {
-            item.links = item.links.slice().filter((link) => this.applyLinksFilters(link));
-            return item;
-        });
-
-        // apply collection filter
-        collection = collection.filter((item) => {
-            return this.applyCollectionFilters(item) && item.links.length > 0;
-        });
-
         //apply sort
+        let collection = this.filterService.filteredCollection$.getValue();
         if (this.currentSorts && this.currentSorts.property) {
             collection = collection.sort((a, b) => {
                 const aProp: string = a[this.currentSorts.property];
@@ -169,71 +122,6 @@ export class ListManagerService<Item extends ICollectionData> {
         }
         this.dataSize = collection.length;
         collection = collection.slice(this.partialParam.from, this.partialParam.to);
-        console.log('list manager update', this.currentSorts, this.collection, collection);
         this.items$.next(collection);
-    }
-
-    private applyCollectionFilters(item: Item): boolean {
-        // il faut dans un premier temps filtrer les links pas les items
-        for (const filter of this.currentCollectionFilters) {
-            let compared;
-            if (filter.propertyGetter) {
-                compared = filter.propertyGetter(item);
-            } else {
-                compared = item[filter.propertyToFilter];
-            }
-
-            const result = this.applyFilter(compared, filter);
-            if (!result) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private applyLinksFilters(item: ICollectionLink) {
-        for (const filter of this.currentLinkFilters) {
-            const compared = filter.propertyGetter(item);
-
-            const result = this.applyFilter(compared, filter);
-            if (!result) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private applyFilter(compared, filter: IDataFilter<any>) {
-        let result = true;
-        if (filter.values && filter.values.length > 0) {
-            switch (filter.operator) {
-                case FilterOperatorEnum.contain:
-                    if (compared) {
-                        result =
-                            filter.values.findIndex((val) => {
-                                return compared.includes(val);
-                            }) !== -1;
-                    }
-                    break;
-                case FilterOperatorEnum.different:
-                    result = !filter.values.includes(compared);
-                    break;
-                case FilterOperatorEnum.equal:
-                    result = filter.values.includes(compared);
-                    break;
-                case FilterOperatorEnum.exclude:
-                    if (compared) {
-                        result =
-                            filter.values.findIndex((val) => {
-                                return compared.includes(val);
-                            }) == -1;
-                    }
-
-                    break;
-            }
-            console.log('compare', compared, filter.values, filter.operator, result);
-        }
-        return result;
     }
 }

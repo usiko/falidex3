@@ -101,13 +101,9 @@ export class PageItemList<Item extends ICollectionData> {
      * init the the component
      */
     init() {
-        this.listManagerService.init();
-        this.initEmptyList();
         this.collection$ = this.collectionService.collection$;
-        this.collection$.subscribe((collection) => {
-            this.listManagerService.setCollection(collection);
-            console.log('update items', this.items$.getValue(), this.collection$.getValue());
-        });
+        this.listManagerService.init(this.collection$);
+        this.initEmptyList();
 
         this.items$.subscribe(
             () => {
@@ -165,14 +161,6 @@ export class PageItemList<Item extends ICollectionData> {
         } else {
             this.searchFilterIndex = this.listManagerService.addFilter('name', [search], FilterOperatorEnum.contain);
         }
-        /*this.collectionService.resetPage();
-        this.pageNumber = 1;
-        this.collectionService.changePageSize(this.pageSize * this.pageNumber);
-        if (search && search.length > 0) {
-            this.collectionService.addFilter({ name: FilterName.name, value: search });
-        } else {
-            this.collectionService.removeFilter(FilterName.name);
-        }*/
     }
 
     /**
@@ -213,39 +201,6 @@ export class PageItemList<Item extends ICollectionData> {
                 break;
         }*/
     }
-
-    /**
-     * getting data with or without filters
-     */
-    /*getFilteresData(reset = false) {
-        this.dataLength = null;
-        console.log(reset, this.listData.slice())
-        if (this.listData.length > 0 && this.listData.filter(data => data === null).length === 0) {
-            this.loading = true;
-        } else {
-            this.initEmptyList();
-        }
-        if (reset) {
-            this.listData = [];
-            this.collectionService.resetPage();
-        }
-
-        const sub = this.collectionService.getList().debounceTime(350).subscribe(data => {
-            console.log(data);
-            this.listData.push(...data.data);
-            this.dataLength = data.count;
-            if (this.infiniteScroll) {
-                this.infiniteScroll.complete();
-            }
-        }, (err) => {
-            this.loading = false;
-            if (this.infiniteScroll) {
-                this.infiniteScroll.complete();
-            }
-        });
-        this.subscribers.add(sub);
-
-    }*/
 
     /**
      * destroying view
