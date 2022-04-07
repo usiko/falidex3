@@ -1,5 +1,5 @@
  [{
-         "name": "medecine",
+         "name": "médecine",
          "id": "filiere-0"
      },
      {
@@ -11,7 +11,7 @@
          "id": "filiere-2"
      },
      {
-         "name": "preparateur en pharmacie",
+         "name": "préparateur en pharmacie",
          "id": "filiere-3"
      },
      {
@@ -27,7 +27,7 @@
          "id": "filiere-6"
      },
      {
-         "name": "paramedical",
+         "name": "paramédical",
          "id": "filiere-7"
      },
      {
@@ -43,7 +43,7 @@
          "id": "filiere-10"
      },
      {
-         "name": "PACES, prepa santé",
+         "name": "PACES, prépa santé",
          "id": "filiere-11"
      },
      {
@@ -67,7 +67,7 @@
          "id": "filiere-16"
      },
      {
-         "name": "ingemedia",
+         "name": "ingémédia",
          "id": "filiere-17"
      },
      {
@@ -75,7 +75,7 @@
          "id": "filiere-18"
      },
      {
-         "name": "geographie",
+         "name": "géographie",
          "id": "filiere-19"
      },
      {
