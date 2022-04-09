@@ -202,7 +202,6 @@ export class PageItemList<Item extends ICollectionData> {
      * destroying view
      */
     onDestroy() {
-        this.listManagerService.destroy();
         this.subscription.unsubscribe();
         //this.subscribers.unsubscribe();
     }

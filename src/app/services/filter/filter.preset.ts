@@ -8,6 +8,10 @@ import {
 import { ICollectionLink } from 'src/app/models/linked-data-models';
 
 export class FilterPreset {
+    /** present action toggle filterting filliere or signification
+     * @param  {string} title
+     * @returns string
+     */
     static getDataType(title: string): DisplayFilters<ICollectionLink> {
         return new DisplayFilters<ICollectionLink>({
             label: title,
@@ -35,6 +39,12 @@ export class FilterPreset {
             ],
         });
     }
+
+    /**
+     * preset  action toggle filtering on circulaire type
+     * @param  {string} title
+     * @returns DisplayFilters
+     */
     static getCirculaireType(title: string): DisplayFilters<ICollectionLink> {
         return new DisplayFilters<ICollectionLink>({
             label: title,
@@ -62,6 +72,12 @@ export class FilterPreset {
             ],
         });
     }
+
+    /**
+     * present action toggle filterting on specificity
+     * @param  {string} title
+     * @returns DisplayFilters
+     */
     static getSpecificity(title: string): DisplayFilters<any> {
         return new DisplayFilters({
             label: title,
