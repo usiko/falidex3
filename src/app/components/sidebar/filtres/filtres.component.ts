@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
-import { BehaviorSubject } from 'rxjs'
-import { ICollectionFilter, IDisplayFilters } from 'src/app/models/filters/filter-model'
-import { ICollectionData } from 'src/app/models/linked-data-models'
-import { FilterStoreService } from 'src/app/services/data-store/filter-store/filter-store.service'
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { ICollectionFilter, IDisplayFilters } from 'src/app/models/filters/filter-model';
+import { ICollectionData } from 'src/app/models/linked-data-models';
+import { FilterStoreService } from 'src/app/services/data-store/filter-store/filter-store.service';
 
 @Component({
     selector: 'app-filtres',
@@ -15,15 +15,18 @@ export class FiltresComponent implements OnInit, OnDestroy {
         name: string,
         value: Filter
     }>();*/
-    public filtersList$: BehaviorSubject<IDisplayFilters<ICollectionData>[]>
+    public filtersList$: BehaviorSubject<IDisplayFilters<ICollectionData>[]>;
     constructor(private filterStore: FilterStoreService) {}
 
     ngOnInit() {
-        this.filtersList$ = this.filterStore.currentDisplayFilter$
+        this.filtersList$ = this.filterStore.currentDisplayFilter$;
     }
 
+    /**
+     * updating current active date filter in store, using gloval current filter data
+     */
     filterChange() {
-        this.filterStore.updateCurrentDataFilter(this.filtersList$.getValue())
+        this.filterStore.updateCurrentDataFilter(this.filtersList$.getValue());
     }
 
     ngOnDestroy() {}

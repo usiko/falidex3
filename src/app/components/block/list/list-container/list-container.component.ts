@@ -1,46 +1,85 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { IonContent, IonInfiniteScroll } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
+import { InfiniteScrollCustomEvent, IonContent, IonInfiniteScroll, IonSlides } from '@ionic/angular';
+import { BehaviorSubject, Subscription, timer } from 'rxjs';
 
+/**
+ * List dislayer and switcher
+ */
 @Component({
     selector: 'app-list-container',
     templateUrl: './list-container.component.html',
     styleUrls: ['./list-container.component.scss'],
 })
-export class LisContainerComponent implements OnInit {
-    private targetScroll;
+export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
+    @ViewChild(IonSlides) slides: IonSlides;
 
-    @Input() dataLength: number; // full length
-    private itemLengthValue: number;
-    @Input() set itemLength(itemLength: number) {
-        if (this.targetScroll) {
-            this.targetScroll.complete();
-            this.targetScroll = null;
-        }
-        this.itemLengthValue = itemLength;
-    }
-    get itemLength(): number {
-        return this.itemLengthValue;
-    }
-    @Input() showListMode = true;
+    /***
+     * loading state
+     */
     @Input() loading = false;
-    @Input() listMode = 'list';
 
+    @Input() activeListMode: {
+        list?: boolean;
+        gallery?: boolean;
+    };
 
+    public slidesOptions: {
+        allowTouchMove: false;
+        autoplay: false;
+    };
 
-    @Output() ongetMore = new EventEmitter();
+    public listMode: string;
 
+    constructor() {}
 
-    constructor() { }
+    /**
+     * switching of list mode
+     * @param  {string} listMode
+     */
     switchListMode(listMode: string) {
-        this.listMode = listMode;
-    }
-    getMore(event) {
-        console.log('get more')
-        this.targetScroll = event.target;
-        this.ongetMore.emit();
+        if (listMode == 'list') {
+            this.slides.slideTo(0);
+        }
+        if (listMode == 'gallery') {
+            this.slides.slideTo(1);
+        }
     }
 
-    ngOnInit() { }
+    /**
+     * getting list mode from slide
+     */
+    private getListMode() {
+        if (this.slides) {
+            this.slides.getActiveIndex().then((index) => {
+                if (index === 0) {
+                    this.listMode = 'list';
+                }
+                if (index === 1) {
+                    this.listMode = 'gallery';
+                }
+            });
+        }
+    }
 
+    ngAfterViewInit(): void {
+        if (this.slides) {
+            this.slides.ionSlideDidChange.subscribe((event) => {
+                this.getListMode();
+            });
+            this.slides.slideTo(0);
+        }
+    }
+
+    ngOnInit(): void {
+        // init listmode without slide
+        if (this.activeListMode && !(this.activeListMode.gallery && this.activeListMode.list)) {
+            if (this.activeListMode.list) {
+                this.listMode = 'list';
+            } else if (this.activeListMode.gallery) {
+                this.listMode = 'gallery';
+            }
+        }
+    }
+
+    ngOnDestroy(): void {}
 }

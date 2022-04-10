@@ -52,7 +52,6 @@ export class PageItemList<Item extends ICollectionData> {
     protected collection$: BehaviorSubject<Item[]>;
 
     //protected content;
-    private filterSubscription = new Subscription();
 
     /**
      * current number of items to show per page
@@ -80,9 +79,14 @@ export class PageItemList<Item extends ICollectionData> {
     public showScrollTopBtn = false;
 
     /**
-     * current data loading state
+     * current intial data loading state
      */
-    public loading = false;
+    public initLoading = false;
+
+    /**
+     * current scroll data loading state
+     */
+    public loadingScroll = false;
 
     /**
      * list of items to show, filtered, sorted, sliced
@@ -97,33 +101,45 @@ export class PageItemList<Item extends ICollectionData> {
      */
     public dataLength = null;
 
+    private subscription = new Subscription();
+
+    private targetScroll;
+
     /**
      * init the the component
      */
     init() {
-        this.listManagerService.init();
-        this.initEmptyList();
         this.collection$ = this.collectionService.collection$;
-        this.collection$.subscribe((collection) => {
-            this.listManagerService.setCollection(collection);
-            console.log('update items', this.items$.getValue(), this.collection$.getValue());
-        });
+        this.listManagerService.init(this.collection$);
+        this.initLoading = true;
+        this.loadingScroll = true;
+        this.initEmptyList();
 
-        this.items$.subscribe(
-            () => {
+        this.subscription.add(
+            this.items$.subscribe(() => {
                 this.dataLength = this.listManagerService.getDataSize();
+                this.loadingScroll = false;
+                if (this.targetScroll) {
+                    this.targetScroll.complete();
+                    this.targetScroll = null;
+                }
+                if (this.dataLength > 0) {
+                    this.initLoading = false;
+                }
                 console.log('update items', this.items$.getValue(), this.collection$.getValue());
-                this.loading = false;
                 this.changeDetector.detectChanges();
-            },
-            (err) => {
-                this.loading = false;
-                this.changeDetector.detectChanges();
-            }
+            })
         );
-        this.listManagerService.items$.pipe(debounceTime(500)).subscribe((items) => {
-            this.items$.next(items);
-        });
+        this.subscription.add(
+            this.listManagerService.filterChange.subscribe(() => {
+                this.filterChange();
+            })
+        );
+        this.subscription.add(
+            this.listManagerService.items$.pipe(debounceTime(500)).subscribe((items) => {
+                this.items$.next(items);
+            })
+        );
         this.listManagerService.setPageNumber(this.pageNumber);
         this.listManagerService.setPageSize(this.pageSize);
     }
@@ -150,6 +166,10 @@ export class PageItemList<Item extends ICollectionData> {
         }*/
     }
 
+    /**
+     * initializing showed filter in menu
+     * @param  {IDisplayFilters<any>[]} filters
+     */
     protected initDisplayFilters(filters: IDisplayFilters<any>[]) {
         this.listManagerService.setDisplayFilters(filters);
     }
@@ -165,14 +185,6 @@ export class PageItemList<Item extends ICollectionData> {
         } else {
             this.searchFilterIndex = this.listManagerService.addFilter('name', [search], FilterOperatorEnum.contain);
         }
-        /*this.collectionService.resetPage();
-        this.pageNumber = 1;
-        this.collectionService.changePageSize(this.pageSize * this.pageNumber);
-        if (search && search.length > 0) {
-            this.collectionService.addFilter({ name: FilterName.name, value: search });
-        } else {
-            this.collectionService.removeFilter(FilterName.name);
-        }*/
     }
 
     /**
@@ -192,66 +204,15 @@ export class PageItemList<Item extends ICollectionData> {
     /**
      * adding new filter to service
      */
-    filterChange(name, value) {
+    filterChange() {
         this.scrollToTop();
-        /*switch (name) {
-            case FilterName.circulaireMat:
-
-                if (value.length === 2) {
-                    this.collectionService.removeFilter(name);
-                } else {
-                    this.collectionService.addFilter({ name, value });
-                }
-
-                break;
-            case FilterName.spe:
-                if (value === 'all') {
-                    this.collectionService.removeFilter(name);
-                } else {
-                    this.collectionService.addFilter({ name, value });
-                }
-                break;
-        }*/
     }
-
-    /**
-     * getting data with or without filters
-     */
-    /*getFilteresData(reset = false) {
-        this.dataLength = null;
-        console.log(reset, this.listData.slice())
-        if (this.listData.length > 0 && this.listData.filter(data => data === null).length === 0) {
-            this.loading = true;
-        } else {
-            this.initEmptyList();
-        }
-        if (reset) {
-            this.listData = [];
-            this.collectionService.resetPage();
-        }
-
-        const sub = this.collectionService.getList().debounceTime(350).subscribe(data => {
-            console.log(data);
-            this.listData.push(...data.data);
-            this.dataLength = data.count;
-            if (this.infiniteScroll) {
-                this.infiniteScroll.complete();
-            }
-        }, (err) => {
-            this.loading = false;
-            if (this.infiniteScroll) {
-                this.infiniteScroll.complete();
-            }
-        });
-        this.subscribers.add(sub);
-
-    }*/
 
     /**
      * destroying view
      */
     onDestroy() {
-        this.listManagerService.destroy();
+        this.subscription.unsubscribe();
         //this.subscribers.unsubscribe();
     }
 
@@ -264,13 +225,14 @@ export class PageItemList<Item extends ICollectionData> {
             this.emptyItems.push(null);
         }
     }
-
     /**
-     * load more data from collection
+     * event loading infinite scroll trigered
+     * @param  {InfiniteScrollCustomEvent} event
      */
-    getMore() {
+    getMore(event) {
+        this.targetScroll = event.target;
         console.log('get more');
-        this.loading = true;
+        this.loadingScroll = true;
         this.pageNumber++;
         this.listManagerService.setPageNumber(this.pageNumber);
     }

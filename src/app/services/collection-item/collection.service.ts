@@ -1,11 +1,20 @@
-import { BehaviorSubject, Subject } from "rxjs";
-import { debounceTime } from "rxjs/operators";
-import { IBaseCollectionData } from "src/app/models/base-data-models";
-import { IRelationData, IRelationItem } from "src/app/models/base-relations.models";
-import { ICollectionData, ICollectionLink } from "src/app/models/linked-data-models";
-import { ISubBaseCirculaire, ISubBaseCollectionData, ISubBaseFiliere, ISubBasePlacement, ISubBasePosition, ISubBaseSignification, ISubBaseSymbol, ISubBaseSymbolAcessory, ISubSymbolSens } from "src/app/models/sub-base-data-models";
-import { SubStoreService } from "../data-store/sub-store/sub-store.service";
-
+import { BehaviorSubject, Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { IBaseCollectionData } from 'src/app/models/base-data-models';
+import { IRelationData, IRelationItem } from 'src/app/models/base-relations.models';
+import { ICollectionData, ICollectionLink } from 'src/app/models/linked-data-models';
+import {
+    ISubBaseCirculaire,
+    ISubBaseCollectionData,
+    ISubBaseFiliere,
+    ISubBasePlacement,
+    ISubBasePosition,
+    ISubBaseSignification,
+    ISubBaseSymbol,
+    ISubBaseSymbolAcessory,
+    ISubSymbolSens,
+} from 'src/app/models/sub-base-data-models';
+import { SubStoreService } from '../data-store/sub-store/sub-store.service';
 
 export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedModel extends ICollectionData> {
     protected store: SubStoreService;
@@ -13,13 +22,8 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
     protected currentRelation$: BehaviorSubject<IRelationData>;
     public collection$ = new BehaviorSubject<LinkedModel[]>([]);
 
-
-
     private runBuild$ = new Subject(); // debouncing assemblage données
-    constructor() {
-
-
-    }
+    constructor() {}
 
     /**
      * init le servive qui va alors se binder au store
@@ -38,13 +42,7 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
             this.runBuild$.next();
         });
         this.bindSubjectToBuild(this.baseCollection$);
-
-
     }
-
-
-
-
 
     /**
      * ajoute une ecoute au store pour rebuild les data
@@ -55,12 +53,11 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
         });
     }
 
-
     /**
      * assemble des objets du store en fonctions des ids des relations
      */
     private getLinkedModel(relations: IRelationItem[]): ICollectionLink[] {
-        return relations.map(relation => {
+        return relations.map((relation) => {
             const returned: ICollectionLink = {};
             if (relation.circulaireId) {
                 returned.circulaire = this.store.getItemById(relation.circulaireId, this.store.circulaires$) as ISubBaseCirculaire;
@@ -69,7 +66,10 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
                 returned.filiere = this.store.getItemById(relation.filiereId, this.store.filieres$) as ISubBaseFiliere;
             }
             if (relation.significationId) {
-                returned.signification = this.store.getItemById(relation.significationId, this.store.significations$) as ISubBaseSignification;
+                returned.signification = this.store.getItemById(
+                    relation.significationId,
+                    this.store.significations$
+                ) as ISubBaseSignification;
             }
             if (relation.placementId) {
                 returned.placement = this.store.getItemById(relation.placementId, this.store.placements$) as ISubBasePlacement;
@@ -84,7 +84,10 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
                 returned.symbolsens = this.store.getItemById(relation.symboleSensId, this.store.symbolesSens$) as ISubSymbolSens;
             }
             if (relation.symboleAccessoryId) {
-                returned.symboleAccessory = this.store.getItemById(relation.symboleAccessoryId, this.store.symbolesAccessories$) as ISubBaseSymbolAcessory;
+                returned.symboleAccessory = this.store.getItemById(
+                    relation.symboleAccessoryId,
+                    this.store.symbolesAccessories$
+                ) as ISubBaseSymbolAcessory;
             }
             returned.spe = relation.spe;
             returned.note = relation.note;
@@ -94,7 +97,6 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
     }
 
     //abstract buildCollection(collection: IBaseCollectionData[], relation: IRelationData): LinkedModel[];
-
 
     /**
      * build object associés en fonction du store
@@ -114,18 +116,13 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
                     returned.push({
                         links,
                         //links: [],
-                        ...item
+                        ...item,
                     } as LinkedModel);
-
-                }
-                else {
+                } else {
                     console.warn('empty links', item, filtered);
                 }
-
             }
             return returned;
-
-
         }
     }
 
@@ -135,5 +132,4 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
     protected linkFinder(item: ISubBaseCollectionData, links: IRelationItem[]): IRelationItem[] {
         return [];
     }
-
 }
