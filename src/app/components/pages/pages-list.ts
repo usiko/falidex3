@@ -79,9 +79,14 @@ export class PageItemList<Item extends ICollectionData> {
     public showScrollTopBtn = false;
 
     /**
-     * current data loading state
+     * current intial data loading state
      */
-    public loading = false;
+    public initLoading = false;
+
+    /**
+     * current scroll data loading state
+     */
+    public loadingScroll = false;
 
     /**
      * list of items to show, filtered, sorted, sliced
@@ -98,27 +103,32 @@ export class PageItemList<Item extends ICollectionData> {
 
     private subscription = new Subscription();
 
+    private targetScroll;
+
     /**
      * init the the component
      */
     init() {
         this.collection$ = this.collectionService.collection$;
         this.listManagerService.init(this.collection$);
+        this.initLoading = true;
+        this.loadingScroll = true;
         this.initEmptyList();
 
         this.subscription.add(
-            this.items$.subscribe(
-                () => {
-                    this.dataLength = this.listManagerService.getDataSize();
-                    console.log('update items', this.items$.getValue(), this.collection$.getValue());
-                    this.loading = false;
-                    this.changeDetector.detectChanges();
-                },
-                (err) => {
-                    this.loading = false;
-                    this.changeDetector.detectChanges();
+            this.items$.subscribe(() => {
+                this.dataLength = this.listManagerService.getDataSize();
+                this.loadingScroll = false;
+                if (this.targetScroll) {
+                    this.targetScroll.complete();
+                    this.targetScroll = null;
                 }
-            )
+                if (this.dataLength > 0) {
+                    this.initLoading = false;
+                }
+                console.log('update items', this.items$.getValue(), this.collection$.getValue());
+                this.changeDetector.detectChanges();
+            })
         );
         this.subscription.add(
             this.listManagerService.filterChange.subscribe(() => {
@@ -215,13 +225,14 @@ export class PageItemList<Item extends ICollectionData> {
             this.emptyItems.push(null);
         }
     }
-
     /**
-     * load more data from collection
+     * event loading infinite scroll trigered
+     * @param  {InfiniteScrollCustomEvent} event
      */
-    getMore() {
+    getMore(event) {
+        this.targetScroll = event.target;
         console.log('get more');
-        this.loading = true;
+        this.loadingScroll = true;
         this.pageNumber++;
         this.listManagerService.setPageNumber(this.pageNumber);
     }

@@ -1,21 +1,60 @@
-<ion-list [class.gallery]="listMode == 'gallery'" [class.list]="listMode == 'list'" color="light">
-    <ion-list-header lines="inset" color="light" *ngIf="showListMode">
-        <ion-label>Affichage</ion-label>
-        <ion-buttons>
-            <ion-button [color]="listMode == 'list'?'secondary':'dark'" (click)="switchListMode('list')">
-                <ion-icon slot="icon-only" name="list-box"></ion-icon>
-            </ion-button>
-            <ion-button [color]="listMode == 'gallery'?'secondary':'dark'" (click)="switchListMode('gallery')">
-                <ion-icon slot="icon-only" name="images"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-    </ion-list-header>
+<ng-container *ngTemplateOutlet="headerTpl">
+</ng-container>
+<ng-container *ngIf="activeListMode">
+    <!-- list-->
+    <ng-container *ngIf="!activeListMode.gallery && activeListMode.list">
+        <ion-item-group class="list list-item" color="light">
+            <ng-container *ngTemplateOutlet="listTpl"></ng-container>
+        </ion-item-group>
 
-    <ng-content select="[slot='list']" *ngIf="listMode == 'list'"></ng-content>
-    <ng-content select="[slot='gallery']" *ngIf="listMode == 'gallery'"></ng-content>
-</ion-list>
+    </ng-container>
 
-<ion-infinite-scroll [disabled]="itemLength>=dataLength || dataLength==0" threshold="120px" (ionInfinite)="getMore($event)">
-    <ion-infinite-scroll-content color="primary" loadingSpinner="circular" loadingText="attends...">
-    </ion-infinite-scroll-content>
-</ion-infinite-scroll>
+    <!-- gallery-->
+    <ng-container *ngIf="activeListMode.gallery && !activeListMode.list">
+        <ion-item-group class="gallery list-item" color="light">
+
+            <ng-container *ngTemplateOutlet="galleryTpl"></ng-container>
+        </ion-item-group>
+
+    </ng-container>
+
+    <!-- both, sliding-->
+    <ng-container *ngIf="activeListMode.gallery && activeListMode.list">
+        <ion-slides [options]="slidesOptions" [pager]="false">
+            <ion-slide>
+                <ion-item-group class="list list-item" color="light">
+                    <ng-container *ngTemplateOutlet="listTpl"></ng-container>
+                </ion-item-group>
+
+            </ion-slide>
+            <ion-slide>
+                <ion-item-group class="gallery list-item" color="light">
+                    <ng-container *ngTemplateOutlet="galleryTpl"></ng-container>
+                </ion-item-group>
+
+            </ion-slide>
+        </ion-slides>
+    </ng-container>
+</ng-container>
+
+<ng-template #headerTpl>
+    <ion-item-divider sticky class="list-header" lines="inset" color="light" *ngIf="activeListMode && activeListMode.list && activeListMode.gallery">
+        <div class="header-container">
+            <ion-label>Affichage</ion-label>
+            <ion-buttons>
+                <ion-button [color]="listMode == 'list'?'secondary':'dark'" (click)="switchListMode('list')">
+                    <ion-icon slot="icon-only" name="list"></ion-icon>
+                </ion-button>
+                <ion-button [color]="listMode == 'gallery'?'secondary':'dark'" (click)="switchListMode('gallery')">
+                    <ion-icon slot="icon-only" name="images"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+        </div>
+    </ion-item-divider>
+</ng-template>
+<ng-template #listTpl>
+    <ng-content select="[slot='list']"></ng-content>
+</ng-template>
+<ng-template #galleryTpl>
+    <ng-content select="[slot='gallery']"></ng-content>
+</ng-template>

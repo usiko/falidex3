@@ -1,4 +1,11 @@
-ion-list {
+.list-item {
+    /*padding-top: 50px;
+    height: 100%;*/
+    &::ng-deep {
+        ion-item {
+            margin-top: 0;
+        }
+    }
     &.gallery {
         display: flex;
         flex-wrap: wrap;
@@ -7,6 +14,38 @@ ion-list {
                 width: 33%;
             }
         }
+    }
+}
+
+.list-header {
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+}
+
+ion-slides {
+    //height: 100%;
+    ion-slide {
+        display: block;
+        position: relative;
+        .list-item {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+        &.swiper-slide-active {
+            .list-item {
+                position: relative;
+            }
+        }
+        /* position: absolute;
+        z-index: -1;
+        */
     }
 }
 

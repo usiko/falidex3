@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { InfiniteScrollCustomEvent, IonContent, IonInfiniteScroll } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
+import { InfiniteScrollCustomEvent, IonContent, IonInfiniteScroll, IonSlides } from '@ionic/angular';
+import { BehaviorSubject, Subscription, timer } from 'rxjs';
 
 /**
  * List dislayer and switcher
@@ -10,51 +10,25 @@ import { BehaviorSubject } from 'rxjs';
     templateUrl: './list-container.component.html',
     styleUrls: ['./list-container.component.scss'],
 })
-export class LisContainerComponent implements OnInit {
-    private targetScroll;
-    /**
-     * full data length to for infinit scroll
-     */
-    @Input() dataLength: number;
-
-    /**
-     * data loaded length for infinit scroll
-     */
-    private itemLengthValue: number;
-
-    /**
-     * setter data loaded length for infinit scroll
-     */
-    @Input() set itemLength(itemLength: number) {
-        if (this.targetScroll) {
-            this.targetScroll.complete();
-            this.targetScroll = null;
-        }
-        this.itemLengthValue = itemLength;
-    }
-    get itemLength(): number {
-        return this.itemLengthValue;
-    }
-
-    /**
-     * Display list switcher
-     */
-    @Input() showListMode = true;
+export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
+    @ViewChild(IonSlides) slides: IonSlides;
 
     /***
      * loading state
      */
     @Input() loading = false;
 
-    /**
-     * current list mode
-     */
-    @Input() listMode = 'list';
+    @Input() activeListMode: {
+        list?: boolean;
+        gallery?: boolean;
+    };
 
-    /**
-     * event for load more data
-     */
-    @Output() ongetMore = new EventEmitter();
+    public slidesOptions: {
+        allowTouchMove: false;
+        autoplay: false;
+    };
+
+    public listMode: string;
 
     constructor() {}
 
@@ -63,21 +37,49 @@ export class LisContainerComponent implements OnInit {
      * @param  {string} listMode
      */
     switchListMode(listMode: string) {
-        this.listMode = listMode;
+        if (listMode == 'list') {
+            this.slides.slideTo(0);
+        }
+        if (listMode == 'gallery') {
+            this.slides.slideTo(1);
+        }
     }
 
     /**
-     * event loading infinite scroll trigered
-     * @param  {InfiniteScrollCustomEvent} event
+     * getting list mode from slide
      */
-    getMore(event) {
-        console.log('get more');
-        this.targetScroll = event.target;
-        this.ongetMore.emit();
+    private getListMode() {
+        if (this.slides) {
+            this.slides.getActiveIndex().then((index) => {
+                if (index === 0) {
+                    this.listMode = 'list';
+                }
+                if (index === 1) {
+                    this.listMode = 'gallery';
+                }
+            });
+        }
     }
 
-    /**
-     * init view
-     */
-    ngOnInit() {}
+    ngAfterViewInit(): void {
+        if (this.slides) {
+            this.slides.ionSlideDidChange.subscribe((event) => {
+                this.getListMode();
+            });
+        }
+        this.getListMode();
+    }
+
+    ngOnInit(): void {
+        // init listmode without slide
+        if (this.activeListMode && !(this.activeListMode.gallery && this.activeListMode.list)) {
+            if (this.activeListMode.list) {
+                this.listMode = 'list';
+            } else if (this.activeListMode.gallery) {
+                this.listMode = 'gallery';
+            }
+        }
+    }
+
+    ngOnDestroy(): void {}
 }
