@@ -1,5 +1,0 @@
-<ion-item *ngFor="let filter of filters">
-    <ion-label>{{filter.label}}</ion-label>
-    <ion-toggle (ionChange)="filterChange()" slot="start" color="secondary" [(ngModel)]="filter.value"></ion-toggle>
-    <!--<ion-checkbox slot="start" color="secondary" [value]="filter.value"></ion-checkbox>-->
-</ion-item>

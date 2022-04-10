@@ -36,6 +36,7 @@ import { IRelationData } from 'src/app/models/base-relations.models';
     providedIn: 'root',
 })
 export class DataLoaderStoreService {
+    private delay = 1000;
     constructor(private store: StoreService, private event: EventService) {}
 
     loadData(): void {
@@ -233,7 +234,7 @@ export class DataLoaderStoreService {
     private dispactIntoSubject(obs: Observable<IBaseCollectionData[]>, subject: BehaviorSubject<IBaseCollectionData[]>) {
         return obs.pipe(
             take(1),
-            delay(750),
+            delay(this.delay),
             map((items) => {
                 console.log(items.length, 'items loaded');
                 subject.next(items);

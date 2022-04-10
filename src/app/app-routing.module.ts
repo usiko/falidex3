@@ -1,13 +1,10 @@
 import { Component, NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { FiliereRoutingModule } from './components/pages/filiere/filiere-routing.module';
-import { FiliereListComponent } from './components/pages/filiere/list/filiere-list.component';
 import { HomePage } from './components/pages/home/home.page';
-import { SymbolListComponent } from './components/pages/symbol/list/symbol-list.component';
 import { SymbolRoutingModule } from './components/pages/symbol/symbole-routing.module';
 
 const routes: Routes = [
-
     { path: '', component: HomePage },
     /*{ path: 'list', component: ListPage },
     { path: 'spes', component: SpesComponent },
@@ -19,23 +16,17 @@ const routes: Routes = [
     { path: 'circulaires', loadChildren: './components/pages/circulaires/circulaires-routing.module#CirculairesRoutingModule' },
     { path: 'spes', loadChildren: './components/pages/spe/spe-routing.module#SpeRoutingModule' },
     { path: 'codes', loadChildren: './components/pages/filecode/filecode-routing.module#FilecodeRoutingModule' }*/
-    { path: 'symbols', loadChildren:()=> SymbolRoutingModule },
-    { path: 'filieres',loadChildren:()=> FiliereRoutingModule }
+    { path: 'symbols', loadChildren: () => SymbolRoutingModule },
+    { path: 'filieres', loadChildren: () => FiliereRoutingModule },
 
     /*{ path: 'symboles', children: symboleRoutes },
     { path: 'filieres', children: filiereRoutes },
     { path: 'circulaires', children: circulaireRoutes },
     { path: 'spes', children: speRoutes }*/
-
-
 ];
 
 @NgModule({
-    imports: [
-        RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
-        SymbolRoutingModule,
-        FiliereRoutingModule
-    ],
-    exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
+    exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

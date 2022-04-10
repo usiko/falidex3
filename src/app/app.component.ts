@@ -53,18 +53,18 @@ export class AppComponent implements OnInit {
         const appPages: { title: string; url: string; icon?: string; src?: string; disabled?: boolean }[] = [
             {
                 title: 'Acceuil',
-                url: '/',
+                url: '',
                 icon: 'home',
             },
             {
                 title: 'Insignes/emblemes',
-                url: '/symbols',
+                url: 'symbols',
                 icon: 'medal',
                 disabled: this.symbolService.collection$.getValue().length == 0,
             },
             {
                 title: 'Filières',
-                url: '/filieres',
+                url: 'filieres',
                 icon: 'school',
                 disabled: this.filieresService.collection$.getValue().length == 0,
             },

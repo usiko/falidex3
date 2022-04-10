@@ -6,7 +6,7 @@
     <ng-container *ngFor="let p of pages; trackBy:trackByFnMenu">
         <ng-container>
             <ion-menu-toggle auto-hide="false">
-                <ion-item [class.disabled-item]="p.disabled" [routerDirection]="'root'" [routerLink]="p.disabled?null:[p.url]">
+                <ion-item [class.disabled-item]="p.disabled" [class.ion-activable]="!p.disabled" [class.ion-activatable]="!p.disabled" [routerLink]="p.disabled?null:[p.url]">
                     <ion-icon color="secondary" slot="start" [name]="p.icon" [src]="p.src"></ion-icon>
                     <ion-label>
                         {{p.title}}
