@@ -21,6 +21,7 @@ export class EventService {
      */
     publish(topic: string, data?: any) {
         const subject = this.getTopic(topic);
+        console.log('fire subscription', 'topic', subject);
         subject.next(data);
     }
     /**
@@ -29,6 +30,7 @@ export class EventService {
      */
     getObs(topic: string) {
         const subject = this.getTopic(topic);
+        console.log('get subscription', 'topic', subject);
         return subject.asObservable();
     }
 }
