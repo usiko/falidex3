@@ -1,0 +1,6 @@
+<ion-header *ngIf="symbol$|async as symbol">
+    <app-header title="{{(symbol)?symbol.name:'oops'}}"></app-header>
+</ion-header>
+<ion-content>
+    <!--symbole detaisl block here-->
+</ion-content>

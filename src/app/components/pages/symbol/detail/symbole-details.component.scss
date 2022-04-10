@@ -1,7 +1,10 @@
-:host {
+.content {
     text-align: center;
     width: 100%;
     //padding: 0 32px;
+    h1 {
+        margin-bottom: 30px;
+    }
 }
 
 ion-tab-bar {
@@ -12,8 +15,8 @@ ion-tab-bar {
         --color-focused: rgba(var(--ion-color-light-rgb), 1);
         --color: rgba(var(--ion-color-light-rgb), 0.5);
         /*&.tab-selected {
-        --background: var(--ion-color-secondary);
-      }*/
+      --background: var(--ion-color-secondary);
+    }*/
         ion-badge {
             --background: var(--ion-color-dark-tint);
         }
