@@ -21,13 +21,13 @@
     <!-- both, sliding-->
     <ng-container *ngIf="activeListMode.gallery && activeListMode.list">
         <ion-slides [options]="slidesOptions" [pager]="false">
-            <ion-slide>
+            <ion-slide [class.absoluteList]="listMode=='gallery'">
                 <ion-item-group class="list list-item" color="light">
                     <ng-container *ngTemplateOutlet="listTpl"></ng-container>
                 </ion-item-group>
 
             </ion-slide>
-            <ion-slide>
+            <ion-slide [class.absoluteList]="listMode=='list'">
                 <ion-item-group class="gallery list-item" color="light">
                     <ng-container *ngTemplateOutlet="galleryTpl"></ng-container>
                 </ion-item-group>

@@ -66,8 +66,8 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
             this.slides.ionSlideDidChange.subscribe((event) => {
                 this.getListMode();
             });
+            this.slides.slideTo(0);
         }
-        this.getListMode();
     }
 
     ngOnInit(): void {
