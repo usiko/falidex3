@@ -16,7 +16,10 @@ const routes: Routes = [
     { path: 'circulaires', loadChildren: './components/pages/circulaires/circulaires-routing.module#CirculairesRoutingModule' },
     { path: 'spes', loadChildren: './components/pages/spe/spe-routing.module#SpeRoutingModule' },
     { path: 'codes', loadChildren: './components/pages/filecode/filecode-routing.module#FilecodeRoutingModule' }*/
-    { path: 'symbols', loadChildren: () => SymbolRoutingModule },
+    {
+        path: 'symbols',
+        loadChildren: () => import('./components/pages/symbol/symbole-routing.module').then((mod) => mod.SymbolRoutingModule),
+    },
     { path: 'filieres', loadChildren: () => FiliereRoutingModule },
 
     /*{ path: 'symboles', children: symboleRoutes },

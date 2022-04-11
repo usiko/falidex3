@@ -23,11 +23,6 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
         gallery?: boolean;
     };
 
-    public slidesOptions: {
-        allowTouchMove: false;
-        autoplay: false;
-    };
-
     public listMode: string;
 
     constructor() {}
@@ -63,6 +58,8 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
 
     ngAfterViewInit(): void {
         if (this.slides) {
+            this.slides.lockSwipes(true);
+            this.slides.stopAutoplay();
             this.slides.ionSlideDidChange.subscribe((event) => {
                 this.getListMode();
             });

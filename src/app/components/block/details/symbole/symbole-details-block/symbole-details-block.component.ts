@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
-import { ISymbol } from 'src/app/models/linked-data-models';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { ICollectionLink, IFiliere, ISignification, ISymbol } from 'src/app/models/linked-data-models';
 
 @Component({
     selector: 'app-symbole-details-block',
@@ -9,10 +9,11 @@ import { ISymbol } from 'src/app/models/linked-data-models';
     styleUrls: ['./symbole-details-block.component.scss'],
 })
 export class SymboleDetailsBlockComponent implements OnInit {
-    constructor() {}
-
     @ViewChild('slides') slide: IonSlides;
     @Input() symbol$: BehaviorSubject<ISymbol>;
+    public significations: ISignification[] = [];
+    public filieres: IFiliere[] = [];
+
     public selectedTab;
     public slideOptions = {
         autoplay: false,
@@ -21,42 +22,35 @@ export class SymboleDetailsBlockComponent implements OnInit {
     public slidesIndex$ = new BehaviorSubject(0);
 
     public slidable = true;
+
+    private subscription = new Subscription();
+    constructor() {}
     ngOnInit() {
         if (this.symbol$) {
-            // load filiere from symbol
-            // loadsignifications
+            this.subscription.add(
+                this.symbol$.subscribe((symbol) => {
+                    if (symbol && symbol.links) {
+                        this.filieres = this.getFilieres(symbol.links);
+                        this.significations = this.getSignification(symbol.links);
+                        console.log('dep', this.filieres, this.significations);
+                        if (this.filieres.length === 0 || this.significations.length === 0) {
+                            this.slidable = false;
+                            if (this.slide) {
+                                if (!this.slidable) {
+                                    this.slide.lockSwipes(true);
+                                }
+                            }
+                            if (this.filieres.length !== 0) {
+                                this.selectedTab = 'filieres';
+                            }
+                            if (this.significations.length !== 0) {
+                                this.selectedTab = 'significations';
+                            }
+                        }
+                    }
+                })
+            );
         }
-        /*this.dataService.initData();
-      this.dataService.details(this.route.snapshot.params.id).subscribe(data => {
-          console.log(data);
-          this.symbole = data.data;
-          this.significations = this.symbole.significations;
-          this.filieres = this.symbole.circFil.map((circFil => {
-              const filiere = new Filiere(circFil.filiere.name, circFil.filiere.id);
-              filiere.circSymboles.push({
-                  symbole: null,
-                  circulaire: circFil.circulaire,
-                  spe: circFil.spe
-              });
-              return filiere;
-          }));
-          if (this.filieres.length === 0 || this.significations.length === 0) {
-              this.slidable = false;
-              if (this.slide) {
-                  if (!this.slidable) {
-                      this.slide.lockSwipes(true);
-                  }
-              }
-              if (this.filieres.length !== 0) {
-                  this.selectedTab = 'filieres';
-              }
-              if (this.significations.length !== 0) {
-                  this.selectedTab = 'significations';
-              }
-          }
-
-
-      });*/
 
         this.slidesIndex$.subscribe((num) => {
             if (this.slidable) {
@@ -71,6 +65,49 @@ export class SymboleDetailsBlockComponent implements OnInit {
                 }
             }
         });
+    }
+
+    private getSignification(links: ICollectionLink[]) {
+        return links
+            .filter((link) => link.signification)
+            .reduce((acc: ISignification[], link) => {
+                let signification = acc.find((item) => {
+                    item.id == link.signification.id;
+                });
+                if (!signification) {
+                    signification = {
+                        ...link.signification,
+                        links: [],
+                    };
+                }
+                signification.links.push({
+                    ...link,
+                    signification: undefined,
+                });
+                acc.push(signification);
+                return acc;
+            }, []);
+    }
+    private getFilieres(links: ICollectionLink[]): IFiliere[] {
+        return links
+            .filter((link) => link.filiere)
+            .reduce((acc: IFiliere[], link) => {
+                let filiere = acc.find((item) => {
+                    item.id == link.filiere.id;
+                });
+                if (!filiere) {
+                    filiere = {
+                        ...link.filiere,
+                        links: [],
+                    };
+                }
+                filiere.links.push({
+                    ...link,
+                    filiere: undefined,
+                });
+                acc.push(filiere);
+                return acc;
+            }, []);
     }
 
     ngAfterViewInit() {

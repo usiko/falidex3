@@ -1,6 +1,8 @@
-<ion-header *ngIf="symbol$|async as symbol">
+<ion-header *ngIf="item$|async as symbol">
     <app-header title="{{(symbol)?symbol.name:'oops'}}"></app-header>
 </ion-header>
 <ion-content>
-    <!--symbole detaisl block here-->
+    <ng-container *ngIf="item$">
+        <app-symbole-details-block [symbol$]="item$"></app-symbole-details-block>
+    </ng-container>
 </ion-content>

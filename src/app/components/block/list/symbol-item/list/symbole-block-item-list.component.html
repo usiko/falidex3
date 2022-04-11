@@ -1,4 +1,4 @@
-<ion-item *ngIf="item && navigation" lines="none" [routerLink]="['/symboles/details',item.id]" (click)="click()" detail>
+<ion-item *ngIf="item && navigation" lines="none" [routerLink]="[navigation,item.id]" (click)="click()" detail>
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </ion-item>
 <ion-item *ngIf="item && !navigation" lines="none" (click)="click()">

@@ -12,7 +12,6 @@ import { ListItem } from '../../list-item';
     styleUrls: ['./symbole-block-item-list.component.scss'],
 })
 export class SymbolBlockItemListComponent extends ListItem<ISymbol> implements OnInit {
-
     /**
      * symbole item to show
      */
@@ -27,18 +26,15 @@ export class SymbolBlockItemListComponent extends ListItem<ISymbol> implements O
     /**
      * show navigation arrow
      */
-    @Input() navigation = false;
-
-
+    @Input() navigation: string = null;
 
     constructor() {
-        super()
+        super();
     }
 
-    ngOnInit() { }
+    ngOnInit() {}
 
     click() {
         this.onclick.emit();
     }
-
 }
