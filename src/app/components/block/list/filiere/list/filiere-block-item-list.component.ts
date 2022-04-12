@@ -11,6 +11,7 @@ export class FiliereBlockItemListComponent extends ListItem<IFiliere> implements
     @Input() item: IFiliere;
     @Input() showSpe = true;
     @Input() navigation: string = null;
+    @Input() cssClass: string;
 
     constructor() {
         super();

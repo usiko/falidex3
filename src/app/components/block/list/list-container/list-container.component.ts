@@ -33,10 +33,14 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
      */
     switchListMode(listMode: string) {
         if (listMode == 'list') {
+            this.slides.lockSwipes(false);
             this.slides.slideTo(0);
+            this.slides.lockSwipes(true);
         }
         if (listMode == 'gallery') {
+            this.slides.lockSwipes(false);
             this.slides.slideTo(1);
+            this.slides.lockSwipes(true);
         }
     }
 
@@ -58,12 +62,13 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
 
     ngAfterViewInit(): void {
         if (this.slides) {
+            this.slides.slideTo(0);
             this.slides.lockSwipes(true);
             this.slides.stopAutoplay();
             this.slides.ionSlideDidChange.subscribe((event) => {
                 this.getListMode();
             });
-            this.slides.slideTo(0);
+            this.getListMode();
         }
     }
 

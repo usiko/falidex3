@@ -19,7 +19,7 @@
             <app-navigation [pages]="appPages"></app-navigation>
         </ion-content>
     </ion-menu>
-    <ion-menu  side="end" menuId="filters" contentId="main-content" type="overlay">
+    <ion-menu side="end" menuId="filters" contentId="main-content" [swipeGesture]="false" type="overlay">
         <ion-header>
             <ion-toolbar color="secondary">
                 <ion-title>Filtres</ion-title>
@@ -28,7 +28,7 @@
         <ion-content>
             <app-filtres></app-filtres>
         </ion-content>
-        </ion-menu>
+    </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
 
 

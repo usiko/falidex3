@@ -4,6 +4,10 @@
     //padding: 0 32px;
 }
 
+ion-slide {
+    width: 100%;
+}
+
 ion-tab-bar {
     --background: var(--ion-color-secondary);
     ion-tab-button {
@@ -35,4 +39,8 @@ ion-tab-bar {
     ion-badge {
         margin-left: 10px;
     }
+}
+
+.content {
+    width: 100%;
 }

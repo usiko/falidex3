@@ -24,6 +24,11 @@ export class ListItem<T extends ICollectionData> implements OnChanges {
     @Input() navigation: string = null;
 
     /**
+     * custom css class
+     */
+    @Input() cssClass: string = null;
+
+    /**
      * click item list event
      */
     @Output() onclick = new EventEmitter<never>();

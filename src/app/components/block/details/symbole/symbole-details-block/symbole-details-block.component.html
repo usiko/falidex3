@@ -6,7 +6,7 @@
         </div>
     </ion-card>
     <ion-card>
-        <ion-tab-bar [selectedTab]="selectedTab" slot="bottom">
+        <ion-tab-bar [selectedTab]="selectedTab">
             <ion-tab-button *ngIf="((symbol.links|filterLink:['circulaire','filiere'])).length>0" (click)="slideTo(0,$event)" tab="filieres">
                 <ion-icon name="school"></ion-icon>
                 <ion-label>Filières</ion-label>
@@ -28,7 +28,7 @@
                     <div class="filieres content">
                         <ion-card *ngFor="let filiere of filieres">
 
-                            <app-filiere-block-item-list [item]="filiere"></app-filiere-block-item-list>
+                            <app-filiere-block-item-list [item]="filiere" [cssClass]="'no-symbol'"></app-filiere-block-item-list>
 
                         </ion-card>
                     </div>
