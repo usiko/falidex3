@@ -7,6 +7,7 @@ import { SymbolRoutingModule } from './components/pages/symbol/symbole-routing.m
 
 const routes: Routes = [
     { path: '', component: AnimatedSplashscreenComponent },
+    { path: 'home', component: HomePage },
     /*{ path: 'list', component: ListPage },
     { path: 'spes', component: SpesComponent },
     { path: 'spe/:id', component: SpeDetailsComponent },

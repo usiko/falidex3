@@ -119,3 +119,9 @@
       </svg>
 
 </div>
+<div class="loadingInfo" *ngIf="loadingState">
+    <ng-container>
+        <div class="message">{{loadingState.message}}</div>
+        <ion-progress-bar color="secondary" [value]="loadingState.value" [buffer]="loadingState.buffer"></ion-progress-bar>
+    </ng-container>
+</div>
