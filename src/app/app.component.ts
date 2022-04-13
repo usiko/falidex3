@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
         const appPages: { title: string; url: string; icon?: string; src?: string; disabled?: boolean }[] = [
             {
                 title: 'Acceuil',
-                url: '',
+                url: '/home',
                 icon: 'home',
             },
             {
