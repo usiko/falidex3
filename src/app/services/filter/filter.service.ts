@@ -265,8 +265,14 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
             switch (filter.operator) {
                 case FilterOperatorEnum.contain:
                     if (compared) {
+                        if (typeof compared == 'string') {
+                            compared = compared.toLowerCase();
+                        }
                         result =
                             filter.values.findIndex((val) => {
+                                if (typeof val == 'string') {
+                                    val = val.toLowerCase();
+                                }
                                 return compared.includes(val);
                             }) !== -1;
                     }
@@ -279,8 +285,14 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
                     break;
                 case FilterOperatorEnum.exclude:
                     if (compared) {
+                        if (typeof compared == 'string') {
+                            compared = compared.toLowerCase();
+                        }
                         result =
                             filter.values.findIndex((val) => {
+                                if (typeof val == 'string') {
+                                    val = val.toLowerCase();
+                                }
                                 return compared.includes(val);
                             }) == -1;
                     }
