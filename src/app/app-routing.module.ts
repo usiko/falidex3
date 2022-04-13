@@ -1,11 +1,12 @@
 import { Component, NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AnimatedSplashscreenComponent } from './components/animated-splashscreen/animated-splashscreen.component';
 import { FiliereRoutingModule } from './components/pages/filiere/filiere-routing.module';
 import { HomePage } from './components/pages/home/home.page';
 import { SymbolRoutingModule } from './components/pages/symbol/symbole-routing.module';
 
 const routes: Routes = [
-    { path: '', component: HomePage },
+    { path: '', component: AnimatedSplashscreenComponent },
     /*{ path: 'list', component: ListPage },
     { path: 'spes', component: SpesComponent },
     { path: 'spe/:id', component: SpeDetailsComponent },
