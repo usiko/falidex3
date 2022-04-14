@@ -19,18 +19,18 @@
         <ion-buttons slot="end">
 
             <ion-button (click)="toggleSearch()">
-                <ion-icon color="light" *ngIf="!isSearching" slot="icon-only" name="search" (click)="toggleSearch()"></ion-icon>
-                <ion-icon color="light" *ngIf="isSearching" slot="icon-only" name="ios-arrow-up" (click)="toggleSearch()"></ion-icon>
+                <fa-icon [icon]="['fas', 'angle-up']" color="light" *ngIf="isSearching" slot="icon-only"></fa-icon>
+                <fa-icon [icon]="['fas', 'magnifying-glass']" *ngIf="!isSearching" slot="icon-only"></fa-icon>
 
             </ion-button>
             <ion-button (click)="toggleFilterMenu()" *ngIf="isSearching && filterable">
-                <ion-icon color="light" name="add"></ion-icon>
+                <fa-icon [icon]="['fas', 'plus']"></fa-icon>
             </ion-button>
 
         </ion-buttons>
 
     </ion-toolbar>
-    <ion-toolbar color="secondary" [hidden]="!isSearching">
+    <ion-toolbar color="secondary" class="searchbar-toolbar" [class.hidden]="!isSearching">
         <ion-searchbar [value]="searchText" (ionChange)="search($event)" animated></ion-searchbar>
     </ion-toolbar>
     <ng-container *ngTemplateOutlet="barLoaderTpl"></ng-container>

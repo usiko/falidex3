@@ -5,7 +5,7 @@
 <ion-content [scrollEvents]="true" (ionScroll)="scrolling($event)">
     <ion-fab *ngIf="showScrollTopBtn" (click)="scrollToTop()" vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button color="dark">
-            <ion-icon name="ios-arrow-up"></ion-icon>
+            <fa-icon [icon]="['fas', 'angle-up']"></fa-icon>
         </ion-fab-button>
     </ion-fab>
     <ng-container *ngIf="(items$|async) as items">

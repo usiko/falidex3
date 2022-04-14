@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { MenuController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { CirculaireCollectionService } from './services/collection-item/circulaire/circulaire-collection.service';
@@ -16,7 +17,7 @@ import { DataRelationsService } from './services/relations/data-relations.servic
     styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-    public appPages: { title: string; url: string; icon?: string; src?: string; disabled?: boolean }[];
+    public appPages: { title: string; url: string; icon?: IconName; src?: string; disabled?: boolean }[];
 
     public relationsData$ = new BehaviorSubject<{ name: string; id: string }[]>([]);
     public currentRelationsData$ = new BehaviorSubject<{ name: string; id: string }>(null);
@@ -50,50 +51,46 @@ export class AppComponent implements OnInit {
     }
 
     setMenu() {
-        const appPages: { title: string; url: string; icon?: string; src?: string; disabled?: boolean }[] = [
+        const appPages: { title: string; url: string; icon?: IconName; src?: string; disabled?: boolean }[] = [
             {
                 title: 'Acceuil',
                 url: '/home',
-                icon: 'home',
+                icon: 'house',
             },
             {
                 title: 'Insignes/emblemes',
                 url: 'symbols',
-                icon: 'medal',
+                icon: 'award',
                 disabled: this.symbolService.collection$.getValue().length == 0,
             },
             {
                 title: 'Filières',
                 url: 'filieres',
-                icon: 'school',
+                icon: 'graduation-cap',
                 disabled: this.filieresService.collection$.getValue().length == 0,
+            },
+            {
+                title: 'Toutes les spés',
+                url: '/spes',
+                icon: 'file-circle-exclamation',
+                disabled: true,
+            },
+            {
+                title: 'Revisions',
+                url: '/revisions',
+                icon: 'lightbulb',
+                disabled: true,
             },
         ];
 
-        /*if (this.databuilder.getSpes().length !== 0) {
-            appPages.push(
-                {
-                    title: 'Toutes les spés',
-                    url: '/spes',
-                    src: 'assets/svg/file-info.svg'
-                });
-        }
+        /*
         if (this.databuilder.getFileCode().length !== 0) {
             appPages.push(
                 {
                     title: 'Codes',
                     url: '/codes',
-                    icon: 'paper',
+                    icon: 'scroll',
                     disabled: true
-                });
-        }
-        if (this.databuilder.getSymboles().length !== 0 || this.databuilder.getFilieres().length !== 0) {
-            appPages.push(
-                {
-                    title: 'Revisions',
-                    url: '/revisions',
-                    icon: 'bulb',
-                    disabled: false
                 });
         }*/
         this.appPages = appPages;

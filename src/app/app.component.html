@@ -1,10 +1,10 @@
 <ion-app>
 
-    <ion-menu side="start" menuId="navigation" contentId="main-content" type="overlay">
+    <ion-menu side="start" menuId="navigation" class="navigation-menu" contentId="main-content" type="overlay">
         <ion-header>
             <ion-toolbar>
                 <ion-item lines="none">
-                    <ion-icon slot="start" name='book'></ion-icon>
+                    <fa-icon [icon]="['fas', 'book']" slot="start"></fa-icon>
                     <ng-container *ngIf="(relationsData$|async) as relations">
                         <ion-select placeholder="changer" (ionChange)="setCurrentRelation($event)" [value]="(currentRelationsData$|async).id" *ngIf="relations && relations.length>1 && (currentRelationsData$|async)">
                             <ion-select-option *ngFor="let relation of (relationsData$|async)" [value]="relation.id"> Code {{relation.name}}</ion-select-option>
@@ -19,7 +19,7 @@
             <app-navigation [pages]="appPages"></app-navigation>
         </ion-content>
     </ion-menu>
-    <ion-menu  side="end" menuId="filters" contentId="main-content" type="overlay">
+    <ion-menu side="end" menuId="filters" contentId="main-content" type="overlay">
         <ion-header>
             <ion-toolbar color="secondary">
                 <ion-title>Filtres</ion-title>
@@ -28,7 +28,7 @@
         <ion-content>
             <app-filtres></app-filtres>
         </ion-content>
-        </ion-menu>
+    </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
 
 
