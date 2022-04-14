@@ -17,7 +17,7 @@
                 </div>
                 <div class="content-slide">
                     <ion-button fill="clear" [disabled]="slideIndex==0" *ngIf="filiere.circSymboles.length>1" (click)="slideprevious()" expand="full" size="small">
-                        <fa-icon [icon]="['fas', 'angle-left']" color="dark" slot="icon-only"></fa-icon>
+                        <fa-icon class='dark-color' [icon]="['fas', 'angle-left']" class="dark-color" slot="icon-only"></fa-icon>
                     </ion-button>
                     <div class="title">
                         <ion-card-header>
@@ -28,7 +28,7 @@
                         </ion-card-content>
                     </div>
                     <ion-button fill="clear" [disabled]="slideIndex==filiere.circSymboles.length-1" *ngIf="filiere.circSymboles.length>1" (click)="slidenext()" expand="full" size="small">
-                        <fa-icon [icon]="['fas', 'angle-right']" color="dark" slot="icon-only"></fa-icon>
+                        <fa-icon class='dark-color' [icon]="['fas', 'angle-right']" class="dark-color" slot="icon-only"></fa-icon>
                     </ion-button>
                 </div>
 
