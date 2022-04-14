@@ -17,8 +17,7 @@
                 <ng-container *ngIf="circFils.length>2">
                     <div class="content">
                         <div class="flex">
-                            <ion-icon color="secondary" *ngIf="circFils[0].spe && showSpe" name="star">
-                            </ion-icon>
+                            <fa-icon [icon]="['fa-duotone', 'star']" color="secondary" *ngIf="circFils[0].spe && showSpe" ></fa-icon>
                             <div>
                                 Sur {{circFils[0].circulaire.name}}, {{circFils[0].filiere.name}}
                             </div>
@@ -35,7 +34,7 @@
                 <ng-container *ngIf="circFils.length<=2">
                     <div class="content" *ngFor="let circFil of circFils">
                         <div class="flex">
-                            <ion-icon color="secondary" *ngIf="circFil.spe && showSpe" name="star"></ion-icon>
+                            <fa-icon  color="secondary" *ngIf="circFil.spe && showSpe" [icon]="['fa-duotone', 'star']" ></fa-icon>
                             <div>sur {{circFil.circulaire.name}}, {{circFil.filiere.name}}</div>
                         </div>
                     </div>
@@ -47,7 +46,7 @@
                 <ng-container *ngIf="significations.length>2">
                     <div class="content">
                         <div class="flex">
-                            <ion-icon *ngIf="significations[0].spe && showSpe" name="star"></ion-icon>
+                            <fa-icon  *ngIf="significations[0].spe && showSpe"  [icon]="['fa-duotone', 'star']" ></fa-icon>
                             <div>
                                 <ng-container *ngIf="significations[0].position">
                                     {{significations[0].position.name}}
@@ -69,9 +68,7 @@
                 <ng-container *ngIf="significations.length<=2">
                     <div class="content" *ngFor="let signification of significations">
                         <div class="flex">
-                            <ion-icon color="secondary" *ngIf="signification.spe && showSpe" name="star">
-                            </ion-icon>
-
+                            <fa-icon color="secondary" *ngIf="signification.spe && showSpe"  [icon]="['fa-duotone', 'star']" ></fa-icon>
                             <div>
                                 <ng-container *ngIf="signification.position">
                                     <ng-container>

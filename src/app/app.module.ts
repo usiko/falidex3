@@ -13,6 +13,11 @@ import { EventService } from './services/event/event.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+
 @NgModule({
     declarations: [
         AppComponent
@@ -27,6 +32,7 @@ import { environment } from '../environments/environment';
                 mode: 'md'
             }
         ),
+        FontAwesomeModule,
         AppRoutingModule,
         ComponentModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
@@ -45,4 +51,8 @@ import { environment } from '../environments/environment';
         //CUSTOM_ELEMENTS_SCHEMA
     ]
 })
-export class AppModule { }
+export class AppModule {
+    constructor(library: FaIconLibrary) { 
+		library.addIconPacks(fas, fab, far);
+	}
+}

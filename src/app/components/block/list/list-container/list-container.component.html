@@ -43,10 +43,10 @@
             <ion-label>Affichage</ion-label>
             <ion-buttons>
                 <ion-button [color]="listMode == 'list'?'secondary':'dark'" (click)="switchListMode('list')">
-                    <ion-icon slot="icon-only" name="list"></ion-icon>
+                    <fa-icon [icon]="['fa-duotone', 'fa-rectangle-list']" color="dark" slot="icon-only"></fa-icon>
                 </ion-button>
                 <ion-button [color]="listMode == 'gallery'?'secondary':'dark'" (click)="switchListMode('gallery')">
-                    <ion-icon slot="icon-only" name="images"></ion-icon>
+                    <fa-icon [icon]="['fa-duotone', 'fa-image']" color="dark" slot="icon-only"></fa-icon>
                 </ion-button>
             </ion-buttons>
         </div>

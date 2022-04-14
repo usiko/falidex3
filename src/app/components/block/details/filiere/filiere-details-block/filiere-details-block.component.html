@@ -20,7 +20,7 @@
 				<div class="content-slide">
 					<ion-button fill="clear" [disabled]="slideIndex==0" *ngIf="filiere.circSymboles.length>1"
 						(click)="slideprevious()" expand="full" size="small">
-						<ion-icon color="dark" slot="icon-only" name="ios-arrow-back"></ion-icon>
+                        <fa-icon [icon]="['fa-duotone', 'angle-left']" color="dark" slot="icon-only"></fa-icon>
 					</ion-button>
 					<div class="title">
 						<ion-card-header>
@@ -32,7 +32,7 @@
 					</div>
 					<ion-button fill="clear" [disabled]="slideIndex==filiere.circSymboles.length-1"
 						*ngIf="filiere.circSymboles.length>1" (click)="slidenext()" expand="full" size="small">
-						<ion-icon color="dark" slot="icon-only" name="ios-arrow-forward"></ion-icon>
+						<fa-icon [icon]="['fa-duotone', 'angle-right']" color="dark" slot="icon-only"></fa-icon>
 					</ion-button>
 				</div>
 

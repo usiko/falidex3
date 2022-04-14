@@ -11,71 +11,83 @@ import { EventService } from './services/event/event.service';
 import { DataRelationsService } from './services/relations/data-relations.service';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: 'app.component.html',
-    styleUrls: ['app.component.scss'],
+	selector: 'app-root',
+	templateUrl: 'app.component.html',
+	styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-    public appPages: { title: string; url: string; icon?: string; src?: string; disabled?: boolean }[];
+	public appPages: { title: string; url: string; icon?: string; src?: string; disabled?: boolean }[];
 
-    public relationsData$ = new BehaviorSubject<{ name: string; id: string }[]>([]);
-    public currentRelationsData$ = new BehaviorSubject<{ name: string; id: string }>(null);
-    public menuFilters = false;
+	public relationsData$ = new BehaviorSubject<{ name: string; id: string }[]>([]);
+	public currentRelationsData$ = new BehaviorSubject<{ name: string; id: string }>(null);
+	public menuFilters = false;
 
-    constructor(
-        private loaderStoreService: DataLoaderStoreService,
-        private circulaireService: CirculaireCollectionService,
-        private significationsService: SignificationCollectionService,
-        private filieresService: FiliereCollectionService,
-        private symbolService: SymbolCollectionService,
-        private subStore: SubStoreService,
-        private relationService: DataRelationsService
-    ) {}
+	constructor(
+		private loaderStoreService: DataLoaderStoreService,
+		private circulaireService: CirculaireCollectionService,
+		private significationsService: SignificationCollectionService,
+		private filieresService: FiliereCollectionService,
+		private symbolService: SymbolCollectionService,
+		private subStore: SubStoreService,
+		private relationService: DataRelationsService
+	) {}
 
-    ngOnInit() {
-        this.filieresService.collection$.subscribe((items) => {
-            this.setMenu();
-        });
-        this.symbolService.collection$.subscribe((items) => {
-            this.setMenu();
-        });
-        this.initData();
+	ngOnInit() {
+		this.filieresService.collection$.subscribe((items) => {
+			this.setMenu();
+		});
+		this.symbolService.collection$.subscribe((items) => {
+			this.setMenu();
+		});
+		this.initData();
 
-        this.relationService.getRelationList().subscribe((items) => {
-            this.relationsData$.next(items);
-        });
-        this.relationService.getCurrentRelation().subscribe((item) => {
-            this.currentRelationsData$.next(item);
-        });
-    }
+		this.relationService.getRelationList().subscribe((items) => {
+			this.relationsData$.next(items);
+		});
+		this.relationService.getCurrentRelation().subscribe((item) => {
+			this.currentRelationsData$.next(item);
+		});
+	}
 
-    setMenu() {
-        const appPages: { title: string; url: string; icon?: string; src?: string; disabled?: boolean }[] = [
-            {
-                title: 'Acceuil',
-                url: '/home',
-                icon: 'home',
+	setMenu() {
+		const appPages: { title: string; url: string; icon?: string; src?: string; disabled?: boolean }[] = [
+			{
+				title: 'Acceuil',
+				url: '/home',
+				icon: 'fa-house',
+			},
+			{
+				title: 'Insignes/emblemes',
+				url: 'symbols',
+				icon: 'fa-award',
+				disabled: this.symbolService.collection$.getValue().length == 0,
+			},
+			{
+				title: 'Filières',
+				url: 'filieres',
+				icon: 'fa-graduation-cap',
+				disabled: this.filieresService.collection$.getValue().length == 0,
             },
             {
-                title: 'Insignes/emblemes',
-                url: 'symbols',
-                icon: 'medal',
-                disabled: this.symbolService.collection$.getValue().length == 0,
+                title: 'Revisions',
+                url: '/revisions',
+                icon: 'fa-lightbulb',
+                disabled: false
             },
             {
-                title: 'Filières',
-                url: 'filieres',
-                icon: 'school',
-                disabled: this.filieresService.collection$.getValue().length == 0,
-            },
-        ];
+                title: 'Revisions',
+                url: '/revisions',
+                icon: 'fa-lightbulb',
+                disabled: false
+            }
+		];
 
-        /*if (this.databuilder.getSpes().length !== 0) {
+		/*if (this.databuilder.getSpes().length !== 0) {
             appPages.push(
                 {
                     title: 'Toutes les spés',
                     url: '/spes',
-                    src: 'assets/svg/file-info.svg'
+                    src: 'fa-file-circle-exclamation'
                 });
         }
         if (this.databuilder.getFileCode().length !== 0) {
@@ -83,32 +95,23 @@ export class AppComponent implements OnInit {
                 {
                     title: 'Codes',
                     url: '/codes',
-                    icon: 'paper',
+                    icon: 'fa-scroll',
                     disabled: true
                 });
-        }
-        if (this.databuilder.getSymboles().length !== 0 || this.databuilder.getFilieres().length !== 0) {
-            appPages.push(
-                {
-                    title: 'Revisions',
-                    url: '/revisions',
-                    icon: 'bulb',
-                    disabled: false
-                });
         }*/
-        this.appPages = appPages;
-    }
+		this.appPages = appPages;
+	}
 
-    private initData() {
-        this.circulaireService.init();
-        this.significationsService.init();
-        this.filieresService.init();
-        this.symbolService.init();
-        this.subStore.init();
-        this.loaderStoreService.loadData();
-    }
+	private initData() {
+		this.circulaireService.init();
+		this.significationsService.init();
+		this.filieresService.init();
+		this.symbolService.init();
+		this.subStore.init();
+		this.loaderStoreService.loadData();
+	}
 
-    public setCurrentRelation(event) {
-        this.relationService.setCurrentRelation(event.detail.value);
-    }
+	public setCurrentRelation(event) {
+		this.relationService.setCurrentRelation(event.detail.value);
+	}
 }

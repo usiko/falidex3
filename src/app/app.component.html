@@ -4,7 +4,7 @@
         <ion-header>
             <ion-toolbar>
                 <ion-item lines="none">
-                    <ion-icon slot="start" name='book'></ion-icon>
+                    <fa-icon [icon]="['fa-duotone', 'fa-book']" slot="start"></fa-icon>
                     <ng-container *ngIf="(relationsData$|async) as relations">
                         <ion-select placeholder="changer" (ionChange)="setCurrentRelation($event)" [value]="(currentRelationsData$|async).id" *ngIf="relations && relations.length>1 && (currentRelationsData$|async)">
                             <ion-select-option *ngFor="let relation of (relationsData$|async)" [value]="relation.id"> Code {{relation.name}}</ion-select-option>

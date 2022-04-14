@@ -19,12 +19,12 @@
         <ion-buttons slot="end">
 
             <ion-button (click)="toggleSearch()">
-                <ion-icon color="light" *ngIf="!isSearching" slot="icon-only" name="search" (click)="toggleSearch()"></ion-icon>
-                <ion-icon color="light" *ngIf="isSearching" slot="icon-only" name="ios-arrow-up" (click)="toggleSearch()"></ion-icon>
+                <fa-icon  [icon]="['fa-duotone', 'fa-angle-up']" color="light" *ngIf="!isSearching" slot="icon-only" (click)="toggleSearch()" ></fa-icon>
+                <fa-icon  [icon]="['fa-duotone', 'fa-magnifying-glass']" *ngIf="isSearching" slot="icon-only" (click)="toggleSearch()" name="ios-arrow-up" ></fa-icon>
 
             </ion-button>
             <ion-button (click)="toggleFilterMenu()" *ngIf="isSearching && filterable">
-                <ion-icon color="light" name="add"></ion-icon>
+                <fa-icon  [icon]="['fa-duotone', 'fa-plus']" ></fa-icon>
             </ion-button>
 
         </ion-buttons>
