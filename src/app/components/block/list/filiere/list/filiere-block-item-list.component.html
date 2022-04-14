@@ -24,7 +24,7 @@
                 <p *ngIf="circSymboles && circSymboles.length>0" class="circSymb">
                     <ng-container *ngIf="circSymboles.length>2">
                         <span class="content">
-                            <fa-icon  color="secondary" *ngIf="circSymboles[0].spe && showSpe" [icon]="['fa-duotone', 'star']" ></fa-icon>
+                            <fa-icon  color="secondary" *ngIf="circSymboles[0].spe && showSpe" [icon]="['fas', 'star']" ></fa-icon>
                             <span><span *ngIf="circSymboles[0].symbols">
                                 {{circSymboles[0].symbols.name}} sur
                             </span> {{circSymboles[0].circulaire.name}}
@@ -37,7 +37,7 @@
                     </ng-container>
                     <ng-container *ngIf="circSymboles && circSymboles.length<=2">
                         <span class="content" *ngFor="let circSymb of circSymboles">
-                            <fa-icon  color="secondary" *ngIf="circSymb.spe && showSpe" [icon]="['fa-duotone', 'star']" ></fa-icon>
+                            <fa-icon  color="secondary" *ngIf="circSymb.spe && showSpe" [icon]="['fas', 'star']" ></fa-icon>
                             <span><span *ngIf="circSymb.symbols">
                                 {{circSymb.symbols.name}} sur
                             </span> {{circSymb.circulaire.name}}</span>

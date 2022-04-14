@@ -1,14 +1,14 @@
 <ion-list color="light">
     <ion-item *ngIf="installable" class="install" (click)="installApp()">
-        <fa-icon [icon]="['fa-duotone', 'fa-mobile']" slot="start"></fa-icon>
-        
+        <fa-icon [icon]="['fas', 'mobile']" slot="start"></fa-icon>
+
         Installe moi
     </ion-item>
     <ng-container *ngFor="let p of pages; trackBy:trackByFnMenu">
         <ng-container>
             <ion-menu-toggle auto-hide="false">
                 <ion-item [class.disabled-item]="p.disabled" [class.ion-activable]="!p.disabled" [class.ion-activatable]="!p.disabled" [routerLink]="p.disabled?null:[p.url]">
-                    <fa-icon [icon]="['fa-duotone', p.icon]" slot="start"></fa-icon>
+                    <fa-icon color="secondary" [icon]="['fas', p.icon]" slot="start"></fa-icon>
                     <!--<ion-icon color="secondary" slot="start" [name]="p.icon" [src]="p.src"></ion-icon>-->
                     <ion-label>
                         {{p.title}}

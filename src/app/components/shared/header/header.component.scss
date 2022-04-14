@@ -26,13 +26,20 @@ ion-toolbar {
     }
     &.barloader {
         height: 0px;
-        transition: height 300ms;
+        transition: height 450ms ease-in-out;
         &.enable {
             height: 56px;
         }
         ion-title {
             font-size: 0.8em;
             text-align: center;
+        }
+    }
+    &.searchbar-toolbar {
+        transition: height 450ms ease-in-out;
+        height: 56px;
+        &.hidden {
+            height: 0;
         }
     }
 }

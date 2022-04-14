@@ -37,18 +37,20 @@ body {
     color: var(--ion-color-dark);
 }
 
+fa-icon {
+    width: 20px;
+    text-align: center;
+}
+
 ion-menu {
     ion-content {
         --background: var(--ion-color-light)
     }
-
     ion-list,
     ion-menu-toggle {
         background: var(--ion-color-light) !important;
-
         ion-item {
             &.disabled-item {
-
                 ion-icon,
                 fa-icon,
                 ion-label {
@@ -61,18 +63,15 @@ ion-menu {
 
 ion-content {
     --background: var(--ion-color-tertiary);
-
     ion-card {
         background: var(--ion-color-light) !important;
     }
-
     ion-item {
         --color: var(--ion-color-dark);
         --border-color: var(--ion-color-tertiary);
         --background: var(--ion-color-light);
         --detail-icon-color: var(--ion-color-secondary);
     }
-
     ion-list {
         background: var(--ion-color-light) !important;
     }
