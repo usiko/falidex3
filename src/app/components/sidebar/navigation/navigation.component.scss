@@ -1,13 +1,20 @@
-ion-select {
-    width: 100%;
-    justify-content: center;
-    max-width: 100%;
-}
-
-ion-icon {
-    transition: opacity 750ms;
-}
-
-ion-label {
-    transition: opacity 750ms;
+:host {
+    background: var(--ion-color-light);
+    ion-select {
+        width: 100%;
+        justify-content: center;
+        max-width: 100%;
+    }
+    ion-icon,
+    fa-icon {
+        transition: opacity 750ms ease-in-out;
+    }
+    ion-label {
+        transition: opacity 750ms ease-in-out;
+    }
+    ion-item {
+        fa-icon {
+            color: var(--ion-color-secondary);
+        }
+    }
 }

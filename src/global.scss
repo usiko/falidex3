@@ -37,6 +37,11 @@ body {
     color: var(--ion-color-dark);
 }
 
+fa-icon {
+    width: 20px;
+    text-align: center;
+}
+
 ion-menu {
     ion-content {
         --background: var(--ion-color-light)
@@ -47,6 +52,7 @@ ion-menu {
         ion-item {
             &.disabled-item {
                 ion-icon,
+                fa-icon,
                 ion-label {
                     opacity: 0.5;
                 }

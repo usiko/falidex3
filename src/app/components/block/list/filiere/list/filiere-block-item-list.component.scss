@@ -9,7 +9,8 @@ ion-item {
                     text-transform: uppercase;
                 }
             }
-            ion-icon {
+            ion-icon,
+            fa-icon {
                 margin-left: 5px;
             }
         }
@@ -19,7 +20,8 @@ ion-item {
                 white-space: nowrap;
                 align-items: center;
                 display: flex;
-                ion-icon {
+                ion-icon,
+                fa-icon {
                     flex: none;
                     font-size: 1.3em;
                     margin-right: 5px;

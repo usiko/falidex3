@@ -20,11 +20,7 @@
                     <ng-container *ngIf="posPlace.symbolsens">
                         <span class="subtitle">{{posPlace.symbolsens.name}}</span>
                     </ng-container>
-
-
-
-
-                    <ion-icon *ngIf="posPlace.spe" name="star" class="spe"></ion-icon>
+                    <fa-icon [icon]="['fas', 'star']"></fa-icon>
                 </div>
             </div>
         </ng-container>
