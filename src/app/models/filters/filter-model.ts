@@ -1,3 +1,4 @@
+import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { ICollectionData, ICollectionLink } from '../linked-data-models';
 
 export class DataFilter<Item> implements IDataFilter<Item> {
@@ -160,6 +161,7 @@ export interface IDisplayFilterItem<Item> {
     filter: IDataFilter<Item>;
     type: FilterDisplayTypeEnum;
     enabled: boolean;
+    icon?: IconName;
 }
 
 export enum FilterDisplayTypeEnum {
@@ -171,6 +173,7 @@ export class DisplayFilterItem<Item> {
     public label: string;
     public filter: IDataFilter<Item>;
     public enabled: boolean;
+    public icon?: IconName;
     constructor(options: Partial<IDisplayFilterItem<Item>>) {
         if (options) {
             if (options.label) {
@@ -184,6 +187,9 @@ export class DisplayFilterItem<Item> {
             }
             if (options.type) {
                 this.type = options.type;
+            }
+            if (options.icon) {
+                this.icon = options.icon;
             }
         }
     }

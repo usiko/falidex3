@@ -17,6 +17,7 @@ export class FilterPreset {
             label: title,
             filters: [
                 new DisplayToggleFilter<ICollectionLink>({
+                    icon: 'graduation-cap',
                     label: 'Des fillières',
                     enabled: true,
                     filter: new EqualLinkFilter({
@@ -27,6 +28,7 @@ export class FilterPreset {
                     }),
                 }),
                 new DisplayToggleFilter<ICollectionLink>({
+                    icon: 'book-open',
                     label: 'Des significations',
                     enabled: true,
                     filter: new EqualLinkFilter({
@@ -51,6 +53,7 @@ export class FilterPreset {
             filters: [
                 new DisplayToggleFilter<ICollectionLink>({
                     label: 'velours',
+                    icon: 'user-doctor',
                     enabled: true,
                     filter: new ExludeLinkFilter({
                         values: ['VELOURS', undefined],
@@ -61,6 +64,7 @@ export class FilterPreset {
                 }),
                 new DisplayToggleFilter<ICollectionLink>({
                     label: 'satin',
+                    icon: 'user-tie',
                     enabled: true,
                     filter: new ExludeLinkFilter({
                         values: ['SATIN', undefined],
@@ -83,6 +87,7 @@ export class FilterPreset {
             label: title,
             filters: [
                 new DisplayToggleFilter<ICollectionLink>({
+                    icon: 'circle',
                     label: 'commun',
                     enabled: true,
                     filter: new EqualLinkFilter({
@@ -93,6 +98,7 @@ export class FilterPreset {
                     }),
                 }),
                 new DisplayToggleFilter<ICollectionLink>({
+                    icon: 'exclamation-circle',
                     label: 'specifique',
                     enabled: true,
                     filter: new DifferentLinkFilter({

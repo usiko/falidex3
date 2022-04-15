@@ -8,7 +8,7 @@
                 </h3>
                 <p *ngIf="circulaireList && circulaireList.length>0" class="content">
                     <span class="content">
-                    <fa-icon  class="secondary-color" *ngIf="circulaireList[0].spe && showSpe" [icon]="['fas', 'star']" ></fa-icon>
+                    <fa-icon  class="primary-color" *ngIf="circulaireList[0].spe && showSpe" [icon]="['fas', 'circle-exclamation']" ></fa-icon>
                     <span>
                         <span *ngIf="circulaireList[0].symbols">{{circulaireList[0].symbols.name}} sur</span> {{circulaireList[0].circulaire.name}}
                     </span>

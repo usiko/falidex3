@@ -5,8 +5,13 @@
         </ion-list-header>
         <ng-container>
             <ion-item *ngFor="let filter of filters.filters">
-                <ion-label>{{filter.label}}</ion-label>
                 <ion-toggle (ionChange)="filterChange()" slot="start" color="secondary" [(ngModel)]="filter.enabled"></ion-toggle>
+
+                <ion-label (click)="filter.enabled = !filter.enabled">
+                    <fa-icon *ngIf="filter.icon" [class.secondary-color]="filter.enabled" [class.dark-color]="!filter.enabled" [icon]="['fas', filter.icon]" slot="start"></fa-icon>
+                    <div class="title">{{filter.label}}</div>
+                </ion-label>
+
                 <!--<ion-checkbox slot="start" color="secondary" [value]="filter.value"></ion-checkbox>-->
             </ion-item>
         </ng-container>
