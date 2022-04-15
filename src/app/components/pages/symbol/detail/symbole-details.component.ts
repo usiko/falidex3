@@ -11,7 +11,6 @@ import { PageItemDetail } from '../../detail-page';
     styleUrls: ['./symbole-details.component.scss'],
 })
 export class SymboleDetailsComponent extends PageItemDetail<ISymbol> implements OnInit {
-    public significations: ISignification[] = [];
     constructor(
         protected collectionService: SymbolCollectionService,
         protected changeDetector: ChangeDetectorRef,

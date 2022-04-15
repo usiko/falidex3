@@ -22,7 +22,10 @@ const routes: Routes = [
         path: 'symbols',
         loadChildren: () => import('./components/pages/symbol/symbole-routing.module').then((mod) => mod.SymbolRoutingModule),
     },
-    { path: 'filieres', loadChildren: () => FiliereRoutingModule },
+    {
+        path: 'filieres',
+        loadChildren: () => import('./components/pages/filiere/filiere-routing.module').then((mod) => mod.FiliereRoutingModule),
+    },
 
     /*{ path: 'symboles', children: symboleRoutes },
     { path: 'filieres', children: filiereRoutes },
