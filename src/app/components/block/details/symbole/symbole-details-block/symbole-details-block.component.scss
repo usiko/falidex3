@@ -18,7 +18,13 @@ ion-tab-bar {
         /*&.tab-selected {
         --background: var(--ion-color-secondary);
       }*/
+        fa-icon {
+            font-size: 1.2em;
+        }
         ion-badge {
+            font-size: 11px;
+            margin-left: -15px;
+            margin-top: -10px;
             --background: var(--ion-color-dark-tint);
         }
     }
