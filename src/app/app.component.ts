@@ -73,7 +73,7 @@ export class AppComponent implements OnInit {
                 title: 'Toutes les spés',
                 url: '/spes',
                 icon: 'file-circle-exclamation',
-                disabled: true,
+                disabled: false,
             },
             {
                 title: 'Revisions',

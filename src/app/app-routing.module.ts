@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AnimatedSplashscreenComponent } from './components/animated-splashscreen/animated-splashscreen.component';
 import { FiliereRoutingModule } from './components/pages/filiere/filiere-routing.module';
 import { HomePage } from './components/pages/home/home.page';
+import { SpeListComponent } from './components/pages/spe/list/spe-list.component';
 import { SymbolRoutingModule } from './components/pages/symbol/symbole-routing.module';
 
 const routes: Routes = [
@@ -25,6 +26,10 @@ const routes: Routes = [
     {
         path: 'filieres',
         loadChildren: () => import('./components/pages/filiere/filiere-routing.module').then((mod) => mod.FiliereRoutingModule),
+    },
+    {
+        path: 'spes',
+        component: SpeListComponent,
     },
 
     /*{ path: 'symboles', children: symboleRoutes },
