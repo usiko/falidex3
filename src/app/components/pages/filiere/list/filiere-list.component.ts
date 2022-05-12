@@ -17,7 +17,7 @@ import { PageItemList } from '../../pages-list';
 })
 export class FiliereListComponent extends PageItemList<IFiliere> implements OnInit {
     showScrollTopBtn = true;
-    public pageSize = 15;
+    public pageSize = 18;
     public circulaireMatEnum = CiculaireMatiereEnum;
     constructor(
         protected collectionService: FiliereCollectionService,

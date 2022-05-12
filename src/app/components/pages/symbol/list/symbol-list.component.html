@@ -23,7 +23,7 @@
             </ng-container>
         </app-list-container>
         <ion-infinite-scroll [disabled]="items.length>=dataLength || dataLength==0" threshold="120px" (ionInfinite)="getMore($event)">
-            <ion-infinite-scroll-content color="primary" loadingSpinner="circular" loadingText="attends...">
+            <ion-infinite-scroll-content color="primary" loadingSpinner="crescent">
             </ion-infinite-scroll-content>
         </ion-infinite-scroll>
     </ng-container>

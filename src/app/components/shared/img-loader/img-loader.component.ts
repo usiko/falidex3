@@ -46,7 +46,6 @@ export class ImgLoaderComponent implements OnInit {
     }
 
     imgLoaded() {
-        console.log('img loaded', this.ownSrc);
         this.loading = false;
         this.changedetector.detectChanges();
     }

@@ -56,7 +56,7 @@ export class PageItemList<Item extends ICollectionData> {
     /**
      * current number of items to show per page
      */
-    protected pageSize = 20;
+    protected pageSize = 18;
 
     /**
      * current page, start on 1

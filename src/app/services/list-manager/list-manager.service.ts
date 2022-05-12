@@ -29,7 +29,7 @@ export class ListManagerService<Item extends ICollectionData> implements OnDestr
     /**
      * pagination size, number of element per adding
      */
-    protected pageSize = 20;
+    protected pageSize = 18;
 
     /**
      * current page number loaded
