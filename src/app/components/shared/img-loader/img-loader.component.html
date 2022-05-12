@@ -3,6 +3,7 @@
 		<ion-spinner color="light"></ion-spinner>
 	</div>
 
-	<ion-img [ngStyle]="{'object-fit':objectFit}" *ngIf="src" [class.img-hidden]="loading" [src]="src"
+	<ion-img [ngStyle]="{'object-fit':objectFit}" *ngIf="ownSrc" [class.img-hidden]="loading" [src]="ownSrc"
 		(ionImgDidLoad)="imgLoaded()" (ionError)="imgError()"></ion-img>
+        <fa-icon color="secondary" ngIf="ownIcon" [icon]="ownIcon"></fa-icon>
 </div>
