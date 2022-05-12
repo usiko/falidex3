@@ -1,52 +1,47 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-	selector: 'app-img-loader',
-	templateUrl: './img-loader.component.html',
-	styleUrls: ['./img-loader.component.scss'],
+    selector: 'app-img-loader',
+    templateUrl: './img-loader.component.html',
+    styleUrls: ['./img-loader.component.scss'],
 })
 export class ImgLoaderComponent implements OnInit {
-	public loading = false;
-	public ownsrc: string;
-	public ownIcon: string;
+    public loading = false;
+    public ownSrc: string;
 
-	@Input() set src(src: string) {
-		this.loading = true;
-		//console.log('img change', src, this.errorSrc, this.ownsrc);
-		if (src) {
-			this.ownsrc = src;
-			//console.log('img change', src, this.errorSrc, this.ownsrc);
-		} else {
-			if (this.errorSrc) {
-				this.ownsrc = this.errorSrc;
-			} else {
-				this.errorIcon = this.ownIcon;
-			}
+    @Input() set src(src: string) {
+        this.loading = true;
+        //console.log('img change', src, this.errorSrc, this.ownSrc);
+        if (src) {
+            this.ownSrc = src;
+            //console.log('img change', src, this.errorSrc, this.ownSrc);
+        } else {
+            this.ownSrc = this.errorSrc;
 
-			//console.log('img change', src, this.errorSrc, this.ownsrc);
-		}
-	}
+            //console.log('img change', src, this.errorSrc, this.ownSrc);
+        }
+    }
 
-	@Input() errorSrc;
+    @Input() errorSrc = '/assets/not-found.svg';
 
-	@Input() errorIcon = 'question';
+    @Input() errorIcon;
 
-	@Input() objectFit = 'cover';
+    @Input() objectFit = 'cover';
 
-	constructor() {}
+    constructor() {}
 
-	ngOnInit() {}
+    ngOnInit() {}
 
-	imgError() {
-		console.warn('error loading', this.ownsrc);
-		this.loading = false;
-		if (this.ownsrc !== this.errorSrc) {
-			this.ownsrc = this.errorSrc;
-		}
-	}
+    imgError() {
+        console.warn('error loading', this.ownSrc);
+        this.loading = false;
+        if (this.ownSrc !== this.errorSrc) {
+            this.ownSrc = this.errorSrc;
+        }
+    }
 
-	imgLoaded() {
-		console.log('img loaded', this.ownsrc);
-		this.loading = false;
-	}
+    imgLoaded() {
+        console.log('img loaded', this.ownSrc);
+        this.loading = false;
+    }
 }

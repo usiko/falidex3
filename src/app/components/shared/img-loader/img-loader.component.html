@@ -1,9 +1,8 @@
 <div class="img-container">
-	<div class="loading" *ngIf="loading">
-		<ion-spinner color="light"></ion-spinner>
-	</div>
+    <div class="loading" *ngIf="loading">
+        <ion-spinner color="light"></ion-spinner>
+    </div>
 
-	<ion-img [ngStyle]="{'object-fit':objectFit}" *ngIf="ownSrc" [class.img-hidden]="loading" [src]="ownSrc"
-		(ionImgDidLoad)="imgLoaded()" (ionError)="imgError()"></ion-img>
-        <fa-icon color="secondary" ngIf="ownIcon" [icon]="ownIcon"></fa-icon>
+    <ion-img [ngStyle]="{'object-fit':objectFit}" *ngIf="ownSrc" [class.img-hidden]="loading" [src]="ownSrc" (ionImgDidLoad)="imgLoaded()" (ionError)="imgError()"></ion-img>
+
 </div>
