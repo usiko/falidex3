@@ -4,17 +4,17 @@
 <ion-content [scrollEvents]="true" (ionScroll)="scrolling($event)">
     <ion-fab *ngIf="showScrollTopBtn" (click)="scrollToTop()" vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button color="dark">
-            <fa-icon [icon]="['fas', 'angle-up']"></fa-icon>
+            <fa-icon class="light-color" [icon]="['fas', 'angle-up']"></fa-icon>
         </ion-fab-button>
     </ion-fab>
     <ng-container *ngIf="(items$|async) as items">
         <app-list-container [activeListMode]="{list:true}" [loading]="loadingScroll">
             <ng-container slot="list">
                 <ng-container *ngIf="!initLoading">
-                    <app-filiere-block-item-list [item]="item" *ngFor="let item of items; trackBy:trackByFn"></app-filiere-block-item-list>
+                    <app-filiere-block-item-list [navigation]="'/filieres/detail/'" [item]="item" *ngFor="let item of items; trackBy:trackByFn"></app-filiere-block-item-list>
                 </ng-container>
                 <ng-container *ngIf="initLoading">
-                    <app-filiere-block-item-list *ngFor="let item of emptyItems" [item]="item"></app-filiere-block-item-list>
+                    <app-filiere-block-item-list [navigation]="'/filieres/detail/'" *ngFor="let item of emptyItems" [item]="item"></app-filiere-block-item-list>
                 </ng-container>
 
             </ng-container>

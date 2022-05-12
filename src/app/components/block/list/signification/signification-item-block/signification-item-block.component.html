@@ -1,21 +1,28 @@
 <ion-item>
     <ion-label>
-        <div class="decernement" *ngIf="signification.placement">
-
-            <div class="title">
-                Décernement <span class="subtitle">{{signification.placement.name}}</span>
-            </div>
-        </div>
         <div>
-            <div *ngIf="signification.positions && signification.positions.length>0" class="position">
-                {{signification.positions|postitionNameList}}</div>
+
 
             <div class="text-content">{{signification.content}}</div>
-            <div>
-                <div class="spe" *ngIf="signification.spe">
-                    <fa-icon [icon]="['fas', 'star']"></fa-icon> Spécificité de la ville
+        </div>
+        <ng-container *ngIf="(signification.links|filterLink:['placement','position', 'symbolsens']:true) as posPlaces">
+            <div class="metaInfo" *ngFor="let posPlace of posPlaces ">
+
+                <div class="title">
+                    <ng-container *ngIf="posPlace.placement">
+                        décernement <span class="subtitle">{{posPlace.placement.name}}</span>
+                    </ng-container>
+                    {{(posPlace.placement && posPlace.position)?' ,':''}}
+                    <ng-container *ngIf="posPlace.position">
+                        <span class="subtitle">{{posPlace.position.name}}</span>
+                    </ng-container>
+                    {{(posPlace.placement && posPlace.symbolsens)?' ,':''}}
+                    <ng-container *ngIf="posPlace.symbolsens">
+                        <span class="subtitle">{{posPlace.symbolsens.name}}</span>
+                    </ng-container>
+                    <fa-icon class="primary-color" [icon]="['fas', 'circle-exclamation']"></fa-icon>
                 </div>
             </div>
-        </div>
+        </ng-container>
     </ion-label>
 </ion-item>

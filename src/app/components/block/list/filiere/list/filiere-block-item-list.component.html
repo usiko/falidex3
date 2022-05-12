@@ -1,7 +1,7 @@
-<ion-item *ngIf="item && navigation" lines="none" [routerLink]="['/filieres/details',item.id]" detail>
+<ion-item [ngClass]="cssClass" *ngIf="item && navigation" lines="none" [routerLink]="[navigation,item.id]" detail>
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </ion-item>
-<ion-item *ngIf="item && !navigation" lines="none">
+<ion-item [ngClass]="cssClass" *ngIf="item && !navigation" lines="none">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </ion-item>
 <ng-template #content>
@@ -12,39 +12,39 @@
         </ion-thumbnail>
     </ng-container>
 
-    <ion-label>
-        <ng-container *ngIf="(item.links|filterLink:['circulaire','symbols']) as circSymboles">
-            <app-circulaire-representation *ngIf="circSymboles[0].circulaire && circSymboles[0].circulaire.colors" [circulaire]="circSymboles[0].circulaire" [cssClass]="'vertical'"></app-circulaire-representation>
+    <ion-label *ngIf="(item.links|filterLink:['circulaire','symbols']:true) as circSymboles">
+
+        <ng-container>
+            <app-circulaire-representation *ngIf="circSymboles.length>0 && circSymboles[0].circulaire && circSymboles[0].circulaire.colors" [circulaire]="circSymboles[0].circulaire" [cssClass]="'vertical'"></app-circulaire-representation>
+
         </ng-container>
         <div>
             <h3>
                 <div>{{item.name}}</div>
             </h3>
-            <ng-container *ngIf="(item.links|filterLink:['circulaire','symbols']) as circSymboles">
-                <p *ngIf="circSymboles && circSymboles.length>0" class="circSymb">
-                    <ng-container *ngIf="circSymboles.length>2">
-                        <span class="content">
-                            <fa-icon  color="secondary" *ngIf="circSymboles[0].spe && showSpe" [icon]="['fas', 'star']" ></fa-icon>
+            <p *ngIf="circSymboles && circSymboles.length>0" class="circSymb">
+                <ng-container *ngIf="circSymboles.length>2">
+                    <span class="content">
+                        <fa-icon  class="primary-color" *ngIf="circSymboles[0].spe && showSpe" [icon]="['fas', 'circle-exclamation']" ></fa-icon>
                             <span><span *ngIf="circSymboles[0].symbols">
                                 {{circSymboles[0].symbols.name}} sur
                             </span> {{circSymboles[0].circulaire.name}}
-                        </span>
-                        </span>
-                        <span class="content">
+                    </span>
+                    </span>
+                    <span class="content">
                             <span>Et {{circSymboles.length-1}} autres représentations</span>
-                        </span>
+                    </span>
 
-                    </ng-container>
-                    <ng-container *ngIf="circSymboles && circSymboles.length<=2">
-                        <span class="content" *ngFor="let circSymb of circSymboles">
-                            <fa-icon  color="secondary" *ngIf="circSymb.spe && showSpe" [icon]="['fas', 'star']" ></fa-icon>
+                </ng-container>
+                <ng-container *ngIf="circSymboles && circSymboles.length<=2">
+                    <span class="content" *ngFor="let circSymb of circSymboles">
+                        <fa-icon  class="primary-color" *ngIf="circSymb.spe && showSpe" [icon]="['fas', 'circle-exclamation']" ></fa-icon>
                             <span><span *ngIf="circSymb.symbols">
                                 {{circSymb.symbols.name}} sur
                             </span> {{circSymb.circulaire.name}}</span>
-                        </span>
-                    </ng-container>
-                </p>
-            </ng-container>
+                    </span>
+                </ng-container>
+            </p>
         </div>
     </ion-label>
 

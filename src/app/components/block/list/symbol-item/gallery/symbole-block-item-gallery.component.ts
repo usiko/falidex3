@@ -11,28 +11,27 @@ import { ListItem } from '../../list-item';
     styleUrls: ['./symbole-block-item-gallery.component.scss'],
 })
 export class SymbolBlockItemGalleryComponent extends ListItem<ISymbol> implements OnInit {
-    
     /**
      * symbole item to show
      */
-     @Input() item: ISymbol;
+    @Input() item: ISymbol;
 
-     /**
-      * show if this item is specific
-      * @deprecated (?)
-      */
-     @Input() showSpe = true;
- 
-     /**
-      * show navigation arrow
-      */
-     @Input() navigation = false;
+    /**
+     * show if this item is specific
+     * @deprecated (?)
+     */
+    @Input() showSpe = true;
+
+    /**
+     * show navigation arrow
+     */
+    @Input() navigation: string = null;
 
     constructor() {
         super();
     }
 
-    ngOnInit() { }
+    ngOnInit() {}
     click() {
         this.onclick.emit();
     }

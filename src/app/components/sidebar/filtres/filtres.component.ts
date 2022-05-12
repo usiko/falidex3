@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ICollectionFilter, IDisplayFilters } from 'src/app/models/filters/filter-model';
+import { ICollectionFilter, IDisplayFilterItem, IDisplayFilters } from 'src/app/models/filters/filter-model';
 import { ICollectionData } from 'src/app/models/linked-data-models';
 import { FilterStoreService } from 'src/app/services/data-store/filter-store/filter-store.service';
 

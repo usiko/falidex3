@@ -1,0 +1,36 @@
+:host {
+    ion-item {
+        --padding-start: 0px;
+        --padding-end: 0px;
+        app-circulaire-representation {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            &.right {
+                right: 0;
+            }
+            &.left {
+                left: 0;
+            }
+            &::ng-deep {
+                margin: 0;
+            }
+        }
+        .item-container {
+            text-align: center;
+            h3 {
+                font-size: 1.2em;
+                &::first-letter {
+                    text-transform: uppercase;
+                }
+            }
+            .content {
+                color: var(--ion-color-secondary);
+                font-style: italic;
+                &::first-letter {
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+}

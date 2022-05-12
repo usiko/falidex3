@@ -1,11 +1,10 @@
-:host {
+.content {
     text-align: center;
     width: 100%;
     //padding: 0 32px;
-}
-
-ion-slide {
-    width: 100%;
+    h1 {
+        margin-bottom: 30px;
+    }
 }
 
 ion-tab-bar {
@@ -16,15 +15,9 @@ ion-tab-bar {
         --color-focused: rgba(var(--ion-color-light-rgb), 1);
         --color: rgba(var(--ion-color-light-rgb), 0.5);
         /*&.tab-selected {
-        --background: var(--ion-color-secondary);
-      }*/
-        fa-icon {
-            font-size: 1.2em;
-        }
+      --background: var(--ion-color-secondary);
+    }*/
         ion-badge {
-            font-size: 11px;
-            margin-left: -15px;
-            margin-top: -10px;
             --background: var(--ion-color-dark-tint);
         }
     }
@@ -45,8 +38,4 @@ ion-tab-bar {
     ion-badge {
         margin-left: 10px;
     }
-}
-
-.content {
-    width: 100%;
 }

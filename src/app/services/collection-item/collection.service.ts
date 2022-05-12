@@ -23,25 +23,33 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
     public collection$ = new BehaviorSubject<LinkedModel[]>([]);
 
     private runBuild$ = new Subject(); // debouncing assemblage données
+
+    /**
+     * able to run init twice and not recall everything in each view
+     */
+    private initiated = false;
     constructor() {}
 
     /**
      * init le servive qui va alors se binder au store
      */
     public init() {
-        this.runBuild$
-            .pipe(debounceTime(500)) //limitations des appels successifs
-            .subscribe(() => {
-                const built = this.buildCollection(this.baseCollection$.getValue(), this.currentRelation$.getValue());
-                console.log('built', built);
-                this.collection$.next(built);
+        if (!this.initiated) {
+            this.initiated = true;
+            this.runBuild$
+                .pipe(debounceTime(500)) //limitations des appels successifs
+                .subscribe(() => {
+                    const built = this.buildCollection(this.baseCollection$.getValue(), this.currentRelation$.getValue());
+                    console.log('built', built);
+                    this.collection$.next(built);
+                });
+            this.currentRelation$ = this.store.currentDataRelations$;
+            this.currentRelation$.subscribe(() => {
+                console.log('relations update');
+                this.runBuild$.next();
             });
-        this.currentRelation$ = this.store.currentDataRelations$;
-        this.currentRelation$.subscribe(() => {
-            console.log('relations update');
-            this.runBuild$.next();
-        });
-        this.bindSubjectToBuild(this.baseCollection$);
+            this.bindSubjectToBuild(this.baseCollection$);
+        }
     }
 
     /**

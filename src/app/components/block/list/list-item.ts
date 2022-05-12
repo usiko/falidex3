@@ -7,7 +7,6 @@ import { ICollectionData } from 'src/app/models/linked-data-models';
  */
 @Injectable()
 export class ListItem<T extends ICollectionData> implements OnChanges {
-
     /**
      *  current item to show
      */
@@ -22,7 +21,12 @@ export class ListItem<T extends ICollectionData> implements OnChanges {
     /**
      * show arrow navigation
      */
-    @Input() navigation = true;
+    @Input() navigation: string = null;
+
+    /**
+     * custom css class
+     */
+    @Input() cssClass: string = null;
 
     /**
      * click item list event
@@ -35,8 +39,5 @@ export class ListItem<T extends ICollectionData> implements OnChanges {
         }
     }
 
-
-    protected itemChange(): void {
-
-    }
+    protected itemChange(): void {}
 }

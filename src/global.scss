@@ -87,3 +87,43 @@ ion-modal {
         border: solid 1px var(--ion-color-secondary);
     }
 }
+
+.primary-color {
+    color: var(--ion-color-primary);
+}
+
+.primary-backrgound {
+    background: var(--ion-color-primary);
+}
+
+.secondary-color {
+    color: var(--ion-color-secondary);
+}
+
+.secondary-backrgound {
+    background: var(--ion-color-secondary);
+}
+
+.tertiary-color {
+    color: var(--ion-color-tertiary);
+}
+
+.tertiary-backrgound {
+    background: var(--ion-color-tertiary);
+}
+
+.dark-color {
+    color: var(--ion-color-dark);
+}
+
+.dark-backrgound {
+    background: var(--ion-color-dark);
+}
+
+.light-color {
+    color: var(--ion-color-light);
+}
+
+.light-backrgound {
+    background: var(--ion-color-light);
+}

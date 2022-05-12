@@ -1,0 +1,7 @@
+<ion-header *ngIf="item$|async as filiere">
+    <app-header title="{{(filiere)?filiere.name:'oops'}}"></app-header>
+</ion-header>
+
+<ion-content>
+    <app-filiere-details-block [filiere$]="item$"></app-filiere-details-block>
+</ion-content>

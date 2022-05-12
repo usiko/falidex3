@@ -1,4 +1,4 @@
-<ion-item *ngIf="item && navigation" lines="none" [routerLink]="['/symboles/details',item.id]" (click)="click()" detail>
+<ion-item *ngIf="item && navigation" lines="none" [routerLink]="[navigation,item.id]" (click)="click()" detail>
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </ion-item>
 <ion-item *ngIf="item && !navigation" lines="none" (click)="click()">
@@ -17,7 +17,7 @@
                 <ng-container *ngIf="circFils.length>2">
                     <div class="content">
                         <div class="flex">
-                            <fa-icon [icon]="['fas', 'star']" color="secondary" *ngIf="circFils[0].spe && showSpe"></fa-icon>
+                            <fa-icon [icon]="['fas', 'circle-exclamation']" class="primary-color" *ngIf="circFils[0].spe && showSpe"></fa-icon>
                             <div>
                                 Sur {{circFils[0].circulaire.name}}, {{circFils[0].filiere.name}}
                             </div>
@@ -34,7 +34,7 @@
                 <ng-container *ngIf="circFils.length<=2">
                     <div class="content" *ngFor="let circFil of circFils">
                         <div class="flex">
-                            <fa-icon color="secondary" *ngIf="circFil.spe && showSpe" [icon]="['fas', 'star']"></fa-icon>
+                            <fa-icon class="primary-color" *ngIf="circFil.spe && showSpe" [icon]="['fas', 'circle-exclamation']"></fa-icon>
                             <div>sur {{circFil.circulaire.name}}, {{circFil.filiere.name}}</div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                 <ng-container *ngIf="significations.length>2">
                     <div class="content">
                         <div class="flex">
-                            <fa-icon *ngIf="significations[0].spe && showSpe" [icon]="['fas', 'star']"></fa-icon>
+                            <fa-icon *ngIf="significations[0].spe && showSpe" class="primary-color" [icon]="['fas', 'circle-exclamation']"></fa-icon>
                             <div>
                                 <ng-container *ngIf="significations[0].position">
                                     {{significations[0].position.name}}
@@ -68,7 +68,7 @@
                 <ng-container *ngIf="significations.length<=2">
                     <div class="content" *ngFor="let signification of significations">
                         <div class="flex">
-                            <fa-icon color="secondary" *ngIf="signification.spe && showSpe" [icon]="['fas', 'star']"></fa-icon>
+                            <fa-icon class="primary-color" *ngIf="signification.spe && showSpe" [icon]="['fas', 'circle-exclamation']"></fa-icon>
                             <div>
                                 <ng-container *ngIf="signification.position">
                                     <ng-container>

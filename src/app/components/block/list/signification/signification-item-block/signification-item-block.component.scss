@@ -14,29 +14,40 @@ ion-item {
         margin: 0;
         padding-bottom: 16px;
     }
-    .decernement {
-        background: var(--ion-color-secondary);
-        color: var(--ion-color-light);
+    .metaInfo {
+        color: var(--ion-color-secondary);
         width: 100%;
+        display: flex;
+        align-items: center;
+        font-size: 0.9em;
         .title {
-            font-weight: bold;
+            font-style: italic;
             text-align: center;
+            width: 100%;
+            &::first-letter {
+                text-transform: uppercase;
+            }
+        }
+        .spe {
+            text-align: center;
+            font-size: 0.7em;
+            margin-left: 5px;
         }
     }
     .text-content {
-        font-style: italic;
         color: var(--ion-color-dark);
         padding: 8px 0;
         text-align: center;
+        font-size: 1.2em;
+        white-space: normal;
+        &::first-letter {
+            text-transform: uppercase;
+        }
     }
     .position {
         padding: 8px 0px;
         font-weight: bold;
         width: 100%;
         text-align: center;
-    }
-    .spe {
-        text-align: center;
-        font-size: 0.7em;
     }
 }

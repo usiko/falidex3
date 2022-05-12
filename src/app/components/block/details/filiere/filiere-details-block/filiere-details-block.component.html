@@ -1,39 +1,42 @@
 <ion-slides #slides (ionSlideDidChange)="slidesChange($event)" [options]="slideOptions">
-    <ng-container *ngIf="filiere &&  filiere.circSymboles">
+    <ng-container *ngIf="filiere$|async as filiere">
+        <ng-container *ngIf="filiere.links|filterLink:['circulaire', 'symbols'] as circSymboles">
 
-        <ion-slide *ngFor="let circSymboles of filiere.circSymboles">
-            <ion-card>
+            <ion-slide *ngFor="let circSymbole of circSymboles">
+                <ion-card>
 
-                <div class="img-container">
-                    <div class="img-symbole">
-                        <app-img-loader [src]="(circSymboles.symbole.img && circSymboles.symbole.img[0])?'http://resources.falidex.fr'+circSymboles.symbole.img[0].url:null">
-                        </app-img-loader>
+                    <div class="img-container">
+                        <div class="img-symbole">
+                            <app-img-loader [src]="(circSymbole.symbols.imgs && circSymbole.symbols.imgs[0])?'http://resources.falidex.fr'+circSymbole.symbols.imgs[0].url:null">
+                            </app-img-loader>
+                        </div>
                     </div>
-                </div>
-                <div class="circulaire-content">
+                    <div class="circulaire-content">
 
-                    <app-circulaire-representation *ngIf="circSymboles.circulaire && circSymboles.circulaire.couleur" [cssClass]="'strong'" [circulaire]="circSymboles.circulaire"></app-circulaire-representation>
+                        <app-circulaire-representation *ngIf="circSymbole.circulaire && circSymbole.circulaire.colors" [cssClass]="'strong'" [circulaire]="circSymbole.circulaire"></app-circulaire-representation>
 
-                </div>
-                <div class="content-slide">
-                    <ion-button fill="clear" [disabled]="slideIndex==0" *ngIf="filiere.circSymboles.length>1" (click)="slideprevious()" expand="full" size="small">
-                        <fa-icon [icon]="['fas', 'angle-left']" color="dark" slot="icon-only"></fa-icon>
-                    </ion-button>
-                    <div class="title">
-                        <ion-card-header>
-                            <ion-card-title>{{circSymboles.symbole.name}}</ion-card-title>
-                        </ion-card-header>
-                        <ion-card-content>
-                            <p>sur {{circSymboles.circulaire.name}}</p>
-                        </ion-card-content>
                     </div>
-                    <ion-button fill="clear" [disabled]="slideIndex==filiere.circSymboles.length-1" *ngIf="filiere.circSymboles.length>1" (click)="slidenext()" expand="full" size="small">
-                        <fa-icon [icon]="['fas', 'angle-right']" color="dark" slot="icon-only"></fa-icon>
-                    </ion-button>
-                </div>
+                    <div class="content-slide">
+                        <ion-button fill="clear" [disabled]="slideIndex==0" *ngIf="circSymboles.length>1" (click)="slideprevious()" expand="full" size="small">
+                            <fa-icon class='dark-color' [icon]="['fas', 'angle-left']" class="dark-color" slot="icon-only"></fa-icon>
+                        </ion-button>
+                        <div class="title">
+                            <ion-card-header>
+                                <ion-card-title>{{circSymbole.symbols.name}}</ion-card-title>
+                            </ion-card-header>
+                            <ion-card-content>
+                                <p>sur {{circSymbole.circulaire.name}}</p>
+                            </ion-card-content>
+                        </div>
+                        <ion-button fill="clear" [disabled]="slideIndex==circSymboles.length-1" *ngIf="circSymboles.length>1" (click)="slidenext()" expand="full" size="small">
+                            <fa-icon class='dark-color' [icon]="['fas', 'angle-right']" class="dark-color" slot="icon-only"></fa-icon>
+                        </ion-button>
+                    </div>
 
-            </ion-card>
-        </ion-slide>
+                </ion-card>
+            </ion-slide>
+        </ng-container>
+
 
     </ng-container>
 

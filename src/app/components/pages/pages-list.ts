@@ -205,7 +205,7 @@ export class PageItemList<Item extends ICollectionData> {
      * adding new filter to service
      */
     filterChange() {
-        this.scrollToTop();
+        //this.scrollToTop();
     }
 
     /**
