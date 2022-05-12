@@ -2,10 +2,11 @@
   <defs>
     <style>
       .secondary-color {
-        fill: #9E2C17;
+        fill: #D0E0EB;
+      
       }
       .grey-color {
-        fill: #989aa2;
+        fill: #2C2A2D;
       }
     </style>
   </defs>
