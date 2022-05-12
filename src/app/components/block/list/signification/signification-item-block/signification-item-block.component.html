@@ -20,7 +20,7 @@
                     <ng-container *ngIf="posPlace.symbolsens">
                         <span class="subtitle">{{posPlace.symbolsens.name}}</span>
                     </ng-container>
-                    <fa-icon class="primary-color" [icon]="['fas', 'circle-exclamation']"></fa-icon>
+                    <fa-icon *ngIf="posPlace.spe" class="primary-color" [icon]="['fas', 'circle-exclamation']"></fa-icon>
                 </div>
             </div>
         </ng-container>
