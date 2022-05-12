@@ -7,44 +7,41 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ImgLoaderComponent implements OnInit {
     public loading = false;
-    public ownsrc: string;
+    public ownSrc: string;
 
     @Input() set src(src: string) {
         this.loading = true;
-        //console.log('img change', src, this.errorSrc, this.ownsrc);
+        //console.log('img change', src, this.errorSrc, this.ownSrc);
         if (src) {
-            this.ownsrc = src;
-            //console.log('img change', src, this.errorSrc, this.ownsrc);
-        }
-        else {
-            this.ownsrc = this.errorSrc;
-            //console.log('img change', src, this.errorSrc, this.ownsrc);
+            this.ownSrc = src;
+            //console.log('img change', src, this.errorSrc, this.ownSrc);
+        } else {
+            this.ownSrc = this.errorSrc;
+
+            //console.log('img change', src, this.errorSrc, this.ownSrc);
         }
     }
 
-    get src() {
-        return this.ownsrc;
-    }
-    @Input() errorSrc = '/assets/no-image.png';
+    @Input() errorSrc = '/assets/not-found.svg';
+
+    @Input() errorIcon;
 
     @Input() objectFit = 'cover';
 
-    constructor() { }
+    constructor() {}
 
-    ngOnInit() { }
+    ngOnInit() {}
 
     imgError() {
-        console.warn('error loading', this.ownsrc);
+        console.warn('error loading', this.ownSrc);
         this.loading = false;
-        if (this.ownsrc !== this.errorSrc) {
-            this.ownsrc = this.errorSrc;
+        if (this.ownSrc !== this.errorSrc) {
+            this.ownSrc = this.errorSrc;
         }
-
     }
 
     imgLoaded() {
-        console.log('img loaded', this.ownsrc);
+        console.log('img loaded', this.ownSrc);
         this.loading = false;
     }
-
 }
