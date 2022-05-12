@@ -29,7 +29,7 @@ export class ImgLoaderComponent implements OnInit {
 
 	@Input() errorSrc;
 
-	@Input() errorIcon = 'seal-question';
+	@Input() errorIcon = 'question';
 
 	@Input() objectFit = 'cover';
 
