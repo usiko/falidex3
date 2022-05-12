@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ISymbol } from 'src/app/models/linked-data-models';
 import { ListItem } from '../../list-item';
 
@@ -9,6 +9,7 @@ import { ListItem } from '../../list-item';
     selector: 'app-symbol-block-item-gallery',
     templateUrl: './symbole-block-item-gallery.component.html',
     styleUrls: ['./symbole-block-item-gallery.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SymbolBlockItemGalleryComponent extends ListItem<ISymbol> implements OnInit {
     /**
@@ -27,7 +28,7 @@ export class SymbolBlockItemGalleryComponent extends ListItem<ISymbol> implement
      */
     @Input() navigation: string = null;
 
-    constructor() {
+    constructor(protected changedetector: ChangeDetectorRef) {
         super();
     }
 

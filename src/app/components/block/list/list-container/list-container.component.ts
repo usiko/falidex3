@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
-import { InfiniteScrollCustomEvent, IonContent, IonInfiniteScroll, IonSlides } from '@ionic/angular';
-import { BehaviorSubject, Subscription, timer } from 'rxjs';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { IonSlides } from '@ionic/angular';
 
 /**
  * List dislayer and switcher
@@ -9,6 +8,7 @@ import { BehaviorSubject, Subscription, timer } from 'rxjs';
     selector: 'app-list-container',
     templateUrl: './list-container.component.html',
     styleUrls: ['./list-container.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
     @ViewChild(IonSlides) slides: IonSlides;
@@ -25,7 +25,7 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
 
     public listMode: string;
 
-    constructor() {}
+    constructor(private changeDetector: ChangeDetectorRef) {}
 
     /**
      * switching of list mode
@@ -42,6 +42,7 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
             this.slides.slideTo(1);
             this.slides.lockSwipes(true);
         }
+        this.changeDetector.detectChanges();
     }
 
     /**
@@ -56,6 +57,7 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
                 if (index === 1) {
                     this.listMode = 'gallery';
                 }
+                this.changeDetector.detectChanges();
             });
         }
     }

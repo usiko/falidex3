@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { IFiliere } from 'src/app/models/linked-data-models';
 import { ListItem } from '../../list-item';
 
@@ -6,6 +6,7 @@ import { ListItem } from '../../list-item';
     selector: 'app-filiere-block-item-list',
     templateUrl: './filiere-block-item-list.component.html',
     styleUrls: ['./filiere-block-item-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FiliereBlockItemListComponent extends ListItem<IFiliere> implements OnInit {
     @Input() item: IFiliere;
@@ -13,7 +14,7 @@ export class FiliereBlockItemListComponent extends ListItem<IFiliere> implements
     @Input() navigation: string = null;
     @Input() cssClass: string;
 
-    constructor() {
+    constructor(protected changedetector: ChangeDetectorRef) {
         super();
     }
 
