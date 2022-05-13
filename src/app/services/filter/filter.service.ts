@@ -196,7 +196,6 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
      * applying current filter to full true list
      */
     private applyFiltersOnCollection() {
-        console.log('filtered', this.collection$);
         if (this.collection$) {
             let collection = this.collection$.getValue().map((item) => {
                 return { ...item };
