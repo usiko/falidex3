@@ -126,7 +126,6 @@ export class PageItemList<Item extends ICollectionData> {
                 if (this.dataLength > 0) {
                     this.initLoading = false;
                 }
-                console.log('update items', this.items$.getValue(), this.collection$.getValue());
                 this.changeDetector.detectChanges();
             })
         );
@@ -154,7 +153,6 @@ export class PageItemList<Item extends ICollectionData> {
                 this.filterChange(data.name, data.value);
             }
         }));*/
-        this.listManagerService.setFilters();
     }
 
     /**
@@ -172,6 +170,7 @@ export class PageItemList<Item extends ICollectionData> {
      */
     protected initDisplayFilters(filters: IDisplayFilters<any>[]) {
         this.listManagerService.setDisplayFilters(filters);
+        this.listManagerService.setFilters();
     }
 
     /**
