@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { IonContent } from '@ionic/angular';
 import { ISymbol } from 'src/app/models/linked-data-models';
 import { SortEnum } from 'src/app/models/sort/sort.model';
 import { SymbolCollectionService } from 'src/app/services/collection-item/symbol/symbol-collection.service';
@@ -15,6 +16,11 @@ import { PageItemList } from '../../pages-list';
     providers: [ListManagerService, FilterService],
 })
 export class SymbolListComponent extends PageItemList<ISymbol> implements OnInit {
+    /**
+     * main page container
+     */
+    @ViewChild(IonContent) content: IonContent;
+
     showScrollTopBtn = true;
     constructor(
         protected collectionService: SymbolCollectionService,

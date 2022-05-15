@@ -20,7 +20,7 @@ export class PageItemList<Item extends ICollectionData> {
     /**
      * main page container
      */
-    @ViewChild(IonContent, null) content: IonContent;
+    public content: IonContent;
 
     /**
      * Must import service in child
@@ -197,7 +197,11 @@ export class PageItemList<Item extends ICollectionData> {
          */
     }
     scrollToTop() {
-        this.content.scrollToTop(350);
+        if (this.content) {
+            this.content.scrollToTop(350);
+        } else {
+            console.warn('unable to scrolltop not content');
+        }
     }
 
     /**
