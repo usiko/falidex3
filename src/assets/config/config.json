@@ -36,5 +36,9 @@
         {
             "message":"\"La fal c`est un truc serieux\""
         }
-    ]
+    ],
+    "urls":{
+        "dataServer":"http://data.falidex.fr",
+        "picturServer":"http://resources.falidex.fr"
+    }
 }
