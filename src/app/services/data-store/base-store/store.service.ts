@@ -1,21 +1,31 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IBaseCirculaire, IBaseCirculaireColor, IBaseCollectionData, IBaseColor, IBaseFiliere, IBasePlacement, IBasePosition, IBaseSignification, IBaseSymbol, IBaseSymbolAcessory, IBaseSymbolSens } from 'src/app/models/base-data-models';
+import {
+    IBaseCirculaire,
+    IBaseCirculaireColor,
+    IBaseCodeSpe,
+    IBaseCollectionData,
+    IBaseColor,
+    IBaseFiliere,
+    IBasePlacement,
+    IBasePosition,
+    IBaseSignification,
+    IBaseSymbol,
+    IBaseSymbolAcessory,
+    IBaseSymbolSens,
+} from 'src/app/models/base-data-models';
 import { IRelationData } from 'src/app/models/base-relations.models';
-import { ICodeSpe } from '../../../models/base-data-models';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class StoreService {
-
-    constructor() { }
+    constructor() {}
 
     // items data
     public circulaires$ = new BehaviorSubject<IBaseCirculaire[]>([]);
     public circulairesColors$ = new BehaviorSubject<IBaseCirculaireColor[]>([]);
     public colors$ = new BehaviorSubject<IBaseColor[]>([]);
-
 
     public filieres$ = new BehaviorSubject<IBaseFiliere[]>([]);
     public placements$ = new BehaviorSubject<IBasePlacement[]>([]);
@@ -25,8 +35,6 @@ export class StoreService {
     public symbolesSens$ = new BehaviorSubject<IBaseSymbolSens[]>([]);
     public symbolesAccessories$ = new BehaviorSubject<IBaseSymbolAcessory[]>([]);
 
-
-
     // links
 
     public dataRelations$ = new BehaviorSubject<IRelationData[]>([]);
@@ -34,6 +42,5 @@ export class StoreService {
 
     // spe code text
 
-    public codeSpeText$ = new BehaviorSubject<ICodeSpe[]>([]);
-
+    public codeSpeText$ = new BehaviorSubject<IBaseCodeSpe[]>([]);
 }

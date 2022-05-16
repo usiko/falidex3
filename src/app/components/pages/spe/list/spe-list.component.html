@@ -19,7 +19,7 @@
                         <div class="border-item"></div>
                     </ion-list-header>
 
-                    <ion-item *ngFor="let item of textSpes$|async" [routerLink]="['/spes/details',item.id]">
+                    <ion-item *ngFor="let item of items$|async" [routerLink]="['/spes/details',item.id]">
                         <ion-label>
                             <h3>
                                 <div>{{item.name}}</div>
@@ -65,7 +65,7 @@
         <ion-tab-button (click)="switch(0)" tab="0">
             <ion-icon name="book"></ion-icon>
             <ion-label>Spé code</ion-label>
-            <ion-badge>{{(textSpes$|async).length}}</ion-badge>
+            <ion-badge>{{(items$|async).length}}</ion-badge>
         </ion-tab-button>
         <ion-tab-button (click)="switch(1)" tab="1">
             <ion-icon name="school"></ion-icon>

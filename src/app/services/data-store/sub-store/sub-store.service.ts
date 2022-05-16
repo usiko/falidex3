@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
-import { IBaseCirculaire, IBaseCirculaireColor, IBaseColor, IBaseCollectionData } from 'src/app/models/base-data-models';
+import { IBaseCirculaire, IBaseCirculaireColor, IBaseColor, IBaseCollectionData, IBaseCodeSpe } from 'src/app/models/base-data-models';
 import { ICirculaire } from 'src/app/models/linked-data-models';
 import {
     ISubBaseCirculaire,
@@ -47,7 +47,7 @@ export class SubStoreService {
     public dataRelations$ = this.store.dataRelations$;
     public currentDataRelations$ = this.store.currentDataRelations$;
 
-    public codeSpeText$:BehaviorSubject<ICodeSpe[]> = this.store.codeSpeText$;
+    public codeSpeText$: BehaviorSubject<IBaseCodeSpe[]> = this.store.codeSpeText$;
 
     public getItemById(id: string, subject: BehaviorSubject<ISubBaseCollectionData[]>): ISubBaseCollectionData {
         const items = subject.getValue();
@@ -127,5 +127,13 @@ export class SubStoreService {
                 });
             }
         );
+        this.codeSpeText$.subscribe((item) => {
+            console.log(item);
+        });
+        this.currentDataRelations$.subscribe((relations) => {
+            if (relations) {
+                this.store.codeSpeText$.next(relations.specificites);
+            }
+        });
     }
 }
