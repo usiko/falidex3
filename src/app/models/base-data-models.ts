@@ -48,3 +48,10 @@ export interface IBaseSymbolAcessory extends IBaseCollectionData { //data linked
 
 }
 
+
+export interface ICodeSpe extends IBaseCollectionData{
+    text: string;
+    article?: string;
+    note?: string;
+}
+

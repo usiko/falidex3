@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { IBaseCirculaire, IBaseCirculaireColor, IBaseCollectionData, IBaseColor, IBaseFiliere, IBasePlacement, IBasePosition, IBaseSignification, IBaseSymbol, IBaseSymbolAcessory, IBaseSymbolSens } from 'src/app/models/base-data-models';
 import { IRelationData } from 'src/app/models/base-relations.models';
+import { ICodeSpe } from '../../../models/base-data-models';
 
 @Injectable({
     providedIn: 'root'
@@ -30,5 +31,9 @@ export class StoreService {
 
     public dataRelations$ = new BehaviorSubject<IRelationData[]>([]);
     public currentDataRelations$ = new BehaviorSubject<IRelationData>(null);
+
+    // spe code text
+
+    public codeSpeText$ = new BehaviorSubject<ICodeSpe[]>([]);
 
 }

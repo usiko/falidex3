@@ -47,6 +47,8 @@ export class SubStoreService {
     public dataRelations$ = this.store.dataRelations$;
     public currentDataRelations$ = this.store.currentDataRelations$;
 
+    public codeSpeText$:BehaviorSubject<ICodeSpe[]> = this.store.codeSpeText$;
+
     public getItemById(id: string, subject: BehaviorSubject<ISubBaseCollectionData[]>): ISubBaseCollectionData {
         const items = subject.getValue();
         const find = items.find((item) => {
