@@ -17,33 +17,34 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 
 @NgModule({
-    declarations: [AppComponent],
-    entryComponents: [],
-    imports: [
-        BrowserModule,
-        CommonModule,
-        IonicModule.forRoot({
-            rippleEffect: false,
-            mode: 'md',
-        }),
-        FontAwesomeModule,
-        AppRoutingModule,
-        ComponentModule,
-        ServiceWorkerModule.register('ngsw-worker.js', {
-            enabled: environment.production,
-            // Register the ServiceWorker as soon as the application is stable
-            // or after 30 seconds (whichever comes first).
-            registrationStrategy: 'registerWhenStable:30000',
-        }),
-    ],
-    providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, EventService],
-    bootstrap: [AppComponent],
-    schemas: [
-        //CUSTOM_ELEMENTS_SCHEMA
-    ],
+	declarations: [AppComponent],
+	entryComponents: [],
+	imports: [
+		BrowserModule,
+		CommonModule,
+		HttpClientModule,
+		IonicModule.forRoot({
+			rippleEffect: false,
+			mode: 'md',
+		}),
+		FontAwesomeModule,
+		AppRoutingModule,
+		ComponentModule,
+		ServiceWorkerModule.register('ngsw-worker.js', {
+			enabled: environment.production,
+			// Register the ServiceWorker as soon as the application is stable
+			// or after 30 seconds (whichever comes first).
+			registrationStrategy: 'registerWhenStable:30000',
+		}),
+	],
+	providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, EventService],
+	bootstrap: [AppComponent],
+	schemas: [
+		//CUSTOM_ELEMENTS_SCHEMA
+	],
 })
 export class AppModule {
-    constructor(library: FaIconLibrary) {
-        library.addIconPacks(fas, fab, far);
-    }
+	constructor(library: FaIconLibrary) {
+		library.addIconPacks(fas, fab, far);
+	}
 }
