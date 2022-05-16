@@ -44,7 +44,7 @@ export class DataLoaderStoreService {
 
     loadData(): void {
         this.loadingSteps = this.config.getConfig().loadingSteps;
-        const numberOfSteps = 13;
+        const numberOfSteps = 11;
         let currentStep = 1;
         of(null)
             .pipe(
@@ -148,13 +148,14 @@ export class DataLoaderStoreService {
 
     private displayStep(currentStep: number, numberOfSteps: number) {
         let nextvalue = (1 / numberOfSteps) * currentStep;
-        let lastvalue = (1 / numberOfSteps) * currentStep - 1;
+        let lastvalue = (1 / numberOfSteps) * (currentStep - 1);
         if (nextvalue > 1) {
             nextvalue = 1;
         }
         if (lastvalue > 1) {
             lastvalue = 1;
         }
+        console.log(lastvalue, nextvalue);
         this.displayLoading({
             enable: !!this.getStepMessage(currentStep),
             value: lastvalue,

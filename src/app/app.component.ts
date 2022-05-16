@@ -6,6 +6,7 @@ import { CirculaireCollectionService } from './services/collection-item/circulai
 import { FiliereCollectionService } from './services/collection-item/filiere/filiere-collection.service';
 import { SignificationCollectionService } from './services/collection-item/signification/signification-collection.service';
 import { SymbolCollectionService } from './services/collection-item/symbol/symbol-collection.service';
+import { ConfigService } from './services/config/config.service';
 import { DataLoaderStoreService } from './services/data-store/loader/data-loader-store.service';
 import { SubStoreService } from './services/data-store/sub-store/sub-store.service';
 import { EventService } from './services/event/event.service';
@@ -30,10 +31,12 @@ export class AppComponent implements OnInit {
         private filieresService: FiliereCollectionService,
         private symbolService: SymbolCollectionService,
         private subStore: SubStoreService,
-        private relationService: DataRelationsService
+        private relationService: DataRelationsService,
+        private configService: ConfigService
     ) {}
 
     ngOnInit() {
+        this.configService.loadConfig();
         this.filieresService.collection$.subscribe((items) => {
             this.setMenu();
         });

@@ -1,21 +1,21 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { CommonModule } from '@angular/common';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { ComponentModule } from './components/component.module';
-import { EventService } from './services/event/event.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
-
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import { HttpClientModule } from '@angular/common/http';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { initializeConfig } from './app.initializer';
+import { ComponentModule } from './components/component.module';
+import { ConfigService } from './services/config/config.service';
+import { EventService } from './services/event/event.service';
 
 @NgModule({
     declarations: [AppComponent],
@@ -38,7 +38,19 @@ import { HttpClientModule } from '@angular/common/http';
             registrationStrategy: 'registerWhenStable:30000',
         }),
     ],
-    providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, EventService],
+    providers: [
+        {
+            provide: RouteReuseStrategy,
+            useClass: IonicRouteStrategy,
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initializeConfig,
+            deps: [ConfigService],
+            multi: true,
+        },
+        EventService,
+    ],
     bootstrap: [AppComponent],
     schemas: [
         //CUSTOM_ELEMENTS_SCHEMA
