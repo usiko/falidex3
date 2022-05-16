@@ -31,15 +31,19 @@ import { StoreService } from '../base-store/store.service';
 import { ILoadingBarState } from '../../../models/global.model';
 import { EventService } from '../../event/event.service';
 import { IRelationData } from 'src/app/models/base-relations.models';
+import { ILoadingSteps } from '../../../models/config.model';
 
 @Injectable({
     providedIn: 'root',
 })
 export class DataLoaderStoreService {
     private delay = 0;
-    constructor(private store: StoreService, private event: EventService) {}
+    private loadingSteps: ILoadingSteps = [];
+    constructor(private store: StoreService, private event: EventService, private config) {}
 
     loadData(): void {
+        const loadingSteps = this.config.getConfig().loadingSteps;
+        const numberOfSteps = 13;
         of(null)
             .pipe(
                 mergeMap(() => {
@@ -182,6 +186,22 @@ export class DataLoaderStoreService {
                     });
                 }, 750);
             });
+    }
+
+    private getStepMessage(stepNumber: number)
+    {
+        if (this.loadingSteps.length === 0) {
+            return null;
+        }
+        else {
+            if (!this.loadingSteps[stepNumber])
+            {
+                return this.loadingSteps[this.loadingSteps.length - 1];
+            }
+            else {
+                return this.loadingSteps[stepNumber];
+            }
+        }
     }
 
     private loadRelations(): Observable<IRelationData[]> {

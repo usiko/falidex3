@@ -1,0 +1,40 @@
+{
+    "loadingSteps":[
+        {
+            "message":"Accrochage des grelots"
+        },
+        {
+            "message":"Tocardisation des tocards"
+        },
+        {
+            "message":"Cuisson de la faluche"
+        },
+        {
+            "message":"Drama satin/velours"
+        },
+        {
+            "message":"Engagement Fouk"
+        },
+        {
+            "message":"Couture des circulaires"
+        },
+        {
+            "message":"Décuvage des PMs"
+        },
+        {
+            "message":"Décernement des singes"
+        },
+        {
+            "message":"Prépatation des pichets"
+        },
+        {
+            "message":"Tarte aux pommes"
+        },
+        {
+            "message":"Lecture du code"
+        },
+        {
+            "message":"\"La fal c`est un truc serieux\""
+        }
+    ]
+}
