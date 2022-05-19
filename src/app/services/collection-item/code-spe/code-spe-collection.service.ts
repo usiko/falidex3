@@ -14,6 +14,7 @@ export class CodeSpeCollectionService extends ICollectionItem<IBaseCodeSpe, ICod
     }
 
     init() {
+        // aucune opération on prends que les info direct
         this.baseCollection$.subscribe((item) => {
             this.collection$.next(item as ICodeSpe[]);
         });

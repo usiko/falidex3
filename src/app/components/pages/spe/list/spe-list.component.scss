@@ -28,3 +28,11 @@ ion-list-header {
     z-index: 2;
     background: rgba(255, 255, 255, 0.8);
 }
+
+.code.content {
+    h3 {
+        &::first-letter {
+            text-transform: uppercase;
+        }
+    }
+}

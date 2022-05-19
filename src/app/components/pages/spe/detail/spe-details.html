@@ -1,0 +1,18 @@
+<ion-header *ngIf="(item$|async) as spe">
+    <app-header title="{{(spe)?spe.name:'oops'}}"></app-header>
+</ion-header>
+
+<ion-content>
+    <ng-container *ngIf="(item$|async) as spe">
+        <ion-card *ngIf="spe">
+            <ion-card-header *ngIf="spe.article">
+                <ion-card-title>Source {{spe.article}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content [innerHTML]="spe.text" class="content">
+            </ion-card-content>
+            <ion-card-content [innerHTML]="spe.note" *ngIf="spe.note" class="subcontent">
+            </ion-card-content>
+        </ion-card>
+    </ng-container>
+    
+</ion-content>
