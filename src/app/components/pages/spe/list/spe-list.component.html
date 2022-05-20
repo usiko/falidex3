@@ -2,7 +2,7 @@
     <app-header title="specifités"></app-header>
 </ion-header>
 
-<ion-content [scrollEvents]="true" (ionScroll)="scrolling($event)">
+<ion-content [scrollX]="false" [scrollY]="false">
 
     <ion-fab *ngIf="showScrollTopBtn" (click)="scrollToTop()" vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button color="dark">
@@ -12,12 +12,15 @@
     <ion-slides #slides (ionSlideDidChange)="slidesChange($event)" [pager]="false">
         <ion-slide>
             <div class="code content">
-
-                <ion-list>
+                <div #header1>
                     <ion-list-header color="tertiary">
                         <ion-label>Toutes les spécifitées autres qu'insigne ou filières du code</ion-label>
                         <div class="border-item"></div>
                     </ion-list-header>
+                </div>
+
+                <ion-list [ngStyle]="{'height':'calc(100% - '+header1.offsetHeight+'px)'}">
+
 
                     <ion-item *ngFor="let item of items$|async" [routerLink]="['/spes/detail',item.id]">
                         <ion-label>
@@ -35,11 +38,15 @@
         </ion-slide>
         <ion-slide>
             <div class="filiere content">
-                <ion-list>
+                <div #header2>
                     <ion-list-header color="tertiary">
                         <ion-label>Toutes les spécifitées de filières</ion-label>
                         <div class="border-item"></div>
                     </ion-list-header>
+                </div>
+
+                <ion-list [ngStyle]="{'height':'calc(100% - '+header2.offsetHeight+'px)'}">
+
                     <app-filiere-block-item-list [navigation]="'/filieres/detail/'" [item]="item" [showSpe]="false" *ngFor="let item of filieres$|async">
                     </app-filiere-block-item-list>
                 </ion-list>
@@ -47,11 +54,14 @@
         </ion-slide>
         <ion-slide>
             <div class="signification content">
-                <ion-list>
+                <div #header3>
                     <ion-list-header color="tertiary">
                         <ion-label>Toutes les spécifitées d'insigne et signification</ion-label>
                         <div class="border-item"></div>
                     </ion-list-header>
+                </div>
+                <ion-list [ngStyle]="{'height':'calc(100% - '+header3.offsetHeight+'px)'}">
+
                     <app-block-symbol-item-list [navigation]="'/symbols/detail/'" [item]="item" [showSpe]="false" *ngFor="let item of symbols$|async">
                     </app-block-symbol-item-list>
                 </ion-list>

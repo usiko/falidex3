@@ -1,7 +1,15 @@
-ion-slide {
-    .content {
-        width: 100%;
+ion-slides {
+    height: 100%;
+    ion-slide {
+        display: block;
+        .content {
+            width: 100%;
+        }
     }
+}
+
+ion-list {
+    overflow-x: auto;
 }
 
 ion-list-header {
@@ -29,10 +37,13 @@ ion-list-header {
     background: rgba(255, 255, 255, 0.8);
 }
 
-.code.content {
-    h3 {
-        &::first-letter {
-            text-transform: uppercase;
+.content {
+    height: 100%;
+    &.code {
+        h3 {
+            &::first-letter {
+                text-transform: uppercase;
+            }
         }
     }
 }
