@@ -39,9 +39,7 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
             this.runBuild$
                 .pipe(debounceTime(500)) //limitations des appels successifs
                 .subscribe(() => {
-                    const relations: IRelationData = this.currentRelation$.getValue();
-                    const built = this.buildCollection(this.baseCollection$.getValue(), relations);
-                    console.log('built', built);
+                    const built = this.buildCollection(this.baseCollection$.getValue(), this.currentRelation$.getValue());
                     this.collection$.next(built);
                 });
             this.currentRelation$ = this.store.currentDataRelations$;
@@ -128,7 +126,6 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
      */
     private buildCollection(collection: IBaseCollectionData[], relation: IRelationData): LinkedModel[] {
         {
-            console.log('building', collection);
             const returned = [];
             for (const item of collection) {
                 const filtered = [];

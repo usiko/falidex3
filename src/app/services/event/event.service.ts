@@ -21,7 +21,6 @@ export class EventService {
      */
     publish(topic: string, data?: any) {
         const subject = this.getTopic(topic);
-        console.log('fire subscription', 'topic', subject);
         subject.next(data);
     }
     /**

@@ -1,20 +1,18 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { CommonModule } from '@angular/common';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 import { ComponentModule } from './components/component.module';
 import { EventService } from './services/event/event.service';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
-
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
-import { fab } from '@fortawesome/free-brands-svg-icons';
 
 @NgModule({
     declarations: [AppComponent],
@@ -26,6 +24,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
             rippleEffect: false,
             mode: 'md',
         }),
+
         FontAwesomeModule,
         AppRoutingModule,
         ComponentModule,

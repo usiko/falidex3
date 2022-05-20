@@ -127,3 +127,19 @@ ion-modal {
 .light-backrgound {
     background: var(--ion-color-light);
 }
+
+ion-infinite-scroll {
+    padding-top: 10px;
+    padding-bottom: 0;
+    --color: var(--ion-color-secondary);
+    ion-infinite-scroll-content {
+        //margin-top: 20px;
+        --color: var(--ion-color-secondary);
+    }
+    .infinite-loading-text {
+        color: var(--ion-color-secondary) !important;
+    }
+    .infinite-loading {
+        margin-bottom: 0px;
+    }
+}

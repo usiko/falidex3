@@ -1,19 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { LisContainerComponent } from './list-container.component';
 
-import { ListDataComponent } from './list-data.component';
-
-describe('ListDataComponent', () => {
-    let component: ListDataComponent;
-    let fixture: ComponentFixture<ListDataComponent>;
+describe('LisContainerComponent', () => {
+    let component: LisContainerComponent;
+    let fixture: ComponentFixture<LisContainerComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ListDataComponent],
-            imports: [IonicModule.forRoot()]
+            declarations: [LisContainerComponent],
+            imports: [IonicModule.forRoot()],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(ListDataComponent);
+        fixture = TestBed.createComponent(LisContainerComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     }));

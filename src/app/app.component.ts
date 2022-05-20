@@ -49,6 +49,7 @@ export class AppComponent implements OnInit {
         });
         this.relationService.getCurrentRelation().subscribe((item) => {
             this.currentRelationsData$.next(item);
+            this.setMenu();
         });
     }
 
