@@ -1,9 +1,7 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AnimatedSplashscreenComponent } from './components/animated-splashscreen/animated-splashscreen.component';
-import { FiliereRoutingModule } from './components/pages/filiere/filiere-routing.module';
 import { HomePage } from './components/pages/home/home.page';
-import { SymbolRoutingModule } from './components/pages/symbol/symbole-routing.module';
 
 const routes: Routes = [
     { path: '', component: AnimatedSplashscreenComponent },
@@ -26,6 +24,10 @@ const routes: Routes = [
     {
         path: 'filieres',
         loadChildren: () => import('./components/pages/filiere/filiere-routing.module').then((mod) => mod.FiliereRoutingModule),
+    },
+    {
+        path: 'spes',
+        loadChildren: () => import('./components/pages/spe/spe-routing.module').then((mod) => mod.SpeRoutingModule),
     },
 
     /*{ path: 'symboles', children: symboleRoutes },
