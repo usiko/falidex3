@@ -1,0 +1,83 @@
+<ion-header>
+    <app-header title="specifités"></app-header>
+</ion-header>
+
+<ion-content [scrollEvents]="true" (ionScroll)="scrolling($event)">
+
+    <ion-fab *ngIf="showScrollTopBtn" (click)="scrollToTop()" vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="dark">
+            <ion-icon name="ios-arrow-up"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <ion-slides #slides (ionSlideDidChange)="slidesChange($event)" [pager]="false">
+        <ion-slide>
+            <div class="code content">
+
+                <ion-list>
+                    <ion-list-header color="tertiary">
+                        <ion-label>Toutes les spécifitées autres qu'insigne ou filières du code</ion-label>
+                        <div class="border-item"></div>
+                    </ion-list-header>
+
+                    <ion-item *ngFor="let item of items$|async" [routerLink]="['/spes/detail',item.id]">
+                        <ion-label>
+                            <h3>
+                                <div>{{item.name}}</div>
+                            </h3>
+                            <p [innerHTML]="item.text">
+
+                            </p>
+                        </ion-label>
+
+                    </ion-item>
+                </ion-list>
+            </div>
+        </ion-slide>
+        <ion-slide>
+            <div class="filiere content">
+                <ion-list>
+                    <ion-list-header color="tertiary">
+                        <ion-label>Toutes les spécifitées de filières</ion-label>
+                        <div class="border-item"></div>
+                    </ion-list-header>
+                    <app-filiere-block-item-list [navigation]="'/filieres/detail/'" [item]="item" [showSpe]="false" *ngFor="let item of filieres$|async">
+                    </app-filiere-block-item-list>
+                </ion-list>
+            </div>
+        </ion-slide>
+        <ion-slide>
+            <div class="signification content">
+                <ion-list>
+                    <ion-list-header color="tertiary">
+                        <ion-label>Toutes les spécifitées d'insigne et signification</ion-label>
+                        <div class="border-item"></div>
+                    </ion-list-header>
+                    <app-block-symbol-item-list [navigation]="'/symbols/detail/'" [item]="item" [showSpe]="false" *ngFor="let item of symbols$|async">
+                    </app-block-symbol-item-list>
+                </ion-list>
+            </div>
+        </ion-slide>
+    </ion-slides>
+
+</ion-content>
+<ion-footer class="ion-no-border">
+    <ion-tab-bar [selectedTab]="activeSlide">
+        <ion-tab-button (click)="switch(0)" tab="0">
+            <ion-icon name="book"></ion-icon>
+            <ion-label>Spé code</ion-label>
+            <ion-badge>{{(items$|async).length}}</ion-badge>
+        </ion-tab-button>
+        <ion-tab-button (click)="switch(1)" tab="1">
+            <ion-icon name="school"></ion-icon>
+            <ion-label>Spé filières</ion-label>
+            <ion-badge>{{(filieres$|async).length}}</ion-badge>
+        </ion-tab-button>
+
+        <ion-tab-button (click)="switch(2)" tab="2">
+            <ion-icon name="medal"></ion-icon>
+            <ion-label>Spé symboles</ion-label>
+            <ion-badge>{{(symbols$|async).length}}</ion-badge>
+        </ion-tab-button>
+
+    </ion-tab-bar>
+</ion-footer>

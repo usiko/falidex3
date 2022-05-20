@@ -4,27 +4,16 @@ import { BlockModule } from '../block/block.module';
 import { AppSharedModule } from '../shared/shared.module';
 import { FilierePagesModule } from './filiere/filiere-page.module';
 import { HomePage } from './home/home.page';
+import { SpePagesModule } from './spe/spe-page.module';
 import { SymbolPagesModule } from './symbol/symbol-page.module';
-
 
 /**
  * all page, routing components
  */
 @NgModule({
-    imports: [
-        SharedModule,
-        AppSharedModule,
-        BlockModule,
-        SymbolPagesModule,
-        FilierePagesModule
-
-    ],
-    exports: [
-
-    ],
+    imports: [SharedModule, AppSharedModule, BlockModule, SymbolPagesModule, FilierePagesModule, SpePagesModule],
+    exports: [],
     declarations: [HomePage],
-    providers: [
-
-    ]
+    providers: [],
 })
-export class PagesModule { }
+export class PagesModule {}

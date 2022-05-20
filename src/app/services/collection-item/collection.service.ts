@@ -1,5 +1,5 @@
-import { BehaviorSubject, Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
 import { IBaseCollectionData } from 'src/app/models/base-data-models';
 import { IRelationData, IRelationItem } from 'src/app/models/base-relations.models';
 import { ICollectionData, ICollectionLink } from 'src/app/models/linked-data-models';
@@ -39,7 +39,8 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
             this.runBuild$
                 .pipe(debounceTime(500)) //limitations des appels successifs
                 .subscribe(() => {
-                    const built = this.buildCollection(this.baseCollection$.getValue(), this.currentRelation$.getValue());
+                    const relations: IRelationData = this.currentRelation$.getValue();
+                    const built = this.buildCollection(this.baseCollection$.getValue(), relations);
                     console.log('built', built);
                     this.collection$.next(built);
                 });
@@ -50,6 +51,22 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
             });
             this.bindSubjectToBuild(this.baseCollection$);
         }
+    }
+
+    public getCollectionSpe(): Observable<LinkedModel[]> {
+        return this.collection$.pipe(
+            map((items: LinkedModel[]) => {
+                return items
+                    .map((item) => {
+                        const newItem = { ...item };
+                        newItem.links = newItem.links.filter((link) => {
+                            return link.spe;
+                        });
+                        return newItem;
+                    })
+                    .filter((item) => item.links.length > 0);
+            })
+        );
     }
 
     /**

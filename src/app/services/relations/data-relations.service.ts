@@ -9,7 +9,7 @@ import { SubStoreService } from '../data-store/sub-store/sub-store.service';
 })
 export class DataRelationsService {
     private relations: BehaviorSubject<IRelationData[]> = this.store.dataRelations$;
-    private currentRelation: BehaviorSubject<IRelationData> = this.store.currentDataRelations$;
+    private currentRelation$: BehaviorSubject<IRelationData> = this.store.currentDataRelations$;
     constructor(private store: SubStoreService) {}
 
     getRelationList(): Observable<{ name: string; id: string }[]> {
@@ -26,7 +26,7 @@ export class DataRelationsService {
     }
 
     getCurrentRelation(): Observable<{ name: string; id: string }> {
-        return this.currentRelation.pipe(
+        return this.currentRelation$.pipe(
             filter((item) => {
                 return !!item;
             }),
@@ -52,7 +52,7 @@ export class DataRelationsService {
             return item.id === id;
         });
         if (find) {
-            this.currentRelation.next(find);
+            this.currentRelation$.next(find);
         } else {
             console.warn('relation not found', id);
         }
