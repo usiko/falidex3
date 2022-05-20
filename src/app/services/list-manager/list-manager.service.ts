@@ -29,7 +29,7 @@ export class ListManagerService<Item extends ICollectionData> implements OnDestr
     /**
      * pagination size, number of element per adding
      */
-    protected pageSize = 18;
+    protected pageSize = 0;
 
     /**
      * current page number loaded
@@ -210,7 +210,12 @@ export class ListManagerService<Item extends ICollectionData> implements OnDestr
             });
         }
         this.dataSize = collection.length;
-        collection = collection.slice(this.partialParam.from, this.partialParam.to);
+        if (!this.partialParam || this.partialParam.to === 0) {
+            collection = collection.slice();
+        } else {
+            collection = collection.slice(this.partialParam.from, this.partialParam.to);
+        }
+
         this.items$.next(collection);
     }
 }

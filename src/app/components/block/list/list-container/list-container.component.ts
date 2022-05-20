@@ -1,3 +1,4 @@
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
 
@@ -12,6 +13,10 @@ import { IonSlides } from '@ionic/angular';
 })
 export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
     @ViewChild(IonSlides) slides: IonSlides;
+    @ViewChild('cdkList') cdkList: CdkVirtualScrollViewport;
+    @ViewChild('cdkGallery') cdkGallery: CdkVirtualScrollViewport;
+    @ViewChild('cdkSlideList') cdkSlideList: CdkVirtualScrollViewport;
+    @ViewChild('cdkSlideGallery') cdkSlideGallery: CdkVirtualScrollViewport;
 
     /***
      * loading state
@@ -22,6 +27,8 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
         list?: boolean;
         gallery?: boolean;
     };
+
+    @Input() showScrollTopBtn = false;
 
     public listMode: string;
 
@@ -71,6 +78,13 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
                 this.getListMode();
             });
             this.getListMode();
+        } else if (!this.activeListMode.gallery || !this.activeListMode.list) {
+            if (this.activeListMode.gallery) {
+                this.listMode = 'gallery';
+            }
+            if (this.activeListMode.list) {
+                this.listMode = 'list';
+            }
         }
     }
 
@@ -82,6 +96,30 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
             } else if (this.activeListMode.gallery) {
                 this.listMode = 'gallery';
             }
+        }
+    }
+
+    scrollToTop() {
+        let cdk: CdkVirtualScrollViewport;
+        if (!this.activeListMode.gallery || !this.activeListMode.list) {
+            if (this.listMode == 'list') {
+                cdk = this.cdkList;
+            }
+            if (this.listMode == 'gallery') {
+                cdk = this.cdkGallery;
+            }
+        } else {
+            if (this.listMode == 'list') {
+                cdk = this.cdkSlideList;
+            }
+            if (this.listMode == 'gallery') {
+                cdk = this.cdkSlideGallery;
+            }
+        }
+        if (cdk) {
+            cdk.scrollToOffset(0, 'smooth');
+        } else {
+            console.warn('nocdk');
         }
     }
 

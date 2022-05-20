@@ -23,7 +23,7 @@ export class FiliereListComponent extends PageItemList<IFiliere> implements OnIn
     @ViewChild(IonContent) content: IonContent;
 
     showScrollTopBtn = true;
-    public pageSize = 18;
+    public pageSize = 0;
     public circulaireMatEnum = CiculaireMatiereEnum;
     constructor(
         protected collectionService: FiliereCollectionService,

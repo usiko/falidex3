@@ -1,14 +1,9 @@
 <ion-header>
     <app-header title="filieres" (onsearch)="search($event)" [filterable]="true" [searchable]="true" [length]="(dataLength )?dataLength:undefined"></app-header>
 </ion-header>
-<ion-content [scrollEvents]="true" (ionScroll)="scrolling($event)">
-    <ion-fab *ngIf="showScrollTopBtn" (click)="scrollToTop()" vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button color="dark">
-            <fa-icon class="light-color" [icon]="['fas', 'angle-up']"></fa-icon>
-        </ion-fab-button>
-    </ion-fab>
+<ion-content [scrollX]="false" [scrollY]="false">
     <ng-container *ngIf="(items$|async) as items">
-        <app-list-container [activeListMode]="{list:true}" [loading]="loadingScroll">
+        <app-list-container [showScrollTopBtn]="showScrollTopBtn" [activeListMode]="{list:true}" [loading]="loadingScroll">
             <ng-container slot="list">
                 <ng-container *ngIf="!initLoading">
                     <app-filiere-block-item-list [navigation]="'/filieres/detail/'" [item]="item" *ngFor="let item of items; trackBy:trackByFn"></app-filiere-block-item-list>

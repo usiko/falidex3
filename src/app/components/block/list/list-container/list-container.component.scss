@@ -27,14 +27,17 @@
 }
 
 ion-slides {
-    //height: 100%;
+    height: calc(100% - 48px);
+    width: 100%;
     ion-slide {
         display: block;
         position: relative;
+        height: 100%;
+        width: 100%;
         .list-item {
             position: relative;
         }
-        &.absoluteList {
+        /*&.absoluteList {
             .list-item {
                 position: absolute;
                 left: 0;
@@ -42,9 +45,19 @@ ion-slides {
                 width: 100%;
                 height: 100%;
             }
-        }
+        }*/
         /* position: absolute;
         z-index: -1;
         */
+    }
+}
+
+cdk-virtual-scroll-viewport {
+    height: 100%;
+    width: 100%;
+    &::ng-deep {
+        .cdk-virtual-scroll-content-wrapper {
+            width: 100%;
+        }
     }
 }
