@@ -1,12 +1,12 @@
 <ion-header>
-    <app-header title="specifités"></app-header>
+    <app-header title="specifités" [length]="(items$|async).length+(filieres$|async).length+(symbols$|async).length"></app-header>
 </ion-header>
 
 <ion-content [scrollX]="false" [scrollY]="false">
 
     <ion-fab *ngIf="showScrollTopBtn" (click)="scrollToTop()" vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button color="dark">
-            <ion-icon name="ios-arrow-up"></ion-icon>
+            <fa-icon class="light-color" [icon]="['fas', 'angle-up']"></fa-icon>
         </ion-fab-button>
     </ion-fab>
     <ion-slides #slides (ionSlideDidChange)="slidesChange($event)" [pager]="false">

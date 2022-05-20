@@ -1,6 +1,17 @@
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    OnDestroy,
+    OnInit,
+    TemplateRef,
+    ViewChild,
+} from '@angular/core';
 import { IonSlides } from '@ionic/angular';
+import { BehaviorSubject } from 'rxjs';
 
 /**
  * List dislayer and switcher
@@ -23,14 +34,22 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
      */
     @Input() loading = false;
 
+    @Input() navigationPath: string;
+
+    @Input() initLoading: boolean;
+
     @Input() activeListMode: {
-        list?: boolean;
-        gallery?: boolean;
+        list?: TemplateRef<any>;
+        gallery?: TemplateRef<any>;
     };
 
     @Input() showScrollTopBtn = false;
 
     public listMode: string;
+    @Input() items$: BehaviorSubject<any[]>;
+
+    @Input() itemListSize;
+    @Input() itemGallerySize;
 
     constructor(private changeDetector: ChangeDetectorRef) {}
 
@@ -121,6 +140,16 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
         } else {
             console.warn('nocdk');
         }
+    }
+
+    /**
+     * track by forngfor list
+     * @param index number, index in list
+     * @param item Item current item iterrated
+     *
+     */
+    trackByFn(index: Number, item: any) {
+        return item.id;
     }
 
     ngOnDestroy(): void {}

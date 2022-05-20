@@ -5,10 +5,12 @@
 <ion-content [scrollX]="false" [scrollY]="false">
 
     <ng-container *ngIf="(items$|async) as items">
-        <app-list-container [showScrollTopBtn]="showScrollTopBtn" [activeListMode]="{list:true,gallery:true}" [loading]="loadingScroll">
-            <ng-container slot="list">
-                <ng-container *ngIf="!initLoading ">
-                    <app-block-symbol-item-list [navigation]="'/symbols/detail/'" *ngFor="let item of items; trackBy:trackByFn" [item]="item"></app-block-symbol-item-list>
+        <app-list-container [items$]="items$" [itemListSize]="85" [itemGallerySize]="150" [initLoading]="initLoading" [navigationPath]="'/symbols/detail/'" [showScrollTopBtn]="showScrollTopBtn" [activeListMode]="{list:listTpl,gallery:galleryTpl}" [loading]="loadingScroll">
+            <!--<ng-container slot="list">
+                <ng-container *ngIf="!initLoading">
+                    <ng-template let-item="item">
+                        <app-block-symbol-item-list [navigation]="'/symbols/detail/'" [item]="item"></app-block-symbol-item-list>
+                    </ng-template>
                 </ng-container>
                 <ng-container *ngIf="initLoading">
                     <app-block-symbol-item-list *ngFor="let item of emptyItems" [item]="item"></app-block-symbol-item-list>
@@ -16,7 +18,7 @@
             </ng-container>
             <ng-container slot="gallery">
                 <app-symbol-block-item-gallery [navigation]="'/symbols/detail/'" *ngFor="let item of items; trackBy:trackByFn" [item]="item"></app-symbol-block-item-gallery>
-            </ng-container>
+            </ng-container>-->
         </app-list-container>
         <ion-infinite-scroll [disabled]="items.length>=dataLength || dataLength==0" threshold="120px" (ionInfinite)="getMore($event)">
             <ion-infinite-scroll-content color="primary" loadingSpinner="crescent">
@@ -24,3 +26,10 @@
         </ion-infinite-scroll>
     </ng-container>
 </ion-content>
+
+<ng-template #listTpl let-item="item" let-navigation="navigation">
+    <app-block-symbol-item-list [navigation]="navigation" [item]="item"></app-block-symbol-item-list>
+</ng-template>
+<ng-template #galleryTpl let-item="item" let-navigation="navigation">
+    <app-symbol-block-item-gallery [navigation]="navigation" [item]="item"></app-symbol-block-item-gallery>
+</ng-template>

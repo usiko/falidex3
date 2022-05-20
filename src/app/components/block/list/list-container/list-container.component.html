@@ -8,40 +8,57 @@
 <ng-container *ngIf="activeListMode">
     <!-- list-->
     <ng-container *ngIf="!activeListMode.gallery && activeListMode.list">
-        <cdk-virtual-scroll-viewport orientation="vertical" #cdkList itemSize="360" minBufferPx="900" maxBufferPx="1350">
-            <ion-item-group class="list list-item" color="light">
-                <ng-container *ngTemplateOutlet="listTpl"></ng-container>
-            </ion-item-group>
-        </cdk-virtual-scroll-viewport>
+
+        <ion-item-group class="list list-item" color="light">
+            <cdk-virtual-scroll-viewport orientation="vertical" #cdkList [itemSize]="itemListSize" [ngStyle]="{'height.px':500}">
+                <ng-container *cdkVirtualFor="let item of (items$|async); trackBy:trackByFn">
+                    <ng-container *ngTemplateOutlet="activeListMode.list;context:{item:item}"></ng-container>
+                </ng-container>
+            </cdk-virtual-scroll-viewport>
+        </ion-item-group>
+
 
     </ng-container>
 
     <!-- gallery-->
     <ng-container *ngIf="activeListMode.gallery && !activeListMode.list">
 
-        <cdk-virtual-scroll-viewport orientation="vertical" #cdkGallery itemSize="360" minBufferPx="900" maxBufferPx="1350">
-            <ion-item-group class="gallery list-item" color="light">
-                <ng-container *ngTemplateOutlet="galleryTpl"></ng-container>
-            </ion-item-group>
-        </cdk-virtual-scroll-viewport>
+
+        <ion-item-group class="gallery list-item" color="light">
+            <cdk-virtual-scroll-viewport orientation="vertical" #cdkGallery [itemSize]="itemGallerySize/3">
+                <ng-container *cdkVirtualFor="let item of (items$|async); trackBy:trackByFn">
+                    <ng-container *ngTemplateOutlet="activeListMode.gallery;context:{item:item}"></ng-container>
+                </ng-container>
+            </cdk-virtual-scroll-viewport>
+        </ion-item-group>
+
     </ng-container>
 
     <!-- both, sliding-->
     <ng-container *ngIf="activeListMode.gallery && activeListMode.list">
         <ion-slides [pager]="false">
             <ion-slide [class.absoluteList]="listMode=='gallery'">
-                <cdk-virtual-scroll-viewport orientation="vertical" #cdkSlideList itemSize="360" minBufferPx="900" maxBufferPx="1350">
+
+                <cdk-virtual-scroll-viewport orientation="vertical" #cdkSlideList [itemSize]="itemListSize">
                     <ion-item-group class="list list-item" color="light">
-                        <ng-container *ngTemplateOutlet="listTpl"></ng-container>
+                        <ng-container *cdkVirtualFor="let item of (items$|async); trackBy:trackByFn">
+                            <ng-container *ngTemplateOutlet="activeListMode.list;context:{item:item}"></ng-container>
+                        </ng-container>
                     </ion-item-group>
+
                 </cdk-virtual-scroll-viewport>
+
             </ion-slide>
             <ion-slide [class.absoluteList]="listMode=='list'">
-                <cdk-virtual-scroll-viewport orientation="vertical" #cdkSlideGallery itemSize="360" minBufferPx="900" maxBufferPx="1350">
+
+                <cdk-virtual-scroll-viewport orientation="vertical" #cdkSlideGallery [itemSize]="itemGallerySize/3" [minBufferPx]="50" [maxBufferPx]="800">
                     <ion-item-group class="gallery list-item" color="light">
-                        <ng-container *ngTemplateOutlet="galleryTpl"></ng-container>
+                        <ng-container *cdkVirtualFor="let item of (items$|async); trackBy:trackByFn">
+                            <ng-container *ngTemplateOutlet="activeListMode.gallery;context:{item:item}"></ng-container>
+                        </ng-container>
                     </ion-item-group>
                 </cdk-virtual-scroll-viewport>
+
             </ion-slide>
         </ion-slides>
     </ng-container>
@@ -62,7 +79,7 @@
         </div>
     </ion-item-divider>
 </ng-template>
-<ng-template #listTpl>
+<ng-template #listTpl let-item="item">
     <ng-content select="[slot='list']"></ng-content>
 </ng-template>
 <ng-template #galleryTpl>
