@@ -19,7 +19,7 @@
                         <div class="border-item"></div>
                     </ion-list-header>
 
-                    <ion-item *ngFor="let item of items$|async" [routerLink]="['/spes/details',item.id]">
+                    <ion-item *ngFor="let item of items$|async" [routerLink]="['/spes/detail',item.id]">
                         <ion-label>
                             <h3>
                                 <div>{{item.name}}</div>

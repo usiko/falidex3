@@ -1,18 +1,15 @@
-
-  
-import { Component, OnInit } from '@angular/core';
-import { SpesService } from 'src/app/services/page-data-services/spes/spes.service';
-import { TextSpe } from 'src/app/models/models';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ICodeSpe } from 'src/app/models/linked-data-models';
 import { CodeSpeCollectionService } from '../../../../services/collection-item/code-spe/code-spe-collection.service';
+import { PageItemDetail } from '../../detail-page';
 
 @Component({
     selector: 'app-spe-details',
     templateUrl: './spe-details.component.html',
     styleUrls: ['./spe-details.component.scss'],
 })
-export class SpeDetailsComponent   extends PageItemDetail<ICodeSpe> implements OnInit {
-
+export class SpeDetailsComponent extends PageItemDetail<ICodeSpe> implements OnInit {
     constructor(
         protected collectionService: CodeSpeCollectionService,
         protected changeDetector: ChangeDetectorRef,
@@ -23,5 +20,4 @@ export class SpeDetailsComponent   extends PageItemDetail<ICodeSpe> implements O
     ngOnInit() {
         super.init();
     }
-
 }

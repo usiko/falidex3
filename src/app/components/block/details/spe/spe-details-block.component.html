@@ -1,4 +1,4 @@
-<ng-container *ngIf="(item$|async) as spe">
+<ng-container *ngIf="(spe$|async) as spe">
     <ion-card *ngIf="spe">
         <ion-card-header *ngIf="spe.article">
             <ion-card-title>Source {{spe.article}}</ion-card-title>
