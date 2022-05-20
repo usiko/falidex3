@@ -51,6 +51,8 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
     @Input() itemListSize;
     @Input() itemGallerySize;
 
+    public emptyItems: null[] = [];
+
     constructor(private changeDetector: ChangeDetectorRef) {}
 
     /**
@@ -108,6 +110,7 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngOnInit(): void {
+        this.initEmptyList();
         // init listmode without slide
         if (this.activeListMode && !(this.activeListMode.gallery && this.activeListMode.list)) {
             if (this.activeListMode.list) {
@@ -150,6 +153,16 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
      */
     trackByFn(index: Number, item: any) {
         return item.id;
+    }
+
+    /**
+     * show an empty list loading at the first show
+     */
+    initEmptyList() {
+        this.emptyItems = [];
+        for (let i = 0; i < 30; i++) {
+            this.emptyItems.push(null);
+        }
     }
 
     ngOnDestroy(): void {}

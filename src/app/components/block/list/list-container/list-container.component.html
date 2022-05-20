@@ -8,26 +8,30 @@
 <ng-container *ngIf="activeListMode">
     <!-- list-->
     <ng-container *ngIf="!activeListMode.gallery && activeListMode.list">
-
-        <ion-item-group class="list list-item" color="light">
+        <ng-container *ngIf="!initLoading">
             <cdk-virtual-scroll-viewport orientation="vertical" #cdkList [itemSize]="itemListSize" [minBufferPx]="1200" [maxBufferPx]="1200">
-                <ng-container *cdkVirtualFor="let item of (items$|async); trackBy:trackByFn">
+                <ion-item-group class="list list-item" color="light">
+                    <ng-container *cdkVirtualFor="let item of (items$|async); trackBy:trackByFn">
+                        <ng-container *ngTemplateOutlet="activeListMode.list;context:{item:item,navigation:navigationPath}"></ng-container>
+                    </ng-container>
+                </ion-item-group>
+            </cdk-virtual-scroll-viewport>
+        </ng-container>
+        <ng-container *ngIf="initLoading">
+            <ion-item-group class="list list-item" color="light">
+                <ng-container *ngFor="let item of emptyItems">
                     <ng-container *ngTemplateOutlet="activeListMode.list;context:{item:item}"></ng-container>
                 </ng-container>
-            </cdk-virtual-scroll-viewport>
-        </ion-item-group>
-
-
+            </ion-item-group>
+        </ng-container>
     </ng-container>
 
     <!-- gallery-->
     <ng-container *ngIf="activeListMode.gallery && !activeListMode.list">
-
-
         <ion-item-group class="gallery list-item" color="light">
             <cdk-virtual-scroll-viewport orientation="vertical" #cdkGallery [itemSize]="itemGallerySize/3" [minBufferPx]="1200" [maxBufferPx]="1200">
                 <ng-container *cdkVirtualFor="let item of (items$|async); trackBy:trackByFn">
-                    <ng-container *ngTemplateOutlet="activeListMode.gallery;context:{item:item}"></ng-container>
+                    <ng-container *ngTemplateOutlet="activeListMode.gallery;context:{item:item,navigation:navigationPath}"></ng-container>
                 </ng-container>
             </cdk-virtual-scroll-viewport>
         </ion-item-group>
@@ -37,27 +41,33 @@
     <!-- both, sliding-->
     <ng-container *ngIf="activeListMode.gallery && activeListMode.list">
         <ion-slides [pager]="false">
-            <ion-slide [class.absoluteList]="listMode=='gallery'">
+            <ion-slide>
+                <ng-container *ngIf="!initLoading">
+                    <cdk-virtual-scroll-viewport orientation="vertical" #cdkSlideList [itemSize]="itemListSize" [minBufferPx]="1200" [maxBufferPx]="1200">
+                        <ion-item-group class="list list-item" color="light">
+                            <ng-container *cdkVirtualFor="let item of (items$|async); trackBy:trackByFn">
+                                <ng-container *ngTemplateOutlet="activeListMode.list;context:{item:item,navigation:navigationPath}"></ng-container>
+                            </ng-container>
+                        </ion-item-group>
 
-                <cdk-virtual-scroll-viewport orientation="vertical" #cdkSlideList [itemSize]="itemListSize" [minBufferPx]="1200" [maxBufferPx]="1200">
-                    <ion-item-group class="list list-item" color="light">
-                        <ng-container *cdkVirtualFor="let item of (items$|async); trackBy:trackByFn">
-                            <ng-container *ngTemplateOutlet="activeListMode.list;context:{item:item}"></ng-container>
-                        </ng-container>
-                    </ion-item-group>
-
-                </cdk-virtual-scroll-viewport>
-
+                    </cdk-virtual-scroll-viewport>
+                </ng-container>
+                <ng-container *ngIf="initLoading">
+                    <ng-container *ngFor="let item of emptyItems">
+                        <ng-container *ngTemplateOutlet="activeListMode.list;context:{item:item}"></ng-container>
+                    </ng-container>
+                </ng-container>
             </ion-slide>
-            <ion-slide [class.absoluteList]="listMode=='list'">
+            <ion-slide>
 
                 <cdk-virtual-scroll-viewport orientation="vertical" #cdkSlideGallery [itemSize]="itemGallerySize/3" [minBufferPx]="1200" [maxBufferPx]="1200">
                     <ion-item-group class="gallery list-item" color="light">
                         <ng-container *cdkVirtualFor="let item of (items$|async); trackBy:trackByFn">
-                            <ng-container *ngTemplateOutlet="activeListMode.gallery;context:{item:item}"></ng-container>
+                            <ng-container *ngTemplateOutlet="activeListMode.gallery;context:{item:item,navigation:navigationPath}"></ng-container>
                         </ng-container>
                     </ion-item-group>
                 </cdk-virtual-scroll-viewport>
+
 
             </ion-slide>
         </ion-slides>
@@ -78,10 +88,4 @@
             </ion-buttons>
         </div>
     </ion-item-divider>
-</ng-template>
-<ng-template #listTpl let-item="item">
-    <ng-content select="[slot='list']"></ng-content>
-</ng-template>
-<ng-template #galleryTpl>
-    <ng-content select="[slot='gallery']"></ng-content>
 </ng-template>
