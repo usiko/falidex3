@@ -1,0 +1,60 @@
+<ion-header>
+	<app-header title="Choisis ta revisions"></app-header>
+</ion-header>
+
+<ion-content>
+	<ion-list>
+		<a [routerLink]="['/revisions','all']" class="nounderline">
+            <ion-item detail>
+                <ion-label>
+                    Tout
+                </ion-label>
+                <ion-icon name="paper" slot="start"></ion-icon>
+            </ion-item>
+        </a>
+
+		<!-- <a [routerLink]="['/revisions','insignes']" class="nounderline">
+            <ion-item detail>
+                <ion-label>
+                    Insignes et emblemes
+                </ion-label>
+                <ion-icon name="medal" slot="start"></ion-icon>
+            </ion-item>
+        </a>-->
+
+		<a [routerLink]="['/revisions','filieres']" class="nounderline">
+			<ion-item detail>
+				<ion-label>
+					Filieres
+				</ion-label>
+				<ion-icon name="school" slot="start"></ion-icon>
+			</ion-item>
+		</a>
+
+		<a [routerLink]="['/revisions','circulaires']" class="nounderline">
+			<ion-item detail>
+				<ion-label>
+					Circulaires
+				</ion-label>
+				<ion-icon name="bookmark" slot="start"></ion-icon>
+			</ion-item>
+		</a>
+		<a [routerLink]="['/revisions','symbol']" class="nounderline">
+			<ion-item detail>
+				<ion-label>
+					Insigne
+				</ion-label>
+				<ion-icon name="bookmark" slot="start"></ion-icon>
+			</ion-item>
+		</a>
+
+		<!-- <a [routerLink]="['/revisions','spes']" class="nounderline">
+            <ion-item detail>
+                <ion-label>
+                    Specificités
+                </ion-label>
+                <ion-icon src="assets/svg/file-info.svg" slot="start"></ion-icon>
+            </ion-item>
+        </a>-->
+	</ion-list>
+</ion-content>
