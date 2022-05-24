@@ -5,10 +5,10 @@
 </ion-card>
 <ion-searchbar [value]="searchText" (ionChange)="search($event)" animated></ion-searchbar>
 <cdk-virtual-scroll-viewport orientation="vertical" #cdkList [itemSize]="50" [minBufferPx]="1200" [maxBufferPx]="1200">
-    <app-filiere-block-item-list *ngFor="let item of (results$|async).filieres" [navigation]="navigation" [item]="item"></app-filiere-block-item-list>
-    <app-block-symbol-item-list *ngFor="let item of (results$|async).symbols" [navigation]="navigation" [item]="item"></app-block-symbol-item-list>
-    <app-signification-item-block  *ngFor="let item of (results$|async).symbols"  [item]="item"></app-signification-item-block>
-    <ion-item *ngFor="let item of (results$|async).circulaires">
+    <app-filiere-block-item-list class="item" *cdkVirtualFor="let item of (results$|async).filieres" [navigation]="navigation" [item]="item"></app-filiere-block-item-list>
+    <app-block-symbol-item-list class="item" *cdkVirtualFor="let item of (results$|async).symbols" [navigation]="navigation" [item]="item"></app-block-symbol-item-list>
+    <app-signification-item-block  class="item" *cdkVirtualFor="let item of (results$|async).symbols"  [item]="item"></app-signification-item-block>
+    <ion-item class="item" *cdkVirtualFor="let item of (results$|async).circulaires">
         <ion-item>
             <ion-label>
                 <p>{{item.name}}</p>
