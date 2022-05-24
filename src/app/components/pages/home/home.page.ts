@@ -9,6 +9,8 @@ import { ActivatedRoute, ActivatedRouteSnapshot, Route, Router } from '@angular/
     styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+    @ViewChild(IonSlides) slide: IonSlides;
+    activeSlide = 0;
     constructor(private route: ActivatedRoute, private router: Router) {
 
     }
@@ -26,5 +28,21 @@ export class HomePage {
             })
         })*/
 
+    }
+
+    switchTab(num: number)
+    {
+        this.activeSlide = num;
+        if (this.slide) {
+            this.slide.slideTo(num);
+        }
+    }
+
+    slidesChange(data) {
+        if (this.slide) {
+            this.slide.getActiveIndex().then((num) => {
+                this.activeSlide = num;
+            });
+        }
     }
 }

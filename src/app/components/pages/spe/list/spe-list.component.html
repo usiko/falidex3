@@ -73,18 +73,18 @@
 <ion-footer class="ion-no-border">
     <ion-tab-bar [selectedTab]="activeSlide">
         <ion-tab-button (click)="switch(0)" tab="0">
-            <ion-icon name="book"></ion-icon>
+            <fa-icon [icon]="['fas', 'book-open']" class="light-color"></fa-icon>
             <ion-label>Spé code</ion-label>
             <ion-badge>{{(items$|async).length}}</ion-badge>
         </ion-tab-button>
         <ion-tab-button (click)="switch(1)" tab="1">
-            <ion-icon name="school"></ion-icon>
+            <fa-icon [icon]="['fas', 'graduation-cap']" class="light-color"></fa-icon>
             <ion-label>Spé filières</ion-label>
             <ion-badge>{{(filieres$|async).length}}</ion-badge>
         </ion-tab-button>
 
         <ion-tab-button (click)="switch(2)" tab="2">
-            <ion-icon name="medal"></ion-icon>
+            <fa-icon [icon]="['fas', 'award']" class="light-color"></fa-icon>
             <ion-label>Spé symboles</ion-label>
             <ion-badge>{{(symbols$|async).length}}</ion-badge>
         </ion-tab-button>

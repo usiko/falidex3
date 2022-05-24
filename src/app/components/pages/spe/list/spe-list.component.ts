@@ -49,7 +49,10 @@ export class SpeListComponent extends PageItemList<ICodeSpe> implements OnInit {
 
     switch(num: number) {
         this.activeSlide = num;
-        this.slide.slideTo(num);
+        if (this.slide) {
+            this.slide.slideTo(num);
+        }
+        
     }
 
     slidesChange(data) {
