@@ -7,9 +7,7 @@ import { ActivatedRoute, ActivatedRouteSnapshot, Route, Router } from '@angular/
 	styleUrls: ['home-search-resultcomponent.scss'],
 })
 export class HomeSearchResult {
-	constructor() {}
+	constructor(private searchService: globalSearchService) {}
 
-	results = [];
-
-	ngOnInit(): void {}
+	results$ = this.searchService.searchResult$;
 }
