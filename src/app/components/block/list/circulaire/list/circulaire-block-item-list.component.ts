@@ -8,8 +8,8 @@ import { ListItem } from '../../list-item';
  */
 @Component({
     selector: 'app-block-circulaire-item-list',
-    templateUrl: './symbole-circulaire-item-list.component.html',
-    styleUrls: ['./symbole-circulaire-item-list.component.scss'],
+    templateUrl: './circulaire-block-item-list.component.html',
+    styleUrls: ['./circulaire-block-item-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CirculaireBlockItemListComponent extends ListItem<ICirculaire> implements OnInit {

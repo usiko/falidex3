@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AnimatedSplashscreenComponent } from './components/animated-splashscreen/animated-splashscreen.component';
-import { HomePage } from './components/pages/home/home.page';
+import { HomePageComponent } from './components/pages/home/home.page.component';
 
 const routes: Routes = [
     { path: '', component: AnimatedSplashscreenComponent },
-    { path: 'home', component: HomePage },
+    { path: 'home', component: HomePageComponent },
 
     /*{ path: 'list', component: ListPage },
     { path: 'spes', component: SpesComponent },
@@ -34,7 +34,7 @@ const routes: Routes = [
     { path: 'filieres', children: filiereRoutes },
     { path: 'circulaires', children: circulaireRoutes },
     { path: 'spes', children: speRoutes }*/
-    { path: '**', pathMatch: 'full', component: HomePage },
+    { path: '**', pathMatch: 'full', component: HomePageComponent },
 ];
 
 @NgModule({

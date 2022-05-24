@@ -13,7 +13,7 @@
                     <div>{{item.name}}</div>
                 </h3>
                 <ng-container *ngIf="filiereList.length>2">
-                    <ng-container *ngTemplateOutlet="filiereTpl;context:{filiereLinks:(filiereList|slice:0,2)}"></ng-container>
+                    <ng-container *ngTemplateOutlet="filiereTpl;context:{filiereLinks:(filiereList|slice:0:2)}"></ng-container>
                     <p class="content">
                         Et {{filiereList.length-2}} de plus
                     </p>

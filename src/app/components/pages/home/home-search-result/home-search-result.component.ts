@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, Route, Router } from '@angular/router';
+import { globalSearchService } from 'src/app/services/globale-search/global-search.service';
 
 @Component({
-	selector: 'app-home-search-result',
-	templateUrl: 'home-search-result.component.html',
-	styleUrls: ['home-search-resultcomponent.scss'],
+    selector: 'app-home-search-result',
+    templateUrl: 'home-search-result.component.html',
+    styleUrls: ['home-search-result.component.scss'],
 })
 export class HomeSearchResult {
-	constructor(private searchService: globalSearchService) {}
+    constructor(private searchService: globalSearchService) {}
 
-	results$ = this.searchService.searchResult$;
+    results$ = this.searchService.searchResult$;
 }
