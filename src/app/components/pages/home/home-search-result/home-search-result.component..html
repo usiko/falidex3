@@ -8,12 +8,6 @@
     <app-filiere-block-item-list class="item" *cdkVirtualFor="let item of (results$|async).filieres" [navigation]="navigation" [item]="item"></app-filiere-block-item-list>
     <app-block-symbol-item-list class="item" *cdkVirtualFor="let item of (results$|async).symbols" [navigation]="navigation" [item]="item"></app-block-symbol-item-list>
     <app-signification-item-block  class="item" *cdkVirtualFor="let item of (results$|async).symbols"  [item]="item"></app-signification-item-block>
-    <ion-item class="item" *cdkVirtualFor="let item of (results$|async).circulaires">
-        <ion-item>
-            <ion-label>
-                <p>{{item.name}}</p>
-            </ion-label>
-        </ion-item>
-    </ion-item>
+    <app-block-circulaire-item-list class="item"  *cdkVirtualFor="let item of (results$|async).circulaires" [item]="item"></app-block-circulaire-item-list>
 
 </cdk-virtual-scroll-viewport>
