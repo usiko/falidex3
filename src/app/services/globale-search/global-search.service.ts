@@ -73,9 +73,21 @@ export class GlobalSearchService {
 
     private searchInCollection(collection: BehaviorSubject<ICollectionData[]>) {
         return collection.getValue().filter((item) => {
+            const deepFind = item.links?.find((link) => {
+                for (const key in link) {
+                    if (Object.prototype.hasOwnProperty.call(link, key)) {
+                        const element = link[key];
+                        return (
+                            element.name?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+                            (element as any).content?.toLowerCase().includes(this.searchText.toLowerCase())
+                        );
+                    }
+                }
+            });
             return (
                 item.name?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-                (item as any).content?.toLowerCase().includes(this.searchText.toLowerCase())
+                (item as any).content?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+                deepFind
             );
         });
     }

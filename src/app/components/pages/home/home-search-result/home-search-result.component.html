@@ -8,16 +8,29 @@
 </div>
 <ion-list *ngIf="(results$|async).filieres.length>0 || (results$|async).symbols.length>0 || (results$|async).signification.length>0 || (results$|async).circulaire.length>0" [ngStyle]="{'height':'calc(100% - '+topContainer.offsetHeight+'px)'}">
     <ion-item-group *ngIf="(results$|async).filieres.length>0">
+        <ion-list-header>
+            Filières
+        </ion-list-header>
         <app-filiere-block-item-list class="item" *ngFor="let item of (results$|async).filieres" [navigation]="'/filieres/detail/'" [item]="item"></app-filiere-block-item-list>
     </ion-item-group>
     <ion-item-group *ngIf="(results$|async).symbols.length>0">
+        <ion-list-header>
+            Insigne/Emblemes
+        </ion-list-header>
         <app-block-symbol-item-list class="item" *ngFor="let item of (results$|async).symbols" [navigation]="'/symbols/detail/'" [item]="item"></app-block-symbol-item-list>
     </ion-item-group>
-    <ion-item-group *ngIf="(results$|async).signification.length>0">
-        <app-signification-item-block class="item" *ngFor="let item of (results$|async).signification" [signification]="item"></app-signification-item-block>
-    </ion-item-group>
+
     <ion-item-group *ngIf="(results$|async).circulaire.length>0">
+        <ion-list-header>
+            Circulaires
+        </ion-list-header>
         <app-block-circulaire-item-list class="item" *ngFor="let item of (results$|async).circulaire" [navigation]="'/circulaires/detail/'" [item]="item"></app-block-circulaire-item-list>
+    </ion-item-group>
+    <ion-item-group *ngIf="(results$|async).signification.length>0">
+        <ion-list-header>
+            Significations
+        </ion-list-header>
+        <app-signification-item-block class="item" *ngFor="let item of (results$|async).signification" [signification]="item"></app-signification-item-block>
     </ion-item-group>
 
 
