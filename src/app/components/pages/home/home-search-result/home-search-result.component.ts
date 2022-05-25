@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { globalSearchService } from 'src/app/services/globale-search/global-search.service';
+import { GlobalSearchService } from 'src/app/services/globale-search/global-search.service';
 
 @Component({
     selector: 'app-home-search-result',
@@ -7,7 +7,14 @@ import { globalSearchService } from 'src/app/services/globale-search/global-sear
     styleUrls: ['home-search-result.component.scss'],
 })
 export class HomeSearchResult {
-    constructor(private searchService: globalSearchService) {}
-
+    constructor(private searchService: GlobalSearchService) {}
+    searchText: string;
     results$ = this.searchService.searchResult$;
+    search(value) {
+        this.results$.subscribe((data) => {
+            console.log(data);
+        });
+        this.searchText = value.detail.value;
+        this.searchService.updateSearchText(this.searchText);
+    }
 }
