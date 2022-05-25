@@ -16,7 +16,7 @@ export class CirculaireDetailsBlockComponent implements OnInit {
     @Input() circualaire$: BehaviorSubject<ICirculaire>;
     slideOptions = {
         autoplay: false,
-        pagination: false,
+        pagination: true,
     };
     slideIndex = 0;
 

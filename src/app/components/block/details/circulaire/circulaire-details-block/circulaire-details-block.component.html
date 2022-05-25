@@ -1,46 +1,54 @@
-<ion-slides #slides (ionSlideDidChange)="slidesChange($event)" [options]="slideOptions">
-    <ng-container *ngIf="circualaire$|async as circulaire">
-        <div class="circulaire-content">
-            <app-circulaire-representation [cssClass]="'strong'" [circulaire]="circulaire"></app-circulaire-representation>
+<ng-container *ngIf="circualaire$|async as circulaire">
+    <div class="circulaire-content">
+        <app-circulaire-representation [cssClass]="'strong'" [circulaire]="circulaire"></app-circulaire-representation>
 
-        </div>
-        <ng-container *ngIf="circulaire.links|filterLink:['filiere', 'symbols'] as links">
+    </div>
 
-            <ion-slide *ngFor="let link of links">
-                <ion-card>
-                    <ion-button fill="clear" [disabled]="slideIndex==0" *ngIf="links.length>1" (click)="slideprevious()" expand="full" size="small">
-                        <fa-icon class='dark-color' [icon]="['fas', 'angle-left']" class="dark-color" slot="icon-only"></fa-icon>
-                    </ion-button>
-                    <div class="content">
-                        <ng-container *ngTemplateOutlet="linkTpl;context:{link:link}"></ng-container>
-                    </div>
-                    <ion-button fill="clear" [disabled]="slideIndex==links.length-1" *ngIf="links.length>1" (click)="slidenext()" expand="full" size="small">
-                        <fa-icon class='dark-color' [icon]="['fas', 'angle-right']" class="dark-color" slot="icon-only"></fa-icon>
-                    </ion-button>
-                </ion-card>
-            </ion-slide>
+    <ion-slides #slides (ionSlideDidChange)="slidesChange($event)" [options]="slideOptions">
+        <ng-container>
+
+            <ng-container *ngIf="circulaire.links|filterLink:['filiere', 'symbols'] as links">
+
+                <ion-slide *ngFor="let link of links">
+                    <ion-card class="slide-container">
+
+                        <div class="content">
+
+                            <ng-container *ngTemplateOutlet="linkTpl;context:{link:link,links:circulaire.links}"></ng-container>
+
+                        </div>
+
+                    </ion-card>
+                </ion-slide>
+            </ng-container>
+
+
         </ng-container>
 
+    </ion-slides>
+</ng-container>
 
-    </ng-container>
-
-</ion-slides>
-
-<ng-template #linkTpl let-link="link">
+<ng-template #linkTpl let-link="link" let-links="links">
     <div class="img-container">
         <div class="img-symbole">
-            <app-img-loader [src]="(link.symbol.imgs && link.symbol.imgs[0])?'http://resources.falidex.fr'+link.symbol.imgs[0].url:null">
+            <app-img-loader [src]="(link.symbols.imgs && link.symbols.imgs[0])?'http://resources.falidex.fr'+link.symbols.imgs[0].url:null">
             </app-img-loader>
         </div>
     </div>
     <div class="content-slide">
+        <ion-button fill="clear" [disabled]="slideIndex==0" *ngIf="links.length>1" (click)="slideprevious()" expand="full" size="small">
+            <fa-icon class='dark-color' [icon]="['fas', 'angle-left']" class="dark-color" slot="icon-only"></fa-icon>
+        </ion-button>
         <div class="title">
             <ion-card-header>
-                <ion-card-title>{{link.symbol.name}}</ion-card-title>
+                <ion-card-title>{{link.symbols.name}}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
                 <p>pour {{link.filiere.name}}</p>
             </ion-card-content>
         </div>
+        <ion-button fill="clear" [disabled]="slideIndex==links.length-1" *ngIf="links.length>1" (click)="slidenext()" expand="full" size="small">
+            <fa-icon class='dark-color' [icon]="['fas', 'angle-right']" class="dark-color" slot="icon-only"></fa-icon>
+        </ion-button>
     </div>
 </ng-template>
