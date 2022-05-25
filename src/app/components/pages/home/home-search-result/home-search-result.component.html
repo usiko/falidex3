@@ -6,7 +6,7 @@
     </ion-card>
     <ion-searchbar [value]="searchText" (ionChange)="search($event)" animated></ion-searchbar>
 </div>
-<ion-list [ngStyle]="{'height':'calc(100% - '+topContainer.offsetHeight+'px)'}">
+<ion-list *ngIf="(results$|async).filieres.length>0 || (results$|async).symbols.length>0 || (results$|async).signification.length>0 || (results$|async).circulaire.length>0" [ngStyle]="{'height':'calc(100% - '+topContainer.offsetHeight+'px)'}">
     <ion-item-group *ngIf="(results$|async).filieres.length>0">
         <app-filiere-block-item-list class="item" *ngFor="let item of (results$|async).filieres" [navigation]="'/filieres/detail/'" [item]="item"></app-filiere-block-item-list>
     </ion-item-group>
@@ -24,3 +24,7 @@
 
 
 </ion-list>
+
+<div class="no-result" *ngIf="searchText && searchText.length>0 && (results$|async).filieres.length==0 && (results$|async).symbols.length==0 && (results$|async).signification.length==0 && (results$|async).circulaire.length==0">
+    <p>Aucun résultat</p>
+</div>
