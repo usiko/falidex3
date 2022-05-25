@@ -6,28 +6,26 @@
 </ion-item>
 <ng-template #content>
     <ion-label *ngIf="(item.links|filterLink:['filiere']) as filiereList">
-        <div class="content">
-            <app-circulaire-representation class="left" *ngIf="item.colors" [circulaire]="item" [cssClass]="'vertical'"></app-circulaire-representation>
-            <div class="item-container">
-                <h3>
-                    <div>{{item.name}}</div>
-                </h3>
-                <ng-container *ngIf="filiereList.length>2">
-                    <ng-container *ngTemplateOutlet="filiereTpl;context:{filiereLinks:(filiereList|slice:0:2)}"></ng-container>
-                    <p class="content">
-                        Et {{filiereList.length-2}} de plus
-                    </p>
-                </ng-container>
-                <ng-container *ngIf="filiereList.length<=2">
-                    <ng-container *ngTemplateOutlet="filiereTpl;context:{filiereLinks:filiereList}"></ng-container>
-                </ng-container>
-            </div>
-            <app-circulaire-representation class="right" *ngIf="item.colors" [circulaire]="item" [cssClass]="'vertical'"></app-circulaire-representation>
+
+        <ng-container>
+            <app-circulaire-representation *ngIf="item.colors" [circulaire]="item" [cssClass]="'vertical'"></app-circulaire-representation>
+
+        </ng-container>
+        <div>
+            <h3>
+                <div>{{item.name}}</div>
+            </h3>
+            <p class="filiere" *ngIf="filiereList.length>1">
+                {{filiereList.length}} filieres
+            </p>
+            <ng-container *ngIf="filiereList.length==1">
+                <ng-container *ngTemplateOutlet="filiereTpl;context:{filiereLinks:filiereList}"></ng-container>
+            </ng-container>
         </div>
     </ion-label>
 </ng-template>
 <ng-template #filiereTpl let-filiereLinks="filiereLinks">
-    <p class="content" *ngFor="let filiereLink of filiereLinks">
+    <p class="filiere" *ngFor="let filiereLink of filiereLinks">
         <span class="content">
             <fa-icon  class="primary-color" *ngIf="filiereLink.spe && showSpe" [icon]="['fas', 'circle-exclamation']" ></fa-icon>
         <span>

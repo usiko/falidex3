@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { GlobalSearchService } from 'src/app/services/globale-search/global-search.service';
 
 @Component({
@@ -7,6 +7,7 @@ import { GlobalSearchService } from 'src/app/services/globale-search/global-sear
     styleUrls: ['home-search-result.component.scss'],
 })
 export class HomeSearchResult {
+    @Input() pageHeight = 0;
     constructor(private searchService: GlobalSearchService) {}
     searchText: string;
     results$ = this.searchService.searchResult$;

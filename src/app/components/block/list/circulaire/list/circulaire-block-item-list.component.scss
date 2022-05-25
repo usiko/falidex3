@@ -1,36 +1,46 @@
-:host {
-    ion-item {
-        --padding-start: 0px;
-        --padding-end: 0px;
-        app-circulaire-representation {
-            height: 100%;
-            position: absolute;
-            top: 0;
-            &.right {
-                right: 0;
+ion-item {
+    ion-label {
+        h3 {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            >div {
+                &::first-letter {
+                    text-transform: uppercase;
+                }
             }
-            &.left {
-                left: 0;
-            }
-            &::ng-deep {
-                margin: 0;
+            ion-icon,
+            fa-icon {
+                margin-left: 5px;
             }
         }
-        .item-container {
-            text-align: center;
-            h3 {
-                font-size: 1.2em;
-                &::first-letter {
-                    text-transform: uppercase;
-                }
-            }
+        .filiere {
             .content {
-                color: var(--ion-color-secondary);
-                font-style: italic;
-                &::first-letter {
-                    text-transform: uppercase;
+                font-size: 0.8em;
+                white-space: nowrap;
+                align-items: center;
+                display: flex;
+                ion-icon,
+                fa-icon {
+                    flex: none;
+                    font-size: 1.3em;
+                    margin-right: 5px;
+                }
+                span {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
             }
+        }
+        display: flex !important;
+        align-items: center;
+        margin: 0;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        height: 100%;
+        app-circulaire-representation {
+            margin-right: 16px;
+            height: 100%;
         }
     }
 }

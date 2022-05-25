@@ -1,12 +1,26 @@
-<ion-card class="warning-card" color='secondary'>
-    <ion-card-content color='secondary'>
-        <ion-text>Attention le falidex n'est pas le code, c'est un outil de réstitution et de recherche, il n'est pas officiel.<br/> En cas de doute, se référer au code officiel de la ville. </ion-text>
-    </ion-card-content>
-</ion-card>
-<ion-searchbar [value]="searchText" (ionChange)="search($event)" animated></ion-searchbar>
-<ion-list>
-    <app-filiere-block-item-list class="item" *ngFor="let item of (results$|async).filieres" [navigation]="''" [item]="item"></app-filiere-block-item-list>
-    <app-block-symbol-item-list class="item" *ngFor="let item of (results$|async).symbols" [navigation]="''" [item]="item"></app-block-symbol-item-list>
-    <app-signification-item-block class="item" *ngFor="let item of (results$|async).signification" [signification]="item"></app-signification-item-block>
-    <app-block-circulaire-item-list class="item" *ngFor="let item of (results$|async).circulaire" [item]="item"></app-block-circulaire-item-list>
+<div class="top-container" #topContainer>
+    <ion-card class="warning-card" color='secondary'>
+        <ion-card-content color='secondary'>
+            <ion-text>Attention le falidex n'est pas le code, c'est un outil de réstitution et de recherche, il n'est pas officiel.<br/> En cas de doute, se référer au code officiel de la ville. </ion-text>
+        </ion-card-content>
+    </ion-card>
+    <ion-searchbar [value]="searchText" (ionChange)="search($event)" animated></ion-searchbar>
+</div>
+<ion-list [ngStyle]="{'height':'calc(100% - '+topContainer.offsetHeight+'px)'}">
+    <ion-item-group *ngIf="(results$|async).filieres.length>0">
+        <app-filiere-block-item-list class="item" *ngFor="let item of (results$|async).filieres" [navigation]="'/filieres/detail/'" [item]="item"></app-filiere-block-item-list>
+    </ion-item-group>
+    <ion-item-group *ngIf="(results$|async).symbols.length>0">
+        <app-block-symbol-item-list class="item" *ngFor="let item of (results$|async).symbols" [navigation]="'/symbols/detail/'" [item]="item"></app-block-symbol-item-list>
+    </ion-item-group>
+    <ion-item-group *ngIf="(results$|async).signification.length>0">
+        <app-signification-item-block class="item" *ngFor="let item of (results$|async).signification" [signification]="item"></app-signification-item-block>
+    </ion-item-group>
+    <ion-item-group *ngIf="(results$|async).circulaire.length>0">
+        <app-block-circulaire-item-list class="item" *ngFor="let item of (results$|async).circulaire" [navigation]="'/circulaires/detail/'" [item]="item"></app-block-circulaire-item-list>
+    </ion-item-group>
+
+
+
+
 </ion-list>

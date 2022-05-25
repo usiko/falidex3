@@ -2,27 +2,28 @@
     <app-header title="Falidex"></app-header>
 </ion-header>
 
-<ion-content>
-    <ion-slides #slides (ionSlideDidChange)="slidesChange($event)" [pager]="false">
+<ion-content [scrollX]="false" [scrollY]="false">
+    <app-home-search-result></app-home-search-result>
+    <!--<ion-slides #slides (ionSlideDidChange)="slidesChange($event)" [pager]="false">
         <ion-slide>
-            <app-home-search-result></app-home-search-result>
+            
         </ion-slide>
         <ion-slide>
             <app-home-about></app-home-about>
         </ion-slide>
-    </ion-slides>   
+    </ion-slides>  -->
 </ion-content>
 <ion-footer class="ion-no-border">
     <ion-tab-bar [selectedTab]="activeSlide">
         <ion-tab-button (click)="switchTab(0)" tab="0">
             <fa-icon [icon]="['fas', 'book-open']" class="light-color"></fa-icon>
             <ion-label>Accueil</ion-label>
-            
+
         </ion-tab-button>
         <ion-tab-button (click)="switchTab(1)" tab="1">
             <fa-icon [icon]="['fas', 'info']" class="light-color"></fa-icon>
             <ion-label>A Propos</ion-label>
-            
+
         </ion-tab-button>
     </ion-tab-bar>
 </ion-footer>

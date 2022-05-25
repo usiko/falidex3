@@ -26,6 +26,10 @@ const routes: Routes = [
         loadChildren: () => import('./components/pages/filiere/filiere-routing.module').then((mod) => mod.FiliereRoutingModule),
     },
     {
+        path: 'circulaires',
+        loadChildren: () => import('./components/pages/circulaire/circulaire-routing.module').then((mod) => mod.CirculaireRoutingModule),
+    },
+    {
         path: 'spes',
         loadChildren: () => import('./components/pages/spe/spe-routing.module').then((mod) => mod.SpeRoutingModule),
     },
