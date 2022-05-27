@@ -6,6 +6,7 @@ import { CirculairePagesModule } from './circulaire/circulaire-page.module';
 import { FilierePagesModule } from './filiere/filiere-page.module';
 import { HomePagesModule } from './home/home-page.module';
 import { HomePageComponent } from './home/home.page.component';
+import { RevisionPagesModule } from './revision/revision-page.module';
 import { SignificationPagesModule } from './signification/signification-page.module';
 import { SpePagesModule } from './spe/spe-page.module';
 import { SymbolPagesModule } from './symbol/symbol-page.module';
@@ -24,6 +25,7 @@ import { SymbolPagesModule } from './symbol/symbol-page.module';
         HomePagesModule,
         CirculairePagesModule,
         SignificationPagesModule,
+        RevisionPagesModule,
     ],
     exports: [],
     declarations: [HomePageComponent],
