@@ -11,12 +11,14 @@ import { ListManagerService } from 'src/app/services/list-manager/list-manager.s
 import { PageItemList } from '../../pages-list';
 
 @Component({
-	selector: 'app-symbol-revision',
-	templateUrl: './symbol-revision.component.html',
-	styleUrls: ['./symbol-revision.component.scss'],
+    selector: 'app-symbol-revision',
+    templateUrl: './symbol-revision.component.html',
+    styleUrls: ['./symbol-revision.component.scss'],
 })
 export class SymbolRevisionComponent extends PageItemList<IFiliere> implements OnInit {
-	constructor() {}
+    constructor() {
+        super();
+    }
 
-	ngOnInit() {}
+    ngOnInit() {}
 }
