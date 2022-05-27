@@ -134,26 +134,33 @@ export class GlobalSearchService {
         return collection.getValue().filter((item) => {
             return (
                 item.name?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-                (item as any).content?.toLowerCase().includes(this.searchText.toLowerCase())
+                (item as any).content?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+                (item as any).text?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+                (item as any).note?.toLowerCase().includes(this.searchText.toLowerCase())
             );
         });
     }
 
     private searchInCollectionDependencies(collection: BehaviorSubject<ICollectionData[]>): ICollectionData[] {
         return collection.getValue().filter((item) => {
-            return (
-                item.links?.findIndex((link) => {
-                    for (const key in link) {
-                        if (Object.prototype.hasOwnProperty.call(link, key)) {
-                            const element = link[key];
-                            return (
-                                element.name?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-                                (element as any).content?.toLowerCase().includes(this.searchText.toLowerCase())
-                            );
-                        }
+            if (!item.links || item.links.length === 0) {
+                return false;
+            }
+            const foundIndex = item.links?.findIndex((link) => {
+                for (const key in link) {
+                    if (Object.prototype.hasOwnProperty.call(link, key)) {
+                        const element = link[key];
+                        return (
+                            link.note?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+                            element.name?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+                            (element as any).content?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+                            (element as any).text?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+                            (element as any).note?.toLowerCase().includes(this.searchText.toLowerCase())
+                        );
                     }
-                }) !== -1
-            );
+                }
+            });
+            return foundIndex !== -1;
         });
     }
 

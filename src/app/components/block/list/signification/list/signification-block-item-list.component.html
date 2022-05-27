@@ -1,15 +1,21 @@
-<ion-item>
+<ion-item *ngIf="item && navigation" lines="none" [routerLink]="[navigation,item.id]" (click)="click()" detail>
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</ion-item>
+<ion-item *ngIf="item && !navigation" lines="none" (click)="click()">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</ion-item>
+<ng-template #content>
     <ion-label>
         <div>
-            <div class="text-title">{{signification.name}}</div>
+            <div class="text-title">{{item.name}}</div>
         </div>
-        <ng-container *ngIf="(signification.links|filterLink:['placement','position', 'symbolsens','symbols']:true) as links">
+        <ng-container *ngIf="(item.links|filterLink:['placement','position', 'symbolsens','symbols']:true) as links">
             <ng-container *ngFor="let link of links">
                 <ng-container *ngTemplateOutlet="linkTpl;context:{link:link}"></ng-container>
             </ng-container>
         </ng-container>
     </ion-label>
-</ion-item>
+</ng-template>
 <ng-template #linkTpl let-link="link">
     <div class="metaInfo">
         <div class="title">
