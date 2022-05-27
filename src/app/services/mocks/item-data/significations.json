@@ -1,433 +1,535 @@
  [{
+         "name": "a intégré",
          "content": "a intégré",
          "id": "signification-0"
      },
      {
+         "name": "a été intégré",
          "content": "a été intégré",
          "id": "signification-1"
      },
      {
+         "name": "n'a pas été intégré",
          "content": "n'a pas été intégré",
          "id": "signification-2"
      },
      {
+         "name": "amour de l’anatomie",
          "content": "amour de l’anatomie en tant que matière",
          "id": "signification-3"
      },
      {
+         "name": "amour du sexe opposé",
          "content": "amour du sexe opposé",
          "id": "signification-4"
      },
      {
+         "name": "amour du même sexe",
          "content": "amour du même sexe",
          "id": "signification-5"
      },
      {
+         "name": "amour des deux sexes",
          "content": "amour des deux sexes",
          "id": "signification-6"
      },
      {
+         "name": "célibataire",
          "content": "célibataire",
          "id": "signification-7"
      },
      {
+         "name": "c'est compliqué",
          "content": "c'est compliqué",
          "id": "signification-8"
      },
      {
+         "name": "en couple",
          "content": "en couple (si le ou la partenaire est faluchard, sur ruban au couleur du circulaire du partenaire)",
          "id": "signification-9"
      },
      {
+         "name": "Cœur pris dans l’antichambre du mariage",
          "content": "Cœur pris dans l’antichambre du mariage (si le ou la partenaire est faluchard, sur ruban au couleur du circulaire du partenaire)",
          "id": "signification-10"
      },
      {
+         "name": "perte de la virginité masculine",
          "content": "perte de la virginité masculine",
          "id": "signification-11"
      },
      {
+         "name": "perte de la virginité feminine",
          "content": "perte de la virginité feminine",
          "id": "signification-12"
      },
      {
+         "name": "géniteur d'un garçon",
          "content": "géniteur d'un garçon",
          "id": "signification-13"
      },
      {
+         "name": "géniteur d'une fille",
          "content": "géniteur d'une fille",
          "id": "signification-14"
      },
      {
+         "name": "génitrice d'un garçon",
          "content": "génitrice d'un garçon",
          "id": "signification-15"
      },
      {
+         "name": "génitrice d'une fille",
          "content": "génitrice d'une fille",
          "id": "signification-16"
      },
      {
+         "name": "femme enceinte",
          "content": "femme enceinte",
          "id": "signification-17"
      },
      {
+         "name": "fiancé ou pacsé",
          "content": "fiancé ou pacsé",
          "id": "signification-18"
      },
      {
+         "name": "marié",
          "content": "marié",
          "id": "signification-19"
      },
      {
+         "name": "divorcé",
          "content": "divorcé",
          "id": "signification-20"
      },
      {
+         "name": "gros dormeur",
          "content": "gros dormeur",
          "id": "signification-21"
      },
      {
+         "name": "insomniaque",
          "content": "insomniaque",
          "id": "signification-22"
      },
      {
+         "name": "réservite ou militaire",
          "content": "réservite ou militaire",
          "id": "signification-23"
      },
      {
-         "content": "pends à l'endroit du cursus où aura été effectué le service militaire ou service civique.",
-         "id": "signification-24"
-     },
-     {
+         "name": "chanceux",
          "content": "chanceux",
          "id": "signification-25"
      },
      {
+         "name": "malchanceux",
          "content": "malchanceux",
          "id": "signification-26"
      },
      {
+         "name": "globetrotteur",
          "content": "globetrotteur",
          "id": "signification-27"
      },
      {
+         "name": "oiseau de nuit",
          "content": "oiseau de nuit",
          "id": "signification-28"
      },
      {
+         "name": "buveau d'eau",
          "content": "buveau d'eau",
          "id": "signification-29"
      },
      {
+         "name": "excellence universitaire sportive",
          "content": "excellence universitaire sportive",
          "id": "signification-30"
      },
      {
+         "name": "amour du bon vin",
          "content": "amour du bon vin",
          "id": "signification-31"
      },
      {
+         "name": "amour des plaisirs de la table",
          "content": "amour des plaisirs de la table",
          "id": "signification-32"
      },
      {
+         "name": "amour de la navigation",
          "content": "amour de la navigation",
          "id": "signification-33"
      },
      {
+         "name": "amour de la musique",
          "content": "amour de la musique",
          "id": "signification-34"
      },
      {
+         "name": "amour de la littérature",
          "content": "amour de la littérature",
          "id": "signification-35"
      },
      {
+         "name": "amour de la montagne",
          "content": "amour de la montagne",
          "id": "signification-36"
      },
      {
+         "name": "amour de l'informatique et des nouvelles technologies",
          "content": "amour de l'informatique et des nouvelles technologies",
          "id": "signification-37"
      },
      {
+         "name": "amour de mécanique",
          "content": "amour de mécanique",
          "id": "signification-38"
      },
      {
+         "name": "amour de la pétanque",
          "content": "amour de la pétanque",
          "id": "signification-39"
      },
      {
+         "name": "amour des plaisirs de la mer",
          "content": "amour des plaisirs de la mer",
          "id": "signification-40"
      },
      {
+         "name": "amour de la photographie",
          "content": "amour de la photographie",
          "id": "signification-41"
      },
      {
+         "name": "amour de l`aviation",
          "content": "amour de l`aviation",
          "id": "signification-42"
      },
      {
+         "name": "amour de la bonne bière",
          "content": "amour de la bonne bière",
          "id": "signification-43"
      },
      {
+         "name": "amour de la peinture",
          "content": "amour de la peinture",
          "id": "signification-44"
      },
      {
+         "name": "amour des arts plastiques",
          "content": "amour des arts plastiques",
          "id": "signification-45"
      },
      {
+         "name": "amour de la scène et du cinema",
          "content": "amour de la scène et du cinema",
          "id": "signification-46"
      },
      {
+         "name": "à cousu une autre faluches que la sienne",
          "content": "à cousu une autre faluches que la sienne, rubans sur la faluche ou faluche entière (si plusieurs, croiser insigne, ou exposant le nombre de faluche cousues)",
          "id": "signification-47"
      },
      {
+         "name": "brevet de pilote",
          "content": "brevet de pilote",
          "id": "signification-48"
      },
      {
+         "name": "grande gueule sachant l`ouvrir",
          "content": "grande gueule sachant l`ouvrir",
          "id": "signification-49"
      },
      {
+         "name": "grande sécheur devant l`éternel",
          "content": "grande sécheur devant l`éternel",
          "id": "signification-50"
      },
      {
+         "name": "dignité dans l`ivresse",
          "content": "dignité dans l`ivresse",
          "id": "signification-51"
      },
      {
+         "name": "personne abstème",
          "content": "personne abstème (ne boit pas d`alcool)",
          "id": "signification-52"
      },
      {
+         "name": "cordon bleu",
          "content": "cordon bleu",
          "id": "signification-53"
      },
      {
+         "name": "digne chanteur de paillardes",
          "content": "digne chanteur de paillardes",
          "id": "signification-54"
      },
      {
+         "name": "gardien des traditions et respect",
          "content": "gardien des traditions et respect des anciens",
          "id": "signification-55"
      },
      {
+         "name": "parcours exemplaire",
          "content": "parcours exemplaire",
          "id": "signification-56"
      },
      {
+         "name": "travail et minutie dans l`associatif",
          "content": "travail et minutie dans l`associatif",
          "id": "signification-57"
      },
      {
+         "name": "chanceux aux examens",
          "content": "chanceux aux examens",
          "id": "signification-58"
      },
      {
+         "name": "nuit blance pour motif estudiantin",
          "content": "nuit blance pour motif estudiantin",
          "id": "signification-59"
      },
      {
+         "name": "à vomit sur sa faluche",
          "content": "à vomit sur sa faluche",
          "id": "signification-60"
      },
      {
+         "name": "à vomit dans sa faluche",
          "content": "à vomit dans sa faluche",
          "id": "signification-61"
      },
      {
+         "name": "à vomit dans sa faluche et la remis sur la tête",
          "content": "à vomit dans sa faluche et la remis sur la tête",
          "id": "signification-62"
      },
      {
+         "name": "prise de guerre",
          "content": "prise de guerre (à ne pas confondre avec le vandalisme)",
          "id": "signification-63"
      },
      {
+         "name": "papi mami (mode de vie)",
          "content": "papi mami (mode de vie)",
          "id": "signification-64"
      },
      {
+         "name": "SAM",
          "content": "accompagnateur de fin de soirée (SAM)",
          "id": "signification-65"
      },
      {
+         "name": "polyglotte",
          "content": "polyglotte (au moins 3 langues parlée courament, langue des signe incluse)",
          "id": "signification-66"
      },
      {
+         "name": "personne chaude",
          "content": "personne chaude",
          "id": "signification-67"
      },
      {
+         "name": "grand chasseur devant l`éternel",
          "content": "grand chasseur devant l`éternel",
          "id": "signification-68"
      },
      {
+         "name": "éjaculateur précoce",
          "content": "éjaculateur précoce",
          "id": "signification-69"
      },
      {
+         "name": "experte",
          "content": "experte",
          "id": "signification-70"
      },
      {
+         "name": "fin baiseur",
          "content": "fin baiseur",
          "id": "signification-71"
      },
      {
+         "name": "acte long et/ou laborieux",
          "content": "acte long et/ou laborieux et difficile",
          "id": "signification-72"
      },
      {
+         "name": "inactif",
          "content": "étoile de mer ou inactif",
          "id": "signification-73"
      },
      {
+         "name": "cuite certifiée",
          "content": "cuite certifiée (possible coéfficient multiplicateur)",
          "id": "signification-74"
      },
      {
 
+         "name": "coma éthylique certifié",
          "content": "coma éthylique certifié",
          "id": "signification-75"
      },
      {
 
+         "name": "nuit passé au poste pour motif estudiantin",
          "content": "nuit passé au poste pour motif estudiantin",
          "id": "signification-76"
      },
      {
 
+         "name": "radin",
          "content": "radin",
          "id": "signification-77"
      },
      {
+         "name": "quémandeur d`insigne",
          "content": "quémandeur d`insigne (gèle de fal: empêche de recevoir tout autre insigne et d`être pm)",
          "id": "signification-78"
      },
      {
 
+         "name": "extrême lourdeur",
          "content": "extrême lourdeur (gèle de fal: empêche de recevoir tout autre insigne et d`être pm)",
          "id": "signification-79"
      },
      {
+         "name": "personne lourde",
          "content": "personne lourde",
          "id": "signification-80"
      },
      {
-         "content": "originaire du Berry (porté par les faluchards Berrichons",
+         "name": "originaire du Berry",
+         "content": "originaire du Berry (porté par les faluchards Berrichons)",
          "id": "signification-81"
      },
      {
+         "name": "lorrain",
          "content": "lorrain",
          "id": "signification-82"
      },
      {
+         "name": "né en provence",
          "content": "né en provence (n'existe pas à Marseille)",
          "id": "signification-83"
      },
      {
+         "name": "alsacien",
          "content": "alsacien",
          "id": "signification-84"
      },
      {
+         "name": "bourguignon",
          "content": "bourguignon",
          "id": "signification-85"
      },
      {
+         "name": "breton",
          "content": "breton",
          "id": "signification-86"
      },
      {
+         "name": "limousin",
          "content": "limousin",
          "id": "signification-87"
      },
      {
+         "name": "normand",
          "content": "normand",
          "id": "signification-88"
      },
      {
+         "name": "lyonnais",
          "content": "lyonnais",
          "id": "signification-89"
      },
      {
+         "name": "orléannais",
          "content": "orléannais",
          "id": "signification-90"
      },
      {
+         "name": "étudiant breton parti étudier à Paris",
          "content": "étudiant breton parti étudier à Paris",
          "id": "signification-91"
      },
      {
+         "name": "ardennais",
          "content": "ardennais",
          "id": "signification-92"
      },
      {
+         "name": "dijonnais",
          "content": "Faluchard dijonnais",
          "id": "signification-93"
      },
      {
+         "name": "Elu au conseil d'UFR",
          "content": "un insigne par année d'élection (ou par mandat) au conseil d'UFR",
          "id": "signification-94"
      },
      {
+         "name": "Elu au conseil d'université",
          "content": "un insigne par année d'élection (ou par mandat) au conseil d'université",
          "id": "signification-95"
      },
      {
+         "name": "élus au CROUS",
          "content": "élus au CROUS",
          "id": "signification-96"
      },
      {
+         "name": "élus au CNOUS",
          "content": "élus au CNOUS",
          "id": "signification-97"
      },
      {
+         "name": "vp étudiant d'UFR ou de CA d'IUT",
          "content": "vp étudiant d'UFR ou de CA d'IUT",
          "id": "signification-98"
      },
      {
+         "name": "un insigne par mandat de délégués mutualistes (sur un petit ruban bleu)",
          "content": "un insigne par mandat de délégués mutualistes (sur un petit ruban bleu)",
          "id": "signification-99"
      },
      {
+         "name": "année d'etude",
          "content": "un insigne par année d'études (se place en début d'année, la première étoile sera placée sur un moivre disposé de biais, de couleur bleue pour les facultés ou établissements d'état, blanche pour les facultés catholiques, écoles ou instituts privés) ",
          "id": "signification-100"
      },
      {
-         "content": "pour les années redoublées ",
+         "name": "année redoublée ",
+         "content": "année redoublée ",
          "id": "signification-101"
      },
      {
+         "name": "Fin de cycle d'etude",
          "content": "se place à la fin de chaque cycle (s'il n'y a pas de diplôme correspondant) ",
          "id": "signification-102"
      },
      {
+         "name": "obtention de diplome",
          "content": "pour chaque diplôme obtenu (DEUG, DUT, BTS, Licence Maîtrise, diplôme universitaire, diplôme d'état, ...) ",
          "id": "signification-103"
      },
      {
+         "name": "réussite au rattrapage",
          "content": "a coté de l'étoile de l'année pour tout échec aux examens de la première session et réussite à la session de rattrapage.",
          "id": "signification-104"
      },
      {
+         "name": "Abandon ou echec d’une discipline",
          "content": "pour abandon d’une discipline (encore échecs aux examens de rattrapage dans certaines villes)",
          "id": "signification-105"
      },
      {
-         "content": "pour tout passage de vie a trepas dans le cadre de ses fonctions",
+         "name": "passage de vie a trepas dans le cadre de ses fonctions",
+         "content": "passage de vie a trepas dans le cadre de ses fonctions",
          "id": "signification-106"
      }
  ]

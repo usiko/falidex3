@@ -1,0 +1,38 @@
+<ion-item>
+    <ion-label>
+        <div>
+            <div class="text-title">{{signification.name}}</div>
+        </div>
+        <ng-container *ngIf="(signification.links|filterLink:['placement','position', 'symbolsens','symbols']:true) as links">
+            <ng-container *ngFor="let link of links">
+                <ng-container *ngTemplateOutlet="linkTpl;context:{link:link}"></ng-container>
+            </ng-container>
+        </ng-container>
+    </ion-label>
+</ion-item>
+<ng-template #linkTpl let-link="link">
+    <div class="metaInfo">
+        <div class="title">
+
+            <div>
+                <ng-container *ngIf="link.position">
+                    <span class="subtitle">{{link.position.name}}</span>
+                </ng-container>
+                {{(link.position && link.symbols)?', ':''}}
+                <ng-container *ngIf="link.symbols">
+                    <span class="subtitle">{{link.symbols.name}}</span>
+                </ng-container>
+                {{((link.symbol || link.position)&& link.symbolsens)?', ':''}}
+                <ng-container *ngIf="link.symbolsens">
+                    <span class="subtitle">{{link.symbolsens.name}}</span>
+                </ng-container>
+                {{((link.symbol || link.position ||link.symbolsens ) && link.placement)?', ':''}}
+                <ng-container *ngIf="link.placement">
+                    décernm. <span class="subtitle">{{link.placement.name}}</span>
+                </ng-container>
+            </div>
+
+            <fa-icon *ngIf="link.spe" class="primary-color" [icon]="['fas', 'circle-exclamation']"></fa-icon>
+        </div>
+    </div>
+</ng-template>

@@ -6,7 +6,14 @@ import { CodeSpeCollectionService } from '../collection-item/code-spe/code-spe-c
 import { FiliereCollectionService } from '../collection-item/filiere/filiere-collection.service';
 import { SignificationCollectionService } from '../collection-item/signification/signification-collection.service';
 import { SymbolCollectionService } from '../collection-item/symbol/symbol-collection.service';
-
+export interface IGlobalResult {
+    symbols: ICollectionData[];
+    filieres: ICollectionData[];
+    circulaire: ICollectionData[];
+    signification: ICollectionData[];
+    codeSpe: ICollectionData[];
+    total: number;
+}
 @Injectable({
     providedIn: 'root',
 })
@@ -17,12 +24,26 @@ export class GlobalSearchService {
     signification$ = new BehaviorSubject<ISignification[]>([]);
     codeSpe$ = new BehaviorSubject<ICodeSpe[]>([]);
 
-    searchResult$ = new BehaviorSubject({
-        symbols: [],
-        filieres: [],
-        circulaire: [],
-        signification: [],
-        codeSpe: [],
+    searchResult$ = new BehaviorSubject<{
+        mainResult: IGlobalResult;
+        dependenciesResult: IGlobalResult;
+    }>({
+        mainResult: {
+            symbols: [],
+            filieres: [],
+            circulaire: [],
+            signification: [],
+            codeSpe: [],
+            total: 0,
+        },
+        dependenciesResult: {
+            symbols: [],
+            filieres: [],
+            circulaire: [],
+            signification: [],
+            codeSpe: [],
+            total: 0,
+        },
     });
 
     private searchText: string;
@@ -49,45 +70,89 @@ export class GlobalSearchService {
 
     resetSearch() {
         this.searchResult$.next({
-            symbols: [],
-            filieres: [],
-            circulaire: [],
-            signification: [],
-            codeSpe: [],
+            mainResult: {
+                symbols: [],
+                filieres: [],
+                circulaire: [],
+                signification: [],
+                codeSpe: [],
+                total: 0,
+            },
+            dependenciesResult: {
+                symbols: [],
+                filieres: [],
+                circulaire: [],
+                signification: [],
+                codeSpe: [],
+                total: 0,
+            },
         });
     }
 
     private applySearch() {
         if (this.searchText && this.searchText.trim().length > 0) {
-            this.searchResult$.next({
+            const mainResult = {
                 symbols: this.searchInCollection(this.symbols$),
                 filieres: this.searchInCollection(this.filieres$),
                 circulaire: this.searchInCollection(this.circulaire$),
                 signification: this.searchInCollection(this.signification$),
                 codeSpe: this.searchInCollection(this.codeSpe$),
+            };
+            const dependenciesResult = {
+                symbols: this.searchInCollectionDependencies(this.symbols$),
+                filieres: this.searchInCollectionDependencies(this.filieres$),
+                circulaire: this.searchInCollectionDependencies(this.circulaire$),
+                signification: this.searchInCollectionDependencies(this.signification$),
+                codeSpe: this.searchInCollectionDependencies(this.codeSpe$),
+            };
+            this.searchResult$.next({
+                mainResult: {
+                    ...mainResult,
+                    total:
+                        mainResult.circulaire.length +
+                        mainResult.codeSpe.length +
+                        mainResult.filieres.length +
+                        mainResult.signification.length +
+                        mainResult.symbols.length,
+                },
+                dependenciesResult: {
+                    ...dependenciesResult,
+                    total:
+                        dependenciesResult.circulaire.length +
+                        dependenciesResult.codeSpe.length +
+                        dependenciesResult.filieres.length +
+                        dependenciesResult.signification.length +
+                        dependenciesResult.symbols.length,
+                },
             });
         } else {
             this.resetSearch();
         }
     }
 
-    private searchInCollection(collection: BehaviorSubject<ICollectionData[]>) {
+    private searchInCollection(collection: BehaviorSubject<ICollectionData[]>): ICollectionData[] {
         return collection.getValue().filter((item) => {
-            const deepFind = item.links?.find((link) => {
-                for (const key in link) {
-                    if (Object.prototype.hasOwnProperty.call(link, key)) {
-                        const element = link[key];
-                        return (
-                            element.name?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-                            (element as any).content?.toLowerCase().includes(this.searchText.toLowerCase())
-                        );
-                    }
-                }
-            });
             return (
                 item.name?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-                (item as any).content?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-                deepFind
+                (item as any).content?.toLowerCase().includes(this.searchText.toLowerCase())
+            );
+        });
+    }
+
+    private searchInCollectionDependencies(collection: BehaviorSubject<ICollectionData[]>): ICollectionData[] {
+        return collection.getValue().filter((item) => {
+            return (
+                item.links?.findIndex((link) => {
+                    for (const key in link) {
+                        if (Object.prototype.hasOwnProperty.call(link, key)) {
+                            const element = link[key];
+                            return (
+                                element.name?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+                                (element as any).content?.toLowerCase().includes(this.searchText.toLowerCase())
+                            );
+                        }
+                    }
+                }) !== -1
             );
         });
     }

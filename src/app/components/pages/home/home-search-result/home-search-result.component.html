@@ -6,38 +6,50 @@
     </ion-card>
     <ion-searchbar [value]="searchText" (ionChange)="search($event)" animated></ion-searchbar>
 </div>
-<ion-list *ngIf="(results$|async).filieres.length>0 || (results$|async).symbols.length>0 || (results$|async).signification.length>0 || (results$|async).circulaire.length>0" [ngStyle]="{'height':'calc(100% - '+topContainer.offsetHeight+'px)'}">
-    <ion-item-group *ngIf="(results$|async).filieres.length>0">
-        <ion-list-header>
-            Filières
-        </ion-list-header>
-        <app-filiere-block-item-list class="item" *ngFor="let item of (results$|async).filieres" [navigation]="'/filieres/detail/'" [item]="item"></app-filiere-block-item-list>
-    </ion-item-group>
-    <ion-item-group *ngIf="(results$|async).symbols.length>0">
-        <ion-list-header>
-            Insigne/Emblemes
-        </ion-list-header>
-        <app-block-symbol-item-list class="item" *ngFor="let item of (results$|async).symbols" [navigation]="'/symbols/detail/'" [item]="item"></app-block-symbol-item-list>
-    </ion-item-group>
-
-    <ion-item-group *ngIf="(results$|async).circulaire.length>0">
-        <ion-list-header>
-            Circulaires
-        </ion-list-header>
-        <app-block-circulaire-item-list class="item" *ngFor="let item of (results$|async).circulaire" [navigation]="'/circulaires/detail/'" [item]="item"></app-block-circulaire-item-list>
-    </ion-item-group>
-    <ion-item-group *ngIf="(results$|async).signification.length>0">
-        <ion-list-header>
-            Significations
-        </ion-list-header>
-        <app-signification-item-block class="item" *ngFor="let item of (results$|async).signification" [signification]="item"></app-signification-item-block>
-    </ion-item-group>
-
-
-
+<ion-list *ngIf="(results$|async).mainResult.total>0 || (results$|async).dependenciesResult.total>0" [ngStyle]="{'height':'calc(100% - '+topContainer.offsetHeight+'px)'}">
+    <ng-container *ngIf="(results$|async).mainResult.total">
+        <ng-container *ngTemplateOutlet="resultTpl;context:{result:(results$|async).mainResult,title:'Meilleure correspondance'}"></ng-container>
+    </ng-container>
+    <ng-container *ngIf="(results$|async).dependenciesResult.total">
+        <ng-container *ngTemplateOutlet="resultTpl;context:{result:(results$|async).dependenciesResult,title:((results$|async).mainResult.total!=0)?'J\'ai trouvé aussi: ':''}"></ng-container>
+    </ng-container>
 
 </ion-list>
 
-<div class="no-result" *ngIf="searchText && searchText.length>0 && (results$|async).filieres.length==0 && (results$|async).symbols.length==0 && (results$|async).signification.length==0 && (results$|async).circulaire.length==0">
+<div class="no-result" *ngIf="searchText && (results$|async).mainResult.total==0 && (results$|async).dependenciesResult.total==0">
     <p>Aucun résultat</p>
 </div>
+
+<ng-template #resultTpl let-result="result" let-title="title">
+
+    <ng-container *ngIf="result.filieres.length>0 || result.symbols.length>0 || result.signification.length>0 || result.circulaire.length>0">
+        <ion-list-header *ngIf="title">
+            {{title}}
+        </ion-list-header>
+        <ion-item-group *ngIf="result.filieres.length>0">
+            <ion-list-header>
+                Filières
+            </ion-list-header>
+            <app-filiere-block-item-list class="item" *ngFor="let item of result.filieres" [navigation]="'/filieres/detail/'" [item]="item"></app-filiere-block-item-list>
+        </ion-item-group>
+        <ion-item-group *ngIf="result.symbols.length>0">
+            <ion-list-header>
+                Insigne/Emblemes
+            </ion-list-header>
+            <app-block-symbol-item-list class="item" *ngFor="let item of result.symbols" [navigation]="'/symbols/detail/'" [item]="item"></app-block-symbol-item-list>
+        </ion-item-group>
+
+        <ion-item-group *ngIf="result.circulaire.length>0">
+            <ion-list-header>
+                Circulaires
+            </ion-list-header>
+            <app-block-circulaire-item-list class="item" *ngFor="let item of result.circulaire" [navigation]="'/circulaires/detail/'" [item]="item"></app-block-circulaire-item-list>
+        </ion-item-group>
+        <ion-item-group *ngIf="result.signification.length>0">
+            <ion-list-header>
+                Significations
+            </ion-list-header>
+            <app-signification-block-item-list class="item" *ngFor="let item of result.signification" [signification]="item"></app-signification-block-item-list>
+        </ion-item-group>
+    </ng-container>
+</ng-template>
