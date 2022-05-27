@@ -47,7 +47,7 @@
             <ion-list-header>
                 Significations
             </ion-list-header>
-            <app-signification-block-item-list class="item" *ngFor="let item of result.signification" [navigation]="'/circulaires/detail/'" [item]="item"></app-signification-block-item-list>
+            <app-signification-block-item-list class="item" *ngFor="let item of result.signification" [navigation]="'/significations/detail/'" [item]="item"></app-signification-block-item-list>
         </ion-item-group>
 
         <ion-item-group *ngIf="result.codeSpe.length>0">

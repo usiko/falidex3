@@ -33,6 +33,11 @@ const routes: Routes = [
         path: 'spes',
         loadChildren: () => import('./components/pages/spe/spe-routing.module').then((mod) => mod.SpeRoutingModule),
     },
+    {
+        path: 'significations',
+        loadChildren: () =>
+            import('./components/pages/signification/signification-routing.module').then((mod) => mod.SignificationRoutingModule),
+    },
 
     /*{ path: 'symboles', children: symboleRoutes },
     { path: 'filieres', children: filiereRoutes },

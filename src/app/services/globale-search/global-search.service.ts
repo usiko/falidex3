@@ -150,13 +150,17 @@ export class GlobalSearchService {
                 for (const key in link) {
                     if (Object.prototype.hasOwnProperty.call(link, key)) {
                         const element = link[key];
-                        return (
-                            link.note?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-                            element.name?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-                            (element as any).content?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-                            (element as any).text?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-                            (element as any).note?.toLowerCase().includes(this.searchText.toLowerCase())
-                        );
+                        if (element) {
+                            const found =
+                                link.note?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+                                element.name?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+                                (element as any).content?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+                                (element as any).text?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+                                (element as any).note?.toLowerCase().includes(this.searchText.toLowerCase());
+                            if (found) {
+                                return true;
+                            }
+                        }
                     }
                 }
             });

@@ -18,7 +18,7 @@ export class HomeSearchResult implements OnInit, OnDestroy {
     results$ = this.searchService.searchResult$;
     ngOnInit(): void {
         this.subscriptions.add(
-            this.searchDebouncer.pipe(debounceTime(1000)).subscribe(() => {
+            this.searchDebouncer.pipe(debounceTime(350)).subscribe(() => {
                 console.log('search with', this.searchText);
                 this.searchService.updateSearchText(this.searchText);
                 if (this.searchText.length > 0) {
