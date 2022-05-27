@@ -5,4 +5,15 @@
 
 .subcontent {
     font-size: 0.9em;
+    font-style: italic;
+}
+
+.title {
+    font-weight: bold;
+    &::first-letter {
+        text-transform: uppercase;
+    }
+    &>div {
+        margin-right: 5px;
+    }
 }

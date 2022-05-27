@@ -35,6 +35,17 @@ ion-item {
         }
     }
     .text-content {
+        font-size: 0.9em;
+        font-style: italic;
+        white-space: normal;
+        text-align: center;
+        padding: 8px 0;
+        padding-bottom: 8px;
+        &::first-letter {
+            text-transform: uppercase;
+        }
+    }
+    .text-title {
         color: var(--ion-color-dark);
         padding: 8px 0;
         text-align: center;

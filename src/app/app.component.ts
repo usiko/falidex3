@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
-import { MenuController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { CirculaireCollectionService } from './services/collection-item/circulaire/circulaire-collection.service';
 import { CodeSpeCollectionService } from './services/collection-item/code-spe/code-spe-collection.service';
@@ -9,7 +8,7 @@ import { SignificationCollectionService } from './services/collection-item/signi
 import { SymbolCollectionService } from './services/collection-item/symbol/symbol-collection.service';
 import { DataLoaderStoreService } from './services/data-store/loader/data-loader-store.service';
 import { SubStoreService } from './services/data-store/sub-store/sub-store.service';
-import { EventService } from './services/event/event.service';
+import { GlobalSearchService } from './services/globale-search/global-search.service';
 import { DataRelationsService } from './services/relations/data-relations.service';
 
 @Component({
@@ -31,6 +30,7 @@ export class AppComponent implements OnInit {
         private filieresService: FiliereCollectionService,
         private symbolService: SymbolCollectionService,
         private codeSpeService: CodeSpeCollectionService,
+        private globaleSearch: GlobalSearchService,
         private subStore: SubStoreService,
         private relationService: DataRelationsService
     ) {}
@@ -51,6 +51,7 @@ export class AppComponent implements OnInit {
             this.currentRelationsData$.next(item);
             this.setMenu();
         });
+        this.globaleSearch.init();
     }
 
     setMenu() {

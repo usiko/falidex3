@@ -51,7 +51,10 @@
                                 <ng-container *ngIf="significations[0].position">
                                     {{significations[0].position.name}}
                                 </ng-container>
-                                {{significations[0].signification.content}}
+                                <ng-container *ngIf="significations[0].symbolsens">
+                                    , {{significations[0].symbolsens.name}},
+                                </ng-container>
+                                {{significations[0].signification.name}}
                             </div>
 
 
@@ -74,8 +77,11 @@
                                     <ng-container>
                                         {{signification.position.name}}
                                     </ng-container>
+                                    <ng-container *ngIf="signification.symbolsens">
+                                        , {{signification.symbolsens.name}},
+                                    </ng-container>
                                 </ng-container>
-                                {{signification.signification.content}}
+                                {{signification.signification.name}}
                             </div>
 
                         </div>

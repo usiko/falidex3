@@ -45,4 +45,8 @@ export class ListItem<T extends ICollectionData> implements OnChanges {
     }
 
     protected itemChange(): void {}
+
+    click() {
+        this.onclick.emit();
+    }
 }
