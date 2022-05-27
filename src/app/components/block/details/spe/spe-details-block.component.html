@@ -1,7 +1,12 @@
 <ng-container *ngIf="(spe$|async) as spe">
-    <ion-card *ngIf="spe">
+    <ion-card>
         <ion-card-header *ngIf="spe.article">
-            <ion-card-title>Source {{spe.article}}</ion-card-title>
+            <ion-card-title>
+                <div class="title">
+                    {{(spe.article)?spe.article:''}} - {{(spe.name)?spe.name:''}}
+                </div>
+
+            </ion-card-title>
         </ion-card-header>
         <ion-card-content [innerHTML]="spe.text" class="content">
         </ion-card-content>

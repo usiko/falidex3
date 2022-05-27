@@ -65,13 +65,7 @@
                 <ion-label>Spécificités</ion-label>
                 <ion-badge mode="ios" color="dark">{{result.codeSpe.length}}</ion-badge>
             </ion-list-header>
-            <ion-item *ngFor="let item of result.codeSpe">
-
-                <ion-label>
-                    <p>{{item.name}}</p>
-                </ion-label>
-
-            </ion-item>
+            <app-spe-block-item-list class="item" [navigation]="'/spes/detail'" [item]="item" *ngFor="let item of result.codeSpe"> </app-spe-block-item-list>
         </ion-item-group>
     </ng-container>
 </ng-template>

@@ -13,22 +13,28 @@ export class AnimatedSplashscreenComponent implements OnInit, OnDestroy {
     constructor(private events: EventService, private router: Router) {}
     public loadingState: ILoadingBarState;
     private subscription = new Subscription();
+    static loaded = false;
     ngOnInit() {
-        this.subscription.add(
-            this.events.getObs('loadingBarState').subscribe((state: ILoadingBarState) => {
-                console.log(state);
-                if (state) {
-                    this.loadingState = state;
-                    if (state.value == 1) {
-                        this.subscription.add(
-                            timer(750).subscribe(() => {
-                                this.router.navigateByUrl('/home');
-                            })
-                        );
+        if (AnimatedSplashscreenComponent.loaded) {
+            this.router.navigateByUrl('/home');
+        } else {
+            this.subscription.add(
+                this.events.getObs('loadingBarState').subscribe((state: ILoadingBarState) => {
+                    console.log(state);
+                    if (state) {
+                        this.loadingState = state;
+                        if (state.value == 1) {
+                            AnimatedSplashscreenComponent.loaded = true;
+                            this.subscription.add(
+                                timer(750).subscribe(() => {
+                                    this.router.navigateByUrl('/home');
+                                })
+                            );
+                        }
                     }
-                }
-            })
-        );
+                })
+            );
+        }
     }
 
     ngOnDestroy(): void {

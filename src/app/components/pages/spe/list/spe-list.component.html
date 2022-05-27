@@ -20,19 +20,7 @@
                 </div>
 
                 <ion-list [ngStyle]="{'height':'calc(100% - '+header1.offsetHeight+'px)'}">
-
-
-                    <ion-item *ngFor="let item of items$|async" [routerLink]="['/spes/detail',item.id]">
-                        <ion-label>
-                            <h3>
-                                <div>{{item.name}}</div>
-                            </h3>
-                            <p [innerHTML]="item.text">
-
-                            </p>
-                        </ion-label>
-
-                    </ion-item>
+                    <app-spe-block-item-list *ngFor="let item of items$|async" [item]="item" [navigation]="'/spes/detail'"></app-spe-block-item-list>
                 </ion-list>
             </div>
         </ion-slide>
