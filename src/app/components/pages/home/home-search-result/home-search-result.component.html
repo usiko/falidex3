@@ -1,9 +1,4 @@
 <div class="top-container" #topContainer>
-    <ion-card class="warning-card" color='secondary'>
-        <ion-card-content color='secondary'>
-            <ion-text>Attention le falidex n'est pas le code, c'est un outil de réstitution et de recherche, il n'est pas officiel.<br/> En cas de doute, se référer au code officiel de la ville. </ion-text>
-        </ion-card-content>
-    </ion-card>
     <ion-searchbar [value]="searchText" (ionChange)="search($event)" animated></ion-searchbar>
 </div>
 <ion-list *ngIf="(results$|async).mainResult.total>0 || (results$|async).dependenciesResult.total>0" [ngStyle]="{'height':'calc(100% - '+topContainer.offsetHeight+'px)'}">

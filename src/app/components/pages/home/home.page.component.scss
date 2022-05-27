@@ -15,3 +15,16 @@ ion-card.warning-card {
         font-size: 0.8em;
     }
 }
+
+.top-container {
+    display: flex;
+}
+
+ion-slides {
+    height: 100%;
+    ion-slide {
+        display: block;
+        height: 100%;
+        text-align: left;
+    }
+}
