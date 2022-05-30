@@ -4,7 +4,10 @@ export class FileSystemService {
 	private delay = 0;
 	constructor(private store: StoreService, private event: EventService, private picturePrelaoder: PicturePreloaderService) {}
 
-	savePicture(path: string, name: string) {
+    /**
+     * return path location of picture
+     */
+	savePicture(path: string, name: string):Observable<string> {
 		const fileName = name + '.jpg';
 		Filesystem.readFile({
 			path: path,
