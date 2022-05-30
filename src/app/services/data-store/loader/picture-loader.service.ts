@@ -5,11 +5,21 @@ import { StorageService } from '../../storage/storage.service';
 	providedIn: 'root',
 })
 export class PicturePreloaderService {
-	private delay = 0;
-	pictureIndex: { [key: string]: string } = {};
+	pictureIndex: {
+		[key: string]: {
+			localPath: string;
+			modificationDate: string;
+		};
+	} = {};
 	constructor(private http: HttpClient, private storageService: StorageService, private fileSystem: FileSystemService) {}
-	init() {}
-	preloadAll(pictures: string[]): void {
+	init() {
+		return this.storageService.get('pictureIndex', {}).pipe(
+			map((storage) => {
+				this.pictureIndex = storage;
+			})
+		);
+	}
+	preloadAll(pictures: { id: string; src: string; modificationDate: Date }): void {
 		const obs = picures.map((src) => {
 			return this.http.get(src).pipe(
 				catchError(() => {
@@ -17,7 +27,11 @@ export class PicturePreloaderService {
 				}),
 				switchMap((src) => {
 					if (src) {
-						return this.fileSystem.savePicture(src);
+						if (src.modificationDate !== pictures.modificationDate) {
+							return this.fileSystem.savePicture(src);
+						} else {
+							return of(null);
+						}
 					} else {
 						return of(null);
 					}
@@ -39,15 +53,42 @@ export class PicturePreloaderService {
 	}
 
 	getLocalPath(src): string {
-		return this.pictureIndex[src] ? this.pictureIndex[src] : src;
+		return this.pictureIndex[src] ? this.pictureIndex[src].localPath : src;
 	}
 
-	private updateIndex(src: string, localPath: string) {
+	getFromStorage(key: string): Observable<{
+		localPath: string;
+		modificationDate: string;
+	}> {
+		return this.storageService.get('pictureIndex', {}).pipe(
+			map((storage) => {
+				return storage[key];
+			})
+		);
+	}
+
+	private setToStorage(
+		key: string,
+		value: {
+			localPath: string;
+			modificationDate: string;
+		}
+	): Observable<never> {
 		return this.storageService.get('pictureIndex', {}).pipe(
 			mergeMap((storage) => {
-				storage[src] = localPath;
-				this.pictureIndex = storage;
+				storage[key] = value;
 				return this.storageService.set('pictureIndex', storage);
+			})
+		);
+	}
+
+	private updateIndex(picture: { id: string; src: string; modificationDate: Date }, localPath: string): Observable<never> {
+		return this.setToStorage(picture.src, {
+			localPath,
+			modificationDate: picture.modificationDate,
+		}).pipe(
+			map((storage) => {
+				this.pictureIndex = storage;
 			})
 		);
 	}

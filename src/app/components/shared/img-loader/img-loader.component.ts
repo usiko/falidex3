@@ -14,7 +14,7 @@ export class ImgLoaderComponent implements OnInit {
         this.loading = true;
         //console.log('img change', src, this.errorSrc, this.ownSrc);
         if (src) {
-            this.ownSrc = src;
+            this.ownSrc = this.pictureLoader.getLocalPath(src);
             //console.log('img change', src, this.errorSrc, this.ownSrc);
         } else {
             this.ownSrc = this.errorSrc;
@@ -30,7 +30,7 @@ export class ImgLoaderComponent implements OnInit {
 
     @Input() objectFit = 'cover';
 
-    constructor(private changedetector: ChangeDetectorRef) {}
+    constructor(private changedetector: ChangeDetectorRef, private pictureLoader:PicturePreloaderService) {}
 
     ngOnInit() {
         this.changedetector.detectChanges();
