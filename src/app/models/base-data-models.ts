@@ -55,3 +55,9 @@ export interface IBaseCodeSpe extends IBaseCollectionData {
 	article?: string;
 	note?: string;
 }
+
+export interface IBaseMetaData {
+	type: string; // enum
+	modificationDate: Date;
+	collection: IBaseCollectionData[];
+}
