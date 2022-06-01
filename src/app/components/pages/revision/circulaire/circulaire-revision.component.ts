@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ICirculaire, IFiliere } from 'src/app/models/linked-data-models';
-import { PageItemList } from '../../pages-list';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ICirculaire } from 'src/app/models/linked-data-models';
+import { CirculaireCollectionService } from 'src/app/services/collection-item/circulaire/circulaire-collection.service';
 import { RevisionPage } from '../revision-page';
 
 @Component({
@@ -9,7 +10,12 @@ import { RevisionPage } from '../revision-page';
     styleUrls: ['./circulaire-revision.component.scss'],
 })
 export class CirculaireRevisionComponent extends RevisionPage<ICirculaire> implements OnInit {
-    constructor() {
+    constructor(
+        protected collectionService: CirculaireCollectionService,
+        protected changeDetector: ChangeDetectorRef,
+        protected activatedRoute: ActivatedRoute,
+        protected routerService: Router
+    ) {
         super();
     }
 

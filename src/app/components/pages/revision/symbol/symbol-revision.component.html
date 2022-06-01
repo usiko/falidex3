@@ -1,10 +1,9 @@
 <ion-header>
-    <app-header title="Insignes/emblèmes"></app-header>
+    <app-header title="Complète l'insignes/emblème"></app-header>
 </ion-header>
 <ion-content [scrollX]="false" [scrollY]="false">
+    <ion-card class="title" *ngIf="(item$|async) as item" color='secondary'>
+        <h3>{{item.name}}</h3>
+    </ion-card>
     <app-symbole-details-block [symbol$]="item$"></app-symbole-details-block>
 </ion-content>
-
-<ng-template #listTpl let-item="item" let-navigation="navigation">
-    <app-filiere-block-item-list [navigation]="navigation" [item]="item"></app-filiere-block-item-list>
-</ng-template>

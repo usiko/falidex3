@@ -50,13 +50,3 @@ ion-tab-bar {
 .content {
     width: 100%;
 }
-
-ion-card.title {
-    background: var(--ion-color-secondary) !important;
-    ion-card-content {
-        font-size: 0.9em;
-    }
-    &::first-letter {
-        text-transform: uppercase;
-    }
-}

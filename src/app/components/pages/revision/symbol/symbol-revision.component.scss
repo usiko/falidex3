@@ -1,69 +1,9 @@
-h3 {
-    font-weight: bold;
+ion-card.title {
+    background: var(--ion-color-secondary) !important;
+    ion-card-content {
+        font-size: 0.9em;
+    }
     &::first-letter {
         text-transform: uppercase;
-    }
-}
-
-.signification,
-.filiere {
-    .content {
-        .flex {
-            font-size: 0.8em;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            &::first-letter {
-                text-transform: uppercase;
-            }
-            >div {
-                &::first-letter {
-                    text-transform: uppercase;
-                }
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-            ion-icon {
-                flex: none;
-                font-size: 1.3em;
-                margin-right: 5px;
-            }
-        }
-    }
-}
-
-.nounderline {
-    text-decoration: none;
-}
-
-.loading {
-    height: 100%;
-    width: 100%;
-    top: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    z-index: 2;
-    background: rgba(255, 255, 255, 0.8);
-}
-
-on-label {
-    display: flex !important;
-    align-items: center;
-    margin: 0;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    height: 100%;
-    //flex-direction: column;
-    .circulaireColor {
-        border: solid 1px #666666;
-        width: 6px;
-        height: inherit;
-        flex: none;
-        margin-right: 16px;
-        >div {
-            // height: 5px;
-        }
     }
 }

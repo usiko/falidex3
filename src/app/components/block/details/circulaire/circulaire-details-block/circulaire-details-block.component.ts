@@ -13,7 +13,7 @@ export class CirculaireDetailsBlockComponent implements OnInit {
 
     @ViewChild(IonSlides) slide: IonSlides;
 
-    @Input() circualaire$: BehaviorSubject<ICirculaire>;
+    @Input() circulaire$: BehaviorSubject<ICirculaire>;
     slideOptions = {
         autoplay: false,
         pagination: true,
