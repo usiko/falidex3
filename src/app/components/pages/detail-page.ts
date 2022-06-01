@@ -33,13 +33,14 @@ export class PageItemDetail<Item extends ICollectionData> {
     /**
      * collection subject of data to show, dircetly from data store,  without any change
      */
-    private collection$: BehaviorSubject<Item[]>;
+    protected collection$: BehaviorSubject<Item[]>;
 
     public item$ = new BehaviorSubject<Item>(null);
 
     protected subscription = new Subscription();
 
-    private currentId: string;
+    protected currentId: string;
+
     /**
      * init the the component
      */
@@ -47,14 +48,13 @@ export class PageItemDetail<Item extends ICollectionData> {
         this.collectionService.init();
         this.collection$ = this.getCollectionSubject();
         this.subscription.add(
-            this.collection$.subscribe((items) => {
-                this.updateItem();
-            })
-        );
-
-        this.subscription.add(
             this.activatedRoute.params.subscribe((params) => {
                 this.onRouteChange(params);
+            })
+        );
+        this.subscription.add(
+            this.collection$.subscribe((items) => {
+                this.updateItem();
             })
         );
     }
@@ -85,7 +85,16 @@ export class PageItemDetail<Item extends ICollectionData> {
      * action whne route is changing
      */
     protected onRouteChange(params) {
-        this.currentId = params?.id;
+        if (params.id) {
+            this.currentId = params?.id;
+        } else {
+            this.currentId = null;
+        }
+
         this.updateItem();
+    }
+
+    protected destroy() {
+        this.subscription.unsubscribe();
     }
 }

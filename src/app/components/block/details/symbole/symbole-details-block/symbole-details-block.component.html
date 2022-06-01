@@ -1,4 +1,7 @@
 <div *ngIf="symbol$|async as symbol">
+    <ion-card class="title" color='secondary'>
+        <h3>{{symbol.name}}</h3>
+    </ion-card>
     <ion-card class="img-container">
         <div class="img-symbole">
             <app-img-loader [src]="(symbol.imgs && symbol.imgs[0])?'http://resources.falidex.fr'+symbol.imgs[0].url:null">
@@ -6,17 +9,17 @@
         </div>
     </ion-card>
     <ion-card>
-        <ion-tab-bar [selectedTab]="selectedTab">
+        <ion-tab-bar *ngIf="(symbol.links|filterLink:['circulaire','filiere']).length>0 && (symbol.links|filterLink:['signification']).length>0 " [selectedTab]="selectedTab">
             <ion-tab-button *ngIf="((symbol.links|filterLink:['circulaire','filiere'])).length>0" (click)="slideTo(0,$event)" tab="filieres">
                 <fa-icon [icon]="['fas', 'graduation-cap']" class="light-color"></fa-icon>
                 <ion-label>Filières</ion-label>
-                <ion-badge>{{((symbol.links|filterLink:['circulaire','filiere'])).length}}</ion-badge>
+                <ion-badge>{{(symbol.links|filterLink:['circulaire','filiere']).length}}</ion-badge>
             </ion-tab-button>
 
-            <ion-tab-button *ngIf="((symbol.links|filterLink:['signification'])).length>0" (click)="slideTo(1,$event)" tab="significations">
+            <ion-tab-button *ngIf="(symbol.links|filterLink:['signification']).length>0" (click)="slideTo(1,$event)" tab="significations">
                 <fa-icon [icon]="['fas', 'book-open']" class="light-color"></fa-icon>
                 <ion-label>Significations</ion-label>
-                <ion-badge>{{((symbol.links|filterLink:['signification'])).length}}</ion-badge>
+                <ion-badge>{{(symbol.links|filterLink:['signification']).length}}</ion-badge>
             </ion-tab-button>
         </ion-tab-bar>
     </ion-card>

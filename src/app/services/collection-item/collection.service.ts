@@ -22,7 +22,7 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
     protected currentRelation$: BehaviorSubject<IRelationData>;
     public collection$ = new BehaviorSubject<LinkedModel[]>([]);
 
-    public unlinkedCollection$ = new BehaviorSubject<BaseModel[]>([]);
+    public unlinkedCollection$ = new BehaviorSubject<LinkedModel[]>([]);
 
     private runBuild$ = new Subject(); // debouncing assemblage données
 
@@ -52,14 +52,17 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
             this.bindSubjectToBuild(this.baseCollection$);
             this.collection$.subscribe((collection: LinkedModel[]) => {
                 // filter used items, but remove dependancies
-                const ids = collection.map((item) => item.id);
-                const baseCollection = this.baseCollection$.getValue();
                 this.unlinkedCollection$.next(
-                    ids
-                        .map((item) => {
-                            return baseCollection.find((item) => ids.includes(item.id));
+                    collection
+                        .filter((item) => {
+                            return item.links.length > 0;
                         })
-                        .filter((item) => !!item)
+                        .map((item) => {
+                            return {
+                                ...item,
+                                links: [],
+                            };
+                        })
                 );
             });
         }

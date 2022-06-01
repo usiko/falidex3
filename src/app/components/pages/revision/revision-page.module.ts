@@ -4,12 +4,13 @@ import { BlockModule } from '../../block/block.module';
 import { AppSharedModule } from '../../shared/shared.module';
 import { CirculaireRevisionComponent } from './circulaire/circulaire-revision.component';
 import { FiliereRevisionComponent } from './filiere/filiere-revision.component';
+import { RevisionPageComponent } from './revision.component';
 import { SymbolRevisionComponent } from './symbol/symbol-revision.component';
 
 @NgModule({
     imports: [SharedModule, AppSharedModule, BlockModule],
     exports: [],
-    declarations: [SymbolRevisionComponent, FiliereRevisionComponent, CirculaireRevisionComponent],
+    declarations: [SymbolRevisionComponent, FiliereRevisionComponent, CirculaireRevisionComponent, RevisionPageComponent],
     providers: [],
 })
 export class RevisionPagesModule {}

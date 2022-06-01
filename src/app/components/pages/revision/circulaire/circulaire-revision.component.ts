@@ -1,22 +1,19 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { IonContent } from '@ionic/angular';
-import { CiculaireMatiereEnum } from 'src/app/models/circulaire-matiere.enum';
-import { IFiliere } from 'src/app/models/linked-data-models';
-import { SortEnum } from 'src/app/models/sort/sort.model';
-import { FiliereCollectionService } from 'src/app/services/collection-item/filiere/filiere-collection.service';
-import { EventService } from 'src/app/services/event/event.service';
-import { FilterPreset } from 'src/app/services/filter/filter.preset';
-import { FilterService } from 'src/app/services/filter/filter.service';
-import { ListManagerService } from 'src/app/services/list-manager/list-manager.service';
+import { Component, OnInit } from '@angular/core';
+import { ICirculaire, IFiliere } from 'src/app/models/linked-data-models';
 import { PageItemList } from '../../pages-list';
+import { RevisionPage } from '../revision-page';
 
 @Component({
-	selector: 'app-circulaire-revision',
-	templateUrl: './circulaire-revision.component.html',
-	styleUrls: ['./circulaire-revision.component.scss'],
+    selector: 'app-circulaire-revision',
+    templateUrl: './circulaire-revision.component.html',
+    styleUrls: ['./circulaire-revision.component.scss'],
 })
-export class CirculaireRevisionComponent implements OnInit {
-	constructor() {}
+export class CirculaireRevisionComponent extends RevisionPage<ICirculaire> implements OnInit {
+    constructor() {
+        super();
+    }
 
-	ngOnInit() {}
+    ngOnInit() {
+        this.init();
+    }
 }

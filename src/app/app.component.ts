@@ -83,7 +83,7 @@ export class AppComponent implements OnInit {
                 title: 'Revisions',
                 url: '/revisions',
                 icon: 'lightbulb',
-                disabled: true,
+                disabled: false,
             },
         ];
 

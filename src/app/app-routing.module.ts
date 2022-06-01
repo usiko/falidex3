@@ -38,6 +38,10 @@ const routes: Routes = [
         loadChildren: () =>
             import('./components/pages/signification/signification-routing.module').then((mod) => mod.SignificationRoutingModule),
     },
+    {
+        path: 'revisions',
+        loadChildren: () => import('./components/pages/revision/revision-routing.module').then((mod) => mod.RevisionRoutingModule),
+    },
 
     /*{ path: 'symboles', children: symboleRoutes },
     { path: 'filieres', children: filiereRoutes },
