@@ -1,0 +1,37 @@
+<ion-toolbar color="light" *ngIf="empty">
+    <ion-button expand="full" color="dark" fill="clear" (click)="more()">
+        Je passe
+        <ion-icon slot="end" name="ios-arrow-forward"></ion-icon>
+    </ion-button>
+
+</ion-toolbar>
+<ion-toolbar color="secondary" *ngIf="!empty && !end">
+    <ion-button expand="full" color="light" fill="clear" (click)="valid()">
+        J'ai fini
+        <ion-icon slot="start" name="checkmark"></ion-icon>
+    </ion-button>
+
+</ion-toolbar>
+<ion-toolbar color="danger" *ngIf="!empty && end && !trueResponse">
+    <ion-buttons slot="start">
+
+        <ion-button expand="block" size="large" color="light" fill="clear" (click)="reset()">
+            Réessayer
+            <ion-icon slot="end" name="refresh"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+        <ion-button expand="block" color="light" size="large" fill="clear" (click)="showResponse()">
+            Reponse
+            <ion-icon slot="end" name="bulb"></ion-icon>
+        </ion-button>
+
+    </ion-buttons>
+
+</ion-toolbar>
+<ion-toolbar color="success" *ngIf="!empty && end && trueResponse" (click)="more()">
+    <ion-button expand="full" color="light" fill="outline">
+        :) une autre !
+    </ion-button>
+
+</ion-toolbar>

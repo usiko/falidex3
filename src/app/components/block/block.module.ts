@@ -7,12 +7,13 @@ import { SignificationDetailsBlockComponent } from './details/signification/sign
 import { SpeDetailsBlockComponent } from './details/spe/spe-details-block.component';
 import { SymboleDetailsBlockComponent } from './details/symbole/symbole-details-block/symbole-details-block.component';
 import { BlockListModule } from './list/block-list.module';
+import { RevisionBlockModule } from './revision/revision-block.module';
 
 /**
  * All reusable block of pages
  */
 @NgModule({
-    imports: [SharedModule, AppSharedModule, BlockListModule],
+    imports: [SharedModule, AppSharedModule, BlockListModule, RevisionBlockModule],
     exports: [
         FiliereDetailsBlockComponent,
         CirculaireDetailsBlockComponent,
@@ -21,6 +22,7 @@ import { BlockListModule } from './list/block-list.module';
         SignificationDetailsBlockComponent,
         SharedModule,
         BlockListModule,
+        RevisionBlockModule,
     ],
     declarations: [
         FiliereDetailsBlockComponent,
