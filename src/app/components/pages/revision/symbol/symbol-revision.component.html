@@ -9,14 +9,7 @@
         <app-symbole-details-block [symbol$]="item$"></app-symbole-details-block>
     </div>
     <div class="answers">
-        <ion-list>
-            <ion-item>circulaire: vert,filiere: droit</ion-item>
-            <ion-item>circulaire: orange,filiere: aes</ion-item>
-            <ion-item>
-                Ajouter une reponse
-                <fa-icon class="light-color" [icon]="['fas', 'plus']"></fa-icon>
-            </ion-item>
-        </ion-list>
+        <app-answer-revision-block></app-answer-revision-block>
     </div>
 </ion-content>
 

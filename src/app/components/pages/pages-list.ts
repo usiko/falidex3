@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Injectable, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, EventEmitter, Injectable, Input, Output, ViewChild } from '@angular/core';
 import { IonContent } from '@ionic/angular';
 
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -17,6 +17,18 @@ import { IDisplayFilters } from '../../models/filters/filter-model';
  */
 @Injectable()
 export class PageItemList<Item extends ICollectionData> {
+    /**
+     * if true , we hide linked info
+     */
+    @Input() unlinkData = false;
+
+    /**
+     * if true we show a footer with a back button
+     */
+    @Input() backFooterBtn = false;
+
+    @Output() backFooterClick = new EventEmitter();
+
     /**
      * main page container
      */
@@ -109,7 +121,11 @@ export class PageItemList<Item extends ICollectionData> {
      * init the the component
      */
     init() {
-        this.collection$ = this.collectionService.collection$;
+        if (this.unlinkData) {
+            this.collection$ = this.collectionService.unlinkedCollection$;
+        } else {
+            this.collection$ = this.collectionService.collection$;
+        }
         this.listManagerService.init(this.collection$);
         this.initLoading = true;
         this.loadingScroll = true;
@@ -258,4 +274,6 @@ export class PageItemList<Item extends ICollectionData> {
     trackByFn(index: Number, item: Item) {
         return item.id;
     }
+
+    onBackFooterClick() {}
 }

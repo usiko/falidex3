@@ -208,7 +208,8 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
 
             // apply collection filter
             collection = collection.filter((item) => {
-                return this.applyCollectionFilters(item) && item.links.length > 0;
+                return this.applyCollectionFilters(item);
+                // return this.applyCollectionFilters(item) && item.links.length > 0;
             });
             this.filteredCollection$.next(collection);
         }
