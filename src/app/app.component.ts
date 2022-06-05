@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
     setMenu() {
         const appPages: { title: string; url: string; icon?: IconName; src?: string; disabled?: boolean }[] = [
             {
-                title: 'Acceuil',
+                title: 'Accueil',
                 url: '/home',
                 icon: 'house',
             },

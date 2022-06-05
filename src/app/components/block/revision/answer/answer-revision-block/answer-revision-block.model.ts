@@ -1,9 +1,11 @@
 import { ICollectionData, ICollectionLink, IFiliere } from 'src/app/models/linked-data-models';
 
-export enum RevisionTypenAnswerItemEnum {
+export enum RevisionTypenAnswerEnum {
     FILIERE = 'filiere',
     CIRCULAIRE = 'circulaire',
-    SYMBOL = 'symbole',
+    SYMBOL = 'symbol',
+    SYMBOLSENS = 'symbol-sens',
+    SIGNIFICATION = 'signifiaction',
 }
 
 export interface IAnswer extends ICollectionLink {}

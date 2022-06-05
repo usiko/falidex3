@@ -1,0 +1,15 @@
+<ion-toolbar color="secondary" class="title">
+    {{title}}</ion-toolbar>
+<ion-content>
+    <ion-list>
+        <ion-item details button *ngFor="let option of options" (click)="onDismiss(option.value)">
+            <fa-icon class="dark-color" *ngIf="option.icon" [icon]="['fas', option.icon]"></fa-icon>
+            {{option.label}}</ion-item>
+
+    </ion-list>
+</ion-content>
+<ion-footer>
+    <ion-toolbar color="secondary">
+        <ion-button (click)="onDismiss()" expand="full" fill="clear" color="light">Retour</ion-button>
+    </ion-toolbar>
+</ion-footer>

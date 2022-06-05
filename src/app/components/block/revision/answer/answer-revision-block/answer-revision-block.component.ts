@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { FiliereListComponent } from 'src/app/components/pages/filiere/list/filiere-list.component';
 import { SymbolListComponent } from 'src/app/components/pages/symbol/list/symbol-list.component';
-import { IAnswer } from './answer-revision-block.model';
+import { SelectionListComponent } from 'src/app/components/shared/selection-list/selection-list/selection-list.component';
+import { IAnswer, RevisionTypenAnswerEnum } from './answer-revision-block.model';
 
 @Component({
     selector: 'app-answer-revision-block',
@@ -10,10 +13,53 @@ import { IAnswer } from './answer-revision-block.model';
 })
 export class AnswerRevisionBlockComponent implements OnInit {
     answers: IAnswer[] = [];
-    constructor(private modalService: ModalController) {}
+    constructor(private modalService: ModalController, private popoverService: PopoverController) {}
 
     ngOnInit() {
-        this.searchSymbol();
+        //this.searchSymbol();
+    }
+
+    async addItem() {
+        const dismiss$ = new Subject();
+        dismiss$.subscribe((type: RevisionTypenAnswerEnum) => {
+            this.popoverService.dismiss();
+            console.log('onDidDismiss resolved with role', type);
+        });
+        const popover = await this.popoverService.create({
+            component: SelectionListComponent,
+            componentProps: {
+                options: [
+                    {
+                        value: RevisionTypenAnswerEnum.SYMBOL,
+                        label: 'Insigne/Emblème',
+                        icon: 'award',
+                    },
+                    {
+                        value: RevisionTypenAnswerEnum.CIRCULAIRE,
+                        label: 'Circulaire',
+                        icon: 'circle-notch',
+                    },
+                    {
+                        value: RevisionTypenAnswerEnum.FILIERE,
+                        label: 'Filière',
+                        icon: 'graduation-cap',
+                    },
+                    {
+                        value: RevisionTypenAnswerEnum.SIGNIFICATION,
+                        label: 'Signification',
+                        icon: 'book-open',
+                    },
+                    {
+                        value: RevisionTypenAnswerEnum.SYMBOLSENS,
+                        label: 'Sens',
+                        icon: 'arrows-rotate',
+                    },
+                ],
+                title: 'Quel type de réponse',
+                dismiss$: dismiss$,
+            },
+        });
+        await popover.present();
     }
     async searchSymbol() {
         const modal = await this.modalService.create({
@@ -25,8 +71,46 @@ export class AnswerRevisionBlockComponent implements OnInit {
         });
         return await modal.present();
     }
+    async searchSymbolSens() {
+        const modal = await this.modalService.create({
+            component: SymbolListComponent, // TODO page list
+            componentProps: {
+                unlinkData: true,
+                backFooterBtn: true,
+            },
+        });
+        return await modal.present();
+    }
 
-    SearchFiliere() {
-        console.log('ok');
+    async SearchFiliere() {
+        const modal = await this.modalService.create({
+            component: FiliereListComponent,
+            componentProps: {
+                unlinkData: true,
+                backFooterBtn: true,
+            },
+        });
+        return await modal.present();
+    }
+    async SearchCirculaire() {
+        const modal = await this.modalService.create({
+            component: FiliereListComponent, //TODO pagelist
+            componentProps: {
+                unlinkData: true,
+                backFooterBtn: true,
+            },
+        });
+        return await modal.present();
+    }
+
+    async searchSignification() {
+        const modal = await this.modalService.create({
+            component: FiliereListComponent, //TODO pagelist
+            componentProps: {
+                unlinkData: true,
+                backFooterBtn: true,
+            },
+        });
+        return await modal.present();
     }
 }
