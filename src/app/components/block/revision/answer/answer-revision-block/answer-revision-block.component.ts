@@ -24,6 +24,23 @@ export class AnswerRevisionBlockComponent implements OnInit {
         dismiss$.subscribe((type: RevisionTypenAnswerEnum) => {
             this.popoverService.dismiss();
             console.log('onDidDismiss resolved with role', type);
+            switch (type) {
+                case RevisionTypenAnswerEnum.CIRCULAIRE:
+                    this.SearchCirculaire();
+                    break;
+                case RevisionTypenAnswerEnum.SYMBOL:
+                    this.searchSymbol();
+                    break;
+                case RevisionTypenAnswerEnum.SYMBOLSENS:
+                    this.searchSymbolSens();
+                    break;
+                case RevisionTypenAnswerEnum.SIGNIFICATION:
+                    this.searchSignification();
+                    break;
+                case RevisionTypenAnswerEnum.FILIERE:
+                    this.SearchFiliere();
+                    break;
+            }
         });
         const popover = await this.popoverService.create({
             component: SelectionListComponent,
