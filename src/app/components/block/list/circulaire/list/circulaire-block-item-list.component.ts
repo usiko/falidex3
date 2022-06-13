@@ -36,6 +36,6 @@ export class CirculaireBlockItemListComponent extends ListItem<ICirculaire> impl
     ngOnInit() {}
 
     click() {
-        this.onclick.emit();
+        this.onClick.emit();
     }
 }

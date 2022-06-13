@@ -1,7 +1,7 @@
 <ion-item [ngClass]="cssClass" *ngIf="item && navigation" lines="none" [routerLink]="[navigation,item.id]" detail>
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </ion-item>
-<ion-item [ngClass]="cssClass" *ngIf="item && !navigation" lines="none">
+<ion-item [ngClass]="cssClass" *ngIf="item && !navigation" lines="none" (click)="click()">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </ion-item>
 <ng-template #content>

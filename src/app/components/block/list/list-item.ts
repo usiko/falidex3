@@ -31,7 +31,7 @@ export class ListItem<T extends ICollectionData> implements OnChanges {
     /**
      * click item list event
      */
-    @Output() onclick = new EventEmitter<never>();
+    @Output() onClick = new EventEmitter<never>();
 
     protected changedetector;
 
@@ -47,6 +47,6 @@ export class ListItem<T extends ICollectionData> implements OnChanges {
     protected itemChange(): void {}
 
     click() {
-        this.onclick.emit();
+        this.onClick.emit();
     }
 }

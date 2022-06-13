@@ -11,12 +11,12 @@
         </ion-infinite-scroll>
     </ng-container>
 </ion-content>
-<ion-footer *ngIf="backFooterBtn">
+<ion-footer *ngIf="dismiss$">
     <ion-toolbar color="secondary">
         <ion-button (click)="onBackFooterClick()" expand="full" fill="clear" color="light">Retour</ion-button>
     </ion-toolbar>
 </ion-footer>
 
 <ng-template #listTpl let-item="item" let-navigation="navigation">
-    <app-filiere-block-item-list [navigation]="navigation" [item]="item"></app-filiere-block-item-list>
+    <app-filiere-block-item-list (onClick)="itemClick(item)" [navigation]="!dismiss$?navigation:null" [item]="item"></app-filiere-block-item-list>
 </ng-template>

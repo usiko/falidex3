@@ -26,19 +26,19 @@ export class AnswerRevisionBlockComponent implements OnInit {
             console.log('onDidDismiss resolved with role', type);
             switch (type) {
                 case RevisionTypenAnswerEnum.CIRCULAIRE:
-                    this.SearchCirculaire();
+                    this.search(FiliereListComponent);
                     break;
                 case RevisionTypenAnswerEnum.SYMBOL:
-                    this.searchSymbol();
+                    this.search(SymbolListComponent);
                     break;
                 case RevisionTypenAnswerEnum.SYMBOLSENS:
-                    this.searchSymbolSens();
+                    this.search(SymbolListComponent);
                     break;
                 case RevisionTypenAnswerEnum.SIGNIFICATION:
-                    this.searchSignification();
+                    this.search(SymbolListComponent);
                     break;
                 case RevisionTypenAnswerEnum.FILIERE:
-                    this.SearchFiliere();
+                    this.search(FiliereListComponent);
                     break;
             }
         });
@@ -78,56 +78,24 @@ export class AnswerRevisionBlockComponent implements OnInit {
         });
         await popover.present();
     }
-    async searchSymbol() {
+
+    async search(component) {
         const modal = await this.modalService.create({
-            component: SymbolListComponent,
+            component,
             componentProps: {
                 unlinkData: true,
-                backFooterBtn: true,
-            },
-        });
-        return await modal.present();
-    }
-    async searchSymbolSens() {
-        const modal = await this.modalService.create({
-            component: SymbolListComponent, // TODO page list
-            componentProps: {
-                unlinkData: true,
-                backFooterBtn: true,
+                dismiss$: this.getDismissList(),
             },
         });
         return await modal.present();
     }
 
-    async SearchFiliere() {
-        const modal = await this.modalService.create({
-            component: FiliereListComponent,
-            componentProps: {
-                unlinkData: true,
-                backFooterBtn: true,
-            },
+    private getDismissList(): Subject<any> {
+        const dismiss$ = new Subject();
+        dismiss$.subscribe((data) => {
+            console.log(data);
+            this.modalService.dismiss();
         });
-        return await modal.present();
-    }
-    async SearchCirculaire() {
-        const modal = await this.modalService.create({
-            component: FiliereListComponent, //TODO pagelist
-            componentProps: {
-                unlinkData: true,
-                backFooterBtn: true,
-            },
-        });
-        return await modal.present();
-    }
-
-    async searchSignification() {
-        const modal = await this.modalService.create({
-            component: FiliereListComponent, //TODO pagelist
-            componentProps: {
-                unlinkData: true,
-                backFooterBtn: true,
-            },
-        });
-        return await modal.present();
+        return dismiss$;
     }
 }

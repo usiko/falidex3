@@ -34,6 +34,6 @@ export class SymbolBlockItemGalleryComponent extends ListItem<ISymbol> implement
 
     ngOnInit() {}
     click() {
-        this.onclick.emit();
+        this.onClick.emit();
     }
 }

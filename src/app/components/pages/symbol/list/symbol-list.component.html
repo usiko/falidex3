@@ -26,14 +26,14 @@
         </ion-infinite-scroll>
     </ng-container>
 </ion-content>
-<ion-footer *ngIf="backFooterBtn">
+<ion-footer *ngIf="dismiss$">
     <ion-toolbar color="secondary">
         <ion-button (click)="onBackFooterClick()" expand="full" fill="clear" color="light">Retour</ion-button>
     </ion-toolbar>
 </ion-footer>
 <ng-template #listTpl let-item="item" let-navigation="navigation">
-    <app-block-symbol-item-list [navigation]="navigation" [item]="item"></app-block-symbol-item-list>
+    <app-block-symbol-item-list (onClick)="itemClick(item)" [navigation]="!dismiss$?navigation:null" [item]="item"></app-block-symbol-item-list>
 </ng-template>
 <ng-template #galleryTpl let-item="item" let-navigation="navigation">
-    <app-symbol-block-item-gallery [navigation]="navigation" [item]="item"></app-symbol-block-item-gallery>
+    <app-symbol-block-item-gallery (onClick)="itemClick(item)" [navigation]="!dismiss$?navigation:null" [item]="item"></app-symbol-block-item-gallery>
 </ng-template>

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, EventEmitter, Injectable, Input, Output, ViewChild } from '@angular/core';
 import { IonContent } from '@ionic/angular';
 
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { IBaseCollectionData } from 'src/app/models/base-data-models';
 import { FilterOperatorEnum } from 'src/app/models/filters/filter-model';
@@ -25,7 +25,7 @@ export class PageItemList<Item extends ICollectionData> {
     /**
      * if true we show a footer with a back button
      */
-    @Input() backFooterBtn = false;
+    @Input() dismiss$: Subject<any>;
 
     @Output() backFooterClick = new EventEmitter();
 
@@ -275,5 +275,15 @@ export class PageItemList<Item extends ICollectionData> {
         return item.id;
     }
 
-    onBackFooterClick() {}
+    onBackFooterClick() {
+        if (this.dismiss$) {
+            this.dismiss$.next();
+        }
+    }
+
+    itemClick(item: Item) {
+        if (this.dismiss$) {
+            this.dismiss$.next(item);
+        }
+    }
 }
