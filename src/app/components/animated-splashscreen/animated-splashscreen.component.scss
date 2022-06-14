@@ -7,7 +7,8 @@
     align-items: center;
     background: var(--ion-color-tertiary);
     .spinner-svg {
-        width: 150px;
+        width: 200px;
+        max-width: 65%;
         &::ng-deep {
             svg {
                 overflow: overlay;
@@ -21,7 +22,7 @@
     }
     .loadingInfo {
         margin-top: 100px;
-        width: 50%;
+        width: 70%;
         .message {
             height: 30px;
             text-align: center;
