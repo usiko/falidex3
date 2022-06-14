@@ -7,7 +7,7 @@
     align-items: center;
     background: var(--ion-color-tertiary);
     .spinner-svg {
-        width: 50%;
+        width: 150px;
         &::ng-deep {
             svg {
                 overflow: overlay;
