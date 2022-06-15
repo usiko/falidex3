@@ -37,6 +37,12 @@ export class AnimatedSplashscreenComponent implements OnInit, OnDestroy {
         }
     }
 
+    ionViewDidEnter() {
+        if (AnimatedSplashscreenComponent.loaded) {
+            this.router.navigateByUrl('/home');
+        }
+    }
+
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }
