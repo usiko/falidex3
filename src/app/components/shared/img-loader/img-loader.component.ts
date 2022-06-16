@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { PicturePreloaderService } from 'src/app/services/data-store/loader/picture-loader.service';
 
 @Component({
     selector: 'app-img-loader',
@@ -30,7 +31,7 @@ export class ImgLoaderComponent implements OnInit {
 
     @Input() objectFit = 'cover';
 
-    constructor(private changedetector: ChangeDetectorRef, private pictureLoader:PicturePreloaderService) {}
+    constructor(private changedetector: ChangeDetectorRef, private pictureLoader: PicturePreloaderService) {}
 
     ngOnInit() {
         this.changedetector.detectChanges();
