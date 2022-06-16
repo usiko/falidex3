@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-img-loader',
@@ -10,9 +12,13 @@ export class ImgLoaderComponent implements OnInit {
     public loading = false;
     public ownSrc: string;
 
+    subscriptions = new Subscription();
+
     @Input() set src(src: string) {
-        this.loading = true;
         //console.log('img change', src, this.errorSrc, this.ownSrc);
+        if (src !== this.ownSrc) {
+            // this.loading = true;
+        }
         if (src) {
             this.ownSrc = src;
             //console.log('img change', src, this.errorSrc, this.ownSrc);
@@ -30,9 +36,10 @@ export class ImgLoaderComponent implements OnInit {
 
     @Input() objectFit = 'cover';
 
-    constructor(private changedetector: ChangeDetectorRef) {}
+    constructor(private changedetector: ChangeDetectorRef, private http: HttpClient) {}
 
     ngOnInit() {
+        console.warn(' img loaded', this.ownSrc);
         this.changedetector.detectChanges();
     }
 
@@ -46,7 +53,29 @@ export class ImgLoaderComponent implements OnInit {
     }
 
     imgLoaded() {
+        console.warn(' img loaded', this.ownSrc);
         this.loading = false;
         this.changedetector.detectChanges();
+    }
+
+    imgLoading() {
+        this.loading = true;
+    }
+
+    private loadImg(imgUrl: string) {
+        if (imgUrl) {
+            this.subscriptions.add(
+                this.http.get(imgUrl).subscribe(
+                    () => {
+                        this.ownSrc = imgUrl;
+                    },
+                    () => {
+                        this.ownSrc = this.errorSrc;
+                    }
+                )
+            );
+        } else {
+            this.ownSrc = this.errorSrc;
+        }
     }
 }
