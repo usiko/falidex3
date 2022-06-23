@@ -1,44 +1,43 @@
 {
-    "loadingSteps":[
-        {
-            "message":"Accrochage des grelots"
+    "loadingSteps": [{
+            "message": "Accrochage des grelots"
         },
         {
-            "message":"Tocardisation des tocards"
+            "message": "Tocardisation des tocards"
         },
         {
-            "message":"Cuisson de la faluche"
+            "message": "Cuisson de la faluche"
         },
         {
-            "message":"Drama satin/velours"
+            "message": "Drama satin/velours"
         },
         {
-            "message":"Engagement Fouk"
+            "message": "Engagement Fouk"
         },
         {
-            "message":"Couture des circulaires"
+            "message": "Couture des circulaires"
         },
         {
-            "message":"Décuvage des PMs"
+            "message": "Décuvage des PMs"
         },
         {
-            "message":"Décernement des singes"
+            "message": "Décernement des singes"
         },
         {
-            "message":"Prépatation des pichets"
+            "message": "Prépatation des pichets"
         },
         {
-            "message":"Tarte aux pommes"
+            "message": "Tarte aux pommes"
         },
         {
-            "message":"Lecture du code"
+            "message": "Lecture du code"
         },
         {
-            "message":"\"La fal c`est un truc serieux\""
+            "message": "\"La fal c`est un truc serieux\""
         }
     ],
-    "urls":{
-        "dataServer":"http://data.falidex.fr",
-        "picturServer":"http://resources.falidex.fr"
+    "urls": {
+        "dataServer": "https://falidex-server.herokuapp.com/",
+        "picturServer": "http://resources.falidex.fr"
     }
 }
