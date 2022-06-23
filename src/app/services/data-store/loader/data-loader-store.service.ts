@@ -31,157 +31,147 @@ import { StoreService } from '../base-store/store.service';
 import { ILoadingBarState } from '../../../models/global.model';
 import { EventService } from '../../event/event.service';
 import { IRelationData } from 'src/app/models/base-relations.models';
+import { ILoadingSteps } from '../../../models/config.model';
+import { ConfigService } from '../../config/config.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class DataLoaderStoreService {
     private delay = 0;
-    constructor(private store: StoreService, private event: EventService) {}
+    private loadingSteps: ILoadingSteps[] = [];
+    constructor(private store: StoreService, private event: EventService, private config: ConfigService) {}
 
     loadData(): void {
+        this.loadingSteps = this.config.getConfig().loadingSteps;
+        const numberOfSteps = 11;
+        let currentStep = 1;
         of(null)
             .pipe(
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadPlacements(), this.store.placements$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0,
-                        buffer: 0.08,
-                        message: 'Accrochage des grelots',
-                    });
+                    this.displayStep(currentStep, numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadSymbolsAccessory(), this.store.symbolesAccessories$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.08,
-                        buffer: 0.16,
-                        message: 'Tocardisation des tocards',
-                    });
+                    this.displayStep(currentStep, numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadPositions(), this.store.positions$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.16,
-                        buffer: 0.3,
-                        message: 'Cuisson de la faluche',
-                    });
+                    this.displayStep(currentStep, numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadCirculaires(), this.store.circulaires$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.3,
-                        buffer: 0.38,
-                        message: 'Drama satin/velours',
-                    });
+                    this.displayStep(currentStep, numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadCirculairesColors(), this.store.circulairesColors$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.38,
-                        buffer: 0.46,
-                        message: 'Coloriage des rubans',
-                    });
+                    this.displayStep(currentStep, numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadColors(), this.store.colors$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.46,
-                        buffer: 0.54,
-                        message: 'Couture des circulaires',
-                    });
+                    this.displayStep(currentStep, numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadFilieres(), this.store.filieres$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.54,
-                        buffer: 0.62,
-                        message: 'Décuvage des PMs',
-                    });
+                    this.displayStep(currentStep, numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadSymbols(), this.store.symboles$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.62,
-                        buffer: 0.7,
-                        message: 'Décernement des singes',
-                    });
+                    this.displayStep(currentStep, numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadSymbolsSens(), this.store.symbolesSens$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.7,
-                        buffer: 0.78,
-                        message: 'Prepatation des pichets',
-                    });
+                    this.displayStep(currentStep, numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadSignifications(), this.store.significations$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.78,
-                        buffer: 0.86,
-                        message: 'Tarte aux pommes',
-                    });
+                    this.displayStep(currentStep, numberOfSteps);
+                    currentStep++;
                 }),
 
                 mergeMap(() => {
                     return this.loadRelations();
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.86,
-                        buffer: 1,
-                        message: 'Lecture du code',
-                    });
+                    this.displayStep(currentStep, numberOfSteps);
+                    currentStep++;
                 })
             )
             .subscribe(() => {
                 console.log('colleciton loaded');
-                this.displayLoading({
-                    enable: true,
-                    value: 1,
-                    buffer: 1,
-                    message: '"La fal c`est un truc serieux"',
-                });
-                setTimeout(() => {
-                    this.displayLoading({
-                        enable: false,
-                        value: 0,
-                        buffer: 0,
-                        message: '',
-                    });
-                }, 750);
+                this.displayStep(currentStep, numberOfSteps);
+                currentStep++;
             });
+    }
+
+    private getStepMessage(stepNumber: number) {
+        if (this.loadingSteps.length === 0) {
+            return null;
+        } else {
+            if (!this.loadingSteps[stepNumber]) {
+                return this.loadingSteps[this.loadingSteps.length - 1];
+            } else {
+                return this.loadingSteps[stepNumber - 1];
+            }
+        }
+    }
+
+    private displayStep(currentStep: number, numberOfSteps: number) {
+        let nextvalue = (1 / numberOfSteps) * currentStep;
+        let lastvalue = (1 / numberOfSteps) * (currentStep - 1);
+        if (nextvalue > 1) {
+            nextvalue = 1;
+        }
+        if (lastvalue > 1) {
+            lastvalue = 1;
+        }
+        console.log(lastvalue, nextvalue);
+        this.displayLoading({
+            enable: !!this.getStepMessage(currentStep),
+            value: lastvalue,
+            buffer: nextvalue,
+            message: this.getStepMessage(currentStep) ? this.getStepMessage(currentStep).message : '',
+        });
+        if (nextvalue === 1) {
+            setTimeout(() => {
+                this.displayLoading({
+                    enable: false,
+                    value: 0,
+                    buffer: 0,
+                    message: '',
+                });
+            }, 750);
+        }
     }
 
     private loadRelations(): Observable<IRelationData[]> {

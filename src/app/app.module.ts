@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -11,7 +12,9 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { initializeConfig } from './app.initializer';
 import { ComponentModule } from './components/component.module';
+import { ConfigService } from './services/config/config.service';
 import { EventService } from './services/event/event.service';
 
 @NgModule({
@@ -20,6 +23,7 @@ import { EventService } from './services/event/event.service';
     imports: [
         BrowserModule,
         CommonModule,
+        HttpClientModule,
         IonicModule.forRoot({
             rippleEffect: false,
             mode: 'md',
@@ -35,7 +39,19 @@ import { EventService } from './services/event/event.service';
             registrationStrategy: 'registerWhenStable:30000',
         }),
     ],
-    providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, EventService],
+    providers: [
+        {
+            provide: RouteReuseStrategy,
+            useClass: IonicRouteStrategy,
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initializeConfig,
+            deps: [ConfigService],
+            multi: true,
+        },
+        EventService,
+    ],
     bootstrap: [AppComponent],
     schemas: [
         //CUSTOM_ELEMENTS_SCHEMA
