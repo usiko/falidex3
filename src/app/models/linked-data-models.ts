@@ -58,3 +58,9 @@ export interface IPlacement extends ICollectionData {
 export interface IPosition extends ICollectionData {
     //data linked
 }
+
+export interface ICodeSpe extends ICollectionData {
+    text?: string;
+    article?: string;
+    note?: string;
+}

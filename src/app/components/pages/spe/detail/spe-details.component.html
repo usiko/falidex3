@@ -1,0 +1,7 @@
+<ion-header *ngIf="(item$|async) as spe">
+    <app-header title="{{(spe)?spe.name:'oops'}}"></app-header>
+</ion-header>
+
+<ion-content>
+    <app-spe-details-block [spe$]="item$"></app-spe-details-block>
+</ion-content>

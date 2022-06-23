@@ -1,0 +1,36 @@
+<ion-item [ngClass]="cssClass" *ngIf="item && navigation" lines="none" [routerLink]="[navigation,item.id]" detail>
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</ion-item>
+<ion-item [ngClass]="cssClass" *ngIf="item && !navigation" lines="none">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</ion-item>
+<ng-template #content>
+
+
+    <ion-label>
+        <div>
+            <div class="title">
+                <div class="article" *ngIf="item.article">{{item.article}}</div>
+                <div *ngIf="item.article">-</div>
+                <div class="name">{{item.name}}</div>
+            </div>
+            <p class="content">
+                {{item.text}}
+            </p>
+        </div>
+    </ion-label>
+
+</ng-template>
+<ion-item *ngIf="!item">
+    <ion-thumbnail slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+    </ion-thumbnail>
+    <ion-label>
+        <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </h3>
+        <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        </p>
+    </ion-label>
+</ion-item>

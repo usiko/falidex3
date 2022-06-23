@@ -28,6 +28,7 @@ import { EventService } from './services/event/event.service';
             rippleEffect: false,
             mode: 'md',
         }),
+
         FontAwesomeModule,
         AppRoutingModule,
         ComponentModule,

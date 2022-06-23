@@ -1,17 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-img-loader',
     templateUrl: './img-loader.component.html',
     styleUrls: ['./img-loader.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImgLoaderComponent implements OnInit {
     public loading = false;
     public ownSrc: string;
 
+    subscriptions = new Subscription();
+
     @Input() set src(src: string) {
-        this.loading = true;
         //console.log('img change', src, this.errorSrc, this.ownSrc);
+        if (src !== this.ownSrc) {
+            // this.loading = true;
+        }
         if (src) {
             this.ownSrc = src;
             //console.log('img change', src, this.errorSrc, this.ownSrc);
@@ -20,6 +27,7 @@ export class ImgLoaderComponent implements OnInit {
 
             //console.log('img change', src, this.errorSrc, this.ownSrc);
         }
+        this.changedetector.detectChanges();
     }
 
     @Input() errorSrc = '/assets/not-found.svg';
@@ -28,20 +36,46 @@ export class ImgLoaderComponent implements OnInit {
 
     @Input() objectFit = 'cover';
 
-    constructor() {}
+    constructor(private changedetector: ChangeDetectorRef, private http: HttpClient) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        console.warn(' img loaded', this.ownSrc);
+        this.changedetector.detectChanges();
+    }
 
     imgError() {
         console.warn('error loading', this.ownSrc);
         this.loading = false;
         if (this.ownSrc !== this.errorSrc) {
             this.ownSrc = this.errorSrc;
+            this.changedetector.detectChanges();
         }
     }
 
     imgLoaded() {
-        console.log('img loaded', this.ownSrc);
+        console.warn(' img loaded', this.ownSrc);
         this.loading = false;
+        this.changedetector.detectChanges();
+    }
+
+    imgLoading() {
+        this.loading = true;
+    }
+
+    private loadImg(imgUrl: string) {
+        if (imgUrl) {
+            this.subscriptions.add(
+                this.http.get(imgUrl).subscribe(
+                    () => {
+                        this.ownSrc = imgUrl;
+                    },
+                    () => {
+                        this.ownSrc = this.errorSrc;
+                    }
+                )
+            );
+        } else {
+            this.ownSrc = this.errorSrc;
+        }
     }
 }

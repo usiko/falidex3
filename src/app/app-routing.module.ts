@@ -1,13 +1,12 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AnimatedSplashscreenComponent } from './components/animated-splashscreen/animated-splashscreen.component';
-import { FiliereRoutingModule } from './components/pages/filiere/filiere-routing.module';
-import { HomePage } from './components/pages/home/home.page';
-import { SymbolRoutingModule } from './components/pages/symbol/symbole-routing.module';
+import { HomePageComponent } from './components/pages/home/home.page.component';
 
 const routes: Routes = [
     { path: '', component: AnimatedSplashscreenComponent },
-    { path: 'home', component: HomePage },
+    { path: 'home', component: HomePageComponent },
+
     /*{ path: 'list', component: ListPage },
     { path: 'spes', component: SpesComponent },
     { path: 'spe/:id', component: SpeDetailsComponent },
@@ -26,11 +25,25 @@ const routes: Routes = [
         path: 'filieres',
         loadChildren: () => import('./components/pages/filiere/filiere-routing.module').then((mod) => mod.FiliereRoutingModule),
     },
+    {
+        path: 'circulaires',
+        loadChildren: () => import('./components/pages/circulaire/circulaire-routing.module').then((mod) => mod.CirculaireRoutingModule),
+    },
+    {
+        path: 'spes',
+        loadChildren: () => import('./components/pages/spe/spe-routing.module').then((mod) => mod.SpeRoutingModule),
+    },
+    {
+        path: 'significations',
+        loadChildren: () =>
+            import('./components/pages/signification/signification-routing.module').then((mod) => mod.SignificationRoutingModule),
+    },
 
     /*{ path: 'symboles', children: symboleRoutes },
     { path: 'filieres', children: filiereRoutes },
     { path: 'circulaires', children: circulaireRoutes },
     { path: 'spes', children: speRoutes }*/
+    { path: '**', pathMatch: 'full', component: HomePageComponent },
 ];
 
 @NgModule({

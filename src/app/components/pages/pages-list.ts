@@ -20,7 +20,7 @@ export class PageItemList<Item extends ICollectionData> {
     /**
      * main page container
      */
-    @ViewChild(IonContent, null) content: IonContent;
+    public content: IonContent;
 
     /**
      * Must import service in child
@@ -56,7 +56,7 @@ export class PageItemList<Item extends ICollectionData> {
     /**
      * current number of items to show per page
      */
-    protected pageSize = 20;
+    protected pageSize = 0;
 
     /**
      * current page, start on 1
@@ -126,7 +126,6 @@ export class PageItemList<Item extends ICollectionData> {
                 if (this.dataLength > 0) {
                     this.initLoading = false;
                 }
-                console.log('update items', this.items$.getValue(), this.collection$.getValue());
                 this.changeDetector.detectChanges();
             })
         );
@@ -154,7 +153,6 @@ export class PageItemList<Item extends ICollectionData> {
                 this.filterChange(data.name, data.value);
             }
         }));*/
-        this.listManagerService.setFilters();
     }
 
     /**
@@ -172,6 +170,7 @@ export class PageItemList<Item extends ICollectionData> {
      */
     protected initDisplayFilters(filters: IDisplayFilters<any>[]) {
         this.listManagerService.setDisplayFilters(filters);
+        this.listManagerService.setFilters();
     }
 
     /**
@@ -198,7 +197,11 @@ export class PageItemList<Item extends ICollectionData> {
          */
     }
     scrollToTop() {
-        this.content.scrollToTop(350);
+        if (this.content) {
+            this.content.scrollToTop(350);
+        } else {
+            console.warn('unable to scrolltop not content');
+        }
     }
 
     /**

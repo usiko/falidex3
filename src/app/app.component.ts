@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
-import { MenuController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { CirculaireCollectionService } from './services/collection-item/circulaire/circulaire-collection.service';
+import { CodeSpeCollectionService } from './services/collection-item/code-spe/code-spe-collection.service';
 import { FiliereCollectionService } from './services/collection-item/filiere/filiere-collection.service';
 import { SignificationCollectionService } from './services/collection-item/signification/signification-collection.service';
 import { SymbolCollectionService } from './services/collection-item/symbol/symbol-collection.service';
 import { ConfigService } from './services/config/config.service';
 import { DataLoaderStoreService } from './services/data-store/loader/data-loader-store.service';
 import { SubStoreService } from './services/data-store/sub-store/sub-store.service';
-import { EventService } from './services/event/event.service';
+import { GlobalSearchService } from './services/globale-search/global-search.service';
 import { DataRelationsService } from './services/relations/data-relations.service';
 
 @Component({
@@ -30,6 +30,8 @@ export class AppComponent implements OnInit {
         private significationsService: SignificationCollectionService,
         private filieresService: FiliereCollectionService,
         private symbolService: SymbolCollectionService,
+        private codeSpeService: CodeSpeCollectionService,
+        private globaleSearch: GlobalSearchService,
         private subStore: SubStoreService,
         private relationService: DataRelationsService,
         private configService: ConfigService
@@ -50,7 +52,9 @@ export class AppComponent implements OnInit {
         });
         this.relationService.getCurrentRelation().subscribe((item) => {
             this.currentRelationsData$.next(item);
+            this.setMenu();
         });
+        this.globaleSearch.init();
     }
 
     setMenu() {
@@ -76,7 +80,7 @@ export class AppComponent implements OnInit {
                 title: 'Toutes les spés',
                 url: '/spes',
                 icon: 'file-circle-exclamation',
-                disabled: true,
+                disabled: false,
             },
             {
                 title: 'Revisions',
@@ -105,6 +109,7 @@ export class AppComponent implements OnInit {
         this.filieresService.init();
         this.symbolService.init();
         this.subStore.init();
+        this.codeSpeService.init();
         this.loaderStoreService.loadData();
     }
 
