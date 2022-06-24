@@ -192,7 +192,7 @@ export class DataLoaderStoreService {
     }
 
     private loadRelations(): Observable<IRelationData[]> {
-        return of([TLNRelation, NATRelation]).pipe(
+        return this.httpData.getDataLink().pipe(
             delay(750),
             map((items) => {
                 console.log('relation loaded');
@@ -205,37 +205,37 @@ export class DataLoaderStoreService {
     }
 
     private loadCirculaires(): Observable<IBaseCirculaire[]> {
-        return of(Circulaires);
+        return this.httpData.getCirculaires();
     }
 
     private loadCirculairesColors(): Observable<IBaseCirculaireColor[]> {
-        return of(CirculairesColors);
+        return this.httpData.getCirculaireColors();
     }
 
     private loadColors(): Observable<IBaseColor[]> {
-        return of(Colors);
+        return this.httpData.getColors();
     }
 
     private loadFilieres(): Observable<IBaseFiliere[]> {
-        return of(Filieres);
+        return this.httpData.getFilieres();
     }
     private loadSignifications(): Observable<IBaseSignification[]> {
-        return of(Significations);
+        return this.httpData.getSignifications();
     }
     private loadSymbols(): Observable<IBaseSymbol[]> {
-        return of(Symbols);
+        return this.httpData.getSymbols();
     }
     private loadSymbolsSens(): Observable<IBaseSymbolSens[]> {
-        return of(SymbolsSens);
+        return this.httpData.getSymbolsSens();
     }
     private loadSymbolsAccessory(): Observable<IBaseSymbolAcessory[]> {
-        return of(SymbolAccessory);
+        return this.httpData.getSymbolsAccessories();
     }
     private loadPlacements(): Observable<IBasePlacement[]> {
-        return of(Placements);
+        return this.httpData.getPlacements();
     }
     private loadPositions(): Observable<IBasePosition[]> {
-        return of(Positions);
+        return this.httpData.getPositions();
     }
 
     private dispactIntoSubject(obs: Observable<IBaseCollectionData[]>, subject: BehaviorSubject<IBaseCollectionData[]>) {
