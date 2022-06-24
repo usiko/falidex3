@@ -37,7 +37,20 @@
         }
     ],
     "urls": {
-        "dataServer": "https://falidex-server.herokuapp.com/",
-        "picturServer": "http://resources.falidex.fr"
+        "dataServer": "http://localhost:8080",
+        "pictureServer": "http://resources.falidex.fr"
+    },
+    "paths": {
+        "circulaires": "circulaire",
+        "circualireColors": "circulaire-color",
+        "symbols": "symbole",
+        "symbolSens": "symbol-sens",
+        "symbolAccessories": "symbol-accessories",
+        "significations": "signification",
+        "filieres": "filiere",
+        "colors": "color",
+        "placements": "placements",
+        "positions": "position",
+        "dataLink": "data-link"
     }
 }

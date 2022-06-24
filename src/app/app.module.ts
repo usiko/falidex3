@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -14,8 +14,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { initializeConfig } from './app.initializer';
 import { ComponentModule } from './components/component.module';
+import { AuthService } from './services/auth/auth.service';
 import { ConfigService } from './services/config/config.service';
 import { EventService } from './services/event/event.service';
+import { HttpInterceptorService } from './services/http-interceptor/http-interceptor.service';
 
 @NgModule({
     declarations: [AppComponent],
@@ -50,6 +52,7 @@ import { EventService } from './services/event/event.service';
             deps: [ConfigService],
             multi: true,
         },
+        { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
         EventService,
     ],
     bootstrap: [AppComponent],

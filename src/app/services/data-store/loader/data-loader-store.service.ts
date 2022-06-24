@@ -33,6 +33,9 @@ import { EventService } from '../../event/event.service';
 import { IRelationData } from 'src/app/models/base-relations.models';
 import { ILoadingSteps } from '../../../models/config.model';
 import { ConfigService } from '../../config/config.service';
+import { AuthService } from '../../auth/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { HttpDataCollectionService } from '../http-data/http-data-collection.service';
 
 @Injectable({
     providedIn: 'root',
@@ -40,9 +43,23 @@ import { ConfigService } from '../../config/config.service';
 export class DataLoaderStoreService {
     private delay = 0;
     private loadingSteps: ILoadingSteps[] = [];
-    constructor(private store: StoreService, private event: EventService, private config: ConfigService) {}
+    constructor(
+        private store: StoreService,
+        private event: EventService,
+        private config: ConfigService,
+        private authService: AuthService,
+        private httpData: HttpDataCollectionService
+    ) {}
 
     loadData(): void {
+        /**
+         * sample test
+         */
+        this.authService.login().subscribe(() => {
+            this.httpData.getCirculaires().subscribe((data) => {
+                console.log(data);
+            });
+        });
         this.loadingSteps = this.config.getConfig().loadingSteps;
         const numberOfSteps = 11;
         let currentStep = 1;
