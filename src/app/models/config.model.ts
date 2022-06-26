@@ -1,5 +1,6 @@
 export interface IConfig {
     loadingSteps: ILoadingSteps[];
+    loadingErrorMessage: string;
     urls: {
         dataServer: string;
         pictureServer: string;
@@ -26,6 +27,7 @@ export interface ILoadingSteps {
 
 export class GlobalConfig {
     loadingSteps: ILoadingSteps[];
+    loadingErrorMessage: string;
     urls: {
         dataServer: string;
         pictureServer: string;
@@ -48,6 +50,7 @@ export class GlobalConfig {
         if (options) {
             this.loadingSteps = options.loadingSteps ? options.loadingSteps : [];
             this.urls = options.urls;
+            this.loadingErrorMessage = options.loadingErrorMessage;
             this.paths = options.paths;
         }
     }

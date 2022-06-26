@@ -9,8 +9,12 @@
                         <ion-select placeholder="changer" (ionChange)="setCurrentRelation($event)" [value]="(currentRelationsData$|async).id" *ngIf="relations && relations.length>1 && (currentRelationsData$|async)">
                             <ion-select-option *ngFor="let relation of (relationsData$|async)" [value]="relation.id"> Code {{relation.name}}</ion-select-option>
                         </ion-select>
+                        <ion-label *ngIf="!relations || relations.length==0">
+                            Aucun code disponible
+                        </ion-label>
 
                     </ng-container>
+
 
                 </ion-item>
             </ion-toolbar>

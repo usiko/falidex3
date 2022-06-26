@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { ConfigService } from '../config/config.service';
 
@@ -18,6 +18,7 @@ export class AuthService {
         const login = 'user';
         const password = 'password';
         const url = this.configService.getConfig()?.urls?.dataServer;
+        //return throwError(null);
         return this.http
             .post(url + '/auth/login', {
                 username: 'john',

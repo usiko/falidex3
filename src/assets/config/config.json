@@ -1,5 +1,8 @@
 {
     "loadingSteps": [{
+            "message": "Chargement..."
+        },
+        {
             "message": "Accrochage des grelots"
         },
         {
@@ -36,6 +39,7 @@
             "message": "\"La fal c`est un truc serieux\""
         }
     ],
+    "loadingErrorMessage": "Echec du chargement",
     "urls": {
         "dataServer": "http://localhost:8080",
         "pictureServer": "http://resources.falidex.fr"
@@ -49,7 +53,7 @@
         "significations": "signification",
         "filieres": "filiere",
         "colors": "color",
-        "placements": "placements",
+        "placements": "placement",
         "positions": "position",
         "dataLink": "data-link"
     }
