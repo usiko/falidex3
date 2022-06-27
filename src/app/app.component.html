@@ -3,20 +3,25 @@
     <ion-menu side="start" menuId="navigation" class="navigation-menu" contentId="main-content" type="overlay">
         <ion-header>
             <ion-toolbar>
-                <ion-item lines="none">
-                    <fa-icon class="dark-color" [icon]="['fas', 'book']" slot="start"></fa-icon>
-                    <ng-container *ngIf="(relationsData$|async) as relations">
-                        <ion-select placeholder="changer" (ionChange)="setCurrentRelation($event)" [value]="(currentRelationsData$|async).id" *ngIf="relations && relations.length>1 && (currentRelationsData$|async)">
-                            <ion-select-option *ngFor="let relation of (relationsData$|async)" [value]="relation.id"> Code {{relation.name}}</ion-select-option>
-                        </ion-select>
-                        <ion-label *ngIf="!relations || relations.length==0">
-                            Aucun code disponible
-                        </ion-label>
-
+                <ng-container *ngIf="(relationsData$|async) as relations">
+                    <ng-container>
+                        <ion-item lines="none" *ngIf="relations && relations.length>1 && (currentRelationsData$|async)">
+                            <fa-icon class="dark-color" [icon]="['fas', 'book']" slot="start"></fa-icon>
+                            <ion-select placeholder="changer" (ionChange)="setCurrentRelation($event)" [value]="(currentRelationsData$|async).id">
+                                <ion-select-option *ngFor="let relation of (relationsData$|async)" [value]="relation.id"> Code {{relation.name}}</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                        <ion-item lines="none" *ngIf="!relations || relations.length==0">
+                            <fa-icon class="dark-color" [icon]="['fas', 'book']" slot="start"></fa-icon>
+                            <ion-label *ngIf="!relations || relations.length==0">
+                                Aucun code disponible
+                            </ion-label>
+                        </ion-item>
                     </ng-container>
+                </ng-container>
 
 
-                </ion-item>
+
             </ion-toolbar>
         </ion-header>
         <ion-content>

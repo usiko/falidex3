@@ -30,7 +30,7 @@ export class AuthService {
                 }),
                 catchError((error) => {
                     this.setToken(undefined);
-                    return of(error);
+                    return throwError(error);
                 })
             );
     }
