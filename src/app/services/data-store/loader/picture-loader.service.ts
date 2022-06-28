@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of, forkJoin, Observable } from 'rxjs';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
-import { FileSystemService } from '../../capacitor/file-system.service';
+import { Observable } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 import { StorageService } from '../../storage/storage.service';
 
 @Injectable({
@@ -15,16 +14,25 @@ export class PicturePreloaderService {
             modificationDate: string;
         };
     } = {};
-    constructor(private http: HttpClient, private storageService: StorageService, private fileSystem: FileSystemService) {}
+    constructor(private http: HttpClient, private storageService: StorageService) {}
     init() {
+        console.log('init pictures loader');
         return this.storageService.get('pictureIndex', {}).pipe(
-            map((storage) => {
-                this.pictureIndex = storage;
-            })
+            map(
+                (storage: {
+                    [key: string]: {
+                        localPath: string;
+                        modificationDate: string;
+                    };
+                }) => {
+                    this.pictureIndex = storage;
+                }
+            )
         );
     }
-    preloadAll(pictures: { id: string; src: string; modificationDate: Date }[]): void {
-        const obs = pictures.map((pic) => {
+    preloadAll(pictures: { id: string; src: string; modificationDate: Date }[]): any {
+        // error cors
+        /*const obs = pictures.map((pic) => {
             return this.http.get(pic.src).pipe(
                 catchError(() => {
                     return of(null);
@@ -46,18 +54,23 @@ export class PicturePreloaderService {
                 }),
                 switchMap((localPath) => {
                     if (localPath) {
-                        return this.updateIndex(src, localPath);
+                        return this.updateIndex(pic, localPath);
                     } else {
                         return of(null);
                     }
                 })
             );
         });
-        return forkJoin([...src, removeUnused]);
+        return forkJoin([...src, removeUnused]);*/
     }
 
     getLocalPath(src): string {
-        return this.pictureIndex[src] ? this.pictureIndex[src].localPath : src;
+        if (this.pictureIndex && this.pictureIndex[src]) {
+            return this.pictureIndex[src].localPath;
+        } else {
+            console.warn('no local picture for', src);
+            return undefined;
+        }
     }
 
     getFromStorage(key: string): Observable<{
@@ -77,7 +90,7 @@ export class PicturePreloaderService {
             localPath: string;
             modificationDate: string;
         }
-    ): Observable<never> {
+    ): Observable<any> {
         return this.storageService.get('pictureIndex', {}).pipe(
             mergeMap((storage) => {
                 storage[key] = value;
@@ -86,10 +99,10 @@ export class PicturePreloaderService {
         );
     }
 
-    private updateIndex(picture: { id: string; src: string; modificationDate: Date }, localPath: string): Observable<never> {
+    private updateIndex(picture: { id: string; src: string; modificationDate: Date }, localPath: string): Observable<void> {
         return this.setToStorage(picture.src, {
             localPath,
-            modificationDate: picture.modificationDate,
+            modificationDate: picture.modificationDate.toISOString(),
         }).pipe(
             map((storage) => {
                 this.pictureIndex = storage;

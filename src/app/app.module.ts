@@ -9,6 +9,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicStorageModule } from '@ionic/storage-angular';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,7 @@ import { AuthService } from './services/auth/auth.service';
 import { ConfigService } from './services/config/config.service';
 import { EventService } from './services/event/event.service';
 import { HttpInterceptorService } from './services/http-interceptor/http-interceptor.service';
+import { StorageService } from './services/storage/storage.service';
 
 @NgModule({
     declarations: [AppComponent],
@@ -30,6 +32,7 @@ import { HttpInterceptorService } from './services/http-interceptor/http-interce
             rippleEffect: false,
             mode: 'md',
         }),
+        IonicStorageModule.forRoot(),
 
         FontAwesomeModule,
         AppRoutingModule,
@@ -49,7 +52,7 @@ import { HttpInterceptorService } from './services/http-interceptor/http-interce
         {
             provide: APP_INITIALIZER,
             useFactory: initializeConfig,
-            deps: [ConfigService],
+            deps: [ConfigService, StorageService],
             multi: true,
         },
         { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
