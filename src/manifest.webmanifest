@@ -2,7 +2,7 @@
     "name": "falidex",
     "short_name": "falidex",
     "theme_color": "#9E2C17",
-    "background_color": "#fafafa",
+    "background_color": "#D0E0EB",
     "display": "standalone",
     "scope": "./",
     "start_url": "./",
