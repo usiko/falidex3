@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { BehaviorSubject } from 'rxjs';
+import { AuthService } from './services/auth/auth.service';
 import { CirculaireCollectionService } from './services/collection-item/circulaire/circulaire-collection.service';
 import { CodeSpeCollectionService } from './services/collection-item/code-spe/code-spe-collection.service';
 import { FiliereCollectionService } from './services/collection-item/filiere/filiere-collection.service';

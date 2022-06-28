@@ -1,5 +1,8 @@
 {
     "loadingSteps": [{
+            "message": "Chargement..."
+        },
+        {
             "message": "Accrochage des grelots"
         },
         {
@@ -36,8 +39,22 @@
             "message": "\"La fal c`est un truc serieux\""
         }
     ],
+    "loadingErrorMessage": "Echec du chargement",
     "urls": {
-        "dataServer": "https://falidex-server.herokuapp.com/",
-        "picturServer": "http://resources.falidex.fr"
+        "dataServer": "https://falidex-server.herokuapp.com",
+        "pictureServer": "http://resources.falidex.fr"
+    },
+    "paths": {
+        "circulaires": "circulaire",
+        "circulaireColors": "circulaire-color",
+        "symbols": "symbole",
+        "symbolSens": "symbol-sens",
+        "symbolAccessories": "symbol-accessories",
+        "significations": "signification",
+        "filieres": "filiere",
+        "colors": "color",
+        "placements": "placement",
+        "positions": "position",
+        "dataLink": "data-link"
     }
 }

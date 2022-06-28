@@ -1,6 +1,7 @@
 export interface ILoadingBarState {
-	enable: boolean;
-	value?: number;
-	buffer?: number;
-	message?: string;
+    enable: boolean;
+    error?: boolean;
+    value?: number;
+    buffer?: number;
+    message?: string;
 }

@@ -1,19 +1,6 @@
 import { Injectable } from '@angular/core';
-import Circulaires from '../../mocks/item-data/circulaires.json';
-import CirculairesColors from '../../mocks/item-data/circulaires-colors.json';
-import Colors from '../../mocks/item-data/colors.json';
-import Filieres from '../../mocks/item-data/filieres.json';
-import Significations from '../../mocks/item-data/significations.json';
-import Symbols from '../../mocks/item-data/symboles.json';
-import SymbolsSens from '../../mocks/item-data/symboles-sens.json';
-import SymbolAccessory from '../../mocks/item-data/symbole-accessoire.json';
-import Placements from '../../mocks/item-data/placements.json';
-import Positions from '../../mocks/item-data/positions.json';
-import TLNRelation from '../../mocks/relations/toulon.json';
-import NATRelation from '../../mocks/relations/national.json';
-
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, take, map, mergeMap, delay, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { catchError, delay, map, mergeMap, take, tap } from 'rxjs/operators';
 import {
     IBaseCirculaire,
     IBaseCirculaireColor,
@@ -27,95 +14,112 @@ import {
     IBaseSymbolAcessory,
     IBaseSymbolSens,
 } from 'src/app/models/base-data-models';
-import { StoreService } from '../base-store/store.service';
-import { ILoadingBarState } from '../../../models/global.model';
-import { EventService } from '../../event/event.service';
 import { IRelationData } from 'src/app/models/base-relations.models';
 import { ILoadingSteps } from '../../../models/config.model';
+import { ILoadingBarState } from '../../../models/global.model';
+import { AuthService } from '../../auth/auth.service';
 import { ConfigService } from '../../config/config.service';
+import { EventService } from '../../event/event.service';
+import { StoreService } from '../base-store/store.service';
+import { HttpDataCollectionService } from '../http-data/http-data-collection.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class DataLoaderStoreService {
-    private delay = 0;
     private loadingSteps: ILoadingSteps[] = [];
-    constructor(private store: StoreService, private event: EventService, private config: ConfigService) {}
+    private numberOfSteps = 12;
+    constructor(
+        private store: StoreService,
+        private event: EventService,
+        private config: ConfigService,
+        private authService: AuthService,
+        private httpData: HttpDataCollectionService
+    ) {}
 
     loadData(): void {
         this.loadingSteps = this.config.getConfig().loadingSteps;
-        const numberOfSteps = 11;
+
         let currentStep = 1;
-        of(null)
+        this.authService
+            .login()
             .pipe(
+                catchError((error) => {
+                    this.displayError();
+                    return throwError(error);
+                }),
+                map(() => {
+                    this.displayStep(currentStep, this.numberOfSteps);
+                    currentStep++;
+                }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadPlacements(), this.store.placements$);
                 }),
                 tap(() => {
-                    this.displayStep(currentStep, numberOfSteps);
+                    this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadSymbolsAccessory(), this.store.symbolesAccessories$);
                 }),
                 tap(() => {
-                    this.displayStep(currentStep, numberOfSteps);
+                    this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadPositions(), this.store.positions$);
                 }),
                 tap(() => {
-                    this.displayStep(currentStep, numberOfSteps);
+                    this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadCirculaires(), this.store.circulaires$);
                 }),
                 tap(() => {
-                    this.displayStep(currentStep, numberOfSteps);
+                    this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadCirculairesColors(), this.store.circulairesColors$);
                 }),
                 tap(() => {
-                    this.displayStep(currentStep, numberOfSteps);
+                    this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadColors(), this.store.colors$);
                 }),
                 tap(() => {
-                    this.displayStep(currentStep, numberOfSteps);
+                    this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadFilieres(), this.store.filieres$);
                 }),
                 tap(() => {
-                    this.displayStep(currentStep, numberOfSteps);
+                    this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadSymbols(), this.store.symboles$);
                 }),
                 tap(() => {
-                    this.displayStep(currentStep, numberOfSteps);
+                    this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadSymbolsSens(), this.store.symbolesSens$);
                 }),
                 tap(() => {
-                    this.displayStep(currentStep, numberOfSteps);
+                    this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadSignifications(), this.store.significations$);
                 }),
                 tap(() => {
-                    this.displayStep(currentStep, numberOfSteps);
+                    this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
                 }),
 
@@ -123,13 +127,13 @@ export class DataLoaderStoreService {
                     return this.loadRelations();
                 }),
                 tap(() => {
-                    this.displayStep(currentStep, numberOfSteps);
+                    this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
                 })
             )
             .subscribe(() => {
                 console.log('colleciton loaded');
-                this.displayStep(currentStep, numberOfSteps);
+                this.displayStep(currentStep, this.numberOfSteps);
                 currentStep++;
             });
     }
@@ -159,6 +163,7 @@ export class DataLoaderStoreService {
         this.displayLoading({
             enable: !!this.getStepMessage(currentStep),
             value: lastvalue,
+            error: false,
             buffer: nextvalue,
             message: this.getStepMessage(currentStep) ? this.getStepMessage(currentStep).message : '',
         });
@@ -166,6 +171,7 @@ export class DataLoaderStoreService {
             setTimeout(() => {
                 this.displayLoading({
                     enable: false,
+                    error: false,
                     value: 0,
                     buffer: 0,
                     message: '',
@@ -173,9 +179,27 @@ export class DataLoaderStoreService {
             }, 750);
         }
     }
+    private displayError() {
+        this.displayLoading({
+            enable: true,
+            error: true,
+            value: 0,
+            buffer: this.numberOfSteps,
+            message: this.config.getConfig()?.loadingErrorMessage || 'erreur',
+        });
+        setTimeout(() => {
+            this.displayLoading({
+                enable: false,
+                error: false,
+                value: 0,
+                buffer: 0,
+                message: '',
+            });
+        }, 3000);
+    }
 
     private loadRelations(): Observable<IRelationData[]> {
-        return of([TLNRelation, NATRelation]).pipe(
+        return this.httpData.getDataLink().pipe(
             delay(750),
             map((items) => {
                 console.log('relation loaded');
@@ -188,43 +212,42 @@ export class DataLoaderStoreService {
     }
 
     private loadCirculaires(): Observable<IBaseCirculaire[]> {
-        return of(Circulaires);
+        return this.httpData.getCirculaires();
     }
 
     private loadCirculairesColors(): Observable<IBaseCirculaireColor[]> {
-        return of(CirculairesColors);
+        return this.httpData.getCirculaireColors();
     }
 
     private loadColors(): Observable<IBaseColor[]> {
-        return of(Colors);
+        return this.httpData.getColors();
     }
 
     private loadFilieres(): Observable<IBaseFiliere[]> {
-        return of(Filieres);
+        return this.httpData.getFilieres();
     }
     private loadSignifications(): Observable<IBaseSignification[]> {
-        return of(Significations);
+        return this.httpData.getSignifications();
     }
     private loadSymbols(): Observable<IBaseSymbol[]> {
-        return of(Symbols);
+        return this.httpData.getSymbols();
     }
     private loadSymbolsSens(): Observable<IBaseSymbolSens[]> {
-        return of(SymbolsSens);
+        return this.httpData.getSymbolsSens();
     }
     private loadSymbolsAccessory(): Observable<IBaseSymbolAcessory[]> {
-        return of(SymbolAccessory);
+        return this.httpData.getSymbolsAccessories();
     }
     private loadPlacements(): Observable<IBasePlacement[]> {
-        return of(Placements);
+        return this.httpData.getPlacements();
     }
     private loadPositions(): Observable<IBasePosition[]> {
-        return of(Positions);
+        return this.httpData.getPositions();
     }
 
     private dispactIntoSubject(obs: Observable<IBaseCollectionData[]>, subject: BehaviorSubject<IBaseCollectionData[]>) {
         return obs.pipe(
             take(1),
-            delay(this.delay),
             map((items) => {
                 console.log(items.length, 'items loaded');
                 subject.next(items);
