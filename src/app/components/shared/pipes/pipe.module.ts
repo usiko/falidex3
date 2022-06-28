@@ -1,10 +1,11 @@
-import { NgModule } from "@angular/core";
-import { FilterLinkPipe } from "./filter-links.pipe";
-import { PositionNameListPipe } from "./position-name.pipe";
+import { NgModule } from '@angular/core';
+import { ArrayGroupPipe } from './array-groupe.pipe';
+import { FilterLinkPipe } from './filter-links.pipe';
+import { PositionNameListPipe } from './position-name.pipe';
 
 @NgModule({
-    declarations: [PositionNameListPipe, FilterLinkPipe],
-    exports: [PositionNameListPipe, FilterLinkPipe],
-    providers: []
+    declarations: [PositionNameListPipe, FilterLinkPipe, ArrayGroupPipe],
+    exports: [PositionNameListPipe, FilterLinkPipe, ArrayGroupPipe],
+    providers: [],
 })
-export class PipeModule { }
+export class PipeModule {}

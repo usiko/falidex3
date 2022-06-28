@@ -64,11 +64,13 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
             this.slides.lockSwipes(false);
             this.slides.slideTo(0);
             this.slides.lockSwipes(true);
+            this.listMode = 'list';
         }
         if (listMode == 'gallery') {
             this.slides.lockSwipes(false);
             this.slides.slideTo(1);
             this.slides.lockSwipes(true);
+            this.listMode = 'gallery';
         }
         this.changeDetector.detectChanges();
     }

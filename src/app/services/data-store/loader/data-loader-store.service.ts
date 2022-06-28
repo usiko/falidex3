@@ -12,8 +12,6 @@ import Positions from '../../mocks/item-data/positions.json';
 import TLNRelation from '../../mocks/relations/toulon.json';
 import NATRelation from '../../mocks/relations/national.json';
 
-import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
-import { catchError, take, map, mergeMap, delay, tap } from 'rxjs/operators';
 import {
     IBaseCirculaire,
     IBaseCirculaireColor,
@@ -27,166 +25,196 @@ import {
     IBaseSymbolAcessory,
     IBaseSymbolSens,
 } from 'src/app/models/base-data-models';
-import { StoreService } from '../base-store/store.service';
+import { ILoadingSteps } from '../../../models/config.model';
 import { ILoadingBarState } from '../../../models/global.model';
+import { AuthService } from '../../auth/auth.service';
+import { ConfigService } from '../../config/config.service';
 import { EventService } from '../../event/event.service';
 import { IRelationData } from 'src/app/models/base-relations.models';
 import { PicturePreloaderService } from './picture-loader.service';
+import { StoreService } from '../base-store/store.service';
+import { HttpDataCollectionService } from '../http-data/http-data-collection.service';
+import { throwError, Observable, forkJoin, of, BehaviorSubject } from 'rxjs';
+import { catchError, map, mergeMap, tap, delay, take } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
 })
 export class DataLoaderStoreService {
-    private delay = 0;
-    constructor(private store: StoreService, private event: EventService, private picturePrelaoder: PicturePreloaderService) {}
+    private loadingSteps: ILoadingSteps[] = [];
+    private numberOfSteps = 12;
+    constructor(
+        private store: StoreService,
+        private event: EventService,
+        private config: ConfigService,
+        private authService: AuthService,
+        private httpData: HttpDataCollectionService,
+        private picturePrelaoder: PicturePreloaderService
+    ) {}
 
     loadData(): void {
-        of(null)
+        this.loadingSteps = this.config.getConfig().loadingSteps;
+
+        let currentStep = 1;
+        this.authService
+            .login()
             .pipe(
+                /*catchError((error) => {
+                    this.displayError();
+                    return throwError(error);
+                }),*/
+                map(() => {
+                    this.displayStep(currentStep, this.numberOfSteps);
+                    currentStep++;
+                }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadPlacements(), this.store.placements$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0,
-                        buffer: 0.08,
-                        message: 'Accrochage des grelots',
-                    });
+                    this.displayStep(currentStep, this.numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadSymbolsAccessory(), this.store.symbolesAccessories$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.08,
-                        buffer: 0.16,
-                        message: 'Tocardisation des tocards',
-                    });
+                    this.displayStep(currentStep, this.numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadPositions(), this.store.positions$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.16,
-                        buffer: 0.3,
-                        message: 'Cuisson de la faluche',
-                    });
+                    this.displayStep(currentStep, this.numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadCirculaires(), this.store.circulaires$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.3,
-                        buffer: 0.38,
-                        message: 'Drama satin/velours',
-                    });
+                    this.displayStep(currentStep, this.numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadCirculairesColors(), this.store.circulairesColors$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.38,
-                        buffer: 0.46,
-                        message: 'Coloriage des rubans',
-                    });
+                    this.displayStep(currentStep, this.numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadColors(), this.store.colors$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.46,
-                        buffer: 0.54,
-                        message: 'Couture des circulaires',
-                    });
+                    this.displayStep(currentStep, this.numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadFilieres(), this.store.filieres$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.54,
-                        buffer: 0.62,
-                        message: 'Décuvage des PMs',
-                    });
+                    this.displayStep(currentStep, this.numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadSymbols(), this.store.symboles$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.62,
-                        buffer: 0.7,
-                        message: 'Décernement des singes',
-                    });
+                    this.displayStep(currentStep, this.numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadSymbolsSens(), this.store.symbolesSens$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.7,
-                        buffer: 0.78,
-                        message: 'Prepatation des pichets',
-                    });
+                    this.displayStep(currentStep, this.numberOfSteps);
+                    currentStep++;
                 }),
                 mergeMap(() => {
                     return this.dispactIntoSubject(this.loadSignifications(), this.store.significations$);
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.78,
-                        buffer: 0.86,
-                        message: 'Tarte aux pommes',
-                    });
+                    this.displayStep(currentStep, this.numberOfSteps);
+                    currentStep++;
                 }),
 
                 mergeMap(() => {
                     return this.loadRelations();
                 }),
                 tap(() => {
-                    this.displayLoading({
-                        enable: true,
-                        value: 0.86,
-                        buffer: 1,
-                        message: 'Lecture du code',
-                    });
+                    this.displayStep(currentStep, this.numberOfSteps);
+                    currentStep++;
                 })
             )
             .subscribe(() => {
                 console.log('colleciton loaded');
-                this.displayLoading({
-                    enable: true,
-                    value: 1,
-                    buffer: 1,
-                    message: '"La fal c`est un truc serieux"',
-                });
-                setTimeout(() => {
-                    this.displayLoading({
-                        enable: false,
-                        value: 0,
-                        buffer: 0,
-                        message: '',
-                    });
-                }, 750);
+                this.displayStep(currentStep, this.numberOfSteps);
+                currentStep++;
             });
     }
 
+    private getStepMessage(stepNumber: number) {
+        if (this.loadingSteps.length === 0) {
+            return null;
+        } else {
+            if (!this.loadingSteps[stepNumber]) {
+                return this.loadingSteps[this.loadingSteps.length - 1];
+            } else {
+                return this.loadingSteps[stepNumber - 1];
+            }
+        }
+    }
+
+    private displayStep(currentStep: number, numberOfSteps: number) {
+        let nextvalue = (1 / numberOfSteps) * currentStep;
+        let lastvalue = (1 / numberOfSteps) * (currentStep - 1);
+        if (nextvalue > 1) {
+            nextvalue = 1;
+        }
+        if (lastvalue > 1) {
+            lastvalue = 1;
+        }
+        console.log(lastvalue, nextvalue);
+        this.displayLoading({
+            enable: !!this.getStepMessage(currentStep),
+            value: lastvalue,
+            error: false,
+            buffer: nextvalue,
+            message: this.getStepMessage(currentStep) ? this.getStepMessage(currentStep).message : '',
+        });
+        if (nextvalue === 1) {
+            setTimeout(() => {
+                this.displayLoading({
+                    enable: false,
+                    error: false,
+                    value: 0,
+                    buffer: 0,
+                    message: '',
+                });
+            }, 750);
+        }
+    }
+    private displayError() {
+        this.displayLoading({
+            enable: true,
+            error: true,
+            value: 0,
+            buffer: this.numberOfSteps,
+            message: this.config.getConfig()?.loadingErrorMessage || 'erreur',
+        });
+        setTimeout(() => {
+            this.displayLoading({
+                enable: false,
+                error: false,
+                value: 0,
+                buffer: 0,
+                message: '',
+            });
+        }, 3000);
+    }
+
     private loadRelations(): Observable<IRelationData[]> {
-        return of([TLNRelation, NATRelation]).pipe(
+        return this.httpData.getDataLink().pipe(
             delay(750),
             map((items) => {
                 console.log('relation loaded');
@@ -199,53 +227,57 @@ export class DataLoaderStoreService {
     }
 
     private loadCirculaires(): Observable<IBaseCirculaire[]> {
-        return of(Circulaires);
+        return this.httpData.getCirculaires();
     }
 
     private loadCirculairesColors(): Observable<IBaseCirculaireColor[]> {
-        return of(CirculairesColors);
+        return this.httpData.getCirculaireColors();
     }
 
     private loadColors(): Observable<IBaseColor[]> {
-        return of(Colors);
+        return this.httpData.getColors();
     }
 
     private loadFilieres(): Observable<IBaseFiliere[]> {
-        return of(Filieres);
+        return this.httpData.getFilieres();
     }
     private loadSignifications(): Observable<IBaseSignification[]> {
-        return of(Significations);
+        return this.httpData.getSignifications();
     }
     private loadSymbols(): Observable<IBaseSymbol[]> {
-        const pictures = Symbols.reduce(
-            (acc,
-            (symbol) => {
-                if (symbol.imgs) {
-                    acc.push(symbol.imgs.map((img) => img.url));
-                }
-                return acc;
-            },
-            [])
-        );
-        return forkJoin([of(Symbols), this.picturePrelaoder.preload(pictures)]);
+        return this.httpData.getSymbols();
+        /*return this.httpData.getSymbols().pipe(mergeMap((symbols => {
+            const pictures = Symbols.reduce(
+                (acc,
+                (symbol) => {
+                    if (symbol.imgs) {
+                        acc.push(symbol.imgs.map((img) => img.url));
+                    }
+                    return acc;
+                },
+                [])
+            );
+            return this.picturePrelaoder.preload(pictures).pipe(map(() => {
+                return symbols;
+            }));
+        })))*/
     }
     private loadSymbolsSens(): Observable<IBaseSymbolSens[]> {
-        return of(SymbolsSens);
+        return this.httpData.getSymbolsSens();
     }
     private loadSymbolsAccessory(): Observable<IBaseSymbolAcessory[]> {
-        return of(SymbolAccessory);
+        return this.httpData.getSymbolsAccessories();
     }
     private loadPlacements(): Observable<IBasePlacement[]> {
-        return of(Placements);
+        return this.httpData.getPlacements();
     }
     private loadPositions(): Observable<IBasePosition[]> {
-        return of(Positions);
+        return this.httpData.getPositions();
     }
 
     private dispactIntoSubject(obs: Observable<IBaseCollectionData[]>, subject: BehaviorSubject<IBaseCollectionData[]>) {
         return obs.pipe(
             take(1),
-            delay(this.delay),
             map((items) => {
                 console.log(items.length, 'items loaded');
                 subject.next(items);

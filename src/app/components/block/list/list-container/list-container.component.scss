@@ -10,8 +10,12 @@
         display: flex;
         flex-wrap: wrap;
         &::ng-deep {
-            >*:not(ion-list-header) {
-                width: 33%;
+            .gallery-slot {
+                display: flex;
+                width: 100%;
+                >*:not(ion-list-header) {
+                    width: 33%;
+                }
             }
         }
     }

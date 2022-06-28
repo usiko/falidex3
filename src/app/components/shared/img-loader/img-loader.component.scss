@@ -5,7 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
+    background: var(--ion-color-dark);
     .loading {
         background: var(--ion-color-dark);
         position: absolute;
@@ -16,19 +16,16 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
         ion-spinner {
             height: 10%;
             width: 10%;
         }
     }
-
     ion-img {
-
+        background: var(--ion-color-light);
         &.img-hidden {
             opacity: 0;
         }
-
         height: 100%;
         width: 100%;
     }
