@@ -22,7 +22,7 @@ export class AuthService {
         //return throwError(null);
         return this.http
             .post(url + '/auth/login', {
-                username: 'johnn',
+                username: 'john',
                 password: 'changeme',
             })
             .pipe(
