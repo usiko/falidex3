@@ -7,10 +7,13 @@
         "ng": "ng",
         "start": "ionic serve",
         "build": "ng build",
+        "build:prod": "ionic build --prod",
         "doc": "npx compodoc -p tsconfig.doc.json",
         "test": "ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "serve:app": "cd server && node server.js",
+        "deploy": "npm run build:prod && npm run serve:app"
     },
     "private": true,
     "dependencies": {
