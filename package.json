@@ -7,7 +7,7 @@
         "ng": "ng",
         "start": "npm serve:app",
         "build": "ng build --prod",
-        "build:prod": "ionic build --prod",
+        "build:prod": "ng build --prod",
         "doc": "npx compodoc -p tsconfig.doc.json",
         "test": "ng test",
         "lint": "ng lint",
