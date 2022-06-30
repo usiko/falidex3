@@ -19,6 +19,7 @@ export interface IConfig {
         dataLink: string;
     };
     updateApp: 'auto' | 'everytimes';
+    pictureServerSalt: string;
     [key: string]: any;
 }
 
@@ -47,6 +48,7 @@ export class GlobalConfig {
         dataLink: string;
     };
     updateApp: 'auto' | 'everytimes';
+    pictureServerSalt: string;
     [key: string]: any;
     constructor(options?: IConfig) {
         if (options) {
@@ -55,6 +57,7 @@ export class GlobalConfig {
             this.loadingErrorMessage = options.loadingErrorMessage;
             this.paths = options.paths;
             this.updateApp = options.updateApp;
+            this.pictureServerSalt = options.pictureServerSalt;
         }
     }
 
