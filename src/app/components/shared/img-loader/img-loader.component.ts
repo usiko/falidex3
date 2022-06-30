@@ -15,8 +15,9 @@ export class ImgLoaderComponent implements OnInit {
     public base64 = false;
 
     public subscriptions = new Subscription();
-
+    private _src: string;
     @Input() set src(src: string) {
+        this._src = src;
         //console.log('img change', src, this.errorSrc, this.ownSrc);
         if (src !== this.ownSrc) {
             this.loading = true;
@@ -28,7 +29,6 @@ export class ImgLoaderComponent implements OnInit {
                         this.ownSrc = base64;
                         this.base64 = true;
                         this.loading = false;
-                        console.log('succesfull load from local', base64);
                         this.changedetector.detectChanges();
                     },
                     (error) => {
@@ -68,6 +68,10 @@ export class ImgLoaderComponent implements OnInit {
     }
 
     imgError() {
+        if (this.base64) {
+            this.pictureService.deleteResource(this._src);
+        }
+        this.base64 = false;
         console.warn('error loading', this.ownSrc);
         this.loading = false;
         if (this.ownSrc !== this.errorSrc) {

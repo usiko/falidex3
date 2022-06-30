@@ -3,7 +3,7 @@
         <ion-spinner color="light"></ion-spinner>
     </div>
 
-    <img [ngStyle]="{'object-fit':objectFit}" *ngIf="ownSrc && base64" [class.img-hidden]="loading" [src]="ownSrc" (error)="imgError()" />
+    <img [ngStyle]="{'object-fit':objectFit}" *ngIf="ownSrc && base64" [class.img-hidden]="loading" [src]="ownSrc|satinizeUrl" (error)="imgError()" />
     <ion-img [ngStyle]="{'object-fit':objectFit}" *ngIf="ownSrc && !base64" [class.img-hidden]="loading" [src]="ownSrc" (ionImgWillLoad)="imgLoading()" (ionImgDidLoad)="imgLoaded()" (ionError)="imgError()"></ion-img>
 
 </div>

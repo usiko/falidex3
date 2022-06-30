@@ -67,7 +67,7 @@ export class StorageService {
 
     public remove(key: string): Observable<any> {
         if (this.database) {
-            return from(this.database?.remove(key));
+            return from(this.database.remove(key));
         } else {
             return throwError('no database');
         }

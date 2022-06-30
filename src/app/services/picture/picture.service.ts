@@ -11,7 +11,7 @@ import { StorageService } from '../storage/storage.service';
 export class PictureService {
     constructor(private config: ConfigService, private http: HttpClient, private storage: StorageService) {}
     pictureIndexer: {
-        [key: string]: string;
+        [key: string]: number;
     } = {};
 
     init() {
@@ -47,22 +47,36 @@ export class PictureService {
         if (src && src[0] == '/') {
             src = src.slice(1);
         }
-        return this.http.get(this.getFullResourceUrl(src), { responseType: 'blob' }).pipe(
-            mergeMap((blob) => {
-                return this.blobToBase64(blob);
-            }),
-            mergeMap((base64) => {
-                console.log(src, base64, 'saved');
-
-                this.pictureIndexer[src] = new Date().getTime().toString();
-                this.updateIndexer();
-                return this.storage.set('picture-' + src, base64);
-            }),
-            catchError((error) => {
-                console.log('preload', error);
-                return of(undefined);
+        const params = {};
+        if (this.pictureIndexer && this.pictureIndexer[src]) {
+            params['mtime'] = this.pictureIndexer[src];
+        }
+        return this.http
+            .get(this.getFullResourceUrl(src), {
+                responseType: 'blob',
+                params,
             })
-        );
+            .pipe(
+                mergeMap((blob) => {
+                    if (blob.size > 0) {
+                        return this.blobToBase64(blob).pipe(
+                            mergeMap((base64) => {
+                                console.log(src, 'saved');
+                                this.pictureIndexer[src] = new Date().getTime() / 1000;
+                                this.updateIndexer();
+                                return this.storage.set('picture-' + src, base64);
+                            })
+                        );
+                    } else {
+                        console.log('storage already up to date');
+                        return of(null);
+                    }
+                }),
+                catchError((error) => {
+                    console.log('preload', error);
+                    return of(undefined);
+                })
+            );
     }
 
     blobToBase64(blob): Observable<string> {
@@ -88,7 +102,9 @@ export class PictureService {
         if (this.pictureIndexer[src]) {
             return this.storage.get('picture-' + src, undefined).pipe(
                 mergeMap((data) => {
-                    if (!data) {
+                    if (!data && data == 'data:') {
+                        delete this.pictureIndexer[src];
+                        this.updateIndexer();
                         return throwError('unable to get base64');
                     } else {
                         return of(data);
@@ -97,6 +113,24 @@ export class PictureService {
             );
         } else {
             return throwError('no base 64 indexed');
+        }
+    }
+
+    public deleteResource(src): void {
+        if (src && src[0] == '/') {
+            src = src.slice(1);
+        }
+        if (this.pictureIndexer[src]) {
+            this.storage.remove('picture-' + src).subscribe(
+                () => {
+                    delete this.pictureIndexer[src];
+                    this.updateIndexer();
+                    console.log(src, 'deleted');
+                },
+                (error) => {
+                    console.log('fail delete', src, error);
+                }
+            );
         }
     }
 
