@@ -6,7 +6,7 @@
     "scripts": {
         "ng": "ng",
         "start": "npm run serve:app",
-        "build": "ng build --prod",
+        "build": "ionic build --prod",
         "build:prod": "ionic build --prod",
         "doc": "npx compodoc -p tsconfig.doc.json",
         "test": "ng test",
@@ -32,6 +32,7 @@
         "@fortawesome/free-solid-svg-icons": "^6.1.0",
         "@ionic/angular": "^6.0.0",
         "express": "^4.18.1",
+        "ionic": "^5.4.16",
         "rxjs": "~6.6.0",
         "tslib": "^2.2.0",
         "zone.js": "~0.11.4"
