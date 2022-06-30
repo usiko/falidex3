@@ -5,9 +5,9 @@
     "homepage": "https://ionicframework.com/",
     "scripts": {
         "ng": "ng",
-        "start": "npm serve:app",
-        "build": "ng build --prod",
-        "build:prod": "ng build --prod",
+        "start": "npm run serve:app",
+        "build": "ionic build --prod",
+        "build:prod": "ionic build --prod",
         "doc": "npx compodoc -p tsconfig.doc.json",
         "test": "ng test",
         "lint": "ng lint",
