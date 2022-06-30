@@ -18,6 +18,7 @@ export interface IConfig {
         colors: string;
         dataLink: string;
     };
+    pictureServerSalt: string;
     [key: string]: any;
 }
 
@@ -45,6 +46,7 @@ export class GlobalConfig {
         colors: string;
         dataLink: string;
     };
+    pictureServerSalt: string;
     [key: string]: any;
     constructor(options?: IConfig) {
         if (options) {
@@ -52,6 +54,7 @@ export class GlobalConfig {
             this.urls = options.urls;
             this.loadingErrorMessage = options.loadingErrorMessage;
             this.paths = options.paths;
+            this.pictureServerSalt = options.pictureServerSalt;
         }
     }
 
