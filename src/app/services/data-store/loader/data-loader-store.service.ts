@@ -31,11 +31,11 @@ import { AuthService } from '../../auth/auth.service';
 import { ConfigService } from '../../config/config.service';
 import { EventService } from '../../event/event.service';
 import { IRelationData } from 'src/app/models/base-relations.models';
-import { PicturePreloaderService } from './picture-loader.service';
 import { StoreService } from '../base-store/store.service';
 import { HttpDataCollectionService } from '../http-data/http-data-collection.service';
 import { throwError, Observable, forkJoin, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, mergeMap, tap, delay, take } from 'rxjs/operators';
+import { PictureService } from '../../picture/picture.service';
 
 @Injectable({
     providedIn: 'root',
@@ -49,7 +49,7 @@ export class DataLoaderStoreService {
         private config: ConfigService,
         private authService: AuthService,
         private httpData: HttpDataCollectionService,
-        private picturePrelaoder: PicturePreloaderService
+        private pictureService: PictureService
     ) {}
 
     loadData(): void {
@@ -245,7 +245,22 @@ export class DataLoaderStoreService {
         return this.httpData.getSignifications();
     }
     private loadSymbols(): Observable<IBaseSymbol[]> {
-        return this.httpData.getSymbols();
+        //return this.httpData.getSymbols();
+        return this.httpData.getSymbols().pipe(
+            mergeMap((symbols: IBaseSymbol[]) => {
+                const pictures = Symbols.reduce((acc, symbol) => {
+                    if (symbol.imgs) {
+                        acc.push(...symbol.imgs.map((img) => img.url));
+                    }
+                    return acc;
+                }, []);
+                return forkJoin(pictures.map((pic) => this.pictureService.preload(pic))).pipe(
+                    map(() => {
+                        return symbols;
+                    })
+                );
+            })
+        );
         /*return this.httpData.getSymbols().pipe(mergeMap((symbols => {
             const pictures = Symbols.reduce(
                 (acc,

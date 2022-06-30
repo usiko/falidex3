@@ -1,7 +1,7 @@
 <div *ngIf="symbol$|async as symbol">
     <ion-card class="img-container">
         <div class="img-symbole">
-            <app-img-loader [src]="(symbol.imgs && symbol.imgs[0])?(symbol.imgs[0].url|resourcePicture):null">
+            <app-img-loader [resource]="true" [src]="(symbol.imgs && symbol.imgs[0])?symbol.imgs[0].url:null">
             </app-img-loader>
         </div>
     </ion-card>

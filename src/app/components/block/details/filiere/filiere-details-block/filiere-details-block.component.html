@@ -7,7 +7,7 @@
 
                     <div class="img-container">
                         <div class="img-symbole">
-                            <app-img-loader [src]="(circSymbole.symbols.imgs && circSymbole.symbols.imgs[0])?(circSymbole.symbols.imgs[0].url|resourcePicture):null">
+                            <app-img-loader [resource]="true" [src]="(circSymbole.symbols.imgs && circSymbole.symbols.imgs[0])?circSymbole.symbols.imgs[0].url:null">
                             </app-img-loader>
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { PicturePreloaderService } from 'src/app/services/data-store/loader/picture-loader.service';
 import { Subscription } from 'rxjs';
+import { PictureService } from 'src/app/services/picture/picture.service';
 
 @Component({
     selector: 'app-img-loader',
@@ -12,26 +12,48 @@ import { Subscription } from 'rxjs';
 export class ImgLoaderComponent implements OnInit {
     public loading = false;
     public ownSrc: string;
-    public localPath: string;
+    public base64 = false;
 
     public subscriptions = new Subscription();
 
     @Input() set src(src: string) {
         //console.log('img change', src, this.errorSrc, this.ownSrc);
         if (src !== this.ownSrc) {
-            // this.loading = true;
+            this.loading = true;
         }
         if (src) {
-            this.localPath = this.pictureLoader.getLocalPath(src);
-            this.ownSrc = this.localPath ? this.localPath : src;
+            if (this.resource) {
+                this.pictureService.getBase64(src).subscribe(
+                    (base64) => {
+                        this.ownSrc = base64;
+                        this.base64 = true;
+                        this.loading = false;
+                        console.log('succesfull load from local', base64);
+                        this.changedetector.detectChanges();
+                    },
+                    (error) => {
+                        this.ownSrc = this.pictureService.getFullResourceUrl(src);
+                        this.base64 = false;
+                        console.warn('error get local', error);
+                        this.changedetector.detectChanges();
+                    }
+                );
+            } else {
+                this.base64 = false;
+                this.ownSrc = src;
+                this.changedetector.detectChanges();
+            }
+
             //console.log('img change', src, this.errorSrc, this.ownSrc);
         } else {
             this.ownSrc = this.errorSrc;
+            this.changedetector.detectChanges();
 
             //console.log('img change', src, this.errorSrc, this.ownSrc);
         }
-        this.changedetector.detectChanges();
     }
+
+    @Input() resource = false;
 
     @Input() errorSrc = '/assets/not-found.svg';
 
@@ -39,7 +61,7 @@ export class ImgLoaderComponent implements OnInit {
 
     @Input() objectFit = 'cover';
 
-    constructor(private changedetector: ChangeDetectorRef, private pictureLoader: PicturePreloaderService, private http: HttpClient) {}
+    constructor(private changedetector: ChangeDetectorRef, private http: HttpClient, private pictureService: PictureService) {}
 
     ngOnInit() {
         this.changedetector.detectChanges();
@@ -64,7 +86,7 @@ export class ImgLoaderComponent implements OnInit {
     }
 
     imgLoading() {
-        this.loading = true;
+        // this.loading = true;
     }
 
     private loadImg(imgUrl: string) {

@@ -7,7 +7,7 @@
 
 <ng-template #content>
     <div class="symbole-content">
-        <app-img-loader [src]="(item.imgs && item.imgs[0])?(item.imgs[0].url|resourcePicture):null">
+        <app-img-loader [resource]="true" [src]="(item.imgs && item.imgs[0])?item.imgs[0].url:null">
         </app-img-loader>
         <div class="title-item">
             <div>
