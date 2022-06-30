@@ -6,7 +6,7 @@
     "scripts": {
         "ng": "ng",
         "start": "npm run serve:app",
-        "build": "ionic build --prod",
+        "build": "ng build --prod",
         "build:prod": "ionic build --prod",
         "doc": "npx compodoc -p tsconfig.doc.json",
         "test": "ng test",
