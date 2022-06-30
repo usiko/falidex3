@@ -7,7 +7,7 @@
 <ng-template #content>
     <ng-container *ngIf="(item.links|filterLink:['circulaire','symbols']) as circSymboles">
         <ion-thumbnail *ngIf="circSymboles.length>0" slot="start">
-            <app-img-loader [src]="(circSymboles[0].symbols.imgs && circSymboles[0].symbols.imgs[0])?'http://resources.falidex.fr'+circSymboles[0].symbols.imgs[0].url:null">
+            <app-img-loader [resource]="true" [src]="(circSymboles[0].symbols.imgs && circSymboles[0].symbols.imgs[0])?circSymboles[0].symbols.imgs[0].url:null">
             </app-img-loader>
         </ion-thumbnail>
     </ng-container>

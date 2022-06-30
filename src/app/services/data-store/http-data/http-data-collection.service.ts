@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable, of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import {
     IBaseCirculaire,
     IBaseCirculaireColor,
@@ -17,23 +17,22 @@ import {
 import { IRelationData } from 'src/app/models/base-relations.models';
 import { ICirculaire, ISymbol } from 'src/app/models/linked-data-models';
 import { ConfigService } from '../../config/config.service';
+import { StorageService } from '../../storage/storage.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class HttpDataCollectionService {
-    constructor(private config: ConfigService, private http: HttpClient) {}
+    constructor(private config: ConfigService, private http: HttpClient, private storageService: StorageService) {}
 
     getCirculaires(): Observable<IBaseCirculaire[]> {
         const url = this.getUrl('circulaires');
         return this.http.get(url).pipe(
             map((data: any) => {
-                console.log(data);
-                return data.item;
+                return this.mapData(data, 'circulaires');
             }),
             catchError((error) => {
-                console.warn(url, error);
-                return of([]);
+                return this.handleError('circulaires', error);
             })
         ) as Observable<IBaseCirculaire[]>;
     }
@@ -42,12 +41,10 @@ export class HttpDataCollectionService {
         const url = this.getUrl('circulaireColors');
         return this.http.get(url).pipe(
             map((data: any) => {
-                console.log(data);
-                return data.item;
+                return this.mapData(data, 'circulaireColors');
             }),
             catchError((error) => {
-                console.warn(url, error);
-                return of([]);
+                return this.handleError('circulaireColors', error);
             })
         ) as Observable<IBaseCirculaireColor[]>;
     }
@@ -55,12 +52,10 @@ export class HttpDataCollectionService {
         const url = this.getUrl('symbols');
         return this.http.get(url).pipe(
             map((data: any) => {
-                console.log(data);
-                return data.item;
+                return this.mapData(data, 'symbols');
             }),
             catchError((error) => {
-                console.warn(url, error);
-                return of([]);
+                return this.handleError('symbols', error);
             })
         ) as Observable<IBaseSymbol[]>;
     }
@@ -68,12 +63,10 @@ export class HttpDataCollectionService {
         const url = this.getUrl('symbolSens');
         return this.http.get(url).pipe(
             map((data: any) => {
-                console.log(data);
-                return data.item;
+                return this.mapData(data, 'symbolSens');
             }),
             catchError((error) => {
-                console.warn(url, error);
-                return of([]);
+                return this.handleError('symbolSens', error);
             })
         ) as Observable<ISymbol[]>;
     }
@@ -81,12 +74,10 @@ export class HttpDataCollectionService {
         const url = this.getUrl('symbolAccessories');
         return this.http.get(url).pipe(
             map((data: any) => {
-                console.log(data);
-                return data.item;
+                return this.mapData(data, 'symbolAccessories');
             }),
             catchError((error) => {
-                console.warn(url, error);
-                return of([]);
+                return this.handleError('symbolAccessories', error);
             })
         ) as Observable<IBaseSymbolAcessory[]>;
     }
@@ -94,12 +85,10 @@ export class HttpDataCollectionService {
         const url = this.getUrl('significations');
         return this.http.get(url).pipe(
             map((data: any) => {
-                console.log(data);
-                return data.item;
+                return this.mapData(data, 'significations');
             }),
             catchError((error) => {
-                console.warn(url, error);
-                return of([]);
+                return this.handleError('significations', error);
             })
         ) as Observable<IBaseSignification[]>;
     }
@@ -107,12 +96,10 @@ export class HttpDataCollectionService {
         const url = this.getUrl('filieres');
         return this.http.get(url).pipe(
             map((data: any) => {
-                console.log(data);
-                return data.item;
+                return this.mapData(data, 'filieres');
             }),
             catchError((error) => {
-                console.warn(url, error);
-                return of([]);
+                return this.handleError('filieres', error);
             })
         ) as Observable<IBaseFiliere[]>;
     }
@@ -120,12 +107,10 @@ export class HttpDataCollectionService {
         const url = this.getUrl('colors');
         return this.http.get(url).pipe(
             map((data: any) => {
-                console.log(data);
-                return data.item;
+                return this.mapData(data, 'colors');
             }),
             catchError((error) => {
-                console.warn(url, error);
-                return of([]);
+                return this.handleError('colors', error);
             })
         ) as Observable<IBaseColor[]>;
     }
@@ -133,12 +118,10 @@ export class HttpDataCollectionService {
         const url = this.getUrl('placements');
         return this.http.get(url).pipe(
             map((data: any) => {
-                console.log(data);
-                return data.item;
+                return this.mapData(data, 'placements');
             }),
             catchError((error) => {
-                console.warn(url, error);
-                return of([]);
+                return this.handleError('placements', error);
             })
         ) as Observable<IBasePlacement[]>;
     }
@@ -146,42 +129,72 @@ export class HttpDataCollectionService {
         const url = this.getUrl('positions');
         return this.http.get(url).pipe(
             map((data: any) => {
-                console.log(data);
-                return data.item;
+                return this.mapData(data, 'positions');
             }),
             catchError((error) => {
-                console.warn(url, error);
-                return of([]);
+                return this.handleError('positions', error);
             })
         ) as Observable<IBasePosition[]>;
     }
     getDataLink(): Observable<IRelationData[]> {
-        /* const url = this.getUrl('dataLink');
-        return this.http.get(url).pipe(
-            map((data: any) => {
-                console.log(data);
-                return data.item;
-            }),*/
-
         const url = this.getUrl('dataLink');
         return this.http.get(url).pipe(
             map((data: any) => {
-                console.log(data);
-                return data.item;
+                return this.mapData(data, 'dataLink');
+            }),
+            catchError((error) => {
+                return this.storageService.get('dataLink', undefined).pipe(
+                    mergeMap((data) => {
+                        if (!data) {
+                            return throwError(error);
+                        } else {
+                            return of(data.item);
+                        }
+                    })
+                );
             }),
             mergeMap((items: { name: string; id: string }[]) => {
                 return forkJoin(
                     items.map((item) => {
-                        return this.http.get(url + '/' + item.id);
+                        return this.getDataLinkItem(url, item.id);
                     })
                 );
-            }),
-
-            catchError((error) => {
-                console.warn(url, error);
-                return of([]);
             })
         ) as Observable<IRelationData[]>;
+    }
+
+    getDataLinkItem(url, id: string): Observable<IRelationData> {
+        return this.http.get(url + '/' + id).pipe(
+            tap((data) => {
+                this.storageService.set(url + '-' + id, data).subscribe();
+            }),
+            catchError((error) => {
+                return this.storageService.get(url + '-' + id, undefined).pipe(
+                    catchError((storageError) => {
+                        console.warn(storageError);
+                        return throwError(error);
+                    })
+                );
+            })
+        ) as Observable<IRelationData>;
+    }
+
+    private mapData(data: any, url: string) {
+        console.log(data);
+        this.storageService.set(url, data).subscribe();
+        return data.item;
+    }
+
+    private handleError(url: string, error): Observable<any> {
+        return this.storageService.get(url, undefined).pipe(
+            map((data) => {
+                return data.item;
+            }),
+            catchError((storageError) => {
+                console.warn('get from local', url, error, storageError);
+                return of([]);
+            })
+        );
     }
 
     private getUrl(pathKey: string) {

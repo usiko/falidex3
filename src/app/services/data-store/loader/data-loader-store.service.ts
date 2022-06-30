@@ -1,6 +1,17 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { catchError, delay, map, mergeMap, take, tap } from 'rxjs/operators';
+import Circulaires from '../../mocks/item-data/circulaires.json';
+import CirculairesColors from '../../mocks/item-data/circulaires-colors.json';
+import Colors from '../../mocks/item-data/colors.json';
+import Filieres from '../../mocks/item-data/filieres.json';
+import Significations from '../../mocks/item-data/significations.json';
+import Symbols from '../../mocks/item-data/symboles.json';
+import SymbolsSens from '../../mocks/item-data/symboles-sens.json';
+import SymbolAccessory from '../../mocks/item-data/symbole-accessoire.json';
+import Placements from '../../mocks/item-data/placements.json';
+import Positions from '../../mocks/item-data/positions.json';
+import TLNRelation from '../../mocks/relations/toulon.json';
+import NATRelation from '../../mocks/relations/national.json';
+
 import {
     IBaseCirculaire,
     IBaseCirculaireColor,
@@ -14,14 +25,17 @@ import {
     IBaseSymbolAcessory,
     IBaseSymbolSens,
 } from 'src/app/models/base-data-models';
-import { IRelationData } from 'src/app/models/base-relations.models';
 import { ILoadingSteps } from '../../../models/config.model';
 import { ILoadingBarState } from '../../../models/global.model';
 import { AuthService } from '../../auth/auth.service';
 import { ConfigService } from '../../config/config.service';
 import { EventService } from '../../event/event.service';
+import { IRelationData } from 'src/app/models/base-relations.models';
 import { StoreService } from '../base-store/store.service';
 import { HttpDataCollectionService } from '../http-data/http-data-collection.service';
+import { throwError, Observable, forkJoin, of, BehaviorSubject } from 'rxjs';
+import { catchError, map, mergeMap, tap, delay, take } from 'rxjs/operators';
+import { PictureService } from '../../picture/picture.service';
 
 @Injectable({
     providedIn: 'root',
@@ -34,7 +48,8 @@ export class DataLoaderStoreService {
         private event: EventService,
         private config: ConfigService,
         private authService: AuthService,
-        private httpData: HttpDataCollectionService
+        private httpData: HttpDataCollectionService,
+        private pictureService: PictureService
     ) {}
 
     loadData(): void {
@@ -44,10 +59,10 @@ export class DataLoaderStoreService {
         this.authService
             .login()
             .pipe(
-                catchError((error) => {
+                /*catchError((error) => {
                     this.displayError();
                     return throwError(error);
-                }),
+                }),*/
                 map(() => {
                     this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
@@ -230,7 +245,37 @@ export class DataLoaderStoreService {
         return this.httpData.getSignifications();
     }
     private loadSymbols(): Observable<IBaseSymbol[]> {
-        return this.httpData.getSymbols();
+        //return this.httpData.getSymbols();
+        return this.httpData.getSymbols().pipe(
+            mergeMap((symbols: IBaseSymbol[]) => {
+                const pictures = Symbols.reduce((acc, symbol) => {
+                    if (symbol.imgs) {
+                        acc.push(...symbol.imgs.map((img) => img.url));
+                    }
+                    return acc;
+                }, []);
+                return forkJoin(pictures.map((pic) => this.pictureService.preload(pic))).pipe(
+                    map(() => {
+                        return symbols;
+                    })
+                );
+            })
+        );
+        /*return this.httpData.getSymbols().pipe(mergeMap((symbols => {
+            const pictures = Symbols.reduce(
+                (acc,
+                (symbol) => {
+                    if (symbol.imgs) {
+                        acc.push(symbol.imgs.map((img) => img.url));
+                    }
+                    return acc;
+                },
+                [])
+            );
+            return this.picturePrelaoder.preload(pictures).pipe(map(() => {
+                return symbols;
+            }));
+        })))*/
     }
     private loadSymbolsSens(): Observable<IBaseSymbolSens[]> {
         return this.httpData.getSymbolsSens();
