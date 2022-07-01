@@ -42,7 +42,7 @@
     "loadingErrorMessage": "Echec du chargement",
     "urls": {
         "dataServer": "https://falidex-server.herokuapp.com",
-        "pictureServer": "http://resources.falidex.fr"
+        "pictureServer": "https://resources.falidex.fr"
     },
     "paths": {
         "circulaires": "circulaire",
