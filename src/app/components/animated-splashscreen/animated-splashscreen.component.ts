@@ -25,15 +25,19 @@ export class AnimatedSplashscreenComponent implements OnInit, OnDestroy {
                         this.loadingState = state;
                         if (state.value == 1) {
                             AnimatedSplashscreenComponent.loaded = true;
-                            this.subscription.add(
-                                timer(750).subscribe(() => {
-                                    this.router.navigateByUrl('/home');
-                                })
-                            );
                         }
                     }
                 })
             );
+            this.subscription.add(
+                this.events.getObs('leaveSplash').subscribe(() => {
+                    this.subscription.add(
+                        timer(750).subscribe(() => {
+                            this.router.navigateByUrl('/home');
+                        })
+                    );
+                })
+            )
         }
     }
 
