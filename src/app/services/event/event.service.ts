@@ -29,7 +29,6 @@ export class EventService {
      */
     getObs(topic: string) {
         const subject = this.getTopic(topic);
-        console.log('get subscription', 'topic', subject);
         return subject.asObservable();
     }
 }

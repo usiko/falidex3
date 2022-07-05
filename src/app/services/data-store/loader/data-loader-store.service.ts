@@ -151,7 +151,6 @@ export class DataLoaderStoreService {
                 })
             )
             .subscribe(() => {
-                console.log('colleciton loaded');
                 this.displayStep(currentStep, this.numberOfSteps);
                 currentStep++;
                 this.event.publish('splashLeave');
@@ -179,7 +178,6 @@ export class DataLoaderStoreService {
         if (lastvalue > 1) {
             lastvalue = 1;
         }
-        console.log(lastvalue, nextvalue);
         this.displayLoading({
             enable: !!this.getStepMessage(currentStep),
             value: lastvalue,
@@ -222,9 +220,7 @@ export class DataLoaderStoreService {
         return this.httpData.getDataLink().pipe(
             delay(750),
             map((items) => {
-                console.log('relation loaded');
                 this.store.dataRelations$.next(items);
-                console.log('relation selected');
                 this.store.currentDataRelations$.next(items[0]);
                 return items;
             })
@@ -299,7 +295,6 @@ export class DataLoaderStoreService {
         return obs.pipe(
             take(1),
             map((items) => {
-                console.log(items.length, 'items loaded');
                 subject.next(items);
                 return items;
             }),
@@ -312,7 +307,6 @@ export class DataLoaderStoreService {
     }
 
     private displayLoading(loadingState: ILoadingBarState) {
-        console.log('displayLoading', loadingState);
         this.event.publish('loadingBarState', loadingState);
     }
 }
