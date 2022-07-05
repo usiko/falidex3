@@ -212,7 +212,6 @@ export class HttpDataCollectionService {
                 return data;
             }),
             catchError((storageError) => {
-                console.warn('get from local', url, error, storageError);
                 return of([]);
             })
         );

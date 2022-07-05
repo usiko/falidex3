@@ -81,7 +81,6 @@ export class SubStoreService {
                     })
                 )
                 .subscribe((items) => {
-                    console.log('substore fire', items.length);
                     debouncer.next(items);
                 });
         });
