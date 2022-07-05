@@ -160,7 +160,7 @@ export class HttpDataCollectionService {
                 return this.storageService.get('dataLink', undefined).pipe(
                     mergeMap((data) => {
                         if (!data) {
-                            return throwError(error);
+                            return of([]);
                         } else {
                             return of(data.item);
                         }
@@ -168,6 +168,9 @@ export class HttpDataCollectionService {
                 );
             }),
             mergeMap((items: { name: string; id: string }[]) => {
+                if (items.length == 0) {
+                    return of([]);
+                }
                 return forkJoin(
                     items.map((item) => {
                         return this.getDataLinkItem(url, item.id);
