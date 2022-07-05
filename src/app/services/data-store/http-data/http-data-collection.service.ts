@@ -199,6 +199,10 @@ export class HttpDataCollectionService {
     private mapData(data: any, url: string) {
         console.log(data);
         this.storageService.set(url, data).subscribe();
+        if (url == 'dataLink') {
+            //TEMP
+            return data.item;
+        }
         return data;
     }
 
