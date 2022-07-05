@@ -53,6 +53,10 @@ export class DataLoaderStoreService {
     ) {}
 
     loadData(): void {
+        const isAllStored = this.httpData.isAllStored();
+        if (isAllStored) {
+            this.event.publish('splashLeave');
+        }
         this.loadingSteps = this.config.getConfig().loadingSteps;
 
         let currentStep = 1;
@@ -150,6 +154,7 @@ export class DataLoaderStoreService {
                 console.log('colleciton loaded');
                 this.displayStep(currentStep, this.numberOfSteps);
                 currentStep++;
+                this.event.publish('splashLeave');
             });
     }
 

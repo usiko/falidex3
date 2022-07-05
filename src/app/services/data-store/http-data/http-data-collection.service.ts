@@ -25,6 +25,20 @@ import { StorageService } from '../../storage/storage.service';
 export class HttpDataCollectionService {
     constructor(private config: ConfigService, private http: HttpClient, private storageService: StorageService) {}
 
+    isAllStored(): boolean {
+        const keys = Object.keys(this.config.getConfig().paths);
+        const values = keys.map((key) => this.storageService.getAge(key));
+        if (values.length != keys.length) {
+            return false;
+        }
+        for (const val of values) {
+            if (!val) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     getCirculaires(): Observable<IBaseCirculaire[]> {
         const url = this.getUrl('circulaires');
         return this.http.get(url).pipe(
@@ -182,13 +196,13 @@ export class HttpDataCollectionService {
     private mapData(data: any, url: string) {
         console.log(data);
         this.storageService.set(url, data).subscribe();
-        return data.item;
+        return data;
     }
 
     private handleError(url: string, error): Observable<any> {
         return this.storageService.get(url, undefined).pipe(
             map((data) => {
-                return data.item;
+                return data;
             }),
             catchError((storageError) => {
                 console.warn('get from local', url, error, storageError);

@@ -12,6 +12,7 @@ import { DataLoaderStoreService } from './services/data-store/loader/data-loader
 import { SubStoreService } from './services/data-store/sub-store/sub-store.service';
 import { GlobalSearchService } from './services/globale-search/global-search.service';
 import { DataRelationsService } from './services/relations/data-relations.service';
+import { environment } from '../environments/environment';
 
 @Component({
     selector: 'app-root',
@@ -39,6 +40,11 @@ export class AppComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        if (environment.production) {
+            console.log('prod mode');
+        } else {
+            console.log('dev mode');
+        }
         this.configService.loadConfig();
         this.filieresService.collection$.subscribe((items) => {
             this.setMenu();
