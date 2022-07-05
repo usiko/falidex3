@@ -14,6 +14,7 @@ export class AnimatedSplashscreenComponent implements OnInit, OnDestroy {
     public loadingState: ILoadingBarState;
     private subscription = new Subscription();
     static loaded = false;
+
     ngOnInit() {
         if (AnimatedSplashscreenComponent.loaded) {
             this.router.navigateByUrl('/home');
