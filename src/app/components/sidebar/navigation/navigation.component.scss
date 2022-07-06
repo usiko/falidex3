@@ -16,5 +16,17 @@
         fa-icon {
             color: var(--ion-color-secondary);
         }
+        &.install {
+            --border-color: transparent;
+            --color: var(--ion-color-primary);
+            //--background: var(--ion-color-secondary);
+            fa-icon {
+                color: var(--ion-color-primary);
+            }
+        }
+    }
+    ion-item-divider {
+        min-height: 0;
+        margin-bottom: 5px;
     }
 }
