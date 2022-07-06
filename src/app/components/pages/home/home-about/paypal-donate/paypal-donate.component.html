@@ -1,4 +1,12 @@
-<p>
-    paypal-donate works!
-</p>
-<a href="https://bit.ly/3Pby21n" target="_blank">donate</a>
+<ion-card class="warning-card text-center" color='secondary'>
+    <ion-card-content color='secondary'>
+        <ion-text>Ce projet est développé sur temps libre, si vous appréciez, n'hésitez pas l'encourager</ion-text>
+    </ion-card-content>
+
+</ion-card>
+
+
+<ion-button (click)="openPaypal()" expand="block">
+    <fa-icon slot="start" [icon]="['fab', 'paypal']"></fa-icon>
+    Faire un don
+</ion-button>
