@@ -31,7 +31,7 @@
 <ng-template #linkTpl let-link="link" let-links="links">
     <div class="img-container">
         <div class="img-symbole">
-            <app-img-loader [src]="(link.symbols.imgs && link.symbols.imgs[0])?(link.symbols.imgs[0].url|resourcePicture):null">
+            <app-img-loader [resource]="true" [src]="(link.symbols.imgs && link.symbols.imgs[0])?link.symbols.imgs[0].url:null">
             </app-img-loader>
         </div>
     </div>

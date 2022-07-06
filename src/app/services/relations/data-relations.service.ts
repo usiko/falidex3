@@ -54,7 +54,7 @@ export class DataRelationsService {
         if (find) {
             this.currentRelation$.next(find);
         } else {
-            console.warn('relation not found', id);
+            console.log('relation not found', id);
         }
     }
 }

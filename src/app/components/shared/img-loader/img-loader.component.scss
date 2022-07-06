@@ -21,7 +21,8 @@
             width: 10%;
         }
     }
-    ion-img {
+    ion-img,
+    img {
         background: var(--ion-color-light);
         &.img-hidden {
             opacity: 0;

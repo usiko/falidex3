@@ -1,17 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { forkJoin, of, throwError } from 'rxjs';
+import { catchError, mergeMap, tap } from 'rxjs/operators';
 import { ConfigService } from '../config/config.service';
+import { HttpDataCollectionService } from '../data-store/http-data/http-data-collection.service';
+import { EventService } from '../event/event.service';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
     private token;
-    constructor(private http: HttpClient, private configService: ConfigService) {
-        console.log('auth');
-        this.login();
+    constructor(private http: HttpClient, private configService: ConfigService, private storageService: StorageService, private httpData:HttpDataCollectionService, private eventService:EventService) {
+
     }
 
     login() {
@@ -29,8 +31,16 @@ export class AuthService {
                     this.setToken(data.access_token);
                 }),
                 catchError((error) => {
-                    this.setToken(undefined);
-                    return throwError(error);
+                    const isAllStored = this.httpData.isAllStored();
+                    if (!isAllStored)
+                    {
+                        this.setToken(undefined);
+                        return throwError(error);
+                    }
+                    else {
+                        return of(null);
+                    }
+                    
                 })
             );
     }

@@ -141,7 +141,7 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
                         ...item,
                     } as LinkedModel);
                 } else {
-                    console.warn('empty links', item, filtered);
+                    //console.warn('empty links', item, filtered);
                 }
             }
             return returned;
