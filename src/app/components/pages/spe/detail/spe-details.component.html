@@ -1,0 +1,10 @@
+<ion-header>
+    <app-header title="{{(item$|async)?(item$|async).name:'oops'}}"></app-header>
+</ion-header>
+
+<ion-content>
+    <app-spe-details-block *ngIf="(item$|async)" [spe$]="item$"></app-spe-details-block>
+    <ng-container *ngIf="!(item$|async)">
+        <app-no-item></app-no-item>
+    </ng-container>
+</ion-content>

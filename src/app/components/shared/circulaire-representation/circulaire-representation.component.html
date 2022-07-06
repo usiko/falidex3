@@ -1,0 +1,4 @@
+<div class="circulaireColor" [ngClass]="cssClass" [class.velours]="circulaire.matiere===circulaireMatEnum.velours" *ngIf="circulaire && circulaire.colors">
+    <div class="ion-color" [style.background-color]="color.colorData" *ngFor="let color of circulaire.colors">
+    </div>
+</div>

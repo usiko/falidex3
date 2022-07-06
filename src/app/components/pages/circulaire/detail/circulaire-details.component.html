@@ -1,0 +1,11 @@
+<ion-header>
+    <app-header title="{{(item$|async)?(item$|async).name:'oops'}}"></app-header>
+</ion-header>
+<ion-content>
+    <ng-container *ngIf="(item$|async)">
+        <app-circulaire-details-block [circualaire$]="item$"></app-circulaire-details-block>
+    </ng-container>
+    <ng-container *ngIf="!(item$|async)">
+        <app-no-item></app-no-item>
+    </ng-container>
+</ion-content>

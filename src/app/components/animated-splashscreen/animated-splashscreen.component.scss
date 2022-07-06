@@ -1,0 +1,86 @@
+:host {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--ion-color-tertiary);
+    .spinner-svg {
+        width: 200px;
+        max-width: 65%;
+        &::ng-deep {
+            svg {
+                overflow: overlay;
+                g.spin-anim {
+                    transform-origin: center;
+                    -webkit-animation: rotate-scale-up 1.5s ease-in-out infinite both;
+                    animation: rotate-scale-up 1.5s ease-in-out infinite both;
+                }
+            }
+        }
+    }
+    .loadingInfo {
+        margin-top: 100px;
+        width: 70%;
+        .message {
+            height: 30px;
+            text-align: center;
+            margin-bottom: 5px;
+            color: var(--ion-color-secondary)
+        }
+    }
+}
+
+
+/**
+ * ----------------------------------------
+ * animation rotate-scale-up
+ * ----------------------------------------
+ */
+
+@-webkit-keyframes rotate-scale-up {
+    0% {
+        -webkit-transform: scale(1) rotateZ(0);
+        transform: scale(1) rotateZ(0);
+    }
+    25% {
+        -webkit-transform: scale(1.2) rotateZ(90);
+        transform: scale(1.2) rotateZ(90);
+    }
+    50% {
+        -webkit-transform: scale(1) rotateZ(180deg);
+        transform: scale(1) rotateZ(180deg);
+    }
+    75% {
+        -webkit-transform: scale(1.05) rotateZ(270deg);
+        transform: scale(1.05) rotateZ(270deg);
+    }
+    100% {
+        -webkit-transform: scale(1) rotateZ(360deg);
+        transform: scale(1) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-scale-up {
+    0% {
+        -webkit-transform: scale(1) rotateZ(0);
+        transform: scale(1) rotateZ(0);
+    }
+    25% {
+        -webkit-transform: scale(1.05) rotateZ(90);
+        transform: scale(1.05) rotateZ(90);
+    }
+    50% {
+        -webkit-transform: scale(1) rotateZ(180deg);
+        transform: scale(1) rotateZ(180deg);
+    }
+    75% {
+        -webkit-transform: scale(1.05) rotateZ(270deg);
+        transform: scale(1.05) rotateZ(270deg);
+    }
+    100% {
+        -webkit-transform: scale(1) rotateZ(360deg);
+        transform: scale(1) rotateZ(360deg);
+    }
+}

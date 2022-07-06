@@ -1,0 +1,108 @@
+<ion-item *ngIf="item && navigation" lines="none" [routerLink]="[navigation,item.id]" (click)="click()" detail>
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</ion-item>
+<ion-item *ngIf="item && !navigation" lines="none" (click)="click()">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</ion-item>
+<ng-template #content>
+    <ion-thumbnail slot="start">
+        <app-img-loader [src]="(item.imgs && item.imgs[0])?(item.imgs[0].url|resourcePicture):null">
+        </app-img-loader>
+    </ion-thumbnail>
+    <ion-label>
+        <h3>{{item.name}}</h3>
+
+        <ng-container *ngIf="item.links|filterLink:['circulaire','filiere'] as  circFils">
+            <p class="filiere" *ngIf="circFils.length>0">
+                <ng-container *ngIf="circFils.length>2">
+                    <div class="content">
+                        <div class="flex">
+                            <fa-icon [icon]="['fas', 'circle-exclamation']" class="primary-color" *ngIf="circFils[0].spe && showSpe"></fa-icon>
+                            <div>
+                                Sur {{circFils[0].circulaire.name}}, {{circFils[0].filiere.name}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="flex">
+                            <div>
+                                Et {{circFils.length-1}} autres circulaire et filières
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="circFils.length<=2">
+                    <div class="content" *ngFor="let circFil of circFils">
+                        <div class="flex">
+                            <fa-icon class="primary-color" *ngIf="circFil.spe && showSpe" [icon]="['fas', 'circle-exclamation']"></fa-icon>
+                            <div>sur {{circFil.circulaire.name}}, {{circFil.filiere.name}}</div>
+                        </div>
+                    </div>
+                </ng-container>
+            </p>
+        </ng-container>
+        <ng-container *ngIf="item.links|filterLink:['signification'] as  significations">
+            <p *ngIf="significations.length>0" class="signification">
+                <ng-container *ngIf="significations.length>2">
+                    <div class="content">
+                        <div class="flex">
+                            <fa-icon *ngIf="significations[0].spe && showSpe" class="primary-color" [icon]="['fas', 'circle-exclamation']"></fa-icon>
+                            <div>
+                                <ng-container *ngIf="significations[0].position">
+                                    {{significations[0].position.name}}
+                                </ng-container>
+                                <ng-container *ngIf="significations[0].symbolsens">
+                                    , {{significations[0].symbolsens.name}},
+                                </ng-container>
+                                {{significations[0].signification.name}}
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <span class="content">
+                        <div class="flex">
+                            <div>
+                                Et {{significations.length-1}} autres significations
+                            </div>
+                        </div>
+                    </span>
+                </ng-container>
+                <ng-container *ngIf="significations.length<=2">
+                    <div class="content" *ngFor="let signification of significations">
+                        <div class="flex">
+                            <fa-icon class="primary-color" *ngIf="signification.spe && showSpe" [icon]="['fas', 'circle-exclamation']"></fa-icon>
+                            <div>
+                                <ng-container *ngIf="signification.position">
+                                    <ng-container>
+                                        {{signification.position.name}}
+                                    </ng-container>
+                                    <ng-container *ngIf="signification.symbolsens">
+                                        , {{signification.symbolsens.name}},
+                                    </ng-container>
+                                </ng-container>
+                                {{signification.signification.name}}
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-container>
+            </p>
+        </ng-container>
+
+
+    </ion-label>
+</ng-template>
+<ion-item *ngIf="!item">
+    <ion-thumbnail slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+    </ion-thumbnail>
+    <ion-label>
+        <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </h3>
+        <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        </p>
+    </ion-label>
+</ion-item>

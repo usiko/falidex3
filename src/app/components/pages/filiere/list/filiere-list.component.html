@@ -1,0 +1,26 @@
+<ion-header>
+    <app-header title="filieres" (onsearch)="search($event)" [filterable]="true" [searchable]="true" [length]="(dataLength )?dataLength:undefined"></app-header>
+</ion-header>
+<ion-content [scrollX]="false" [scrollY]="false">
+    <ng-container *ngIf="(items$|async) as items">
+        <app-list-container [items$]="items$" [itemListSize]="72" [initLoading]="initLoading" [navigationPath]="'/filieres/detail/'" [showScrollTopBtn]="showScrollTopBtn" [activeListMode]="{list:listTpl}" [loading]="loadingScroll">
+            <!--<ng-container slot="list">
+                <ng-container *ngIf="!initLoading">
+                    <app-filiere-block-item-list [navigation]="'/filieres/detail/'" [item]="item" *ngFor="let item of items; trackBy:trackByFn"></app-filiere-block-item-list>
+                </ng-container>
+                <ng-container *ngIf="initLoading">
+                    <app-filiere-block-item-list [navigation]="'/filieres/detail/'" *ngFor="let item of emptyItems" [item]="item"></app-filiere-block-item-list>
+                </ng-container>
+
+            </ng-container>-->
+        </app-list-container>
+        <ion-infinite-scroll [disabled]="items.length>=dataLength || dataLength==0" threshold="120px" (ionInfinite)="getMore($event)">
+            <ion-infinite-scroll-content color="primary" loadingSpinner="crescent">
+            </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+    </ng-container>
+</ion-content>
+
+<ng-template #listTpl let-item="item" let-navigation="navigation">
+    <app-filiere-block-item-list [navigation]="navigation" [item]="item"></app-filiere-block-item-list>
+</ng-template>

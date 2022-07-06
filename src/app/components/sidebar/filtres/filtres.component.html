@@ -1,0 +1,22 @@
+<ion-list color="light">
+    <ng-container *ngFor="let filters of (filtersList$|async)">
+        <ion-list-header *ngIf="filters.label && filters.filters.length>0" color="dark">
+            {{filters.label}}
+        </ion-list-header>
+        <ng-container>
+            <ion-item *ngFor="let filter of filters.filters">
+                <ion-toggle (ionChange)="filterChange()" slot="start" color="secondary" [(ngModel)]="filter.enabled"></ion-toggle>
+
+                <ion-label (click)="filter.enabled = !filter.enabled">
+                    <fa-icon *ngIf="filter.icon" [class.secondary-color]="filter.enabled" [class.dark-color]="!filter.enabled" [icon]="['fas', filter.icon]" slot="start"></fa-icon>
+                    <div class="title">{{filter.label}}</div>
+                </ion-label>
+
+                <!--<ion-checkbox slot="start" color="secondary" [value]="filter.value"></ion-checkbox>-->
+            </ion-item>
+        </ng-container>
+
+
+    </ng-container>
+
+</ion-list>

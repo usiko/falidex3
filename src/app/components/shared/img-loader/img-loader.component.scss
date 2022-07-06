@@ -1,0 +1,32 @@
+.img-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ion-color-dark);
+    .loading {
+        background: var(--ion-color-dark);
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        ion-spinner {
+            height: 10%;
+            width: 10%;
+        }
+    }
+    ion-img {
+        background: var(--ion-color-light);
+        &.img-hidden {
+            opacity: 0;
+        }
+        height: 100%;
+        width: 100%;
+    }
+}

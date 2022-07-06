@@ -1,0 +1,81 @@
+<ion-header>
+    <app-header title="specifités" [length]="(items$|async).length+(filieres$|async).length+(symbols$|async).length"></app-header>
+</ion-header>
+
+<ion-content [scrollX]="false" [scrollY]="false">
+
+    <ion-fab *ngIf="showScrollTopBtn" (click)="scrollToTop()" vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="dark">
+            <fa-icon class="light-color" [icon]="['fas', 'angle-up']"></fa-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <ion-slides #slides (ionSlideDidChange)="slidesChange($event)" [pager]="false">
+        <ion-slide>
+            <div class="code content">
+                <div #header1>
+                    <ion-list-header color="tertiary">
+                        <ion-label>Toutes les spécifitées autres qu'insigne ou filières du code</ion-label>
+                        <div class="border-item"></div>
+                    </ion-list-header>
+                </div>
+
+                <ion-list [ngStyle]="{'height':'calc(100% - '+header1.offsetHeight+'px)'}">
+                    <app-spe-block-item-list *ngFor="let item of items$|async" [item]="item" [navigation]="'/spes/detail'"></app-spe-block-item-list>
+                </ion-list>
+            </div>
+        </ion-slide>
+        <ion-slide>
+            <div class="filiere content">
+                <div #header2>
+                    <ion-list-header color="tertiary">
+                        <ion-label>Toutes les spécifitées de filières</ion-label>
+                        <div class="border-item"></div>
+                    </ion-list-header>
+                </div>
+
+                <ion-list [ngStyle]="{'height':'calc(100% - '+header2.offsetHeight+'px)'}">
+
+                    <app-filiere-block-item-list [navigation]="'/filieres/detail/'" [item]="item" [showSpe]="false" *ngFor="let item of filieres$|async">
+                    </app-filiere-block-item-list>
+                </ion-list>
+            </div>
+        </ion-slide>
+        <ion-slide>
+            <div class="signification content">
+                <div #header3>
+                    <ion-list-header color="tertiary">
+                        <ion-label>Toutes les spécifitées d'insigne et signification</ion-label>
+                        <div class="border-item"></div>
+                    </ion-list-header>
+                </div>
+                <ion-list [ngStyle]="{'height':'calc(100% - '+header3.offsetHeight+'px)'}">
+
+                    <app-block-symbol-item-list [navigation]="'/symbols/detail/'" [item]="item" [showSpe]="false" *ngFor="let item of symbols$|async">
+                    </app-block-symbol-item-list>
+                </ion-list>
+            </div>
+        </ion-slide>
+    </ion-slides>
+
+</ion-content>
+<ion-footer class="ion-no-border">
+    <ion-tab-bar [selectedTab]="activeSlide">
+        <ion-tab-button (click)="switch(0)" tab="0">
+            <fa-icon [icon]="['fas', 'book-open']" class="secondary-color"></fa-icon>
+            <ion-label>Spé code</ion-label>
+            <ion-badge>{{(items$|async).length}}</ion-badge>
+        </ion-tab-button>
+        <ion-tab-button (click)="switch(1)" tab="1">
+            <fa-icon [icon]="['fas', 'graduation-cap']" class="secondary-color"></fa-icon>
+            <ion-label>Spé filières</ion-label>
+            <ion-badge>{{(filieres$|async).length}}</ion-badge>
+        </ion-tab-button>
+
+        <ion-tab-button (click)="switch(2)" tab="2">
+            <fa-icon [icon]="['fas', 'award']" class="secondary-color"></fa-icon>
+            <ion-label>Spé symboles</ion-label>
+            <ion-badge>{{(symbols$|async).length}}</ion-badge>
+        </ion-tab-button>
+
+    </ion-tab-bar>
+</ion-footer>

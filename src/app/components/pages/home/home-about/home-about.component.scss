@@ -1,0 +1,21 @@
+.welcome-card ion-img {
+    max-height: 35vh;
+    overflow: hidden;
+}
+
+ion-card.warning-card {
+    background: var(--ion-color-secondary) !important;
+    ion-card-content {
+        font-size: 0.9em;
+    }
+}
+
+.versions {
+    ion-item {
+        font-size: 0.8em;
+    }
+}
+
+.text-center {
+    text-align: center;
+}

@@ -1,0 +1,111 @@
+<ng-container *ngTemplateOutlet="headerTpl">
+</ng-container>
+<ion-fab *ngIf="showScrollTopBtn" (click)="scrollToTop()" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="dark">
+        <fa-icon class="light-color" [icon]="['fas', 'angle-up']"></fa-icon>
+    </ion-fab-button>
+</ion-fab>
+<ng-container *ngIf="activeListMode">
+    <!-- list-->
+    <ng-container *ngIf="!activeListMode.gallery && activeListMode.list">
+        <ng-container *ngIf="!initLoading">
+            <cdk-virtual-scroll-viewport orientation="vertical" #cdkList [itemSize]="itemListSize" [minBufferPx]="1200" [maxBufferPx]="1200">
+                <ion-item-group class="list list-item" color="light">
+                    <ng-container *cdkVirtualFor="let item of (items$|async); trackBy:trackByFn">
+                        <ng-container *ngTemplateOutlet="activeListMode.list;context:{item:item,navigation:navigationPath}"></ng-container>
+                    </ng-container>
+                </ion-item-group>
+            </cdk-virtual-scroll-viewport>
+        </ng-container>
+        <ng-container *ngIf="initLoading">
+            <ion-item-group class="list list-item" color="light">
+                <ng-container *ngFor="let item of emptyItems">
+                    <ng-container *ngTemplateOutlet="activeListMode.list;context:{item:item}"></ng-container>
+                </ng-container>
+            </ion-item-group>
+        </ng-container>
+    </ng-container>
+
+    <!-- gallery-->
+    <ng-container *ngIf="activeListMode.gallery && !activeListMode.list">
+        <ion-item-group class="gallery list-item" color="light">
+            <cdk-virtual-scroll-viewport orientation="vertical" #cdkGallery [itemSize]="itemGallerySize/3" [minBufferPx]="1200" [maxBufferPx]="1200">
+                <ng-container *cdkVirtualFor="let items of (items$|async|arrayGroupePipe:3); trackBy:trackByFn">
+                    <div class="gallery-slot">
+                        <ng-container *ngIf="items[0]">
+                            <ng-container *ngTemplateOutlet="activeListMode.gallery;context:{item:items[0],navigation:navigationPath}"></ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="items[1]">
+                            <ng-container *ngTemplateOutlet="activeListMode.gallery;context:{item:items[1],navigation:navigationPath}"></ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="items[2]">
+                            <ng-container *ngTemplateOutlet="activeListMode.gallery;context:{item:items[2],navigation:navigationPath}"></ng-container>
+                        </ng-container>
+                    </div>
+                </ng-container>
+            </cdk-virtual-scroll-viewport>
+        </ion-item-group>
+
+    </ng-container>
+
+    <!-- both, sliding-->
+    <ng-container *ngIf="activeListMode.gallery && activeListMode.list">
+        <ion-slides [pager]="false">
+            <ion-slide>
+                <ng-container *ngIf="!initLoading">
+                    <cdk-virtual-scroll-viewport orientation="vertical" #cdkSlideList [itemSize]="itemListSize" [minBufferPx]="1200" [maxBufferPx]="1200">
+                        <ion-item-group class="list list-item" color="light">
+                            <ng-container *cdkVirtualFor="let item of (items$|async); trackBy:trackByFn">
+                                <ng-container *ngTemplateOutlet="activeListMode.list;context:{item:item,navigation:navigationPath}"></ng-container>
+                            </ng-container>
+                        </ion-item-group>
+
+                    </cdk-virtual-scroll-viewport>
+                </ng-container>
+                <ng-container *ngIf="initLoading">
+                    <ng-container *ngFor="let item of emptyItems">
+                        <ng-container *ngTemplateOutlet="activeListMode.list;context:{item:item}"></ng-container>
+                    </ng-container>
+                </ng-container>
+            </ion-slide>
+            <ion-slide>
+
+                <cdk-virtual-scroll-viewport orientation="vertical" #cdkSlideGallery [itemSize]="itemGallerySize" [minBufferPx]="1200" [maxBufferPx]="1200">
+                    <ion-item-group class="gallery list-item" color="light">
+                        <ng-container *cdkVirtualFor="let items of (items$|async|arrayGroupePipe:3); trackBy:trackByFn">
+                            <div class="gallery-slot">
+                                <ng-container *ngIf="items[0]">
+                                    <ng-container *ngTemplateOutlet="activeListMode.gallery;context:{item:items[0],navigation:navigationPath}"></ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="items[1]">
+                                    <ng-container *ngTemplateOutlet="activeListMode.gallery;context:{item:items[1],navigation:navigationPath}"></ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="items[2]">
+                                    <ng-container *ngTemplateOutlet="activeListMode.gallery;context:{item:items[2],navigation:navigationPath}"></ng-container>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                    </ion-item-group>
+                </cdk-virtual-scroll-viewport>
+
+
+            </ion-slide>
+        </ion-slides>
+    </ng-container>
+</ng-container>
+
+<ng-template #headerTpl>
+    <ion-item-divider sticky class="list-header" lines="inset" color="light" *ngIf="activeListMode && activeListMode.list && activeListMode.gallery">
+        <div class="header-container">
+            <ion-label>Affichage</ion-label>
+            <ion-buttons>
+                <ion-button ripp (click)="switchListMode('list')">
+                    <fa-icon [icon]="['fas', 'list']" [ngClass]="listMode == 'list'?'secondary-color':'dark-color'" slot="icon-only"></fa-icon>
+                </ion-button>
+                <ion-button [color]="listMode == 'gallery'?'secondary':'dark'" (click)="switchListMode('gallery')">
+                    <fa-icon [icon]="['fas', 'image']" [ngClass]="listMode == 'gallery'?'secondary-color':'dark-color'" slot="icon-only"></fa-icon>
+                </ion-button>
+            </ion-buttons>
+        </div>
+    </ion-item-divider>
+</ng-template>

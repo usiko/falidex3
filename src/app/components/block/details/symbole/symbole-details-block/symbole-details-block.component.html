@@ -1,0 +1,53 @@
+<div *ngIf="symbol$|async as symbol">
+    <ion-card class="img-container">
+        <div class="img-symbole">
+            <app-img-loader [src]="(symbol.imgs && symbol.imgs[0])?(symbol.imgs[0].url|resourcePicture):null">
+            </app-img-loader>
+        </div>
+    </ion-card>
+    <ion-card>
+        <ion-tab-bar [selectedTab]="selectedTab">
+            <ion-tab-button *ngIf="((symbol.links|filterLink:['circulaire','filiere'])).length>0" (click)="slideTo(0,$event)" tab="filieres">
+                <fa-icon [icon]="['fas', 'graduation-cap']" class="light-color"></fa-icon>
+                <ion-label>Filières</ion-label>
+                <ion-badge>{{((symbol.links|filterLink:['circulaire','filiere'])).length}}</ion-badge>
+            </ion-tab-button>
+
+            <ion-tab-button *ngIf="((symbol.links|filterLink:['signification'])).length>0" (click)="slideTo(1,$event)" tab="significations">
+                <fa-icon [icon]="['fas', 'book-open']" class="light-color"></fa-icon>
+                <ion-label>Significations</ion-label>
+                <ion-badge>{{((symbol.links|filterLink:['signification'])).length}}</ion-badge>
+            </ion-tab-button>
+        </ion-tab-bar>
+    </ion-card>
+    <div class="content">
+        <ion-slides #slides (ionSlideDidChange)="slidesChange($event)" [options]="slideOptions">
+            <ng-container>
+                <ion-slide *ngIf="symbol &&  filieres && filieres.length>0">
+
+                    <div class="filieres content">
+                        <ion-card *ngFor="let filiere of filieres">
+
+                            <app-filiere-nosymb-block-item-list [item]="filiere" [cssClass]="'no-symbol'"></app-filiere-nosymb-block-item-list>
+
+                        </ion-card>
+                    </div>
+                </ion-slide>
+                <ion-slide *ngIf="symbol && significations && significations.length>0">
+
+                    <div class="signification content">
+                        <ion-card *ngFor="let signification of significations">
+                            <app-signification-item-block [signification]="signification">
+                            </app-signification-item-block>
+                        </ion-card>
+
+                    </div>
+                </ion-slide>
+            </ng-container>
+
+        </ion-slides>
+    </div>
+</div>
+<div *ngIf="!symbol$">
+    <h1>OOPS</h1>
+</div>

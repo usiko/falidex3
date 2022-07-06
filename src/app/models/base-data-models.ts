@@ -1,46 +1,56 @@
-export interface IBaseCirculaire { //data linked
+export interface IBaseCollectionData {
     id: string;
-    name: string;
+    name?: string;
+}
+
+export interface IBaseCirculaire extends IBaseCollectionData {
+    //data linked
+
     matiere: string;
 }
 
-export interface IBaseCirculaireColor { //linked to color
+export interface IBaseCirculaireColor extends IBaseCollectionData {
+    //linked to color
     circulaireId: string;
-    colorIds: string[]
+    colorIds: string[];
 }
-export interface IBaseColor {  //linked to circulaire color
-    id: string
-    name: string;
-    colorData: string //couleur hexa rgb ou autre
-}
-
-export interface IBaseFiliere { //data linked
-    id: string,
-    name: string
+export interface IBaseColor extends IBaseCollectionData {
+    //linked to circulaire color
+    colorData: string; //couleur hexa rgb ou autre
 }
 
-export interface IBaseSymbol { //data linked
-    id: string;
-    name: string;
-    imgs: {
-        id: string,
-        url: string
-    }[]
-
-}
-export interface IBaseSignification {  //data linked
-    id: string,
-    content: string
-
+export interface IBaseFiliere extends IBaseCollectionData {
+    //data linked
 }
 
-export interface IBasePlacement { //data linked
-    name: string;
-    id: string;
+export interface IBaseSymbol extends IBaseCollectionData {
+    //data linked
 
+    imgs?: {
+        id: string;
+        url: string;
+    }[];
 }
-export interface IBasePosition { //data linked
-    id: string,
-    name: string
+export interface IBaseSignification extends IBaseCollectionData {
+    //data linked
+    content: string;
 }
 
+export interface IBasePlacement extends IBaseCollectionData {
+    //data linked
+}
+export interface IBasePosition extends IBaseCollectionData {
+    //data linked
+}
+export interface IBaseSymbolSens extends IBaseCollectionData {
+    //data linked
+}
+export interface IBaseSymbolAcessory extends IBaseCollectionData {
+    //data linked
+}
+
+export interface IBaseCodeSpe extends IBaseCollectionData {
+    text: string;
+    article?: string;
+    note?: string;
+}

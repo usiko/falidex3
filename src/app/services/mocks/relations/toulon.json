@@ -1,0 +1,1014 @@
+{
+    "name": "toulon",
+    "id": "tln",
+    "relations": [{
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-0",
+            "symboleId": "symbole-0",
+            "circulaireId": "circulaire-0"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-1",
+            "symboleId": "symbole-2",
+            "circulaireId": "circulaire-2"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-1",
+            "symboleId": "symbole-8",
+            "circulaireId": "circulaire-2"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-2",
+            "symboleId": "symbole-1",
+            "circulaireId": "circulaire-1"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-3",
+            "symboleId": "symbole-4",
+            "circulaireId": "circulaire-1"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-4",
+            "symboleId": "symbole-5",
+            "circulaireId": "circulaire-3"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-5",
+            "symboleId": "symbole-6",
+            "circulaireId": "circulaire-5"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-6",
+            "symboleId": "symbole-7",
+            "circulaireId": "circulaire-6"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-7",
+            "symboleId": "symbole-8",
+            "circulaireId": "circulaire-2"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-8",
+            "symboleId": "symbole-3",
+            "circulaireId": "circulaire-2"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-9",
+            "symboleId": "symbole-8",
+            "circulaireId": "circulaire-2"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-10",
+            "symboleId": "symbole-9",
+            "circulaireId": "circulaire-7"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-11",
+            "symboleId": "symbole-10",
+            "circulaireId": "circulaire-4"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-12",
+            "symboleId": "symbole-11",
+            "circulaireId": "circulaire-8"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-13",
+            "symboleId": "symbole-3",
+            "circulaireId": "circulaire-9"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-15",
+            "symboleId": "symbole-39",
+            "circulaireId": "circulaire-9"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-16",
+            "symboleId": "symbole-12",
+            "circulaireId": "circulaire-9",
+            "spe": true
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-17",
+            "symboleId": "symbole-3",
+            "circulaireId": "circulaire-10",
+            "spe": true
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-18",
+            "symboleId": "symbole-14",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-19",
+            "symboleId": "symbole-16",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-20",
+            "symboleId": "symbole-17",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-21",
+            "symboleId": "symbole-40",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-23",
+            "symboleId": "symbole-127",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-25",
+            "symboleId": "symbole-18",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-26",
+            "symboleId": "symbole-23",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-27",
+            "symboleId": "symbole-14",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-28",
+            "symboleId": "symbole-24",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-29",
+            "symboleId": "symbole-26",
+            "circulaireId": "circulaire-14"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-31",
+            "symboleId": "symbole-27",
+            "circulaireId": "circulaire-14"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-32",
+            "symboleId": "symbole-28",
+            "circulaireId": "circulaire-14"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-33",
+            "symboleId": "symbole-29",
+            "circulaireId": "circulaire-14"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-34",
+            "symboleId": "symbole-37",
+            "circulaireId": "circulaire-13"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-36",
+            "symboleId": "symbole-30",
+            "circulaireId": "circulaire-20"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-37",
+            "symboleId": "symbole-31",
+            "circulaireId": "circulaire-22"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-38",
+            "symboleId": "symbole-32",
+            "circulaireId": "circulaire-16"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-39",
+            "symboleId": "symbole-38",
+            "circulaireId": "circulaire-18"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-40",
+            "symboleId": "symbole-33",
+            "circulaireId": "circulaire-21"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-42",
+            "symboleId": "symbole-75",
+            "circulaireId": "circulaire-23"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-54",
+            "symboleId": "symbole-42",
+            "circulaireId": "circulaire-15"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-41",
+            "symboleId": "symbole-43",
+            "circulaireId": "circulaire-24"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-43",
+            "symboleId": "symbole-11",
+            "circulaireId": "circulaire-29"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-44",
+            "symboleId": "symbole-92",
+            "circulaireId": "circulaire-26"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-45",
+            "symboleId": "symbole-3",
+            "circulaireId": "circulaire-27"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-24",
+            "symboleId": "symbole-128",
+            "circulaireId": "circulaire-11"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-50",
+            "symboleId": "symbole-34",
+            "circulaireId": "circulaire-12"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-51",
+            "symboleId": "symbole-41",
+            "circulaireId": "circulaire-28",
+            "spe": true
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-52",
+            "symboleId": "symbole-35",
+            "circulaireId": "circulaire-30"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-53",
+            "symboleId": "symbole-36",
+            "circulaireId": "circulaire-25"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-30",
+            "symboleId": "symbole-24",
+            "circulaireId": "circulaire-14"
+        },
+        {
+            "placementId": "placement-0",
+            "symboleSensId": "symbole-sens-0",
+            "symboleId": "symbole-55",
+            "positionId": "position-4",
+            "significationId": "signification-0"
+        },
+        {
+            "placementId": "placement-0",
+            "symboleSensId": "symbole-sens-1",
+            "positionId": "position-4",
+            "symboleId": "symbole-55",
+            "significationId": "signification-1"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-56",
+            "symboleSensId": "symbole-sens-1",
+            "significationId": "signification-4",
+            "spe": true
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-56",
+            "significationId": "signification-3",
+            "symboleSensId": "symbole-sens-0",
+            "note": "ancien natio du 118 au 130",
+            "spe": true
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-57",
+            "significationId": "signification-5",
+            "note": "ancien natio du 118 au 130",
+            "spe": true
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-58",
+            "significationId": "signification-6",
+            "note": "ancien natio du 118 au 130",
+            "spe": true
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-59",
+            "symboleSensId": "symbole-sens-0",
+            "significationId": "signification-9"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-59",
+            "significationId": "signification-7",
+            "symboleSensId": "symbole-sens-1"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-59",
+            "significationId": "signification-8",
+            "symboleSensId": "symbole-sens-2"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-61",
+            "significationId": "signification-11"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-60",
+            "significationId": "signification-12"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-62",
+            "significationId": "signification-15",
+            "symboleAccessoryId": "symbole-accessory-7"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-62",
+            "significationId": "signification-16",
+            "symboleAccessoryId": "symbole-accessory-8"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-63",
+            "significationId": "signification-13",
+            "symboleAccessoryId": "symbole-accessory-7"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleAccessoryId": "symbole-accessory-8",
+            "symboleId": "symbole-63",
+            "significationId": "signification-14"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-64",
+            "significationId": "signification-17"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-65",
+            "significationId": "signification-18",
+            "spe": true
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-66",
+            "significationId": "signification-19"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-67",
+            "significationId": "signification-20"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleSensId": "symbole-sens-0",
+            "symboleId": "symbole-68",
+            "significationId": "signification-21"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-68",
+            "symboleSensId": "symbole-sens-1",
+            "significationId": "signification-22",
+            "spe": true
+        },
+        {
+            "placementId": "placement-0",
+            "symboleAccessoryId": "symbole-accessory-1",
+            "symboleId": "symbole-76",
+            "significationId": "signification-23",
+            "spe": true
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-4",
+            "symboleId": "symbole-16",
+            "significationId": "signification-27"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-69",
+            "significationId": "signification-25",
+            "symboleSensId": "symbole-sens-0"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-69",
+            "significationId": "signification-26",
+            "symboleSensId": "symbole-sens-1"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-70",
+            "significationId": "signification-28"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-71",
+            "significationId": "signification-29"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-4",
+            "symboleId": "symbole-31",
+            "significationId": "signification-31"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-72",
+            "significationId": "signification-32"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-72",
+            "significationId": "signification-53",
+            "symboleAccessoryId": "symbole-accessory-7"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-73",
+            "significationId": "signification-33"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-75",
+            "significationId": "signification-34"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-24",
+            "significationId": "signification-44"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-15",
+            "significationId": "signification-35"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-77",
+            "significationId": "signification-36"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-34",
+            "significationId": "signification-37"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-78",
+            "significationId": "signification-38"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-125",
+            "significationId": "signification-39"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-74",
+            "significationId": "signification-40"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-79",
+            "significationId": "signification-41",
+            "spe": true
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-80",
+            "significationId": "signification-42"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-80",
+            "significationId": "signification-48"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-82",
+            "significationId": "signification-43",
+            "note": "A ne pas confondre avec l'ordre des chevalier du Gambrinus"
+        },
+        {
+            "placementId": "placement-7",
+            "positionId": "position-4",
+            "symboleId": "symbole-8",
+            "significationId": "signification-47"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-32",
+            "significationId": "signification-49"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-83",
+            "significationId": "signification-50"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-84",
+            "significationId": "signification-51"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-85",
+            "significationId": "signification-52"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-86",
+            "significationId": "signification-30"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-87",
+            "significationId": "signification-54"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-3",
+            "symboleId": "symbole-88",
+            "significationId": "signification-56"
+        },
+        {
+            "placementId": "placement-3",
+            "positionId": "position-6",
+            "symboleId": "symbole-88",
+            "significationId": "signification-57"
+        },
+        {
+            "placementId": "placement-5",
+            "positionId": "position-4",
+            "symboleId": "symbole-89",
+            "significationId": "signification-55"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-90",
+            "significationId": "signification-58"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-91",
+            "significationId": "signification-59"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-92",
+            "significationId": "signification-60"
+        },
+        {
+            "placementId": "placement-2",
+            "symboleSensId": "symbole-sens-0",
+            "symboleId": "symbole-92",
+            "significationId": "signification-60"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-92",
+            "significationId": "signification-61"
+        },
+        {
+            "placementId": "placement-2",
+            "symboleSensId": "symbole-sens-1",
+            "symboleId": "symbole-92",
+            "significationId": "signification-61"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-93",
+            "significationId": "signification-62"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-94",
+            "significationId": "signification-63"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-95",
+            "significationId": "signification-64",
+            "spe": true
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-96",
+            "significationId": "signification-65"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-23",
+            "significationId": "signification-66"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-97",
+            "significationId": "signification-67"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-98",
+            "significationId": "signification-68"
+        },
+        {
+            "placementId": "placement-4",
+            "positionId": "position-4",
+            "symboleId": "symbole-99",
+            "significationId": "signification-69"
+        },
+        {
+            "placementId": "placement-4",
+            "positionId": "position-4",
+            "symboleId": "symbole-100",
+            "significationId": "signification-70"
+        },
+        {
+            "placementId": "placement-4",
+            "positionId": "position-4",
+            "symboleId": "symbole-101",
+            "significationId": "signification-71"
+        },
+        {
+            "placementId": "placement-4",
+            "positionId": "position-4",
+            "symboleId": "symbole-102",
+            "significationId": "signification-72"
+        },
+        {
+            "placementId": "placement-4",
+            "positionId": "position-4",
+            "symboleId": "symbole-104",
+            "significationId": "signification-73",
+            "spe": true
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-105",
+            "significationId": "signification-74"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-106",
+            "significationId": "signification-75"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-107",
+            "significationId": "signification-76"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-108",
+            "significationId": "signification-77"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-109",
+            "significationId": "signification-78"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-109",
+            "significationId": "signification-78"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-110",
+            "significationId": "signification-80"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-111",
+            "significationId": "signification-79",
+            "spe": true
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-4",
+            "symboleId": "symbole-112",
+            "significationId": "signification-81"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-4",
+            "symboleId": "symbole-113",
+            "significationId": "signification-82"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-4",
+            "symboleId": "symbole-114",
+            "significationId": "signification-83"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-4",
+            "symboleId": "symbole-115",
+            "significationId": "signification-84"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-4",
+            "symboleId": "symbole-116",
+            "significationId": "signification-85"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-4",
+            "symboleId": "symbole-117",
+            "significationId": "signification-86"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-4",
+            "symboleId": "symbole-118",
+            "significationId": "signification-87"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-4",
+            "symboleId": "symbole-119",
+            "significationId": "signification-88"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-4",
+            "symboleId": "symbole-120",
+            "significationId": "signification-89"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-4",
+            "symboleId": "symbole-122",
+            "significationId": "signification-91"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-4",
+            "symboleId": "symbole-123",
+            "significationId": "signification-92"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-4",
+            "symboleId": "symbole-124",
+            "significationId": "signification-93"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-126",
+            "significationId": "signification-106"
+        }
+    ],
+    "specificites": [{
+            "name": "le minot",
+            "text": "Le Minot a le titre de Minot et non pas d’impétrant ",
+            "id": "spes-0",
+            "article": "Article XI"
+        },
+        {
+            "name": "le pompon",
+            "text": "Les baptisés ont un pompon rouge au centre de leur faluche",
+            "id": "spes-1",
+            "article": "article XI",
+            "note": "Les guerres d’Italie, les progrès de la construction navale, l’excellence de notre rade favorable à l’évolution des vaisseaux, sa protection naturelle, contribuent à faire deToulon un port de guerre à partir du XVIe siècle."
+        },
+        {
+            "name": "les adoption et confirmations",
+            "text": "Les Adoptions ou Confirmations sont nommées « Pomponisation » à Toulon",
+            "id": "spes-2",
+            "article": "article XI",
+            "note": "Edit an 131 de la Faluche : Les adoptés reçoivent un pompon Bleu, les confirmés (faluchards baptisés d’une autre ville mais résidant dans l’ère Toulonnaise) reçoivent un pompon Rouge.Tous les Pomponisés arborent le Pompon décalé vers l’arrière.Seuls les baptisés ont le Pompon centré."
+        },
+        {
+            "name": "thème des baptèmes",
+            "text": "Les baptêmes Toulonnais ont tous pour thème les pirates : en l’honneur du corsaire Barberousse",
+            "id": "spes-3",
+            "article": "article XI",
+            "note": "En 1543, notre ville connaît un épisode plutôt inattendu avec l’hivernage de la flotte de Barberousse, l’allié turc de François 1er "
+        },
+        {
+            "name": "le dagobit",
+            "text": "Le dagobit n’est pas reconnu sur Toulon, les toulonnais pourront cependant le pratiquer en extérieur ",
+            "id": "spes-4",
+            "article": "article XI"
+        },
+        {
+            "name": "Pas de croix",
+            "text": "Les faluchards baptisés Toulonnais ne reconnaissent pas l’autorité des croix. Seul le statut d’ancien du porteur de la croix peut être reconnu.",
+            "id": "spes-5",
+            "article": "artcile III bis, article XI",
+            "note": "Il n’y a pas de croix à Toulon, les toulonnais souhaitent revenir aux toutes premières origines de la faluche, néanmoins pour respecter le code national qui dit que l’on peut baptiser sous l’œil avisé de trois anciens, c’est donc l’assemblée générale des faluchards toulonnais qui baptise."
+        },
+        {
+            "name": "L'assemblée",
+            "text": "L’asemblée des faluchards toulonais ne reconnaît pas le statut de croix dans sa ville c’est pourquoi c’est une assemblée de faluchards toulonnais qui procède aux baptêmes et autres cérémonies.",
+            "id": "spes-6",
+            "article": "article XIII",
+            "note": "Les faluchards Toulonnais s’engagent à être respectueux des traditions des autres villes et notamment du statut du grand maître en leur sein L’assemblée des faluchards Toulonnais tient lieu de grand maître pour tout acte officiel (remise d’insigne par exemple), les décisions sont prises par votes à verres levés(mains levées à défaut de verres) après convocation de tous les membres.Lors du baptême l’assemblée décide d’un officiant pour organiser les différentes épreuves du baptême."
+        },
+        {
+            "name": "Le grand pilouteur",
+            "text": "Un Grand Pilouteur sera désigné par l’Assemblée Toulonnaise, pour ses capacités orales. Lors de son mandat, il sera en charge de lancer le traditionnel Pilou Pilou à chaque évènement. Il se reconnait par le port d’un ruban Rouge et Noir agrémenté d’un « P », pendant de sa faluche.",
+            "id": "spes-7",
+            "article": "article XI"
+        },
+        {
+            "name": "Faluche cousue",
+            "text": "Le Baptisé recevra lors de son baptême une faluche qu’il aura préalablement cousue, et ce afin qu’il prenne conscience de l’engagement et qu’il ait une meilleure adhésion avec sa coiffe. Cela évite également les faluches restées non cousues longtemps après les baptêmes.",
+            "id": "spes-8",
+            "article": "article XI"
+        },
+        {
+            "name": "Ruban de ville",
+            "text": "Un ruban bleu roi et jaune pour les couleurs de la ville ",
+            "id": "spes-9",
+            "article": "article XI"
+        },
+        {
+            "name": "Le representant national",
+            "text": "Un representant national par décision unanime du national du 131 et par décision de l’AG du 24 mai 2019",
+            "id": "spes-10",
+            "article": "article XIII",
+            "note": "Chaque année à l’AG de milieu d’année (décembre/janvier), un représentant national de Toulon sera élu (maximum 2 mandats), il aura pour rôle d’être le relai entre le forum des croix, les informations qui y sont transmis et la communauté toulonnaise. Il aura aussi pour devoir d’être la voix de Toulon et des décisions prises en AG. Il se doit d’être présent à l’anniversaire de la Faluche, et de siéger à la réunion des croix lors de l’anniversaire en tant que représentant de Toulon. Il doit présenter les doléances allant être débattues à l’anniversaire lors de l’AG de fin d’année scolaire, qui doit obligatoirement précéder l’anniversaire. Ces doléances seront débattues et le représentant votera lors de la réunion des croix en suivant les résultats de l’AG. Il n’a pas le droit de s’exprimer en son nom sur le Forum des croix, toute intervention de sa part doit avoir été préalablement approuvé par l’Assemblée Toulonnaise."
+        },
+        {
+            "name": "Ruban d'assosciation",
+            "text": "Les membres du bureau gardent le ruban frontal occipital et ajoutent un ruban en V du central à l’occipital en précisant le poste et l’année",
+            "id": "spes-11",
+            "article": "article X"
+        }
+    ],
+    "lastUpdate": "30/08/2021 20:58"
+}

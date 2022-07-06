@@ -1,0 +1,43 @@
+<ion-slides #slides (ionSlideDidChange)="slidesChange($event)" [options]="slideOptions">
+    <ng-container *ngIf="filiere$|async as filiere">
+        <ng-container *ngIf="filiere.links|filterLink:['circulaire', 'symbols'] as circSymboles">
+
+            <ion-slide *ngFor="let circSymbole of circSymboles">
+                <ion-card>
+
+                    <div class="img-container">
+                        <div class="img-symbole">
+                            <app-img-loader [src]="(circSymbole.symbols.imgs && circSymbole.symbols.imgs[0])?(circSymbole.symbols.imgs[0].url|resourcePicture):null">
+                            </app-img-loader>
+                        </div>
+                    </div>
+                    <div class="circulaire-content">
+
+                        <app-circulaire-representation *ngIf="circSymbole.circulaire && circSymbole.circulaire.colors" [cssClass]="'strong'" [circulaire]="circSymbole.circulaire"></app-circulaire-representation>
+
+                    </div>
+                    <div class="content-slide">
+                        <ion-button fill="clear" [disabled]="slideIndex==0" *ngIf="circSymboles.length>1" (click)="slideprevious()" expand="full" size="small">
+                            <fa-icon class='dark-color' [icon]="['fas', 'angle-left']" class="dark-color" slot="icon-only"></fa-icon>
+                        </ion-button>
+                        <div class="title">
+                            <ion-card-header>
+                                <ion-card-title>{{circSymbole.symbols.name}}</ion-card-title>
+                            </ion-card-header>
+                            <ion-card-content>
+                                <p>sur {{circSymbole.circulaire.name}}</p>
+                            </ion-card-content>
+                        </div>
+                        <ion-button fill="clear" [disabled]="slideIndex==circSymboles.length-1" *ngIf="circSymboles.length>1" (click)="slidenext()" expand="full" size="small">
+                            <fa-icon class='dark-color' [icon]="['fas', 'angle-right']" class="dark-color" slot="icon-only"></fa-icon>
+                        </ion-button>
+                    </div>
+
+                </ion-card>
+            </ion-slide>
+        </ng-container>
+
+
+    </ng-container>
+
+</ion-slides>
