@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
+import { BehaviorSubject } from 'rxjs';
 import { InstallAppService } from 'src/app/services/install/install-app.service';
 
 /**
@@ -25,15 +26,12 @@ export class NavigationComponent implements OnInit {
     /**
      * show pwa install button
      */
-    public installable: boolean = true;
+    public installable$ = new BehaviorSubject(false);
 
     constructor(private install: InstallAppService) {}
 
     ngOnInit() {
-        this.install.isInstallable().subscribe((data: boolean) => {
-            console.log('isInstallable', data);
-            this.installable = data;
-        });
+        this.installable$ = this.install.installable$;
     }
 
     installApp() {

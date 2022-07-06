@@ -1,9 +1,10 @@
 <ion-list color="light">
-    <ion-item *ngIf="installable" class="install" (click)="installApp()">
-        <fa-icon class="secondary-color" [icon]="['fas', 'mobile']" slot="start"></fa-icon>
+    <ion-item *ngIf="installable$|async" class="install" (click)="installApp()">
+        <fa-icon class="secondary-color" [icon]="['fas', 'mobile-screen']" slot="start"></fa-icon>
 
         Installe moi
     </ion-item>
+    <ion-item-divider *ngIf="installable$|async"></ion-item-divider>
     <ng-container *ngFor="let p of pages; trackBy:trackByFnMenu">
         <ng-container>
             <ion-menu-toggle auto-hide="false">

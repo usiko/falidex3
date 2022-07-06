@@ -1,47 +1,48 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class InstallAppService {
+    constructor() {}
 
-    constructor() { }
-
-    private installable$ = new BehaviorSubject(undefined);
+    public installable$ = new BehaviorSubject(false);
     private installEvent;
-    private installed = false;
-    setEvent(event) {
-        this.installEvent = event;
-        console.log('setEvent', event);
-        console.log('setEvent', (this.installEvent !== null && this.installEvent !== undefined))
-        if (this.installEvent !== null && this.installEvent !== undefined && !this.installed) {
-            this.installable$.next(true);
-        }
-        else {
-            this.installable$.next(false);
-        }
 
-    }
-
-    isInstallable(): BehaviorSubject<any> {
-        return this.installable$;
+    init(eventName: string): Observable<void> {
+        window.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            this.setEvent(e);
+        });
+        return of(null);
     }
 
     promptInstall() {
         if (this.installEvent) {
-
-            this.installEvent.userChoice
-                .then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('User accepted the prompt');
-                        this.installed = true;
-                        this.setEvent(null);
-                    } else {
-                        console.log('User dismissed the prompt');
-                    }
-                });
+            this.installEvent.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the prompt');
+                    this.installable$.next(false);
+                    this.setEvent(undefined);
+                } else {
+                    console.log('User dismissed the prompt');
+                }
+            });
             this.installEvent.prompt();
+        } else {
+            this.installable$.next(false);
+        }
+    }
+
+    private setEvent(event) {
+        this.installEvent = event;
+        console.log('setEvent', event);
+        console.log('setEvent', this.installEvent !== null && this.installEvent !== undefined);
+        if (this.installEvent !== null && this.installEvent !== undefined) {
+            this.installable$.next(true);
+        } else {
+            this.installable$.next(false);
         }
     }
 }
