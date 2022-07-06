@@ -19,6 +19,7 @@ import { AuthService } from './services/auth/auth.service';
 import { ConfigService } from './services/config/config.service';
 import { EventService } from './services/event/event.service';
 import { HttpInterceptorService } from './services/http-interceptor/http-interceptor.service';
+import { InstallAppService } from './services/install/install-app.service';
 import { PictureService } from './services/picture/picture.service';
 import { SwService } from './services/service-worker/sw-service.service';
 import { StorageService } from './services/storage/storage.service';
@@ -54,7 +55,7 @@ import { StorageService } from './services/storage/storage.service';
         {
             provide: APP_INITIALIZER,
             useFactory: initializeConfig,
-            deps: [ConfigService, StorageService, SwService, PictureService],
+            deps: [ConfigService, StorageService, SwService, PictureService, InstallAppService],
             multi: true,
         },
         { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
