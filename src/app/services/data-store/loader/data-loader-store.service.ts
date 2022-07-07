@@ -36,6 +36,7 @@ import { HttpDataCollectionService } from '../http-data/http-data-collection.ser
 import { throwError, Observable, forkJoin, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, mergeMap, tap, delay, take } from 'rxjs/operators';
 import { PictureService } from '../../picture/picture.service';
+import { StorageService } from '../../storage/storage.service';
 
 @Injectable({
     providedIn: 'root',
@@ -49,7 +50,8 @@ export class DataLoaderStoreService {
         private config: ConfigService,
         private authService: AuthService,
         private httpData: HttpDataCollectionService,
-        private pictureService: PictureService
+        private pictureService: PictureService,
+        private storageService:StorageService
     ) {}
 
     loadData(): void {
@@ -218,12 +220,22 @@ export class DataLoaderStoreService {
 
     private loadRelations(): Observable<IRelationData[]> {
         return this.httpData.getDataLink().pipe(
-            delay(750),
-            map((items) => {
+            mergeMap((items) => {
                 this.store.dataRelations$.next(items);
-                this.store.currentDataRelations$.next(items[0]);
-                return items;
+               return  this.storageService.get('currentRelation', undefined).pipe(map(stored => {
+                    if (stored)
+                    {
+                        const find = items.find(item => item.id === stored);
+                        this.store.currentDataRelations$.next(find?find:items[0]);
+                    }
+                    else {
+                        this.store.currentDataRelations$.next(items[0]);
+                    }
+                    return items;
+                 }))
             })
+            
+          
         );
     }
 
