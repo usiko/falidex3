@@ -18,9 +18,14 @@ export interface IConfig {
         colors: string;
         dataLink: string;
     };
-    updateApp: 'auto' | 'everytimes';
+    update: {
+        frequency: 'auto' | 'everytimes';
+        clearCacheOnUpdate: boolean;
+    };
     pictureServerSalt: string;
-    [key: string]: any;
+    donate: boolean;
+    storeEnabled: boolean;
+    //[key: string]: any;
 }
 
 export interface ILoadingSteps {
@@ -47,9 +52,12 @@ export class GlobalConfig {
         colors: string;
         dataLink: string;
     };
-    updateApp: 'auto' | 'everytimes';
+    update: {
+        frequency: 'auto' | 'everytimes';
+        clearCacheOnUpdate: boolean;
+    };
     pictureServerSalt: string;
-    [key: string]: any;
+    //[key: string]: any;
     donate: boolean;
     storeEnabled: boolean;
     constructor(options?: IConfig) {
@@ -58,18 +66,10 @@ export class GlobalConfig {
             this.urls = options?.urls;
             this.loadingErrorMessage = options?.loadingErrorMessage;
             this.paths = options?.paths;
-            this.updateApp = options?.updateApp;
+            this.update = options?.update;
             this.pictureServerSalt = options?.pictureServerSalt;
             this.donate = options?.donate;
             this.storeEnabled = options?.donate;
-        }
-    }
-
-    get(key: string) {
-        if (this.key) {
-            return this.key;
-        } else {
-            return null;
         }
     }
 }
