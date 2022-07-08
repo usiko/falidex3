@@ -51,7 +51,7 @@ export class DataLoaderStoreService {
         private authService: AuthService,
         private httpData: HttpDataCollectionService,
         private pictureService: PictureService,
-        private storageService:StorageService
+        private storageService: StorageService
     ) {}
 
     loadData(): void {
@@ -222,20 +222,23 @@ export class DataLoaderStoreService {
         return this.httpData.getDataLink().pipe(
             mergeMap((items) => {
                 this.store.dataRelations$.next(items);
-               return  this.storageService.get('currentRelation', undefined).pipe(map(stored => {
-                    if (stored)
-                    {
-                        const find = items.find(item => item.id === stored);
-                        this.store.currentDataRelations$.next(find?find:items[0]);
-                    }
-                    else {
-                        this.store.currentDataRelations$.next(items[0]);
-                    }
-                    return items;
-                 }))
+                return this.storageService.get('currentRelation', undefined).pipe(
+                    map((stored) => {
+                        if (stored) {
+                            const find = items.find((item) => item.id === stored);
+                            this.store.currentDataRelations$.next(find ? find : items[0]);
+                        } else {
+                            const findDefault = items.find((item) => item.default);
+                            if (findDefault) {
+                                this.store.currentDataRelations$.next(findDefault);
+                            } else {
+                                this.store.currentDataRelations$.next(items[0]);
+                            }
+                        }
+                        return items;
+                    })
+                );
             })
-            
-          
         );
     }
 
