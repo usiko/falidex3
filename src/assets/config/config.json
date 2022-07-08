@@ -57,6 +57,6 @@
         "positions": "position",
         "dataLink": "data-link"
     },
-    "updateApp": "auto",
+    "updateApp": "everytimes",
     "pictureServerSalt": "iBhodGT6GTqS6Bb"
 }
