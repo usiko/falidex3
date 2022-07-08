@@ -15,11 +15,15 @@ export class PictureService {
     } = {};
 
     init() {
-        return this.storage.get('pictureIndexer', {}).pipe(
-            tap((data) => {
-                this.pictureIndexer = data;
-            })
-        );
+        if (this.getStorageEnabled()) {
+            return this.storage.get('pictureIndexer', {}).pipe(
+                tap((data) => {
+                    this.pictureIndexer = data;
+                })
+            );
+        } else {
+            return of(null);
+        }
     }
     getFullResourceUrl(src: string) {
         if (src && src[0] == '/') {
@@ -58,17 +62,22 @@ export class PictureService {
             })
             .pipe(
                 mergeMap((blob) => {
-                    if (blob.size > 0) {
-                        return this.blobToBase64(blob).pipe(
-                            mergeMap((base64) => {
-                                console.log(src, 'saved');
-                                this.pictureIndexer[src] = new Date().getTime() / 1000;
-                                this.updateIndexer();
-                                return this.storage.set('picture-' + src, base64);
-                            })
-                        );
+                    if (this.getStorageEnabled()) {
+                        if (blob.size > 0) {
+                            return this.blobToBase64(blob).pipe(
+                                mergeMap((base64) => {
+                                    console.log(src, 'saved');
+                                    this.pictureIndexer[src] = new Date().getTime() / 1000;
+                                    this.updateIndexer();
+                                    return this.storage.set('picture-' + src, base64);
+                                })
+                            );
+                        } else {
+                            console.log('storage already up to date');
+                            return of(null);
+                        }
                     } else {
-                        console.log('storage already up to date');
+                        console.log('storage disabled');
                         return of(null);
                     }
                 }),
@@ -95,6 +104,9 @@ export class PictureService {
     }
 
     getBase64(src): Observable<string> {
+        if (!this.getStorageEnabled()) {
+            return throwError('storage disabled');
+        }
         if (src && src[0] == '/') {
             src = src.slice(1);
         }
@@ -136,5 +148,10 @@ export class PictureService {
 
     private updateIndexer(): void {
         this.storage.set('pictureIndexer', this.pictureIndexer).subscribe();
+    }
+
+    private getStorageEnabled(): boolean {
+        const conf = this.config.getConfig();
+        return conf?.storeEnabled;
     }
 }

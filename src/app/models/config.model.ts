@@ -50,14 +50,18 @@ export class GlobalConfig {
     updateApp: 'auto' | 'everytimes';
     pictureServerSalt: string;
     [key: string]: any;
+    donate: boolean;
+    storeEnabled: boolean;
     constructor(options?: IConfig) {
         if (options) {
-            this.loadingSteps = options.loadingSteps ? options.loadingSteps : [];
-            this.urls = options.urls;
-            this.loadingErrorMessage = options.loadingErrorMessage;
-            this.paths = options.paths;
-            this.updateApp = options.updateApp;
-            this.pictureServerSalt = options.pictureServerSalt;
+            this.loadingSteps = options?.loadingSteps ? options.loadingSteps : [];
+            this.urls = options?.urls;
+            this.loadingErrorMessage = options?.loadingErrorMessage;
+            this.paths = options?.paths;
+            this.updateApp = options?.updateApp;
+            this.pictureServerSalt = options?.pictureServerSalt;
+            this.donate = options?.donate;
+            this.storeEnabled = options?.donate;
         }
     }
 

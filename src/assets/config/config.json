@@ -58,5 +58,7 @@
         "dataLink": "data-link"
     },
     "updateApp": "auto",
-    "pictureServerSalt": "iBhodGT6GTqS6Bb"
+    "pictureServerSalt": "iBhodGT6GTqS6Bb",
+    "donate": false,
+    "storeEnabled": false
 }
