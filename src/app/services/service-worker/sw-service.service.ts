@@ -49,6 +49,9 @@ export class SwService {
                         console.log('SwService', 'no update');
                         return of(null);
                     }
+                }),
+                catchError((error) => {
+                    return of(null);
                 })
             );
         } else {

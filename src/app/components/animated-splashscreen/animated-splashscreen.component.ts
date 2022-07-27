@@ -53,8 +53,10 @@ export class AnimatedSplashscreenComponent implements OnInit, OnDestroy {
             })
         );
         this.subscription.add(
-            this.events.getObs('splashLeave').subscribe(() => {
-                this.router.navigateByUrl('/home');
+            this.events.getObs('splashLeave', false).subscribe((value: boolean) => {
+                if (value) {
+                    this.router.navigateByUrl('/home');
+                }
             })
         );
     }

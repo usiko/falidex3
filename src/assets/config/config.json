@@ -1,6 +1,9 @@
 {
     "loadingSteps": [{
-            "message": "Chargement..."
+            "message": "Recherche du code"
+        },
+        {
+            "message": "Sécurisation des pin's"
         },
         {
             "message": "Accrochage des grelots"
@@ -13,9 +16,6 @@
         },
         {
             "message": "Drama satin/velours"
-        },
-        {
-            "message": "Engagement Fouk"
         },
         {
             "message": "Couture des circulaires"
