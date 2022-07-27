@@ -162,13 +162,13 @@ export class HttpDataCollectionService {
                         if (!data) {
                             return of([]);
                         } else {
-                            return of(data.item);
+                            return of(data);
                         }
                     })
                 );
             }),
             mergeMap((items: { name: string; id: string }[]) => {
-                if (items.length == 0) {
+                if (items?.length == 0) {
                     return of([]);
                 }
                 return forkJoin(
@@ -199,10 +199,6 @@ export class HttpDataCollectionService {
     private mapData(data: any, url: string) {
         console.log(data);
         this.storageService.set(url, data).subscribe();
-        if (url == 'dataLink') {
-            //TEMP
-            return data.item;
-        }
         return data;
     }
 
