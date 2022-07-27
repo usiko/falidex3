@@ -13,6 +13,7 @@ import { SubStoreService } from './services/data-store/sub-store/sub-store.servi
 import { GlobalSearchService } from './services/globale-search/global-search.service';
 import { DataRelationsService } from './services/relations/data-relations.service';
 import { environment } from '../environments/environment';
+import { InstallAppService } from './services/install/install-app.service';
 
 @Component({
     selector: 'app-root',
@@ -35,8 +36,7 @@ export class AppComponent implements OnInit {
         private codeSpeService: CodeSpeCollectionService,
         private globaleSearch: GlobalSearchService,
         private subStore: SubStoreService,
-        private relationService: DataRelationsService,
-        private configService: ConfigService
+        private relationService: DataRelationsService
     ) {}
 
     ngOnInit() {
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
         } else {
             console.log('dev mode');
         }
-        this.configService.loadConfig();
+
         this.filieresService.collection$.subscribe((items) => {
             this.setMenu();
         });
