@@ -27,7 +27,7 @@ export class HttpDataCollectionService {
 
     isAllStored(): boolean {
         const keys = Object.keys(this.config.getConfig().paths);
-        const values = keys.map((key) => this.storageService.getAge(key));
+        const values = keys.map((key) => this.storageService.getAge(key)).filter((item) => item != undefined);
         if (values.length != keys.length) {
             return false;
         }

@@ -57,11 +57,12 @@ export class DataLoaderStoreService {
     loadData(): void {
         const isAllStored = this.httpData.isAllStored();
         if (isAllStored) {
-            this.event.publish('splashLeave');
+            this.event.publish('splashLeave', true);
         }
         this.loadingSteps = this.config.getConfig().loadingSteps;
 
         let currentStep = 1;
+        this.displayStep(currentStep, this.numberOfSteps);
         this.authService
             .login()
             .pipe(
@@ -155,7 +156,7 @@ export class DataLoaderStoreService {
             .subscribe(() => {
                 this.displayStep(currentStep, this.numberOfSteps);
                 currentStep++;
-                this.event.publish('splashLeave');
+                this.event.publish('splashLeave', true);
             });
     }
 
