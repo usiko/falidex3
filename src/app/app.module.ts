@@ -55,7 +55,7 @@ import { StorageService } from './services/storage/storage.service';
         {
             provide: APP_INITIALIZER,
             useFactory: initializeConfig,
-            deps: [ConfigService, StorageService, SwService, PictureService, InstallAppService],
+            deps: [ConfigService, StorageService, PictureService, InstallAppService],
             multi: true,
         },
         { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
