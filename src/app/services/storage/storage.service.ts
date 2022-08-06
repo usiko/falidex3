@@ -89,4 +89,12 @@ export class StorageService {
     public getAge(key): string {
         return this.ages[key];
     }
+
+    public clear(): Observable<void> {
+        return from(this.storage.clear()).pipe(
+            tap(() => {
+                console.log('storage cleared');
+            })
+        );
+    }
 }

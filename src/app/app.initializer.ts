@@ -10,7 +10,7 @@ import { StorageService } from './services/storage/storage.service';
 export const initializeConfig = (
     configService: ConfigService,
     storageService: StorageService,
-    swService: SwService,
+    //swService: SwService,
     pictureService: PictureService,
     installApp: InstallAppService
 ) => {
@@ -25,7 +25,7 @@ export const initializeConfig = (
                                 return pictureService.init();
                             })
                         ),
-                        swService.init(),
+                        //swService.init(),
                         installApp.init('beforeinstallprompt'),
                     ]);
                 })
