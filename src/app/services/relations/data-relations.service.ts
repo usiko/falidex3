@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 import { IRelationData } from 'src/app/models/base-relations.models';
 import { SubStoreService } from '../data-store/sub-store/sub-store.service';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable({
     providedIn: 'root',
@@ -10,7 +11,7 @@ import { SubStoreService } from '../data-store/sub-store/sub-store.service';
 export class DataRelationsService {
     private relations: BehaviorSubject<IRelationData[]> = this.store.dataRelations$;
     private currentRelation$: BehaviorSubject<IRelationData> = this.store.currentDataRelations$;
-    constructor(private store: SubStoreService) {}
+    constructor(private store: SubStoreService, private storage: StorageService) {}
 
     getRelationList(): Observable<{ name: string; id: string }[]> {
         return this.relations.pipe(
@@ -52,9 +53,14 @@ export class DataRelationsService {
             return item.id === id;
         });
         if (find) {
+            if (!find.default) {
+                this.storage.set('currentRelation', id).subscribe();
+            } else {
+                this.storage.remove('currentRelation').subscribe();
+            }
             this.currentRelation$.next(find);
         } else {
-            console.warn('relation not found', id);
+            console.log('relation not found', id);
         }
     }
 }

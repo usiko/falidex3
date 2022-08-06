@@ -1,6 +1,9 @@
 {
     "loadingSteps": [{
-            "message": "Chargement..."
+            "message": "Recherche du code"
+        },
+        {
+            "message": "Sécurisation des pin's"
         },
         {
             "message": "Accrochage des grelots"
@@ -13,9 +16,6 @@
         },
         {
             "message": "Drama satin/velours"
-        },
-        {
-            "message": "Engagement Fouk"
         },
         {
             "message": "Couture des circulaires"
@@ -41,7 +41,7 @@
     ],
     "loadingErrorMessage": "Echec du chargement",
     "urls": {
-        "dataServer": "https://falidex-server.herokuapp.com",
+        "dataServer": "https://dev-falidex-server.herokuapp.com",
         "pictureServer": "https://resources.falidex.fr/index.php"
     },
     "paths": {
@@ -57,6 +57,11 @@
         "positions": "position",
         "dataLink": "data-link"
     },
-    "updateApp": "auto",
-    "pictureServerSalt": "iBhodGT6GTqS6Bb"
+    "update": {
+        "frequency": "auto",
+        "clearCacheOnUpdate": false
+    },
+    "pictureServerSalt": "iBhodGT6GTqS6Bb",
+    "donate": false,
+    "storeEnabled": true
 }

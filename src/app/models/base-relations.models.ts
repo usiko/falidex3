@@ -25,6 +25,8 @@ export interface IRelationItem {
 export interface IRelationData {
     name: string;
     id: string;
+    annee: number;
+    default: boolean;
     relations: IRelationItem[];
     specificites?: IBaseCodeSpe[];
 }

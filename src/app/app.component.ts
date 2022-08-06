@@ -12,6 +12,9 @@ import { DataLoaderStoreService } from './services/data-store/loader/data-loader
 import { SubStoreService } from './services/data-store/sub-store/sub-store.service';
 import { GlobalSearchService } from './services/globale-search/global-search.service';
 import { DataRelationsService } from './services/relations/data-relations.service';
+import { environment } from '../environments/environment';
+import { InstallAppService } from './services/install/install-app.service';
+import { SwService } from './services/service-worker/sw-service.service';
 
 @Component({
     selector: 'app-root',
@@ -35,18 +38,22 @@ export class AppComponent implements OnInit {
         private globaleSearch: GlobalSearchService,
         private subStore: SubStoreService,
         private relationService: DataRelationsService,
-        private configService: ConfigService
+        private updateService: SwService
     ) {}
 
     ngOnInit() {
-        this.configService.loadConfig();
+        if (environment.production) {
+            console.log('prod mode');
+        } else {
+            console.log('dev mode');
+        }
+
         this.filieresService.collection$.subscribe((items) => {
             this.setMenu();
         });
         this.symbolService.collection$.subscribe((items) => {
             this.setMenu();
         });
-        this.initData();
 
         this.relationService.getRelationList().subscribe((items) => {
             this.relationsData$.next(items);
@@ -56,6 +63,9 @@ export class AppComponent implements OnInit {
             this.setMenu();
         });
         this.globaleSearch.init();
+        this.updateService.init().subscribe(() => {
+            this.initData();
+        });
     }
 
     setMenu() {

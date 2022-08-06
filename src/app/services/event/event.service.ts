@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -7,9 +7,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class EventService {
     private subjects = new Map<string, BehaviorSubject<any>>();
     constructor() {}
-    private getTopic(topic: string) {
+    private getTopic(topic: string, defaultValue?: any) {
         if (!this.subjects.has(topic)) {
-            this.subjects.set(topic, new BehaviorSubject(undefined));
+            this.subjects.set(topic, new BehaviorSubject(defaultValue));
         }
         return this.subjects.get(topic);
     }
@@ -27,9 +27,8 @@ export class EventService {
      * get observable to subscribe from a ref topic
      * @param  {string} topic topic refence
      */
-    getObs(topic: string) {
-        const subject = this.getTopic(topic);
-        console.log('get subscription', 'topic', subject);
+    getObs(topic: string, defaultValue?: any) {
+        const subject = this.getTopic(topic, defaultValue);
         return subject.asObservable();
     }
 }

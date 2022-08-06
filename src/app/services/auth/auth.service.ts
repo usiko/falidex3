@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { forkJoin, of, throwError } from 'rxjs';
 import { catchError, mergeMap, tap } from 'rxjs/operators';
 import { ConfigService } from '../config/config.service';
+import { HttpDataCollectionService } from '../data-store/http-data/http-data-collection.service';
+import { EventService } from '../event/event.service';
 import { StorageService } from '../storage/storage.service';
 
 @Injectable({
@@ -10,9 +12,8 @@ import { StorageService } from '../storage/storage.service';
 })
 export class AuthService {
     private token;
-    constructor(private http: HttpClient, private configService: ConfigService, private storageService: StorageService) {
-        console.log('auth');
-        this.login();
+    constructor(private http: HttpClient, private configService: ConfigService, private storageService: StorageService, private httpData:HttpDataCollectionService, private eventService:EventService) {
+
     }
 
     login() {
@@ -30,17 +31,16 @@ export class AuthService {
                     this.setToken(data.access_token);
                 }),
                 catchError((error) => {
-                    const keys = Object.keys(this.configService.getConfig().paths);
-                    const values = keys.map((key) => this.storageService.getAge(key));
-                    if (values.length > 0) {
+                    const isAllStored = this.httpData.isAllStored();
+                    if (!isAllStored)
+                    {
+                        this.setToken(undefined);
+                        return throwError(error);
                     }
-                    for (const val of values) {
-                        if (!val) {
-                            this.setToken(undefined);
-                            return throwError(error);
-                        }
+                    else {
+                        return of(null);
                     }
-                    return of(null);
+                    
                 })
             );
     }

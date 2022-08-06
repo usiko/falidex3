@@ -14,36 +14,50 @@ export class AnimatedSplashscreenComponent implements OnInit, OnDestroy {
     public loadingState: ILoadingBarState;
     private subscription = new Subscription();
     static loaded = false;
+
     ngOnInit() {
         if (AnimatedSplashscreenComponent.loaded) {
             this.router.navigateByUrl('/home');
         } else {
-            this.subscription.add(
-                this.events.getObs('loadingBarState').subscribe((state: ILoadingBarState) => {
-                    console.log(state);
-                    if (state) {
-                        this.loadingState = state;
-                        if (state.value == 1) {
-                            AnimatedSplashscreenComponent.loaded = true;
-                            this.subscription.add(
-                                timer(750).subscribe(() => {
-                                    this.router.navigateByUrl('/home');
-                                })
-                            );
-                        }
-                    }
-                })
-            );
+            this.initSubscriptions();
         }
     }
 
     ionViewDidEnter() {
         if (AnimatedSplashscreenComponent.loaded) {
             this.router.navigateByUrl('/home');
+        } else {
+            this.initSubscriptions();
         }
+    }
+    ionViewDidLeave() {
+        this.subscription.unsubscribe();
     }
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
+    }
+
+    private initSubscriptions() {
+        this.subscription.unsubscribe();
+        this.subscription = new Subscription();
+        this.subscription.add(
+            this.events.getObs('loadingBarState').subscribe((state: ILoadingBarState) => {
+                console.log(state);
+                if (state) {
+                    this.loadingState = state;
+                    if (state.value == 1) {
+                        AnimatedSplashscreenComponent.loaded = true;
+                    }
+                }
+            })
+        );
+        this.subscription.add(
+            this.events.getObs('splashLeave', false).subscribe((value: boolean) => {
+                if (value) {
+                    this.router.navigateByUrl('/home');
+                }
+            })
+        );
     }
 }

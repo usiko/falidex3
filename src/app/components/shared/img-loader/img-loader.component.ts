@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { ConfigService } from 'src/app/services/config/config.service';
 import { PictureService } from 'src/app/services/picture/picture.service';
 
 @Component({
@@ -24,20 +25,27 @@ export class ImgLoaderComponent implements OnInit {
         }
         if (src) {
             if (this.resource) {
-                this.pictureService.getBase64(src).subscribe(
-                    (base64) => {
-                        this.ownSrc = base64;
-                        this.base64 = true;
-                        this.loading = false;
-                        this.changedetector.detectChanges();
-                    },
-                    (error) => {
-                        this.ownSrc = this.pictureService.getFullResourceUrl(src);
-                        this.base64 = false;
-                        console.warn('error get local', error);
-                        this.changedetector.detectChanges();
-                    }
-                );
+                if (this.getStorageEnabled()) {
+                    this.pictureService.getBase64(src).subscribe(
+                        (base64) => {
+                            this.ownSrc = base64;
+                            this.base64 = true;
+                            this.loading = false;
+                            this.changedetector.detectChanges();
+                        },
+                        (error) => {
+                            this.ownSrc = this.pictureService.getFullResourceUrl(src);
+                            this.base64 = false;
+                            console.log('error get local', error);
+                            this.changedetector.detectChanges();
+                        }
+                    );
+                } else {
+                    this.ownSrc = this.pictureService.getFullResourceUrl(src);
+                    this.base64 = false;
+                    console.log('storage disabled', src);
+                    this.changedetector.detectChanges();
+                }
             } else {
                 this.base64 = false;
                 this.ownSrc = src;
@@ -61,7 +69,12 @@ export class ImgLoaderComponent implements OnInit {
 
     @Input() objectFit = 'cover';
 
-    constructor(private changedetector: ChangeDetectorRef, private http: HttpClient, private pictureService: PictureService) {}
+    constructor(
+        private changedetector: ChangeDetectorRef,
+        private http: HttpClient,
+        private pictureService: PictureService,
+        private configService: ConfigService
+    ) {}
 
     ngOnInit() {
         this.changedetector.detectChanges();
@@ -108,5 +121,10 @@ export class ImgLoaderComponent implements OnInit {
         } else {
             this.ownSrc = this.errorSrc;
         }
+    }
+
+    private getStorageEnabled(): boolean {
+        const conf = this.configService.getConfig();
+        return conf?.storeEnabled;
     }
 }

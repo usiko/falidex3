@@ -3,12 +3,13 @@ import { SwUpdate } from '@angular/service-worker';
 import { from, Observable, of } from 'rxjs';
 import { catchError, mergeMap, tap } from 'rxjs/operators';
 import { ConfigService } from '../config/config.service';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class SwService {
-    constructor(private updates: SwUpdate, private configService: ConfigService) {}
+    constructor(private updates: SwUpdate, private configService: ConfigService, private storage: StorageService) {}
 
     init() {
         console.log('init', 'SwService');
@@ -28,7 +29,7 @@ export class SwService {
         });
         const config = this.configService.getConfig();
         console.log('SwService', 'config', config);
-        if (config.updateApp === 'everytimes') {
+        if (config?.update?.frequency === 'everytimes') {
             console.log('SwService', 'force update');
             return this.checkForUpdate().pipe(
                 mergeMap((statut: boolean) => {
@@ -39,7 +40,13 @@ export class SwService {
                             tap((statut: boolean) => {
                                 if (statut) {
                                     console.log('SwService', 'end update');
-                                    document.location.reload();
+                                    if (config.update.clearCacheOnUpdate) {
+                                        this.storage.clear().subscribe(() => {
+                                            document.location.reload();
+                                        });
+                                    } else {
+                                        document.location.reload();
+                                    }
                                 } else {
                                     console.log('SwService', 'fail update');
                                 }
@@ -49,6 +56,9 @@ export class SwService {
                         console.log('SwService', 'no update');
                         return of(null);
                     }
+                }),
+                catchError((error) => {
+                    return of(null);
                 })
             );
         } else {

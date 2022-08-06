@@ -1,5 +1,15 @@
-<ion-card class="warning-card text-center" color='secondary'>
-    <ion-card-content color='secondary'>
-        <ion-text>Codé, developpé, colorié, cassé, reparé, uploadé avec amour par Plok </ion-text>
-    </ion-card-content>
-</ion-card>
+<div class="wrapper">
+    <div>
+        <ion-card class="warning-card text-center" color='secondary'>
+            <ion-card-content color='secondary'>
+                <ion-text>Codé, developpé, colorié, cassé, reparé, uploadé avec amour par Plok </ion-text>
+            </ion-card-content>
+        </ion-card>
+
+
+    </div>
+    <div>
+
+        <app-paypal-donate *ngIf="showDonate"></app-paypal-donate>
+    </div>
+</div>
