@@ -26,6 +26,9 @@ export class HttpDataCollectionService {
     constructor(private config: ConfigService, private http: HttpClient, private storageService: StorageService) {}
 
     isAllStored(): boolean {
+        if (!this.getStorageEnabled()) {
+            return false;
+        }
         const keys = Object.keys(this.config.getConfig().paths);
         const values = keys.map((key) => this.storageService.getAge(key)).filter((item) => item != undefined);
         if (values.length != keys.length) {
@@ -157,15 +160,19 @@ export class HttpDataCollectionService {
                 return this.mapData(data, 'dataLink');
             }),
             catchError((error) => {
-                return this.storageService.get('dataLink', undefined).pipe(
-                    mergeMap((data) => {
-                        if (!data) {
-                            return of([]);
-                        } else {
-                            return of(data);
-                        }
-                    })
-                );
+                if (this.getStorageEnabled()) {
+                    return this.storageService.get('dataLink', undefined).pipe(
+                        mergeMap((data) => {
+                            if (!data) {
+                                return of([]);
+                            } else {
+                                return of(data);
+                            }
+                        })
+                    );
+                } else {
+                    return of([]);
+                }
             }),
             mergeMap((items: { name: string; id: string }[]) => {
                 if (items?.length == 0) {
@@ -197,20 +204,25 @@ export class HttpDataCollectionService {
     }
 
     private mapData(data: any, url: string) {
-        console.log(data);
-        this.storageService.set(url, data).subscribe();
+        if (this.getStorageEnabled()) {
+            this.storageService.set(url, data).subscribe();
+        }
         return data;
     }
 
     private handleError(url: string, error): Observable<any> {
-        return this.storageService.get(url, undefined).pipe(
-            map((data) => {
-                return data;
-            }),
-            catchError((storageError) => {
-                return of([]);
-            })
-        );
+        if (this.getStorageEnabled()) {
+            return this.storageService.get(url, undefined).pipe(
+                map((data) => {
+                    return data;
+                }),
+                catchError((storageError) => {
+                    return of([]);
+                })
+            );
+        } else {
+            return of([]);
+        }
     }
 
     private getUrl(pathKey: string) {
@@ -220,5 +232,10 @@ export class HttpDataCollectionService {
         } else {
             console.warn('no path', pathKey);
         }
+    }
+
+    private getStorageEnabled(): boolean {
+        const conf = this.config.getConfig();
+        return conf?.storeEnabled;
     }
 }

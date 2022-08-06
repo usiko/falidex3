@@ -57,6 +57,11 @@
         "positions": "position",
         "dataLink": "data-link"
     },
-    "updateApp": "auto",
-    "pictureServerSalt": "iBhodGT6GTqS6Bb"
+    "update": {
+        "frequency": "auto",
+        "clearCacheOnUpdate": false
+    },
+    "pictureServerSalt": "iBhodGT6GTqS6Bb",
+    "donate": false,
+    "storeEnabled": true
 }
