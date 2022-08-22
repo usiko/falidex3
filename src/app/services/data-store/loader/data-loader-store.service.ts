@@ -57,6 +57,7 @@ export class DataLoaderStoreService {
     loadData(): void {
         const isAllStored = this.httpData.isAllStored();
         if (isAllStored) {
+            console.log('isallstored','splashLeave' )
             this.event.publish('splashLeave', true);
         }
         this.loadingSteps = this.config.getConfig().loadingSteps;
