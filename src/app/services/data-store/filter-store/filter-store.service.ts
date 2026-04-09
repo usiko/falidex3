@@ -12,8 +12,8 @@ export class FilterStoreService {
     /**
      * only for filters page
      */
-    currentDisplayFilter$: BehaviorSubject<DisplayFilters<ICollectionData>[]> = new BehaviorSubject([]);
-    private currentFilterId: number;
+    currentDisplayFilter$ = new BehaviorSubject<DisplayFilters<ICollectionData>[]>([])
+    private currentFilterId: number = 0;
     private lastIndex = 0;
 
     createStoreFilter() {
@@ -26,7 +26,7 @@ export class FilterStoreService {
     /**
      * @param  {number} id
      */
-    getCurrentFilter(id: number): BehaviorSubject<IDisplayFilters<ICollectionData>[]> {
+    getCurrentFilter(id: number): BehaviorSubject<IDisplayFilters<ICollectionData>[]>|undefined {
         const map = this.collectionDisplayFilters$.getValue();
         if (map.has(id)) {
             this.updateCurrentFilter(id);
@@ -36,7 +36,7 @@ export class FilterStoreService {
     public updateCurrentDataFilter(filters: IDisplayFilters<ICollectionData>[]) {
         console.log('update filter', this.currentFilterId);
         if (this.collectionDisplayFilters$.getValue().has(this.currentFilterId)) {
-            this.collectionDisplayFilters$.getValue().get(this.currentFilterId).next(filters);
+            this.collectionDisplayFilters$.getValue().get(this.currentFilterId)?.next(filters);
         }
     }
 
@@ -44,10 +44,11 @@ export class FilterStoreService {
      * @param  {number} id
      */
     private updateCurrentFilter(id: number) {
-        if (this.collectionDisplayFilters$.getValue().has(id)) {
+        const subject = this.collectionDisplayFilters$.getValue().get(id);
+        if (subject) {
             this.currentFilterId = id;
             console.log('set current page filter index', id);
-            this.currentDisplayFilter$.next(this.collectionDisplayFilters$.getValue().get(this.currentFilterId).getValue());
+            this.currentDisplayFilter$.next(subject.getValue());
         }
     }
 
@@ -64,7 +65,7 @@ export class FilterStoreService {
                     return new DisplayFilters(item);
                 })
             );
-            subject['id-test'] = id + '--' + new Date().getTime();
+            (subject as any)['id-test'] = id + '--' + new Date().getTime();
             map.set(id, subject);
         }
         this.collectionDisplayFilters$.next(map);
@@ -77,8 +78,11 @@ export class FilterStoreService {
         const map = this.collectionDisplayFilters$.getValue();
         if (map.has(id)) {
             const subject = map.get(id);
-            subject.complete();
-            subject.unsubscribe();
+            if(subject)
+            {
+                subject.complete();
+                subject.unsubscribe();
+            }
             map.delete(id);
         }
         this.collectionDisplayFilters$.next(map);
@@ -92,11 +96,14 @@ export class FilterStoreService {
         const map = this.collectionDisplayFilters$.getValue();
         if (map.has(id)) {
             const subject = map.get(id);
-            subject.next(
+           if(subject)
+           {
+             subject.next(
                 filters.map((item) => {
                     return new DisplayFilters(item);
                 })
             );
+           }
         }
     }
 }

@@ -47,16 +47,21 @@ export class PictureService {
         }
     }
 
-    preload(src) {
+    preload(src:string) {
         if (src && src[0] == '/') {
             src = src.slice(1);
         }
-        const params = {};
+        let params = {};
         if (this.pictureIndexer && this.pictureIndexer[src]) {
-            params['mtime'] = this.pictureIndexer[src];
+            params = {
+                'mtime':this.pictureIndexer[src]
+            }
         }
-        return this.http
-            .get(this.getFullResourceUrl(src), {
+        const fullSrc = this.getFullResourceUrl(src);
+        if(fullSrc)
+        {
+                    return this.http
+            .get(fullSrc, {
                 responseType: 'blob',
                 params,
             })
@@ -86,9 +91,14 @@ export class PictureService {
                     return of(undefined);
                 })
             );
+        }
+        else{
+            return throwError(()=>"no full src")
+        }
+
     }
 
-    blobToBase64(blob): Observable<string> {
+    blobToBase64(blob:Blob): Observable<string> {
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         return new Observable((obs) => {
@@ -103,7 +113,7 @@ export class PictureService {
         });
     }
 
-    getBase64(src): Observable<string> {
+    getBase64(src:string): Observable<string> {
         if (!this.getStorageEnabled()) {
             return throwError('storage disabled');
         }
@@ -128,7 +138,7 @@ export class PictureService {
         }
     }
 
-    public deleteResource(src): void {
+    public deleteResource(src:string): void {
         if (src && src[0] == '/') {
             src = src.slice(1);
         }
@@ -152,6 +162,6 @@ export class PictureService {
 
     private getStorageEnabled(): boolean {
         const conf = this.config.getConfig();
-        return conf?.storeEnabled;
+        return !!conf?.storeEnabled;
     }
 }

@@ -1,10 +1,10 @@
-import { IconName } from '@fortawesome/fontawesome-svg-core';
+
 import { ICollectionData, ICollectionLink } from '../linked-data-models';
 
 export class DataFilter<Item> implements IDataFilter<Item> {
-    operator: FilterOperatorEnum;
+    operator!: FilterOperatorEnum;
     propertyGetter?: (item: Item) => any;
-    values: any[]; // value given (sarch text or anything else)
+    values!: any[]; // value given (sarch text or anything else)
     type?: 'link' | 'collection';
     idFilter?: string;
     constructor(options?: Partial<IDataFilter<Item>>) {
@@ -43,7 +43,7 @@ export interface ICollectionFilter<Item extends ICollectionData> extends IDataFi
 }
 
 export class CollectionFilter<Item extends ICollectionData> extends DataFilter<Item> implements ICollectionFilter<Item> {
-    public propertyToFilter: string;
+    public propertyToFilter!: string;
 
     public linkToFilter?: (links: ICollectionLink[]) => ICollectionLink[];
 
@@ -125,7 +125,7 @@ export enum FilterOperatorEnum {
 }
 
 export class DisplayFilters<Item> implements IDisplayFilters<Item> {
-    label: string;
+    label!: string;
     filters: IDisplayFilterItem<Item>[] = [];
     constructor(options?: Partial<IDisplayFilters<Item>>) {
         if (options) {
@@ -161,7 +161,7 @@ export interface IDisplayFilterItem<Item> {
     filter: IDataFilter<Item>;
     type: FilterDisplayTypeEnum;
     enabled: boolean;
-    icon?: IconName;
+    icon?: string;
 }
 
 export enum FilterDisplayTypeEnum {
@@ -169,11 +169,11 @@ export enum FilterDisplayTypeEnum {
 }
 
 export class DisplayFilterItem<Item> {
-    public type: FilterDisplayTypeEnum;
-    public label: string;
-    public filter: IDataFilter<Item>;
-    public enabled: boolean;
-    public icon?: IconName;
+    public type!: FilterDisplayTypeEnum;
+    public label!: string;
+    public filter!: IDataFilter<Item>;
+    public enabled!: boolean;
+    public icon?: string;
     constructor(options: Partial<IDisplayFilterItem<Item>>) {
         if (options) {
             if (options.label) {

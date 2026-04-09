@@ -9,21 +9,21 @@ import { map } from 'rxjs/operators';
     providedIn: 'root',
 })
 export class ConfigService {
-    private config: GlobalConfig;
+    private config: GlobalConfig|undefined;
     private configUrl = 'assets/config/config.json';
     constructor(private http: HttpClient) {}
     loadConfig(): Observable<void> {
-        return this.http.get(this.configUrl).pipe(
+        return this.http.get<IConfig>(this.configUrl).pipe(
             map((value: IConfig) => {
                 this.config = new GlobalConfig(value);
             })
         );
     }
-    getConfig(): GlobalConfig {
+    getConfig(): GlobalConfig|undefined {
         if (this.config) {
             return this.config;
         } else {
-            return new GlobalConfig();
+            return undefined;
         }
     }
 }

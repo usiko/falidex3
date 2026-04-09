@@ -20,7 +20,7 @@ export class FiliereCollectionService extends ICollectionItem<ISubBaseFiliere, I
         this.bindSubjectToBuild(this.store.positions$);
         this.bindSubjectToBuild(this.store.placements$);
         this.bindSubjectToBuild(this.store.symboles$);
-        this.bindSubjectToBuild(this.store.circulaires$);
+        this.bindSubjectToBuild(this.store.circulaires$ as any);
         this.bindSubjectToBuild(this.store.symbolesAccessories$);
         this.bindSubjectToBuild(this.store.symbolesSens$);
     }

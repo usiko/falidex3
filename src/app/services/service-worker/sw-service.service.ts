@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { from, Observable, of } from 'rxjs';
 import { catchError, mergeMap, tap } from 'rxjs/operators';
@@ -9,11 +9,13 @@ import { StorageService } from '../storage/storage.service';
     providedIn: 'root',
 })
 export class SwService {
-    constructor(private updates: SwUpdate, private configService: ConfigService, private storage: StorageService) {}
+    private updates = inject(SwUpdate);
+    private configService = inject(ConfigService);
+    private storage = inject(StorageService);
 
     init() {
         console.log('init', 'SwService');
-        this.updates.versionUpdates.subscribe((evt) => {
+        this.updates.versionUpdates.subscribe((evt:any) => {
             switch (evt.type) {
                 case 'VERSION_DETECTED':
                     console.log(`SW Downloading new app version: ${evt.version.hash}`);

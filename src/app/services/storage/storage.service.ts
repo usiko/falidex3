@@ -1,81 +1,61 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage-angular';
-import { from, merge, Observable, of, throwError } from 'rxjs';
-import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
 })
 export class StorageService {
-    private database: Storage | null = null;
-
-    public ages = {};
-    constructor(private storage: Storage) {}
+    public ages: { [key: string]: string } = {};
+    
+    constructor() {}
+    
     init(): Observable<any> {
-        return from(this.storage.create()).pipe(
-            tap((storage) => {
-                this.database = storage;
-            }),
-            mergeMap(() => {
-                return this.loadAges();
-            })
-        );
-        //this.database = storage;
+        return this.loadAges();
     }
     // Create and expose methods that users of this service can
     // call, for example:
     public set(key: string, value: any, ageProperty = 'age'): Observable<any> {
-        if (this.database) {
-            return from(this.database?.set(key, value)).pipe(
-                tap(() => {
-                    let date = value[ageProperty];
-                    if (!date) {
-                        date = new Date().toISOString();
-                    }
-                    this.saveAge(key, date);
-                })
-            );
-        } else {
-            return throwError('no database');
+        try {
+            localStorage.setItem(key, JSON.stringify(value));
+            let date = value[ageProperty];
+            if (!date) {
+                date = new Date().toISOString();
+            }
+            this.saveAge(key, date);
+            return of(value);
+        } catch (error) {
+            return throwError(() => error);
         }
-
-        //this.database?.set(key, JSON.stringify(value));
     }
 
     // Create and expose methods that users of this service can
     // call, for example:
     public get(key: string, emptyValue: any): Observable<any> {
-        if (this.database) {
-            return from(this.database.get(key)).pipe(
-                map((data) => {
-                    if (data === null) {
-                        return emptyValue;
-                    } else {
-                        return data;
-                    }
-                }),
-                catchError((error) => {
-                    return of(emptyValue);
-                })
-            );
-        } else {
-            return throwError('no database');
+        try {
+            const data = localStorage.getItem(key);
+            if (data === null) {
+                return of(emptyValue);
+            } else {
+                return of(JSON.parse(data));
+            }
+        } catch (error) {
+            return of(emptyValue);
         }
-
-        //JSON.parse();
     }
 
     public remove(key: string): Observable<any> {
-        if (this.database) {
-            return from(this.database.remove(key));
-        } else {
-            return throwError('no database');
+        try {
+            localStorage.removeItem(key);
+            return of(null);
+        } catch (error) {
+            return throwError(() => error);
         }
     }
 
-    public saveAge(key, value): void {
+    public saveAge(key: string, value: string): void {
         this.ages[key] = value;
-        this.set('ageIndex', this.ages);
+        this.set('ageIndex', this.ages).subscribe();
     }
 
     public loadAges() {
@@ -86,15 +66,17 @@ export class StorageService {
         );
     }
 
-    public getAge(key): string {
+    public getAge(key: string): string {
         return this.ages[key];
     }
 
     public clear(): Observable<void> {
-        return from(this.storage.clear()).pipe(
-            tap(() => {
-                console.log('storage cleared');
-            })
-        );
+        try {
+            localStorage.clear();
+            console.log('storage cleared');
+            return of(undefined);
+        } catch (error) {
+            return throwError(() => error);
+        }
     }
 }

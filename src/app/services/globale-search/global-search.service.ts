@@ -46,7 +46,7 @@ export class GlobalSearchService {
         },
     });
 
-    private searchText: string;
+    private searchText: string = '';
     constructor(
         private symbolCollection: SymbolCollectionService,
         private filiereCollection: FiliereCollectionService,
@@ -56,11 +56,11 @@ export class GlobalSearchService {
     ) {}
 
     init() {
-        this.initCollection(this.symbols$, this.symbolCollection.collection$);
-        this.initCollection(this.filieres$, this.filiereCollection.collection$);
-        this.initCollection(this.circulaire$, this.circulaireCollection.collection$);
-        this.initCollection(this.signification$, this.significationCollection.collection$);
-        this.initCollection(this.codeSpe$, this.codeSpeCollection.collection$);
+        this.initCollection(this.symbols$ as any, this.symbolCollection.collection$ as any);
+        this.initCollection(this.filieres$ as any, this.filiereCollection.collection$ as any);
+        this.initCollection(this.circulaire$ as any, this.circulaireCollection.collection$ as any);
+        this.initCollection(this.signification$ as any, this.significationCollection.collection$ as any);
+        this.initCollection(this.codeSpe$ as any, this.codeSpeCollection.collection$ as any);
     }
 
     updateSearchText(searchText: string) {
@@ -92,18 +92,18 @@ export class GlobalSearchService {
     private applySearch() {
         if (this.searchText && this.searchText.trim().length > 0) {
             const mainResult = {
-                symbols: this.searchInCollection(this.symbols$),
-                filieres: this.searchInCollection(this.filieres$),
-                circulaire: this.searchInCollection(this.circulaire$),
-                signification: this.searchInCollection(this.signification$),
-                codeSpe: this.searchInCollection(this.codeSpe$),
+                symbols: this.searchInCollection(this.symbols$ as any),
+                filieres: this.searchInCollection(this.filieres$ as any),
+                circulaire: this.searchInCollection(this.circulaire$ as any),
+                signification: this.searchInCollection(this.signification$ as any),
+                codeSpe: this.searchInCollection(this.codeSpe$ as any),
             };
             const dependenciesResult = {
-                symbols: this.searchInCollectionDependencies(this.symbols$),
-                filieres: this.searchInCollectionDependencies(this.filieres$),
-                circulaire: this.searchInCollectionDependencies(this.circulaire$),
-                signification: this.searchInCollectionDependencies(this.signification$),
-                codeSpe: this.searchInCollectionDependencies(this.codeSpe$),
+                symbols: this.searchInCollectionDependencies(this.symbols$ as any),
+                filieres: this.searchInCollectionDependencies(this.filieres$ as any),
+                circulaire: this.searchInCollectionDependencies(this.circulaire$ as any),
+                signification: this.searchInCollectionDependencies(this.signification$ as any),
+                codeSpe: this.searchInCollectionDependencies(this.codeSpe$ as any),
             };
             this.searchResult$.next({
                 mainResult: {
@@ -149,7 +149,7 @@ export class GlobalSearchService {
             const foundIndex = item.links?.findIndex((link) => {
                 for (const key in link) {
                     if (Object.prototype.hasOwnProperty.call(link, key)) {
-                        const element = link[key];
+                        const element = (link as any)[key];
                         if (element) {
                             const found =
                                 link.note?.toLowerCase().includes(this.searchText.toLowerCase()) ||
@@ -163,12 +163,13 @@ export class GlobalSearchService {
                         }
                     }
                 }
+                return false;
             });
             return foundIndex !== -1;
         });
     }
 
-    private initCollection(localCollection, storeCollection) {
+    private initCollection(localCollection:BehaviorSubject<ICollectionData[]>, storeCollection:BehaviorSubject<ICollectionData[]>) {
         storeCollection.subscribe((collection) => {
             localCollection.next(collection);
         });

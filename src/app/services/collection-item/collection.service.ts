@@ -19,7 +19,7 @@ import { SubStoreService } from '../data-store/sub-store/sub-store.service';
 export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedModel extends ICollectionData> {
     protected store!: SubStoreService;
     protected baseCollection$!: BehaviorSubject<BaseModel[]>;
-    protected currentRelation$!: BehaviorSubject<IRelationData>;
+    protected currentRelation$!: BehaviorSubject<IRelationData | null>;
     public collection$ = new BehaviorSubject<LinkedModel[]>([]);
 
     private runBuild$ = new Subject<void>(); // debouncing assemblage données
@@ -124,7 +124,7 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
     /**
      * build object associés en fonction du store
      */
-    private buildCollection(collection: IBaseCollectionData[], relation: IRelationData): LinkedModel[] {
+    private buildCollection(collection: IBaseCollectionData[], relation: IRelationData | null): LinkedModel[] {
         {
             const returned = [];
             for (const item of collection) {
