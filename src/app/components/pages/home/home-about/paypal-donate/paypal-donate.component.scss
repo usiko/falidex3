@@ -1,0 +1,14 @@
+ion-button {
+    margin: 10px;
+}
+
+ion-card.warning-card {
+    background: var(--ion-color-primary) !important;
+    ion-card-content {
+        font-size: 0.9em;
+    }
+}
+
+.text-center {
+    text-align: center;
+}

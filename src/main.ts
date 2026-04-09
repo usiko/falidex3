@@ -7,6 +7,7 @@ import { AppComponent } from './app/app.component';
 import { provideAppInitializer, isDevMode } from '@angular/core';
 import { appInitiealizerFn } from './app/app.initializer';
 import { provideServiceWorker } from '@angular/service-worker';
+import { provideHttpClient } from '@angular/common/http';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -17,5 +18,6 @@ bootstrapApplication(AppComponent, {
             enabled: !isDevMode(),
             registrationStrategy: 'registerWhenStable:30000'
           }),
+    provideHttpClient()
   ],
 });

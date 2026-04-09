@@ -1,12 +1,14 @@
 import { Routes } from '@angular/router';
+import { AnimatedSplashscreenComponent } from './components/animated-splashscreen/animated-splashscreen.component';
 
 export const routes: Routes = [
+  { path: '', component: AnimatedSplashscreenComponent },
   {
     path: 'home',
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+    loadComponent: () => import('./components/pages/home/home.page.component').then((m) => m.HomePageComponent),
   },
   {
-    path: '',
+    path: '**',
     redirectTo: 'home',
     pathMatch: 'full',
   },
