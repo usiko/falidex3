@@ -1,7 +1,10 @@
-<div *ngIf="symbol$|async as symbol">
+@let symbol = symbol$|async;
+@if(symbol)
+{
     <ion-card class="img-container">
         <div class="img-symbole">
-            <app-img-loader [resource]="true" [src]="(symbol.imgs && symbol.imgs[0])?symbol.imgs[0].url:null">
+            @let imgs = symbol.imgs;
+            <app-img-loader [resource]="true" [src]="(imgs && imgs[0])?imgs[0].url:''">
             </app-img-loader>
         </div>
     </ion-card>
@@ -21,9 +24,9 @@
         </ion-tab-bar>
     </ion-card>
     <div class="content">
-        <ion-slides #slides (ionSlideDidChange)="slidesChange($event)" [options]="slideOptions">
+        <app-slider [(index)]="slideIndex">
             <ng-container>
-                <ion-slide *ngIf="symbol &&  filieres && filieres.length>0">
+                <ng-template appSlide *ngIf="symbol &&  filieres && filieres.length>0">
 
                     <div class="filieres content">
                         <ion-card *ngFor="let filiere of filieres">
@@ -32,8 +35,8 @@
 
                         </ion-card>
                     </div>
-                </ion-slide>
-                <ion-slide *ngIf="symbol && significations && significations.length>0">
+                </ng-template>
+                <ng-template appSlide *ngIf="symbol && significations && significations.length>0">
 
                     <div class="signification content">
                         <ion-card *ngFor="let signification of significations">
@@ -42,12 +45,13 @@
                         </ion-card>
 
                     </div>
-                </ion-slide>
+                </ng-template>
             </ng-container>
 
-        </ion-slides>
+        </app-slider>
     </div>
-</div>
-<div *ngIf="!symbol$">
+}
+@if(!symbol$)
+{
     <h1>OOPS</h1>
-</div>
+}

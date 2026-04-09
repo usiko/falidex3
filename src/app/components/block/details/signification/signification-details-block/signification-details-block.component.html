@@ -1,15 +1,19 @@
-<ng-container *ngIf="signification$|async as signification">
+@let signification = signification$|async;
+@if(signification)
+{
     <ion-card class="signification-content" *ngIf="signification.content!==signification.name">
         <div class="content">{{signification.content}}</div>
 
     </ion-card>
 
-    <ion-slides #slides (ionSlideDidChange)="slidesChange($event)" [options]="slideOptions">
+    <app-slider [(index)]="slideIndex">
         <ng-container>
 
-            <ng-container *ngIf="signification.links as links">
+            @let links = signification.links;
+            @if(links)
+            {
 
-                <ion-slide *ngFor="let link of links">
+                <ng-template appSlide *ngFor="let link of links">
                     <ion-card class="slide-container">
 
                         <div class="content">
@@ -19,14 +23,14 @@
                         </div>
 
                     </ion-card>
-                </ion-slide>
-            </ng-container>
+                </ng-template>
+            }
 
 
         </ng-container>
 
-    </ion-slides>
-</ng-container>
+    </app-slider>
+}
 
 <ng-template #linkTpl let-link="link" let-links="links">
     <div class="img-container">
@@ -36,7 +40,7 @@
         </div>
     </div>
     <div class="content-slide">
-        <ion-button fill="clear" [disabled]="slideIndex==0" *ngIf="links.length>1" (click)="slideprevious()" expand="full" size="small">
+        <ion-button fill="clear" [disabled]="slideIndex()==0" *ngIf="links.length>1" (click)="previousSlide()" expand="full" size="small">
             <fa-icon class='dark-color' [icon]="['fas', 'angle-left']" class="dark-color" slot="icon-only"></fa-icon>
         </ion-button>
         <div class="title">
@@ -50,7 +54,7 @@
                 <p *ngIf="link.placement">décerné {{link.placement.name}}</p>
             </ion-card-content>
         </div>
-        <ion-button fill="clear" [disabled]="slideIndex==links.length-1" *ngIf="links.length>1" (click)="slidenext()" expand="full" size="small">
+        <ion-button fill="clear" [disabled]="slideIndex()==links.length-1" *ngIf="links.length>1" (click)="nextSlide()" expand="full" size="small">
             <fa-icon class='dark-color' [icon]="['fas', 'angle-right']" class="dark-color" slot="icon-only"></fa-icon>
         </ion-button>
     </div>

@@ -1,5 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import { Component, Input, OnInit, model, effect } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ICollectionLink, IFiliere, ISignification, ISymbol } from 'src/app/models/linked-data-models';
 import { IonCard, IonTabBar, IonTabButton, IonLabel, IonBadge } from "@ionic/angular/standalone";
@@ -8,30 +7,39 @@ import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { FiliereNosymbBlockItemListComponent } from "../../../list/filiere/filiere-nosymb-block-item-list/filiere-nosymb-block-item-list.component";
 import { SignificationItemBlockComponent } from "../../../list/signification/signification-item-block/signification-item-block.component";
 import { FilterLinkPipe } from 'src/app/components/shared/pipes/filter-links.pipe';
+import { CommonModule } from '@angular/common';
+import { SliderComponent } from 'src/app/components/shared/slider/slider.component';
+import { SlideDirective } from 'src/app/components/shared/slider/slide.directive';
 
 @Component({
     selector: 'app-symbole-details-block',
     templateUrl: './symbole-details-block.component.html',
     styleUrls: ['./symbole-details-block.component.scss'],
-    imports: [IonCard, ImgLoaderComponent, IonTabBar, IonTabButton, FaIconComponent, IonLabel, IonBadge, FiliereNosymbBlockItemListComponent, SignificationItemBlockComponent,FilterLinkPipe],
+    imports: [CommonModule, IonCard, ImgLoaderComponent, IonTabBar, IonTabButton, FaIconComponent, IonLabel, IonBadge, FiliereNosymbBlockItemListComponent, SignificationItemBlockComponent, FilterLinkPipe, SliderComponent, SlideDirective],
 })
 export class SymboleDetailsBlockComponent implements OnInit {
-    @ViewChild('slides') slide: IonSlides;
-    @Input() symbol$: BehaviorSubject<ISymbol>;
+    @Input() symbol$!: BehaviorSubject<ISymbol>;
     public significations: ISignification[] = [];
     public filieres: IFiliere[] = [];
 
-    public selectedTab:string|undefined;
-    public slideOptions = {
-        autoplay: false,
-        pagination: false,
-    };
-    public slidesIndex$ = new BehaviorSubject(0);
-
+    public selectedTab: string | undefined;
+    public slideIndex = model(0);
     public slidable = true;
 
     private subscription = new Subscription();
-    constructor() {}
+    constructor() {
+        effect(() => {
+            const index = this.slideIndex();
+            if (this.slidable) {
+                if (index === 1) {
+                    this.selectedTab = 'significations';
+                }
+                if (index === 0) {
+                    this.selectedTab = 'filieres';
+                }
+            }
+        });
+    }
     ngOnInit() {
         if (this.symbol$) {
             this.subscription.add(
@@ -42,11 +50,6 @@ export class SymboleDetailsBlockComponent implements OnInit {
                         console.log('dep', this.filieres, this.significations);
                         if (this.filieres.length === 0 || this.significations.length === 0) {
                             this.slidable = false;
-                            if (this.slide) {
-                                if (!this.slidable) {
-                                    this.slide.lockSwipes(true);
-                                }
-                            }
                             if (this.filieres.length !== 0) {
                                 this.selectedTab = 'filieres';
                             }
@@ -58,20 +61,6 @@ export class SymboleDetailsBlockComponent implements OnInit {
                 })
             );
         }
-
-        this.slidesIndex$.subscribe((num) => {
-            if (this.slidable) {
-                if (num === 1) {
-                    this.selectedTab = 'significations';
-                }
-                if (num === 0) {
-                    this.selectedTab = 'filieres';
-                }
-                if (this.slide) {
-                    this.slide.slideTo(num);
-                }
-            }
-        });
     }
 
     private getSignification(links: ICollectionLink[]) {
@@ -79,19 +68,22 @@ export class SymboleDetailsBlockComponent implements OnInit {
             .filter((link) => link.signification)
             .reduce((acc: ISignification[], link) => {
                 let signification = acc.find((item) => {
-                    item.id == link.signification.id;
+                    link.signification && item.id == link.signification.id;
                 });
-                if (!signification) {
+                if (!signification && link.signification) {
                     signification = {
                         ...link.signification,
                         links: [],
                     };
                 }
-                signification.links.push({
+                if(signification)
+                {
+                    signification.links.push({
                     ...link,
                     signification: undefined,
                 });
                 acc.push(signification);
+                }
                 return acc;
             }, []);
     }
@@ -100,29 +92,24 @@ export class SymboleDetailsBlockComponent implements OnInit {
             .filter((link) => link.filiere)
             .reduce((acc: IFiliere[], link) => {
                 let filiere = acc.find((item) => {
-                    item.id == link.filiere.id;
+                     link.filiere && item.id == link.filiere.id;
                 });
-                if (!filiere) {
+                if (!filiere && link.filiere) {
                     filiere = {
                         ...link.filiere,
                         links: [],
                     };
                 }
-                filiere.links.push({
-                    ...link,
-                    filiere: undefined,
-                });
-                acc.push(filiere);
+                if(filiere)
+                {
+                    filiere.links.push({
+                        ...link,
+                        filiere: undefined,
+                    });
+                    acc.push(filiere);
+                }
                 return acc;
             }, []);
-    }
-
-    ngAfterViewInit() {
-        if (this.slide) {
-            if (!this.slidable) {
-                this.slide.lockSwipes(true);
-            }
-        }
     }
 
     slideTo(num: number, event?: Event) {
@@ -130,17 +117,6 @@ export class SymboleDetailsBlockComponent implements OnInit {
             event.preventDefault();
             event.stopImmediatePropagation();
         }
-
-        this.slidesIndex$.next(num);
-    }
-
-    slidesChange(data) {
-        if (this.slide) {
-            this.slide.getActiveIndex().then((num) => {
-                if (num !== this.slidesIndex$.getValue()) {
-                    this.slidesIndex$.next(num);
-                }
-            });
-        }
+        this.slideIndex.set(num);
     }
 }
