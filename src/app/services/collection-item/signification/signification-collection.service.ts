@@ -9,12 +9,12 @@ import { ICollectionItem } from '../collection.service';
     providedIn: 'root'
 })
 export class SignificationCollectionService extends ICollectionItem<ISubBaseSignification, ISignification> {
-    protected baseCollection$ = this.store.significations$;
-    constructor(protected store: SubStoreService) {
+    protected override baseCollection$ = this.store.significations$;
+    constructor(protected override store: SubStoreService) {
         super();
     }
 
-    init() {
+    override init() {
         super.init();
         this.bindSubjectToBuild(this.store.positions$);
         this.bindSubjectToBuild(this.store.placements$);
@@ -23,7 +23,7 @@ export class SignificationCollectionService extends ICollectionItem<ISubBaseSign
         this.bindSubjectToBuild(this.store.symbolesSens$);
     }
 
-    protected linkFinder(item: ISubBaseSignification, links: IRelationItem[]): IRelationItem[] {
+    protected override linkFinder(item: ISubBaseSignification, links: IRelationItem[]): IRelationItem[] {
         const returned: IRelationItem[] = [];
         for (const rel of links) {
             //specfik

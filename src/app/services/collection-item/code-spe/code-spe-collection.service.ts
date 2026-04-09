@@ -8,12 +8,12 @@ import { ICollectionItem } from '../collection.service';
     providedIn: 'root',
 })
 export class CodeSpeCollectionService extends ICollectionItem<IBaseCodeSpe, ICodeSpe> {
-    protected baseCollection$ = this.store.codeSpeText$;
-    constructor(protected store: SubStoreService) {
+    protected override baseCollection$ = this.store.codeSpeText$;
+    constructor(protected override store: SubStoreService) {
         super();
     }
 
-    init() {
+    override init() {
         // aucune opération on prends que les info direct
         this.baseCollection$.subscribe((item) => {
             this.collection$.next(item as ICodeSpe[]);

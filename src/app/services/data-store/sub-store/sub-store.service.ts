@@ -49,7 +49,7 @@ export class SubStoreService {
 
     public codeSpeText$: BehaviorSubject<IBaseCodeSpe[]> = this.store.codeSpeText$;
 
-    public getItemById(id: string, subject: BehaviorSubject<ISubBaseCollectionData[]>): ISubBaseCollectionData {
+    public getItemById(id: string, subject: BehaviorSubject<ISubBaseCollectionData[]>): ISubBaseCollectionData|undefined {
         const items = subject.getValue();
         const find = items.find((item) => {
             return item.id === id;
@@ -64,7 +64,7 @@ export class SubStoreService {
         storeSubjects: BehaviorSubject<IBaseCollectionData[]>[],
         debouncer: BehaviorSubject<ISubBaseCollectionData[]>,
         localSubject: BehaviorSubject<ISubBaseCollectionData[]>,
-        adapter?: (IBaseCollectionData) => ISubBaseCollectionData[]
+        adapter?: (IBaseCollectionData:ISubBaseCollectionData[]) => ISubBaseCollectionData[]
     ) {
         debouncer.pipe(debounceTime(500)).subscribe((items) => {
             localSubject.next(items);
@@ -87,21 +87,21 @@ export class SubStoreService {
     }
 
     public init() {
-        this.listenStore([this.store.significations$], this.significationsDebouncer$, this.significations$);
-        this.listenStore([this.store.filieres$], this.filieresDebouncer$, this.filieres$);
-        this.listenStore([this.store.placements$], this.placementsDebouncer$, this.placements$);
-        this.listenStore([this.store.positions$], this.positionsDebouncer$, this.positions$);
-        this.listenStore([this.store.symboles$], this.symbolesDebouncer$, this.symboles$);
-        this.listenStore([this.store.symbolesSens$], this.symbolesSensDebouncer$, this.symbolesSens$);
-        this.listenStore([this.store.symbolesAccessories$], this.symbolesAccessoryDebouncer$, this.symbolesAccessories$);
+        this.listenStore([this.store.significations$ as unknown as BehaviorSubject<IBaseCollectionData[]>], this.significationsDebouncer$ as unknown as BehaviorSubject<ISubBaseCollectionData[]>, this.significations$ as unknown as BehaviorSubject<ISubBaseCollectionData[]>);
+        this.listenStore([this.store.filieres$ as unknown as BehaviorSubject<IBaseCollectionData[]>], this.filieresDebouncer$ as unknown as BehaviorSubject<ISubBaseCollectionData[]>, this.filieres$ as unknown as BehaviorSubject<ISubBaseCollectionData[]>);
+        this.listenStore([this.store.placements$ as unknown as BehaviorSubject<IBaseCollectionData[]>], this.placementsDebouncer$ as unknown as BehaviorSubject<ISubBaseCollectionData[]>, this.placements$ as unknown as BehaviorSubject<ISubBaseCollectionData[]>);
+        this.listenStore([this.store.positions$ as unknown as BehaviorSubject<IBaseCollectionData[]>], this.positionsDebouncer$ as unknown as BehaviorSubject<ISubBaseCollectionData[]>, this.positions$ as unknown as BehaviorSubject<ISubBaseCollectionData[]>);
+        this.listenStore([this.store.symboles$ as unknown as BehaviorSubject<IBaseCollectionData[]>], this.symbolesDebouncer$ as unknown as BehaviorSubject<ISubBaseCollectionData[]>, this.symboles$ as unknown as BehaviorSubject<ISubBaseCollectionData[]>);
+        this.listenStore([this.store.symbolesSens$ as unknown as BehaviorSubject<IBaseCollectionData[]>], this.symbolesSensDebouncer$ as unknown as BehaviorSubject<ISubBaseCollectionData[]>, this.symbolesSens$ as unknown as BehaviorSubject<ISubBaseCollectionData[]>);
+        this.listenStore([this.store.symbolesAccessories$ as unknown as BehaviorSubject<IBaseCollectionData[]>], this.symbolesAccessoryDebouncer$ as unknown as BehaviorSubject<ISubBaseCollectionData[]>, this.symbolesAccessories$ as unknown as BehaviorSubject<ISubBaseCollectionData[]>);
 
         /**
          * assemblage circulaires et couleurs
          */
         this.listenStore(
-            [this.store.circulaires$, this.store.colors$, this.store.circulairesColors$],
-            this.circulairesDebouncer$,
-            this.circulaires$,
+            [this.store.circulaires$ as unknown as BehaviorSubject<IBaseCollectionData[]>, this.store.colors$ as unknown as BehaviorSubject<IBaseCollectionData[]>, this.store.circulairesColors$ as unknown as BehaviorSubject<IBaseCollectionData[]>],
+            this.circulairesDebouncer$ as unknown as BehaviorSubject<ISubBaseCollectionData[]>,
+            this.circulaires$ as unknown as BehaviorSubject<ISubBaseCollectionData[]>,
             (items) => {
                 const circulaires: IBaseCirculaire[] = this.store.circulaires$.getValue();
                 const colors: IBaseColor[] = this.store.colors$.getValue();
@@ -131,7 +131,7 @@ export class SubStoreService {
         });
         this.currentDataRelations$.subscribe((relations) => {
             if (relations) {
-                this.store.codeSpeText$.next(relations.specificites);
+                this.store.codeSpeText$.next(relations.specificites as IBaseCodeSpe[]);
             }
         });
     }

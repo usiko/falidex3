@@ -17,12 +17,12 @@ import {
 import { SubStoreService } from '../data-store/sub-store/sub-store.service';
 
 export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedModel extends ICollectionData> {
-    protected store: SubStoreService;
-    protected baseCollection$: BehaviorSubject<BaseModel[]>;
-    protected currentRelation$: BehaviorSubject<IRelationData>;
+    protected store!: SubStoreService;
+    protected baseCollection$!: BehaviorSubject<BaseModel[]>;
+    protected currentRelation$!: BehaviorSubject<IRelationData>;
     public collection$ = new BehaviorSubject<LinkedModel[]>([]);
 
-    private runBuild$ = new Subject(); // debouncing assemblage données
+    private runBuild$ = new Subject<void>(); // debouncing assemblage données
 
     /**
      * able to run init twice and not recall everything in each view
@@ -47,7 +47,7 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
                 console.log('relations update');
                 this.runBuild$.next();
             });
-            this.bindSubjectToBuild(this.baseCollection$);
+            this.bindSubjectToBuild(this.baseCollection$ as any);
         }
     }
 
@@ -83,33 +83,33 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
         return relations.map((relation) => {
             const returned: ICollectionLink = {};
             if (relation.circulaireId) {
-                returned.circulaire = this.store.getItemById(relation.circulaireId, this.store.circulaires$) as ISubBaseCirculaire;
+                returned.circulaire = this.store.getItemById(relation.circulaireId, this.store.circulaires$ as any) as ISubBaseCirculaire;
             }
             if (relation.filiereId) {
-                returned.filiere = this.store.getItemById(relation.filiereId, this.store.filieres$) as ISubBaseFiliere;
+                returned.filiere = this.store.getItemById(relation.filiereId, this.store.filieres$ as any) as ISubBaseFiliere;
             }
             if (relation.significationId) {
                 returned.signification = this.store.getItemById(
                     relation.significationId,
-                    this.store.significations$
+                    this.store.significations$ as any
                 ) as ISubBaseSignification;
             }
             if (relation.placementId) {
-                returned.placement = this.store.getItemById(relation.placementId, this.store.placements$) as ISubBasePlacement;
+                returned.placement = this.store.getItemById(relation.placementId, this.store.placements$ as any) as ISubBasePlacement;
             }
             if (relation.positionId) {
-                returned.position = this.store.getItemById(relation.positionId, this.store.positions$) as ISubBasePosition;
+                returned.position = this.store.getItemById(relation.positionId, this.store.positions$ as any) as ISubBasePosition;
             }
             if (relation.symboleId) {
-                returned.symbols = this.store.getItemById(relation.symboleId, this.store.symboles$) as ISubBaseSymbol;
+                returned.symbols = this.store.getItemById(relation.symboleId, this.store.symboles$ as any) as ISubBaseSymbol;
             }
             if (relation.symboleSensId) {
-                returned.symbolsens = this.store.getItemById(relation.symboleSensId, this.store.symbolesSens$) as ISubSymbolSens;
+                returned.symbolsens = this.store.getItemById(relation.symboleSensId, this.store.symbolesSens$ as any) as ISubSymbolSens;
             }
             if (relation.symboleAccessoryId) {
                 returned.symboleAccessory = this.store.getItemById(
                     relation.symboleAccessoryId,
-                    this.store.symbolesAccessories$
+                    this.store.symbolesAccessories$ as any
                 ) as ISubBaseSymbolAcessory;
             }
             returned.spe = relation.spe;
