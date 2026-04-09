@@ -1,0 +1,61 @@
+ion-item {
+    ion-label {
+        h3 {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            >div {
+                &::first-letter {
+                    text-transform: uppercase;
+                }
+            }
+            ion-icon,
+            fa-icon {
+                margin-left: 5px;
+            }
+        }
+        .circSymb {
+            .content {
+                font-size: 0.8em;
+                white-space: nowrap;
+                align-items: center;
+                display: flex;
+                ion-icon,
+                fa-icon {
+                    flex: none;
+                    font-size: 1.3em;
+                    margin-right: 5px;
+                }
+                span {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+        display: flex !important;
+        align-items: center;
+        margin: 0;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        height: 100%;
+        app-circulaire-representation {
+            margin-right: 16px;
+            height: 100%;
+        }
+    }
+    &.no-symbol {
+        --padding-start: 0px;
+        h3 {
+            font-size: 1.2em;
+        }
+        .content {
+            color: var(--ion-color-secondary);
+            font-style: italic;
+            font-size: 1.2em !important;
+        }
+        ion-label {
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+    }
+}

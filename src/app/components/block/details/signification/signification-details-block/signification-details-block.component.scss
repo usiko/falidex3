@@ -1,0 +1,41 @@
+.circulaireColor {
+    height: 30px;
+    //border-top: solid #ffffff 1px;
+}
+
+.content-slide {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    .title {
+        width: 100%;
+        &::first-letter {
+            text-transform: uppercase;
+        }
+        ion-card-content {
+            p {
+                &::first-letter {
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+}
+
+.slide-container {
+    width: 100%;
+}
+
+.img-symbole {
+    height: 300px;
+}
+
+.signification-content {
+    .content {
+        padding: 8px;
+        text-align: center;
+        &::first-letter {
+            text-transform: uppercase;
+        }
+    }
+}

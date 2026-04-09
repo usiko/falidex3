@@ -1,0 +1,53 @@
+:host {
+    display: block;
+    position: relative;
+    text-align: center;
+}
+
+ion-item {
+    .metaInfo {
+        color: var(--ion-color-secondary);
+        width: 100%;
+        display: flex;
+        align-items: center;
+        font-size: 0.8em;
+        .title {
+            width: 100%;
+            display: flex;
+            >div {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                &::first-letter {
+                    text-transform: uppercase;
+                }
+            }
+        }
+        .spe {
+            text-align: center;
+            font-size: 0.7em;
+            margin-left: 5px;
+        }
+    }
+    .text-title {
+        &::first-letter {
+            text-transform: uppercase;
+        }
+    }
+    .text-content {
+        color: var(--ion-color-dark);
+        padding: 8px 0;
+        font-size: 0.8em;
+        font-style: italic;
+        text-overflow: ellipsis;
+        &::first-letter {
+            text-transform: uppercase;
+        }
+    }
+    .position {
+        padding: 8px 0px;
+        font-weight: bold;
+        width: 100%;
+        text-align: center;
+    }
+}

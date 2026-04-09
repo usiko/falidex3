@@ -1,0 +1,37 @@
+h3 {
+    font-weight: bold;
+    &::first-letter {
+        text-transform: uppercase;
+    }
+}
+
+.signification,
+.filiere {
+    .content {
+        .flex {
+            font-size: 0.8em;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            &::first-letter {
+                text-transform: uppercase;
+            }
+            >div {
+                &::first-letter {
+                    text-transform: uppercase;
+                }
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            ion-icon,fa-icon {
+                flex: none;
+                font-size: 1.3em;
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+ion-item{
+		margin-top:5px;
+	}
