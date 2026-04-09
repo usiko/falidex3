@@ -1,18 +1,21 @@
-<ion-item *ngIf="item && navigation" lines="none" [routerLink]="[navigation,item.id]" (click)="click()" detail>
+
+
+<ion-item *ngIf="item() && navigation" lines="none" [routerLink]="[navigation,item().id]" (click)="click()" detail>
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </ion-item>
-<ion-item *ngIf="item && !navigation" lines="none" (click)="click()">
+<ion-item *ngIf="item() && !navigation" lines="none" (click)="click()">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </ion-item>
 <ng-template #content>
     <ion-thumbnail slot="start">
-        <app-img-loader [resource]="true" [src]="(item.imgs && item.imgs[0])?item.imgs[0].url:''">
+        @let imgs = item().imgs;
+        <app-img-loader [resource]="true" [src]="(imgs && imgs[0])?imgs[0].url:''">
         </app-img-loader>
     </ion-thumbnail>
     <ion-label>
-        <h3>{{item.name}}</h3>
+        <h3>{{item().name}}</h3>
 
-        <ng-container *ngIf="item.links|filterLink:['circulaire','filiere'] as  circFils">
+        <ng-container *ngIf="item().links|filterLink:['circulaire','filiere'] as  circFils">
             <p class="filiere" *ngIf="circFils.length>0">
                 <ng-container *ngIf="circFils.length>2">
                     <div class="content">
@@ -41,7 +44,7 @@
                 </ng-container>
             </p>
         </ng-container>
-        <ng-container *ngIf="item.links|filterLink:['signification'] as  significations">
+        <ng-container *ngIf="item().links|filterLink:['signification'] as  significations">
             <p *ngIf="significations.length>0" class="signification">
                 <ng-container *ngIf="significations.length>2">
                     <div class="content">
@@ -93,7 +96,7 @@
 
     </ion-label>
 </ng-template>
-<ion-item *ngIf="!item">
+<ion-item *ngIf="!item()">
     <ion-thumbnail slot="start">
         <ion-skeleton-text animated></ion-skeleton-text>
     </ion-thumbnail>

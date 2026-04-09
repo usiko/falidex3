@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { ICirculaire, ICollectionLink, IFiliere, ISignification, ISymbol } from 'src/app/models/linked-data-models';
-import { ISubBaseCirculaire, ISubBaseFiliere, ISubBaseSignification } from 'src/app/models/sub-base-data-models';
-import { ListItem } from '../../list-item';
+import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
+import { ICirculaire } from 'src/app/models/linked-data-models';
 import { IonItem, IonLabel, IonSkeletonText } from "@ionic/angular/standalone";
 import { CirculaireRepresentationComponent } from "src/app/components/shared/circulaire-representation/circulaire-representation.component";
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FilterLinkPipe } from 'src/app/components/shared/pipes/filter-links.pipe';
 
 /**
  * item block of symbole list showing
@@ -14,30 +15,28 @@ import { FaIconComponent } from "@fortawesome/angular-fontawesome";
     templateUrl: './circulaire-block-item-list.component.html',
     styleUrls: ['./circulaire-block-item-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [IonItem, IonLabel, CirculaireRepresentationComponent, FaIconComponent, IonSkeletonText],
+    imports: [CommonModule, RouterModule, IonItem, IonLabel, CirculaireRepresentationComponent, FaIconComponent, IonSkeletonText,FilterLinkPipe],
 })
-export class CirculaireBlockItemListComponent extends ListItem<ICirculaire> implements OnInit {
+export class CirculaireBlockItemListComponent {
     /**
      * symbole item to show
      */
-    @Input() item: ICirculaire;
+    item = input.required<ICirculaire>();
 
     /**
      * show if this item is specific
      * @deprecated (?)
      */
-    @Input() showSpe = true;
+    showSpe = input(true);
 
     /**
      * show navigation arrow
      */
-    @Input() navigation: string = null;
+    navigation = input<string|null>(null);
 
-    constructor(protected changedetector: ChangeDetectorRef) {
-        super();
-    }
+    onclick = output<void>();
 
-    ngOnInit() {}
+    constructor() {}
 
     click() {
         this.onclick.emit();

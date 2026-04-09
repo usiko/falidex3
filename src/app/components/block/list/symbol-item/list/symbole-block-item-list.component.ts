@@ -1,11 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { ICirculaire, ICollectionLink, IFiliere, ISignification, ISymbol } from 'src/app/models/linked-data-models';
-import { ISubBaseCirculaire, ISubBaseFiliere, ISubBaseSignification } from 'src/app/models/sub-base-data-models';
-import { ListItem } from '../../list-item';
-import { IonItem, IonThumbnail, IonLabel, IonSkeletonText } from "@ionic/angular/standalone";
-import { ImgLoaderComponent } from "src/app/components/shared/img-loader/img-loader.component";
-import { FaIconComponent } from "@fortawesome/angular-fontawesome";
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { FaIconComponent } from "@fortawesome/angular-fontawesome";
+import { IonItem, IonLabel, IonSkeletonText, IonThumbnail } from "@ionic/angular/standalone";
+import { ImgLoaderComponent } from "src/app/components/shared/img-loader/img-loader.component";
+import { ISymbol } from 'src/app/models/linked-data-models';
 
 /**
  * item block of symbole list showing
@@ -17,30 +15,30 @@ import { RouterModule } from '@angular/router';
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [IonItem, IonThumbnail, ImgLoaderComponent, IonLabel, FaIconComponent, IonSkeletonText, RouterModule],
 })
-export class SymbolBlockItemListComponent extends ListItem<ISymbol> implements OnInit {
+export class SymbolBlockItemListComponent {
     /**
      * symbole item to show
      */
-    @Input() item: ISymbol;
+    item = input.required<ISymbol>()
 
     /**
      * show if this item is specific
      * @deprecated (?)
      */
-    @Input() showSpe = true;
+    showSpe = input(true);
 
     /**
      * show navigation arrow
      */
-    @Input() navigation: string = null;
+    navigation =  input<string|null>(null)
 
-    constructor(protected override changedetector: ChangeDetectorRef) {
-        super();
-    }
+    onclick = output<void>()
+
+    
 
     ngOnInit() {}
 
-    override  click() {
-        this.onclick.emit();
+    click() {
+        this.onclick.emit(void 0);
     }
 }
