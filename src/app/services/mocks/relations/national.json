@@ -1,0 +1,603 @@
+{
+    "name": "national",
+    "id": "nat",
+    "relations": [{
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-0",
+            "symboleId": "symbole-0",
+            "circulaireId": "circulaire-0"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-1",
+            "symboleId": "symbole-2",
+            "circulaireId": "circulaire-2"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-2",
+            "symboleId": "symbole-1",
+            "circulaireId": "circulaire-1"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-3",
+            "symboleId": "symbole-4",
+            "circulaireId": "circulaire-1"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-4",
+            "symboleId": "symbole-5",
+            "circulaireId": "circulaire-3"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-5",
+            "symboleId": "symbole-6",
+            "circulaireId": "circulaire-5"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-6",
+            "symboleId": "symbole-7",
+            "circulaireId": "circulaire-6"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-7",
+            "symboleId": "symbole-8",
+            "circulaireId": "circulaire-2"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-8",
+            "symboleId": "symbole-3",
+            "circulaireId": "circulaire-2"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-9",
+            "symboleId": "symbole-8",
+            "circulaireId": "circulaire-2"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-10",
+            "symboleId": "symbole-9",
+            "circulaireId": "circulaire-7"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-11",
+            "symboleId": "symbole-10",
+            "circulaireId": "circulaire-4"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-12",
+            "symboleId": "symbole-11",
+            "circulaireId": "circulaire-8"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-13",
+            "symboleId": "symbole-3",
+            "circulaireId": "circulaire-9"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-15",
+            "symboleId": "symbole-39",
+            "circulaireId": "circulaire-9"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-18",
+            "symboleId": "symbole-14",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-19",
+            "symboleId": "symbole-16",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-20",
+            "symboleId": "symbole-17",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-23",
+            "symboleId": "symbole-127",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-25",
+            "symboleId": "symbole-18",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-26",
+            "symboleId": "symbole-23",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-29",
+            "symboleId": "symbole-26",
+            "circulaireId": "circulaire-14"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-31",
+            "symboleId": "symbole-27",
+            "circulaireId": "circulaire-14"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-32",
+            "symboleId": "symbole-28",
+            "circulaireId": "circulaire-14"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-33",
+            "symboleId": "symbole-29",
+            "circulaireId": "circulaire-14"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-34",
+            "symboleId": "symbole-37",
+            "circulaireId": "circulaire-13"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-36",
+            "symboleId": "symbole-30",
+            "circulaireId": "circulaire-20"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-37",
+            "symboleId": "symbole-31",
+            "circulaireId": "circulaire-22"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-38",
+            "symboleId": "symbole-32",
+            "circulaireId": "circulaire-17"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-39",
+            "symboleId": "symbole-38",
+            "circulaireId": "circulaire-19"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-40",
+            "symboleId": "symbole-33",
+            "circulaireId": "circulaire-21"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-42",
+            "symboleId": "symbole-75",
+            "circulaireId": "circulaire-23"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-41",
+            "symboleId": "symbole-43",
+            "circulaireId": "circulaire-24"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-44",
+            "symboleId": "symbole-92",
+            "circulaireId": "circulaire-26"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-45",
+            "symboleId": "symbole-3",
+            "circulaireId": "circulaire-27"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-24",
+            "symboleId": "symbole-128",
+            "circulaireId": "circulaire-11"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-50",
+            "symboleId": "symbole-34",
+            "circulaireId": "circulaire-12"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-30",
+            "symboleId": "symbole-24",
+            "circulaireId": "circulaire-14"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-46",
+            "symboleId": "symbole-3",
+            "circulaireId": "circulaire-32"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-54",
+            "symboleId": "symbole-42",
+            "circulaireId": "circulaire-31"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-48",
+            "symboleId": "symbole-42",
+            "circulaireId": "circulaire-31"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-35",
+            "symboleId": "symbole-44",
+            "circulaireId": "circulaire-31"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-55",
+            "symboleId": "symbole-46",
+            "circulaireId": "circulaire-31"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-47",
+            "symboleId": "symbole-47",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-22",
+            "symboleId": "symbole-14",
+            "circulaireId": "circulaire-10"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-49",
+            "symboleId": "symbole-3",
+            "circulaireId": "circulaire-27"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-3",
+            "filiereId": "filiere-14",
+            "symboleId": "symbole-3",
+            "circulaireId": "circulaire-27"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-55",
+            "significationId": "signification-0"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-55",
+            "significationId": "signification-1"
+        },
+        {
+            "placementId": "placement-0",
+            "symboleSensId": "symbole-sens-1",
+            "symboleId": "symbole-55",
+            "significationId": "signification-2"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-4",
+            "significationId": "signification-52",
+            "symboleId": "symbole-85"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "significationId": "signification-51",
+            "symboleId": "symbole-84"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-59",
+            "significationId": "signification-10",
+            "symboleSensId": "symbole-sens-0"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-59",
+            "significationId": "signification-7",
+            "symboleSensId": "symbole-sens-1"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-82",
+            "significationId": "signification-43"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-108",
+            "significationId": "signification-77"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-90",
+            "significationId": "signification-58"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-66",
+            "significationId": "signification-19"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-15",
+            "significationId": "signification-35"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-23",
+            "significationId": "signification-66"
+        },
+        {
+            "placementId": "placement-4",
+            "positionId": "position-4",
+            "symboleId": "symbole-99",
+            "significationId": "signification-69"
+        },
+        {
+            "placementId": "placement-4",
+            "positionId": "position-4",
+            "symboleId": "symbole-100",
+            "significationId": "signification-70"
+        },
+        {
+            "placementId": "placement-4",
+            "positionId": "position-4",
+            "symboleId": "symbole-101",
+            "significationId": "signification-71"
+        },
+        {
+            "placementId": "placement-4",
+            "positionId": "position-4",
+            "symboleId": "symbole-102",
+            "significationId": "signification-72"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-86",
+            "significationId": "signification-30"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-105",
+            "significationId": "signification-74"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-106",
+            "significationId": "signification-75"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-94",
+            "significationId": "signification-63"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-89",
+            "significationId": "signification-55"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-110",
+            "significationId": "signification-80"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-97",
+            "significationId": "signification-67"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-96",
+            "significationId": "signification-65"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-107",
+            "significationId": "signification-76"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-109",
+            "significationId": "signification-78"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-98",
+            "significationId": "signification-68"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-32",
+            "significationId": "signification-49"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-70",
+            "significationId": "signification-28"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-126",
+            "significationId": "signification-106"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-3",
+            "symboleId": "symbole-88",
+            "significationId": "signification-56"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-6",
+            "symboleId": "symbole-88",
+            "significationId": "signification-57"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-3",
+            "symboleId": "symbole-76",
+            "significationId": "signification-24"
+        },
+        {
+            "placementId": "placement-6",
+            "positionId": "position-4",
+            "symboleId": "symbole-72",
+            "significationId": "signification-53",
+            "symboleAccessoryId": "symbole-accessory-7"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-72",
+            "significationId": "signification-32"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-75",
+            "significationId": "signification-34"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-25",
+            "significationId": "signification-45"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-28",
+            "significationId": "signification-46"
+        },
+        {
+            "placementId": "placement-1",
+            "positionId": "position-4",
+            "symboleId": "symbole-31",
+            "significationId": "signification-31"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-69",
+            "significationId": "signification-25"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-61",
+            "significationId": "signification-11"
+        },
+        {
+            "placementId": "placement-0",
+            "positionId": "position-4",
+            "symboleId": "symbole-15",
+            "significationId": "signification-35"
+        },
+        {
+            "placementId": "placement-2",
+            "positionId": "position-4",
+            "symboleId": "symbole-87",
+            "significationId": "signification-54"
+        }
+    ],
+    "specificites": [],
+    "lastUpdate": "30/08/2021 20:58"
+}
