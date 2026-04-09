@@ -16,24 +16,29 @@ import {FaIconComponent, FontAwesomeModule} from "@fortawesome/angular-fontaweso
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { NavigationComponent } from "./components/sidebar/navigation/navigation.component";
+import { FiltresComponent } from "./components/sidebar/filtres/filtres.component";
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   imports: [
     IonApp,
-     IonRouterOutlet,
-     IonContent,
-     IonMenu,
-     IonHeader,
-     IonToolbar,
-     IonTitle,
-     IonItem,
-     IonSelect,
-     IonSelectOption,
-     FaIconComponent,
-     FontAwesomeModule,
-     IonLabel,
-      CommonModule],
+    IonRouterOutlet,
+    IonContent,
+    IonMenu,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonItem,
+    IonSelect,
+    IonSelectOption,
+    FaIconComponent,
+    FontAwesomeModule,
+    IonLabel,
+    CommonModule,
+    NavigationComponent,
+    FiltresComponent
+],
 })
 export class AppComponent implements OnInit {
     private loaderStoreService= inject(DataLoaderStoreService);

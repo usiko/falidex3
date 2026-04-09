@@ -2,6 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { BehaviorSubject } from 'rxjs';
 import { InstallAppService } from 'src/app/services/install/install-app.service';
+import { IonList, IonItem, IonItemDivider, IonMenuToggle, IonLabel } from "@ionic/angular/standalone";
+import { FaIconComponent } from "@fortawesome/angular-fontawesome";
+import { RouterLink, RouterModule } from '@angular/router';
 
 /**
  * navigation menu
@@ -10,6 +13,7 @@ import { InstallAppService } from 'src/app/services/install/install-app.service'
     selector: 'app-navigation',
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
+    imports: [IonList, IonItem, FaIconComponent, IonItemDivider, IonMenuToggle, IonLabel, RouterModule],
 })
 export class NavigationComponent implements OnInit {
     /**
@@ -18,7 +22,7 @@ export class NavigationComponent implements OnInit {
     @Input() pages: {
         title: string;
         url: string;
-        icon?: IconName;
+        icon?: string;
         src?: string;
         disabled?: boolean;
     }[] = [];
