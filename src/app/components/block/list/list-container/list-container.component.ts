@@ -4,16 +4,24 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    computed,
+    effect,
+    input,
     Input,
+    model,
     OnDestroy,
     OnInit,
     TemplateRef,
     ViewChild,
 } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
-import { IonFab, IonFabButton, IonItemGroup } from "@ionic/angular/standalone";
-
+import { IonFab, IonFabButton, IonItemGroup, IonItemDivider, IonLabel, IonButtons, IonButton } from "@ionic/angular/standalone";
+import { FaIconComponent } from "@fortawesome/angular-fontawesome";
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { SlideDirective } from 'src/app/components/shared/slider/slide.directive';
+import { SliderComponent } from 'src/app/components/shared/slider/slider.component';
+import { CommonModule } from '@angular/common';
+import { ArrayGroupPipe } from 'src/app/components/shared/pipes/array-groupe.pipe';
 /**
  * List dislayer and switcher
  */
@@ -22,40 +30,62 @@ import { IonFab, IonFabButton, IonItemGroup } from "@ionic/angular/standalone";
     templateUrl: './list-container.component.html',
     styleUrls: ['./list-container.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [IonFab, IonFabButton, IonItemGroup],
+    imports: [IonFab, IonFabButton, IonItemGroup, FaIconComponent, ScrollingModule, CommonModule, ArrayGroupPipe, SlideDirective, SliderComponent, IonItemDivider, IonLabel, IonButtons, IonButton],
 })
-export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
-    @ViewChild(IonSlides) slides: IonSlides;
-    @ViewChild('cdkList') cdkList: CdkVirtualScrollViewport;
-    @ViewChild('cdkGallery') cdkGallery: CdkVirtualScrollViewport;
-    @ViewChild('cdkSlideList') cdkSlideList: CdkVirtualScrollViewport;
-    @ViewChild('cdkSlideGallery') cdkSlideGallery: CdkVirtualScrollViewport;
+export class LisContainerComponent implements OnDestroy, OnInit {
+    @ViewChild('cdkList') cdkList!: CdkVirtualScrollViewport;
+    @ViewChild('cdkGallery') cdkGallery!: CdkVirtualScrollViewport;
+    @ViewChild('cdkSlideList') cdkSlideList!: CdkVirtualScrollViewport;
+    @ViewChild('cdkSlideGallery') cdkSlideGallery!: CdkVirtualScrollViewport;
 
     /***
      * loading state
      */
     @Input() loading = false;
 
-    @Input() navigationPath: string;
+    @Input() navigationPath!: string;
 
-    @Input() initLoading: boolean;
+    @Input() initLoading!: boolean;
 
-    @Input() activeListMode: {
+    activeListMode = input<{
         list?: TemplateRef<any>;
         gallery?: TemplateRef<any>;
-    };
+    }>({})
 
     @Input() showScrollTopBtn = false;
 
-    public listMode: string;
-    @Input() items$: BehaviorSubject<any[]>;
+    public listMode = computed(()=>{
+        const index = this.slideIndex()
+        if(index==0)
+        {
+            return 'list';
+        }
+        return 'gallery';
 
-    @Input() itemListSize;
-    @Input() itemGallerySize;
+    })
+    @Input() items$!: BehaviorSubject<any[]>;
+
+    @Input() itemListSize:number=0;
+    @Input() itemGallerySize:number=0;
 
     public emptyItems: null[] = [];
 
-    constructor(private changeDetector: ChangeDetectorRef) {}
+    protected slideIndex = model(0);
+
+    constructor(private changeDetector: ChangeDetectorRef) {
+        effect(()=>{
+            {
+            const activeListMode = this.activeListMode()
+            if (activeListMode.list) {
+                this.slideIndex.set(0)
+            } else if (activeListMode.gallery) {
+                this.slideIndex.set(1)
+            }
+
+        }
+        })
+        
+    }
 
     /**
      * switching of list mode
@@ -63,82 +93,46 @@ export class LisContainerComponent implements AfterViewInit, OnDestroy, OnInit {
      */
     switchListMode(listMode: string) {
         if (listMode == 'list') {
-            this.slides.lockSwipes(false);
-            this.slides.slideTo(0);
-            this.slides.lockSwipes(true);
-            this.listMode = 'list';
+            this.slideIndex.set(0)
+
         }
         if (listMode == 'gallery') {
-            this.slides.lockSwipes(false);
-            this.slides.slideTo(1);
-            this.slides.lockSwipes(true);
-            this.listMode = 'gallery';
+            this.slideIndex.set(1)
         }
         this.changeDetector.detectChanges();
     }
 
-    /**
-     * getting list mode from slide
-     */
-    private getListMode() {
-        if (this.slides) {
-            this.slides.getActiveIndex().then((index) => {
-                if (index === 0) {
-                    this.listMode = 'list';
-                }
-                if (index === 1) {
-                    this.listMode = 'gallery';
-                }
-                this.changeDetector.detectChanges();
-            });
-        }
-    }
 
-    ngAfterViewInit(): void {
-        if (this.slides) {
-            this.slides.slideTo(0);
-            this.slides.lockSwipes(true);
-            this.slides.stopAutoplay();
-            this.slides.ionSlideDidChange.subscribe((event) => {
-                this.getListMode();
-            });
-            this.getListMode();
-        } else if (!this.activeListMode.gallery || !this.activeListMode.list) {
-            if (this.activeListMode.gallery) {
-                this.listMode = 'gallery';
-            }
-            if (this.activeListMode.list) {
-                this.listMode = 'list';
-            }
-        }
-    }
+
 
     ngOnInit(): void {
         this.initEmptyList();
         // init listmode without slide
-        if (this.activeListMode && !(this.activeListMode.gallery && this.activeListMode.list)) {
-            if (this.activeListMode.list) {
-                this.listMode = 'list';
-            } else if (this.activeListMode.gallery) {
-                this.listMode = 'gallery';
+        const activeListMode = this.activeListMode()
+        if (activeListMode && !(activeListMode.gallery && activeListMode.list)) {
+            if (activeListMode.list) {
+                this.slideIndex.set(0)
+            } else if (activeListMode.gallery) {
+                this.slideIndex.set(1)
             }
         }
     }
 
     scrollToTop() {
-        let cdk: CdkVirtualScrollViewport;
-        if (!this.activeListMode.gallery || !this.activeListMode.list) {
-            if (this.listMode == 'list') {
+        let cdk: CdkVirtualScrollViewport|undefined = undefined;
+        const activeListMode = this.activeListMode()
+        if (!activeListMode.gallery || !activeListMode.list) {
+            if (this.listMode() == 'list') {
                 cdk = this.cdkList;
             }
-            if (this.listMode == 'gallery') {
+            if (this.listMode() == 'gallery') {
                 cdk = this.cdkGallery;
             }
         } else {
-            if (this.listMode == 'list') {
+            if (this.listMode() == 'list') {
                 cdk = this.cdkSlideList;
             }
-            if (this.listMode == 'gallery') {
+            if (this.listMode() == 'gallery') {
                 cdk = this.cdkSlideGallery;
             }
         }

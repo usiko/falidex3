@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
 import { ISymbol } from 'src/app/models/linked-data-models';
 import { ImgLoaderComponent } from "src/app/components/shared/img-loader/img-loader.component";
+import { RouterModule } from '@angular/router';
 
 /**
  * item block of symbole gallery showing
@@ -10,7 +11,7 @@ import { ImgLoaderComponent } from "src/app/components/shared/img-loader/img-loa
     templateUrl: './symbole-block-item-gallery.component.html',
     styleUrls: ['./symbole-block-item-gallery.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [ImgLoaderComponent],
+    imports: [ImgLoaderComponent, RouterModule],
 })
 export class SymbolBlockItemGalleryComponent {
     /**
