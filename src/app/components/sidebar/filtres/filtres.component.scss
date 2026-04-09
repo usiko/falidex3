@@ -1,0 +1,13 @@
+ion-label {
+    display: flex !important;
+    fa-icon {
+        margin-right: 16px;
+        transition: color 350ms ease-in-out;
+    }
+    .title {
+        &::first-letter {
+            //display: inline;
+            text-transform: uppercase;
+        }
+    }
+}
