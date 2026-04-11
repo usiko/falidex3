@@ -42,14 +42,4 @@ export class NavigationComponent implements OnInit {
     installApp() {
         this.install.promptInstall();
     }
-
-    /**
-     * track by forngfor list
-     * @param index number, index in list
-     * @param item Item current item iterrated
-     *
-     */
-    public trackByFnMenu(index: Number, item: any) {
-        return index;
-    }
 }

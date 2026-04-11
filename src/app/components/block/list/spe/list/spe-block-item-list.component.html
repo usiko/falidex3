@@ -1,17 +1,25 @@
-<ion-item [ngClass]="cssClass()" *ngIf="item() && navigation()" lines="none" [routerLink]="[navigation(),item().id]" detail>
+@if(item() && navigation()) {
+<ion-item [ngClass]="cssClass()" lines="none" [routerLink]="[navigation(),item().id]" detail>
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </ion-item>
-<ion-item [ngClass]="cssClass()" *ngIf="item() && !navigation()" lines="none">
+}
+@if(item() && !navigation()) {
+<ion-item [ngClass]="cssClass()" lines="none">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </ion-item>
+}
 <ng-template #content>
 
 
     <ion-label>
         <div>
             <div class="title">
-                <div class="article" *ngIf="item().article">{{item().article}}</div>
-                <div *ngIf="item().article">-</div>
+                @if(item().article) {
+                <div class="article">{{item().article}}</div>
+                }
+                @if(item().article) {
+                <div>-</div>
+                }
                 <div class="name">{{item().name}}</div>
             </div>
             <p class="content">
@@ -21,7 +29,8 @@
     </ion-label>
 
 </ng-template>
-<ion-item *ngIf="!item()">
+@if(!item()) {
+<ion-item>
     <ion-thumbnail slot="start">
         <ion-skeleton-text animated></ion-skeleton-text>
     </ion-thumbnail>
@@ -34,3 +43,4 @@
         </p>
     </ion-label>
 </ion-item>
+}

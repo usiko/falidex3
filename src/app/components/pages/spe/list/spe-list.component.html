@@ -9,12 +9,14 @@
     </ion-header>
 
     <ion-content [scrollX]="false" [scrollY]="false">
-
-        <ion-fab *ngIf="showScrollTopBtn" (click)="scrollToTop()" vertical="bottom" horizontal="end" slot="fixed">
-            <ion-fab-button color="dark">
-                <fa-icon class="light-color" [icon]="['fas', 'angle-up']"></fa-icon>
-            </ion-fab-button>
-        </ion-fab>
+        @if(showScrollTopBtn)
+        {
+            <ion-fab (click)="scrollToTop()" vertical="bottom" horizontal="end" slot="fixed">
+                <ion-fab-button color="dark">
+                    <fa-icon class="light-color" [icon]="['fas', 'angle-up']"></fa-icon>
+                </ion-fab-button>
+            </ion-fab>
+        }
         <app-slider [(index)]="activeSlide">
             <ng-template appSlide>
                 <div class="code content">
@@ -26,7 +28,10 @@
                     </div>
 
                     <ion-list [ngStyle]="{'height':'calc(100% - '+header1.offsetHeight+'px)'}">
-                        <app-spe-block-item-list *ngFor="let item of items$|async" [item]="item" [navigation]="'/spes/detail'"></app-spe-block-item-list>
+                        @for(item of items; track item)
+                        {
+                            <app-spe-block-item-list [item]="item" [navigation]="'/spes/detail'"></app-spe-block-item-list>
+                        }
                     </ion-list>
                 </div>
             </ng-template>
@@ -40,9 +45,11 @@
                     </div>
 
                     <ion-list [ngStyle]="{'height':'calc(100% - '+header2.offsetHeight+'px)'}">
-
-                        <app-filiere-block-item-list [navigation]="'/filieres/detail/'" [item]="item" [showSpe]="false" *ngFor="let item of filieres$|async">
-                        </app-filiere-block-item-list>
+                        @for(item of filiere; track item)
+                        {
+                            <app-filiere-block-item-list [navigation]="'/filieres/detail/'" [item]="item" [showSpe]="false">
+                            </app-filiere-block-item-list>
+                        }
                     </ion-list>
                 </div>
             </ng-template>
@@ -55,9 +62,11 @@
                         </ion-list-header>
                     </div>
                     <ion-list [ngStyle]="{'height':'calc(100% - '+header3.offsetHeight+'px)'}">
-
-                        <app-block-symbol-item-list [navigation]="'/symbols/detail/'" [item]="item" [showSpe]="false" *ngFor="let item of symbols$|async">
-                        </app-block-symbol-item-list>
+                        @for(item of symboles; track item)
+                        {
+                            <app-block-symbol-item-list [navigation]="'/symbols/detail/'" [item]="item" [showSpe]="false">
+                            </app-block-symbol-item-list>
+                        }
                     </ion-list>
                 </div>
             </ng-template>

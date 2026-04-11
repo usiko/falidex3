@@ -1,9 +1,15 @@
 <div class="img-container">
-    <div class="loading" *ngIf="loading">
+    @if(loading) {
+    <div class="loading">
         <ion-spinner color="light"></ion-spinner>
     </div>
+    }
 
-    <img [ngStyle]="{'object-fit':objectFit}" *ngIf="ownSrc && base64" [class.img-hidden]="loading" [src]="ownSrc|satinizeUrl" (error)="imgError()" />
-    <ion-img [ngStyle]="{'object-fit':objectFit}" *ngIf="ownSrc && !base64" [class.img-hidden]="loading" [src]="ownSrc" (ionImgWillLoad)="imgLoading()" (ionImgDidLoad)="imgLoaded()" (ionError)="imgError()"></ion-img>
+    @if(ownSrc && base64) {
+    <img [ngStyle]="{'object-fit':objectFit}" [class.img-hidden]="loading" [src]="ownSrc|satinizeUrl" (error)="imgError()" />
+    }
+    @if(ownSrc && !base64) {
+    <ion-img [ngStyle]="{'object-fit':objectFit}" [class.img-hidden]="loading" [src]="ownSrc" (ionImgWillLoad)="imgLoading()" (ionImgDidLoad)="imgLoaded()" (ionError)="imgError()"></ion-img>
+    }
 
 </div>

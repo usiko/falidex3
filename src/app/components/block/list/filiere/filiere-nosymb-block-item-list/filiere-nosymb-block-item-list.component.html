@@ -1,26 +1,37 @@
-<ion-item [ngClass]="cssClass()" *ngIf="item()" lines="none">
+@if(item()) {
+<ion-item [ngClass]="cssClass()" lines="none">
     @let circulaireList = item().links|filterLink:['circulaire'];
     <ion-label>
         <div class="content">
-            <app-circulaire-representation class="left" *ngIf="circulaireList.length>0 && circulaireList[0].circulaire && circulaireList[0].circulaire.colors" [circulaire]="circulaireList[0].circulaire" [cssClass]="'vertical'"></app-circulaire-representation>
+            @if(circulaireList.length>0 && circulaireList[0].circulaire && circulaireList[0].circulaire.colors) {
+            <app-circulaire-representation class="left" [circulaire]="circulaireList[0].circulaire" [cssClass]="'vertical'"></app-circulaire-representation>
+            }
             <div class="item-container">
                 <h3>
                     <div>{{item().name}}</div>
                 </h3>
-                <p *ngIf="circulaireList && circulaireList.length>0" class="content">
+                @if(circulaireList && circulaireList.length>0) {
+                <p class="content">
                     <span class="content">
-                    <fa-icon  class="primary-color" *ngIf="circulaireList[0].spe && showSpe()" [icon]="['fas', 'circle-exclamation']" ></fa-icon>
+                    @if(circulaireList[0].spe && showSpe()) {
+                    <fa-icon  class="primary-color" [icon]="['fas', 'circle-exclamation']" ></fa-icon>
+                    }
                     <span>
-                        <span *ngIf="circulaireList[0].symbols">{{circulaireList[0].symbols.name}} sur</span> {{circulaireList[0].circulaire?.name}}
+                        @if(circulaireList[0].symbols) {<span>{{circulaireList[0].symbols.name}} sur</span>} {{circulaireList[0].circulaire?.name}}
                     </span>
                     </span>
                 </p>
+                }
             </div>
-            <app-circulaire-representation class="right" *ngIf="circulaireList.length>0 && circulaireList[0].circulaire && circulaireList[0].circulaire.colors" [circulaire]="circulaireList[0].circulaire" [cssClass]="'vertical'"></app-circulaire-representation>
+            @if(circulaireList.length>0 && circulaireList[0].circulaire && circulaireList[0].circulaire.colors) {
+            <app-circulaire-representation class="right" [circulaire]="circulaireList[0].circulaire" [cssClass]="'vertical'"></app-circulaire-representation>
+            }
         </div>
     </ion-label>
 </ion-item>
-<ion-item *ngIf="!item()">
+}
+@if(!item()) {
+<ion-item>
     <ion-label>
         <h3>
             <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
@@ -30,3 +41,4 @@
         </p>
     </ion-label>
 </ion-item>
+}

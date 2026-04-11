@@ -12,8 +12,7 @@
         <ion-item-divider></ion-item-divider>
     }
     
-    <ng-container *ngFor="let p of pages; trackBy:trackByFnMenu">
-        <ng-container>
+    @for(p of pages; track $index) {
             <ion-menu-toggle auto-hide="false">
                 <ion-item [class.disabled-item]="p.disabled" [class.ion-activable]="!p.disabled" [class.ion-activatable]="!p.disabled" [routerLink]="p.disabled?null:[p.url]">
                     
@@ -28,7 +27,6 @@
                     </ion-label>
                 </ion-item>
             </ion-menu-toggle>
-        </ng-container>
-    </ng-container>
+    }
 
 </ion-list>

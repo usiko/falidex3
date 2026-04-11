@@ -256,14 +256,4 @@ export abstract class PageItemList<Item extends ICollectionData> {
     setSort(property: string, order: SortEnum) {
         this.listManagerService.setSort(property, order);
     }
-
-    /**
-     * track by forngfor list
-     * @param index number, index in list
-     * @param item Item current item iterrated
-     *
-     */
-    trackByFn(index: Number, item: Item) {
-        return item.id;
-    }
 }

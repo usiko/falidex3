@@ -3,22 +3,27 @@
     <ion-menu side="start" menuId="navigation" class="navigation-menu" contentId="main-content" type="overlay">
         <ion-header>
             <ion-toolbar>
-                <ng-container *ngIf="(relationsData$|async) as relations">
-                    <ng-container>
-                        <ion-item lines="none" *ngIf="relations && relations.length>1 && (currentRelationsData$|async)">
+                @let relations = relationsData$|async;
+                @if(relations) {
+                    @if(relations && relations.length>1 && (currentRelationsData$|async)) {
+                        <ion-item lines="none">
                             <fa-icon class="dark-color" [icon]="['fas', 'book']" slot="start"></fa-icon>
                             <ion-select placeholder="changer" (ionChange)="setCurrentRelation($event)" [value]="(currentRelationsData$|async)?.id">
-                                <ion-select-option *ngFor="let relation of (relationsData$|async)" [value]="relation.id"> Code {{relation.name}}</ion-select-option>
+                                @for(relation of (relationsData$|async); track relation) {
+                                <ion-select-option [value]="relation.id"> Code {{relation.name}}</ion-select-option>
+                                }
                             </ion-select>
                         </ion-item>
-                        <ion-item lines="none" *ngIf="!relations || relations.length==0">
+                    }
+                    @if(!relations || relations.length==0) {
+                        <ion-item lines="none">
                             <fa-icon class="dark-color" [icon]="['fas', 'book']" slot="start"></fa-icon>
-                            <ion-label *ngIf="!relations || relations.length==0">
+                            <ion-label>
                                 Aucun code disponible
                             </ion-label>
                         </ion-item>
-                    </ng-container>
-                </ng-container>
+                    }
+                }
 
 
 

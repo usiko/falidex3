@@ -1,57 +1,67 @@
-<ion-item [ngClass]="cssClass()" *ngIf="item() && navigation()" lines="none" [routerLink]="[navigation(),item().id]" detail>
+@if(item() && navigation()) {
+<ion-item [ngClass]="cssClass()" lines="none" [routerLink]="[navigation(),item().id]" detail>
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </ion-item>
-<ion-item [ngClass]="cssClass()" *ngIf="item() && !navigation()" lines="none">
+}
+@if(item() && !navigation()) {
+<ion-item [ngClass]="cssClass()" lines="none">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </ion-item>
+}
 <ng-template #content>
     @let circSymboles = item().links|filterLink:['circulaire','symbols'];
-    <ng-container>
-        <ion-thumbnail *ngIf="circSymboles.length>0" slot="start">
+    @if(circSymboles.length>0) {
+        <ion-thumbnail slot="start">
             @let imgs = circSymboles[0].symbols?.imgs;
             <app-img-loader [resource]="true" [src]="(imgs && imgs[0])?imgs[0].url:''">
             </app-img-loader>
         </ion-thumbnail>
-    </ng-container>
+    }
 
     <ion-label>
-
-        <ng-container>
-            <app-circulaire-representation *ngIf="circSymboles.length>0 && circSymboles[0].circulaire && circSymboles[0].circulaire.colors" [circulaire]="circSymboles[0].circulaire" [cssClass]="'vertical'"></app-circulaire-representation>
-
-        </ng-container>
+        @if(circSymboles.length>0 && circSymboles[0].circulaire && circSymboles[0].circulaire.colors) {
+            <app-circulaire-representation [circulaire]="circSymboles[0].circulaire" [cssClass]="'vertical'"></app-circulaire-representation>
+        }
         <div>
             <h3>
                 <div>{{item().name}}</div>
             </h3>
-            <p *ngIf="circSymboles && circSymboles.length>0" class="circSymb">
-                <ng-container *ngIf="circSymboles.length>2">
+            @if(circSymboles && circSymboles.length>0) {
+            <p class="circSymb">
+                @if(circSymboles.length>2) {
                     <span class="content">
-                        <fa-icon  class="primary-color" *ngIf="circSymboles[0].spe && showSpe()" [icon]="['fas', 'circle-exclamation']" ></fa-icon>
-                            <span><span *ngIf="circSymboles[0].symbols">
+                        @if(circSymboles[0].spe && showSpe()) {
+                        <fa-icon  class="primary-color" [icon]="['fas', 'circle-exclamation']" ></fa-icon>
+                        }
+                            <span>@if(circSymboles[0].symbols) {<span>
                                 {{circSymboles[0].symbols.name}} sur
-                            </span> {{circSymboles[0].circulaire?.name}}
+                            </span>} {{circSymboles[0].circulaire?.name}}
                     </span>
                     </span>
                     <span class="content">
                             <span>Et {{circSymboles.length-1}} autres représentations</span>
                     </span>
-
-                </ng-container>
-                <ng-container *ngIf="circSymboles && circSymboles.length<=2">
-                    <span class="content" *ngFor="let circSymb of circSymboles">
-                        <fa-icon  class="primary-color" *ngIf="circSymb.spe && showSpe()" [icon]="['fas', 'circle-exclamation']" ></fa-icon>
-                            <span><span *ngIf="circSymb.symbols">
+                }
+                @if(circSymboles && circSymboles.length<=2) {
+                    @for(circSymb of circSymboles; track circSymb) {
+                    <span class="content">
+                        @if(circSymb.spe && showSpe()) {
+                        <fa-icon  class="primary-color" [icon]="['fas', 'circle-exclamation']" ></fa-icon>
+                        }
+                            <span>@if(circSymb.symbols) {<span>
                                 {{circSymb.symbols.name}} sur
-                            </span> {{circSymb.circulaire?.name}}</span>
+                            </span>} {{circSymb.circulaire?.name}}</span>
                     </span>
-                </ng-container>
+                    }
+                }
             </p>
+            }
         </div>
     </ion-label>
 
 </ng-template>
-<ion-item *ngIf="!item()">
+@if(!item()) {
+<ion-item>
     <ion-thumbnail slot="start">
         <ion-skeleton-text animated></ion-skeleton-text>
     </ion-thumbnail>
@@ -64,3 +74,4 @@
         </p>
     </ion-label>
 </ion-item>
+}

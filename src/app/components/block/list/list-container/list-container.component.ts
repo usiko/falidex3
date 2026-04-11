@@ -144,16 +144,6 @@ export class LisContainerComponent implements OnDestroy, OnInit {
     }
 
     /**
-     * track by forngfor list
-     * @param index number, index in list
-     * @param item Item current item iterrated
-     *
-     */
-    trackByFn(index: Number, item: any) {
-        return item.id;
-    }
-
-    /**
      * show an empty list loading at the first show
      */
     initEmptyList() {
