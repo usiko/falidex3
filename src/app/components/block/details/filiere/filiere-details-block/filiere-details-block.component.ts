@@ -17,7 +17,7 @@ import { FilterLinkPipe } from 'src/app/components/shared/pipes/filter-links.pip
     imports: [CommonModule, IonCard, CirculaireRepresentationComponent, ImgLoaderComponent, IonButton, FaIconComponent, IonCardHeader, IonCardTitle, IonCardContent, SliderComponent, SlideDirective, FilterLinkPipe],
 })
 export class FiliereDetailsBlockComponent implements OnInit {
-    @Input() filiere$!: BehaviorSubject<IFiliere>;
+    @Input() filiere$!: BehaviorSubject<IFiliere|null>;
     slideIndex = model(0);
 
     ngOnInit() {}

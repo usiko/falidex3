@@ -1,7 +1,7 @@
-<div class="symbole-gallery-item" [routerLink]="[navigation,item().id]" (click)="click()" *ngIf="item && navigation">
+<div class="symbole-gallery-item" [routerLink]="[navigation(),item().id]" (click)="click()" *ngIf="item() && navigation()">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </div>
-<div class="symbole-gallery-item" *ngIf="item && !navigation" (click)="click()">
+<div class="symbole-gallery-item" *ngIf="item() && !navigation()" (click)="click()">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </div>
 

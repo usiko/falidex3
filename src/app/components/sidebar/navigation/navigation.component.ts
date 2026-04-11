@@ -5,6 +5,7 @@ import { InstallAppService } from 'src/app/services/install/install-app.service'
 import { IonList, IonItem, IonItemDivider, IonMenuToggle, IonLabel } from "@ionic/angular/standalone";
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { RouterLink, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 /**
  * navigation menu
@@ -13,7 +14,7 @@ import { RouterLink, RouterModule } from '@angular/router';
     selector: 'app-navigation',
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
-    imports: [IonList, IonItem, FaIconComponent, IonItemDivider, IonMenuToggle, IonLabel, RouterModule],
+    imports: [IonList, IonItem, FaIconComponent, IonItemDivider, IonMenuToggle, IonLabel, RouterModule,CommonModule],
 })
 export class NavigationComponent implements OnInit {
     /**

@@ -32,6 +32,7 @@ export class FilterStoreService {
             this.updateCurrentFilter(id);
             return map.get(id);
         }
+        return undefined;
     }
     public updateCurrentDataFilter(filters: IDisplayFilters<ICollectionData>[]) {
         console.log('update filter', this.currentFilterId);

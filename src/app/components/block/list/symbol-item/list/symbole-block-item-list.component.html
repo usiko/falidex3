@@ -1,9 +1,9 @@
 
 
-<ion-item *ngIf="item() && navigation" lines="none" [routerLink]="[navigation,item().id]" (click)="click()" detail>
+<ion-item *ngIf="item() && navigation()" lines="none" [routerLink]="[navigation(),item().id]" (click)="click()" detail>
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </ion-item>
-<ion-item *ngIf="item() && !navigation" lines="none" (click)="click()">
+<ion-item *ngIf="item() && !navigation()" lines="none" (click)="click()">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </ion-item>
 <ng-template #content>
@@ -22,7 +22,7 @@
                         <div class="flex">
                             <fa-icon [icon]="['fas', 'circle-exclamation']" class="primary-color" *ngIf="circFils[0].spe && showSpe"></fa-icon>
                             <div>
-                                Sur {{circFils[0].circulaire.name}}, {{circFils[0].filiere.name}}
+                                Sur {{circFils[0].circulaire?.name}}, {{circFils[0].filiere?.name}}
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                     <div class="content" *ngFor="let circFil of circFils">
                         <div class="flex">
                             <fa-icon class="primary-color" *ngIf="circFil.spe && showSpe" [icon]="['fas', 'circle-exclamation']"></fa-icon>
-                            <div>sur {{circFil.circulaire.name}}, {{circFil.filiere.name}}</div>
+                            <div>sur {{circFil.circulaire?.name}}, {{circFil.filiere?.name}}</div>
                         </div>
                     </div>
                 </ng-container>
@@ -57,7 +57,7 @@
                                 <ng-container *ngIf="significations[0].symbolsens">
                                     , {{significations[0].symbolsens.name}},
                                 </ng-container>
-                                {{significations[0].signification.name}}
+                                {{significations[0].signification?.name}}
                             </div>
 
 
@@ -84,7 +84,7 @@
                                         , {{signification.symbolsens.name}},
                                     </ng-container>
                                 </ng-container>
-                                {{signification.signification.name}}
+                                {{signification.signification?.name}}
                             </div>
 
                         </div>

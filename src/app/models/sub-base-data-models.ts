@@ -4,7 +4,7 @@ export interface ISubBaseCollectionData extends IBaseCollectionData { //data lin
 }
 
 export interface ISubBaseCirculaire extends IBaseCirculaire { //data linked
-    colors: IBaseColor[];
+    colors?: IBaseColor[];
 }
 
 export interface ISubBaseFiliere extends IBaseFiliere { //data linked

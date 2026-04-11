@@ -18,7 +18,7 @@ import { SlideDirective } from 'src/app/components/shared/slider/slide.directive
     imports: [CommonModule, IonCard, ImgLoaderComponent, IonTabBar, IonTabButton, FaIconComponent, IonLabel, IonBadge, FiliereNosymbBlockItemListComponent, SignificationItemBlockComponent, FilterLinkPipe, SliderComponent, SlideDirective],
 })
 export class SymboleDetailsBlockComponent implements OnInit {
-    @Input() symbol$!: BehaviorSubject<ISymbol>;
+    @Input() symbol$!: BehaviorSubject<ISymbol|null>;
     public significations: ISignification[] = [];
     public filieres: IFiliere[] = [];
 

@@ -19,7 +19,7 @@ import { FilterLinkPipe } from 'src/app/components/shared/pipes/filter-links.pip
 export class CirculaireDetailsBlockComponent implements OnInit {
     constructor() {}
 
-    @Input() circualaire$!: BehaviorSubject<ICirculaire>;
+    @Input() circualaire$!: BehaviorSubject<ICirculaire|null>;
     slideIndex = model(0);
 
     ngOnInit() {}

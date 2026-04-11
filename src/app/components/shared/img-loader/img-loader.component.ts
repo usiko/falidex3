@@ -3,12 +3,16 @@ import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } 
 import { Subscription } from 'rxjs';
 import { ConfigService } from 'src/app/services/config/config.service';
 import { PictureService } from 'src/app/services/picture/picture.service';
+import { IonSpinner, IonImg } from "@ionic/angular/standalone";
+import { CommonModule } from '@angular/common';
+import { SatinizeUrlPipe } from '../pipes/satinize-url.pipe';
 
 @Component({
     selector: 'app-img-loader',
     templateUrl: './img-loader.component.html',
     styleUrls: ['./img-loader.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [IonSpinner, IonImg,CommonModule,SatinizeUrlPipe],
 })
 export class ImgLoaderComponent implements OnInit {
     public loading = false;

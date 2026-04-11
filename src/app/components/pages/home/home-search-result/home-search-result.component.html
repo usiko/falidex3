@@ -35,7 +35,7 @@
                 <ion-label>Filières</ion-label>
                 <ion-badge mode="ios" color="dark">{{result.filieres.length}}</ion-badge>
             </ion-list-header>
-            <!--<app-filiere-block-item-list class="item" *ngFor="let item of result.filieres" [navigation]="'/filieres/detail/'" [item]="item"></app-filiere-block-item-list>-->
+            <app-filiere-block-item-list class="item" *ngFor="let item of result.filieres" [navigation]="'/filieres/detail/'" [item]="item"></app-filiere-block-item-list>
         </ion-item-group>
         <ion-item-group *ngIf="result.symbols.length>0">
             <ion-list-header>
@@ -43,7 +43,7 @@
 
                 <ion-badge mode="ios" color="dark">{{result.symbols.length}}</ion-badge>
             </ion-list-header>
-            <!--<app-block-symbol-item-list class="item" *ngFor="let item of result.symbols" [navigation]="'/symbols/detail/'" [item]="item"></app-block-symbol-item-list>-->
+            <app-block-symbol-item-list class="item" *ngFor="let item of result.symbols" [navigation]="'/symbols/detail/'" [item]="item"></app-block-symbol-item-list>
         </ion-item-group>
 
         <ion-item-group *ngIf="result.circulaire.length>0">
@@ -51,14 +51,14 @@
                 <ion-label>Circulaires</ion-label>
                 <ion-badge mode="ios" color="dark">{{result.circulaire.length}}</ion-badge>
             </ion-list-header>
-            <!--<app-block-circulaire-item-list class="item" *ngFor="let item of result.circulaire" [navigation]="'/circulaires/detail/'" [item]="item"></app-block-circulaire-item-list>-->
+            <app-block-circulaire-item-list class="item" *ngFor="let item of result.circulaire" [navigation]="'/circulaires/detail/'" [item]="item"></app-block-circulaire-item-list>
         </ion-item-group>
         <ion-item-group *ngIf="result.signification.length>0">
             <ion-list-header>
                 <ion-label>Significations</ion-label>
                 <ion-badge mode="ios" color="dark">{{result.signification.length}}</ion-badge>
             </ion-list-header>
-            <!--<app-signification-block-item-list class="item" *ngFor="let item of result.signification" [navigation]="'/significations/detail/'" [item]="item"></app-signification-block-item-list>-->
+            <app-signification-block-item-list class="item" *ngFor="let item of result.signification" [navigation]="'/significations/detail/'" [item]="item"></app-signification-block-item-list>
         </ion-item-group>
 
         <ion-item-group *ngIf="result.codeSpe.length>0">
@@ -66,7 +66,7 @@
                 <ion-label>Spécificités</ion-label>
                 <ion-badge mode="ios" color="dark">{{result.codeSpe.length}}</ion-badge>
             </ion-list-header>
-            <!--<app-spe-block-item-list class="item" [navigation]="'/spes/detail'" [item]="item" *ngFor="let item of result.codeSpe"> </app-spe-block-item-list>-->
+            <app-spe-block-item-list class="item" [navigation]="'/spes/detail'" [item]="item" *ngFor="let item of result.codeSpe"> </app-spe-block-item-list>
         </ion-item-group>
     </ng-container>
 </ng-template>

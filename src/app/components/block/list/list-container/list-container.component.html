@@ -56,7 +56,7 @@
     <!-- both, sliding-->
     <ng-container *ngIf="activeListMode().gallery && activeListMode().list">
         <app-slider [(index)]="slideIndex">
-            <div appSlide>
+            <ng-template appSlide>
                 <ng-container *ngIf="!initLoading">
                     <cdk-virtual-scroll-viewport orientation="vertical" #cdkSlideList [itemSize]="itemListSize" [minBufferPx]="1200" [maxBufferPx]="1200">
                         <ion-item-group class="list list-item" color="light">
@@ -72,8 +72,8 @@
                         <ng-container *ngTemplateOutlet="activeListMode().list;context:{item:item}"></ng-container>
                     </ng-container>
                 </ng-container>
-            </div>
-            <div appSlide>
+            </ng-template>
+            <ng-template appSlide>
                                 <cdk-virtual-scroll-viewport orientation="vertical" #cdkSlideGallery [itemSize]="itemGallerySize" [minBufferPx]="1200" [maxBufferPx]="1200">
                     <ion-item-group class="gallery list-item" color="light">
                         @let asyncItems = items$|async;
@@ -96,7 +96,7 @@
 
                     </ion-item-group>
                 </cdk-virtual-scroll-viewport>
-            </div>
+            </ng-template>
         </app-slider>
     </ng-container>
 </ng-container>

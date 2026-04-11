@@ -17,7 +17,7 @@ import { SlideDirective } from 'src/app/components/shared/slider/slide.directive
 export class SignificationDetailsBlockComponent implements OnInit {
     constructor() {}
 
-    @Input() signification$!: BehaviorSubject<ISignification>;
+    @Input() signification$!: BehaviorSubject<ISignification|null>;
     slideIndex = model(0);
 
     ngOnInit() {}

@@ -1,0 +1,38 @@
+ .img-symbole {
+        height: 300px;
+	}
+.circulaireColor {
+    height: 30px;
+    border-top: solid #ffffff 1px;
+}
+
+ion-card {
+    .content-slide {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        ion-button {
+            flex: none;
+            height: auto;
+        }
+        ion-slides {
+            width: 100%;
+            ion-slide {
+                display: block;
+                //width: 100% !important;
+                ion-card-header {
+                    ion-card-title {
+                        &::first-letter {
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.content-slide{
+	display: flex;
+	
+}
