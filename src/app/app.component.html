@@ -31,6 +31,12 @@
         </ion-header>
         <ion-content>
             <app-navigation [pages]="appPages"></app-navigation>
+            @if(version())
+            {
+                <div class="version">
+                    {{version()}}
+                </div>
+            }
         </ion-content>
     </ion-menu>
     <ion-menu side="end" menuId="filters" contentId="main-content" [swipeGesture]="false" type="overlay">

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { IonApp, IonRouterOutlet, IonContent, IonMenu, IonHeader, IonToolbar, IonTitle, IonItem, IonSelect, IonSelectOption, SelectCustomEvent, IonLabel } from '@ionic/angular/standalone';
 import { CirculaireCollectionService } from './services/collection-item/circulaire/circulaire-collection.service';
 import { CodeSpeCollectionService } from './services/collection-item/code-spe/code-spe-collection.service';
@@ -18,9 +18,11 @@ import { CommonModule } from '@angular/common';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { NavigationComponent } from "./components/sidebar/navigation/navigation.component";
 import { FiltresComponent } from "./components/sidebar/filtres/filtres.component";
+import packageJson from '../../package.json';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
+  styleUrls: ['./app.component.scss'],
   imports: [
     IonApp,
     IonRouterOutlet,
@@ -58,7 +60,9 @@ export class AppComponent implements OnInit {
     public relationsData$ = new BehaviorSubject<{ name: string; id: string }[]>([]);
     public currentRelationsData$ = new BehaviorSubject<{ name: string; id: string }|null>(null);
     public menuFilters = false;
+    public version = signal<string|undefined>(undefined);
     ngOnInit() {
+        this.version.set(`${packageJson.name} v${packageJson.version}`);
         this.initIcons();
         if (environment.production) {
             console.log('prod mode');
