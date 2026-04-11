@@ -1,35 +1,26 @@
 @let circulaire = circualaire$|async;
 @if(circulaire)
 {
-    <ng-container>
     <div class="circulaire-content">
         <app-circulaire-representation [cssClass]="'strong'" [circulaire]="circulaire"></app-circulaire-representation>
-
     </div>
 
     <app-slider [(index)]="slideIndex">
-        <ng-container>
-
-            <ng-container *ngIf="circulaire.links|filterLink:['filiere', 'symbols'] as links">
-
-                <ng-template appSlide *ngFor="let link of links">
+        @let links = circulaire.links|filterLink:['filiere', 'symbols'];
+        @if(links)
+        {
+            @for(link of links; track link)
+            {
+                <ng-template appSlide>
                     <ion-card class="slide-container">
-
                         <div class="content">
-
                             <ng-container *ngTemplateOutlet="linkTpl;context:{link:link,links:circulaire.links}"></ng-container>
-
                         </div>
-
                     </ion-card>
                 </ng-template>
-            </ng-container>
-
-
-        </ng-container>
-
+            }
+        }
     </app-slider>
-    </ng-container>
 
     <ng-template #linkTpl let-link="link" let-links="links">
         <div class="img-container">
@@ -39,9 +30,12 @@
             </div>
         </div>
         <div class="content-slide">
-            <ion-button fill="clear" [disabled]="slideIndex()==0" *ngIf="links.length>1" (click)="previousSlide()" expand="full" size="small">
-                <fa-icon class='dark-color' [icon]="['fas', 'angle-left']" class="dark-color" slot="icon-only"></fa-icon>
-            </ion-button>
+            @if(links.length>1)
+            {
+                <ion-button fill="clear" [disabled]="slideIndex()==0" (click)="previousSlide()" expand="full" size="small">
+                    <fa-icon class='dark-color' [icon]="['fas', 'angle-left']" class="dark-color" slot="icon-only"></fa-icon>
+                </ion-button>
+            }
             <div class="title">
                 <ion-card-header>
                     <ion-card-title>{{link.symbols.name}}</ion-card-title>
@@ -50,9 +44,12 @@
                     <p>pour {{link.filiere.name}}</p>
                 </ion-card-content>
             </div>
-            <ion-button fill="clear" [disabled]="slideIndex()==links.length-1" *ngIf="links.length>1" (click)="nextSlide()" expand="full" size="small">
-                <fa-icon class='dark-color' [icon]="['fas', 'angle-right']" class="dark-color" slot="icon-only"></fa-icon>
-            </ion-button>
+            @if(links.length>1)
+            {
+                <ion-button fill="clear" [disabled]="slideIndex()==links.length-1" (click)="nextSlide()" expand="full" size="small">
+                    <fa-icon class='dark-color' [icon]="['fas', 'angle-right']" class="dark-color" slot="icon-only"></fa-icon>
+                </ion-button>
+            }
         </div>
     </ng-template>
 }

@@ -10,44 +10,56 @@
     </ion-card>
     <ion-card>
         <ion-tab-bar [selectedTab]="selectedTab">
-            <ion-tab-button *ngIf="((symbol.links|filterLink:['circulaire','filiere'])).length>0" (click)="slideTo(0,$event)" tab="filieres">
-                <fa-icon [icon]="['fas', 'graduation-cap']" class="light-color"></fa-icon>
-                <ion-label>Filières</ion-label>
-                <ion-badge>{{((symbol.links|filterLink:['circulaire','filiere'])).length}}</ion-badge>
-            </ion-tab-button>
+            @let circulaireFilieres = symbol.links|filterLink:['circulaire','filiere'];
+            @if(circulaireFilieres.length>0)
+            {
+                <ion-tab-button (click)="slideTo(0,$event)" tab="filieres">
+                    <fa-icon [icon]="['fas', 'graduation-cap']" class="light-color"></fa-icon>
+                    <ion-label>Filières</ion-label>
+                    <ion-badge>{{circulaireFilieres.length}}</ion-badge>
+                </ion-tab-button>
+            }
 
-            <ion-tab-button *ngIf="((symbol.links|filterLink:['signification'])).length>0" (click)="slideTo(1,$event)" tab="significations">
-                <fa-icon [icon]="['fas', 'book-open']" class="light-color"></fa-icon>
-                <ion-label>Significations</ion-label>
-                <ion-badge>{{((symbol.links|filterLink:['signification'])).length}}</ion-badge>
-            </ion-tab-button>
+            @let signifs = symbol.links|filterLink:['signification'];
+            @if(signifs.length>0)
+            {
+                <ion-tab-button (click)="slideTo(1,$event)" tab="significations">
+                    <fa-icon [icon]="['fas', 'book-open']" class="light-color"></fa-icon>
+                    <ion-label>Significations</ion-label>
+                    <ion-badge>{{signifs.length}}</ion-badge>
+                </ion-tab-button>
+            }
         </ion-tab-bar>
     </ion-card>
     <div class="content">
         <app-slider [(index)]="slideIndex">
-            <ng-container>
-                <ng-template appSlide *ngIf="symbol &&  filieres && filieres.length>0">
-
+            @if(symbol && filieres && filieres.length>0)
+            {
+                <ng-template appSlide>
                     <div class="filieres content">
-                        <ion-card *ngFor="let filiere of filieres">
-
-                            <app-filiere-nosymb-block-item-list [item]="filiere" [cssClass]="'no-symbol'"></app-filiere-nosymb-block-item-list>
-
-                        </ion-card>
+                        @for(filiere of filieres; track filiere)
+                        {
+                            <ion-card>
+                                <app-filiere-nosymb-block-item-list [item]="filiere" [cssClass]="'no-symbol'"></app-filiere-nosymb-block-item-list>
+                            </ion-card>
+                        }
                     </div>
                 </ng-template>
-                <ng-template appSlide *ngIf="symbol && significations && significations.length>0">
-
+            }
+            @if(symbol && significations && significations.length>0)
+            {
+                <ng-template appSlide>
                     <div class="signification content">
-                        <ion-card *ngFor="let signification of significations">
-                            <app-signification-item-block [signification]="signification">
-                            </app-signification-item-block>
-                        </ion-card>
-
+                        @for(signification of significations; track signification)
+                        {
+                            <ion-card>
+                                <app-signification-item-block [signification]="signification">
+                                </app-signification-item-block>
+                            </ion-card>
+                        }
                     </div>
                 </ng-template>
-            </ng-container>
-
+            }
         </app-slider>
     </div>
 }
