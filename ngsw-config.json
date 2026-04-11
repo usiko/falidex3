@@ -8,7 +8,6 @@
       "resources": {
         "files": [
           "/favicon.ico",
-          "/index.csr.html",
           "/index.html",
           "/manifest.webmanifest",
           "/*.css",
@@ -18,13 +17,40 @@
     },
     {
       "name": "assets",
-      "installMode": "lazy",
+      "installMode": "prefetch",
       "updateMode": "prefetch",
       "resources": {
         "files": [
-          "/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
+          "/assets/**",
+          "/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
         ]
       }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "google-analytics",
+      "urls": [
+        "https://www.googletagmanager.com/**",
+        "https://www.google-analytics.com/**"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 0,
+        "maxAge": "0s"
+      }
+    },
+    {
+        "name": "falidex-resources",
+        "urls": [
+            "https://resources.falidex.fr/**"
+        ],
+        "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 100,
+        "maxAge": "14d",
+        "timeout": "10s"
+        }
     }
   ]
 }
