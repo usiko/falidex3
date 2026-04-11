@@ -10,7 +10,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "server:app": "node server/server.js"
+    "serve:app": "node server/server.js"
   },
   "private": true,
   "dependencies": {
