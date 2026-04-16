@@ -20,6 +20,7 @@ export class AuthService {
         const login = 'user';
         const password = 'password';
         const url = this.configService.getConfig()?.urls?.dataServer;
+        return of({ access_token: 'test'})
         //return throwError(null);
         return this.http
             .post<{ access_token: string }>(url + '/auth/login', {

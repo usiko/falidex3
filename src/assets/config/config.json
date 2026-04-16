@@ -41,21 +41,22 @@
     ],
     "loadingErrorMessage": "Echec du chargement",
     "urls": {
-        "dataServer": "https://dev-falidex-server.herokuapp.com",
+        "dataServer": "http://localhost:3000",
         "pictureServer": "https://resources.falidex.fr/index.php"
     },
     "paths": {
-        "circulaires": "circulaire",
-        "circulaireColors": "circulaire-color",
-        "symbols": "symbole",
-        "symbolSens": "symbol-sens",
-        "symbolAccessories": "symbol-accessories",
-        "significations": "signification",
-        "filieres": "filiere",
-        "colors": "color",
-        "placements": "placement",
-        "positions": "position",
-        "dataLink": "data-link"
+        "circulaires": "collection/circulaires",
+        "circulaireColors": "collection/circulaires-colors",
+        "symbols": "collection/symboles",
+        "symbolSens": "collection/symboles-sens",
+        "symbolAccessories": "collection/symbole-accessoires",
+        "significations": "collection/significations",
+        "filieres": "collection/filieres",
+        "colors": "collection/colors",
+        "placements": "collection/placements",
+        "positions": "collection/positions",
+        "dataLink": "collection/links",
+        "dataLinkItem": "collection/link"
     },
     "update": {
         "frequency": "auto",
