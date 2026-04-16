@@ -9,15 +9,15 @@ import { ICollectionItem } from '../collection.service';
     providedIn: 'root'
 })
 export class CirculaireCollectionService extends ICollectionItem<ISubBaseCirculaire, ICirculaire> {
-    protected baseCollection$ = this.store.circulaires$;
-    constructor(protected store: SubStoreService) {
+    protected override baseCollection$ = this.store.circulaires$;
+    constructor(protected override store: SubStoreService) {
         super();
         //on va builds avec ces data la aussi donc on les ecoute aussi
 
 
     }
 
-    init() {
+    override init() {
         super.init();
         this.bindSubjectToBuild(this.store.positions$);
         this.bindSubjectToBuild(this.store.filieres$);
@@ -27,7 +27,7 @@ export class CirculaireCollectionService extends ICollectionItem<ISubBaseCircula
         this.bindSubjectToBuild(this.store.symbolesSens$);
     }
 
-    protected linkFinder(item: ISubBaseCirculaire, links: IRelationItem[]): IRelationItem[] {
+    protected override linkFinder(item: ISubBaseCirculaire, links: IRelationItem[]): IRelationItem[] {
         const returned: IRelationItem[] = [];
         for (const rel of links) {
             //specfik

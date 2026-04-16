@@ -49,7 +49,7 @@ export interface ISymbol extends ICollectionData {
 }
 export interface ISignification extends ICollectionData {
     //data linked
-    content: string;
+    content?: string;
 }
 
 export interface IPlacement extends ICollectionData {

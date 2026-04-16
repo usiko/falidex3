@@ -32,7 +32,7 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
     /**
      * initial true full collection
      */
-    private collection$: BehaviorSubject<Item[]>;
+    private collection$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
 
     /**
      *  filters to display in the current list want to display
@@ -42,17 +42,17 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
     /**
      * filter to display in the global menu
      */
-    private currentBindDisplayFilters$: BehaviorSubject<IDisplayFilters<ICollectionData>[]>;
+    private currentBindDisplayFilters$=  new BehaviorSubject<IDisplayFilters<ICollectionData>[]>([])
 
     /**
      * store index of filter
      */
-    private storeIndex: number;
+    private storeIndex: number = 0
 
     /**
      * all service subscriptions
      */
-    private filterSubscription: Subscription;
+    private filterSubscription: Subscription = new Subscription()
 
     constructor(private store: FilterStoreService) {}
 
@@ -225,7 +225,7 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
             if (filter.propertyGetter) {
                 compared = filter.propertyGetter(item);
             } else {
-                compared = item[filter.propertyToFilter];
+                compared = (item as any)[filter.propertyToFilter];
             }
 
             const result = this.compareFilters(compared, filter);
@@ -243,12 +243,14 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
      */
     private applyLinksFilters(item: ICollectionLink) {
         for (const filter of this.linksfilters$.getValue()) {
-            const compared = filter.propertyGetter(item);
-
-            const result = this.compareFilters(compared, filter);
-            if (!result) {
-                return false;
+            if(filter.propertyGetter){
+                const compared = filter.propertyGetter(item);
+                const result = this.compareFilters(compared, filter);
+                if (!result) {
+                    return false;
+                }
             }
+            
         }
         return true;
     }
@@ -258,7 +260,7 @@ export class FilterService<Item extends ICollectionData> implements OnDestroy {
      * @param  {any} compared
      * @param  {IDataFilter<any>} filter
      */
-    private compareFilters(compared, filter: IDataFilter<any>) {
+    private compareFilters(compared:string, filter: IDataFilter<any>) {
         let result = true;
         if (filter.values && filter.values.length > 0) {
             switch (filter.operator) {

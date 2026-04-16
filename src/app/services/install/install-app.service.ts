@@ -8,19 +8,19 @@ export class InstallAppService {
     constructor() {}
 
     public installable$ = new BehaviorSubject(false);
-    private installEvent;
+    private installEvent:any|undefined;
 
     init(eventName: string): Observable<void> {
         window.addEventListener(eventName, (e) => {
             e.preventDefault();
             this.setEvent(e);
         });
-        return of(null);
+        return of(void 0);
     }
 
     promptInstall() {
         if (this.installEvent) {
-            this.installEvent.userChoice.then((choiceResult) => {
+            this.installEvent.userChoice.then((choiceResult:any) => {
                 if (choiceResult.outcome === 'accepted') {
                     console.log('User accepted the prompt');
                     this.installable$.next(false);
@@ -35,7 +35,7 @@ export class InstallAppService {
         }
     }
 
-    private setEvent(event) {
+    private setEvent(event:any) {
         this.installEvent = event;
         console.log('setEvent', event);
         console.log('setEvent', this.installEvent !== null && this.installEvent !== undefined);

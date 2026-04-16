@@ -1,6 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
 import { ISymbol } from 'src/app/models/linked-data-models';
-import { ListItem } from '../../list-item';
+import { ImgLoaderComponent } from "src/app/components/shared/img-loader/img-loader.component";
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 /**
  * item block of symbole gallery showing
@@ -10,29 +12,29 @@ import { ListItem } from '../../list-item';
     templateUrl: './symbole-block-item-gallery.component.html',
     styleUrls: ['./symbole-block-item-gallery.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [ImgLoaderComponent, RouterModule,CommonModule],
 })
-export class SymbolBlockItemGalleryComponent extends ListItem<ISymbol> implements OnInit {
+export class SymbolBlockItemGalleryComponent {
     /**
      * symbole item to show
      */
-    @Input() item: ISymbol;
+    item = input.required<ISymbol>();
 
     /**
      * show if this item is specific
      * @deprecated (?)
      */
-    @Input() showSpe = true;
+    showSpe = input(true);
 
     /**
      * show navigation arrow
      */
-    @Input() navigation: string = null;
+    navigation = input<string|null>(null);
 
-    constructor(protected changedetector: ChangeDetectorRef) {
-        super();
-    }
+    onclick = output<void>();
 
-    ngOnInit() {}
+    constructor() {}
+
     click() {
         this.onclick.emit();
     }

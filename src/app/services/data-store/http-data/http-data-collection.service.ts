@@ -30,23 +30,28 @@ export class HttpDataCollectionService {
 		if (!this.getStorageEnabled()) {
 			return false;
 		}
-		const keys = Object.keys(this.config.getConfig().paths);
-		const values = keys.map((key) => this.storageService.getAge(key)).filter((item) => item != undefined);
-		console.log('isallStored', 'length', values.length, keys.length, values);
-		if (values.length != keys.length) {
-			return false;
-		}
-		for (const val of values) {
-			if (!val) {
-				return false;
-			}
-		}
+        const paths = this.config.getConfig()?.paths
+        if(paths)
+        {
+            const keys = Object.keys(paths);
+            const values = keys.map((key) => this.storageService.getAge(key)).filter((item) => item != undefined);
+            console.log('isallStored', 'length', values.length, keys.length, values);
+            if (values.length != keys.length) {
+                return false;
+            }
+            for (const val of values) {
+                if (!val) {
+                    return false;
+                }
+            }
+        }
+		
 		return true;
 	}
 
 	getCirculaires(): Observable<IBaseCirculaire[]> {
 		const url = this.getUrl('circulaires');
-		return this.http.get(url).pipe(
+		return this.http.get(url!).pipe(
 			map((data: any) => {
 				return this.mapData(data, 'circulaires');
 			}),
@@ -58,7 +63,7 @@ export class HttpDataCollectionService {
 
 	getCirculaireColors(): Observable<IBaseCirculaireColor[]> {
 		const url = this.getUrl('circulaireColors');
-		return this.http.get(url).pipe(
+		return this.http.get(url!).pipe(
 			map((data: any) => {
 				return this.mapData(data, 'circulaireColors');
 			}),
@@ -69,7 +74,7 @@ export class HttpDataCollectionService {
 	}
 	getSymbols(): Observable<IBaseSymbol[]> {
 		const url = this.getUrl('symbols');
-		return this.http.get(url).pipe(
+		return this.http.get(url!).pipe(
 			map((data: any) => {
 				return this.mapData(data, 'symbols');
 			}),
@@ -80,7 +85,7 @@ export class HttpDataCollectionService {
 	}
 	getSymbolsSens(): Observable<IBaseSymbolSens[]> {
 		const url = this.getUrl('symbolSens');
-		return this.http.get(url).pipe(
+		return this.http.get(url!).pipe(
 			map((data: any) => {
 				return this.mapData(data, 'symbolSens');
 			}),
@@ -91,7 +96,7 @@ export class HttpDataCollectionService {
 	}
 	getSymbolsAccessories(): Observable<IBaseSymbolAcessory[]> {
 		const url = this.getUrl('symbolAccessories');
-		return this.http.get(url).pipe(
+		return this.http.get(url!).pipe(
 			map((data: any) => {
 				return this.mapData(data, 'symbolAccessories');
 			}),
@@ -102,7 +107,7 @@ export class HttpDataCollectionService {
 	}
 	getSignifications(): Observable<IBaseSignification[]> {
 		const url = this.getUrl('significations');
-		return this.http.get(url).pipe(
+		return this.http.get(url!).pipe(
 			map((data: any) => {
 				return this.mapData(data, 'significations');
 			}),
@@ -113,7 +118,7 @@ export class HttpDataCollectionService {
 	}
 	getFilieres(): Observable<IBaseFiliere[]> {
 		const url = this.getUrl('filieres');
-		return this.http.get(url).pipe(
+		return this.http.get(url!).pipe(
 			map((data: any) => {
 				return this.mapData(data, 'filieres');
 			}),
@@ -124,7 +129,7 @@ export class HttpDataCollectionService {
 	}
 	getColors(): Observable<IBaseColor[]> {
 		const url = this.getUrl('colors');
-		return this.http.get(url).pipe(
+		return this.http.get(url!).pipe(
 			map((data: any) => {
 				return this.mapData(data, 'colors');
 			}),
@@ -135,7 +140,7 @@ export class HttpDataCollectionService {
 	}
 	getPlacements(): Observable<IBasePlacement[]> {
 		const url = this.getUrl('placements');
-		return this.http.get(url).pipe(
+		return this.http.get(url!).pipe(
 			map((data: any) => {
 				return this.mapData(data, 'placements');
 			}),
@@ -146,7 +151,7 @@ export class HttpDataCollectionService {
 	}
 	getPositions(): Observable<IBasePosition[]> {
 		const url = this.getUrl('positions');
-		return this.http.get(url).pipe(
+		return this.http.get(url!).pipe(
 			map((data: any) => {
 				return this.mapData(data, 'positions');
 			}),
@@ -157,7 +162,7 @@ export class HttpDataCollectionService {
 	}
 	getDataLink(): Observable<IRelationData[]> {
 		const url = this.getUrl('dataLink');
-		return this.http.get(url).pipe(
+		return this.http.get(url!).pipe(
 			map((data: any) => {
 				return this.mapData(data, 'dataLink');
 			}),
@@ -182,15 +187,15 @@ export class HttpDataCollectionService {
 				}
 				return forkJoin(
 					items.map((item) => {
-						return this.getDataLinkItem(url, item.id);
+						return this.getDataLinkItem(url!, item.id);
 					})
 				);
 			})
 		) as Observable<IRelationData[]>;
 	}
 
-	getDataLinkItem(url, id: string): Observable<IRelationData> {
-		return this.http.get(url + '/' + id).pipe(
+	getDataLinkItem(url: string, id: string): Observable<IRelationData> {
+		return this.http.get<IRelationData>(url + '/' + id).pipe(
 			tap((data) => {
 				this.storageService.set(url + '-' + id, data).subscribe();
 			}),
@@ -212,7 +217,7 @@ export class HttpDataCollectionService {
 		return data;
 	}
 
-	private handleError(url: string, error): Observable<any> {
+	private handleError(url: string, error: any): Observable<any> {
 		if (this.getStorageEnabled()) {
 			return this.storageService.get(url, undefined).pipe(
 				map((data) => {
@@ -227,17 +232,18 @@ export class HttpDataCollectionService {
 		}
 	}
 
-	private getUrl(pathKey: string) {
+	private getUrl(pathKey: string): string | undefined {
 		const config = this.config.getConfig();
-		if (config.urls?.dataServer && config.paths && config.paths[pathKey]) {
-			return config.urls?.dataServer + '/' + config.paths[pathKey];
+		if (config && config.urls?.dataServer && config.paths && (config.paths as any)[pathKey]) {
+			return config.urls?.dataServer + '/' + (config.paths as any)[pathKey];
 		} else {
 			console.warn('no path', pathKey);
+			return undefined;
 		}
 	}
 
 	private getStorageEnabled(): boolean {
 		const conf = this.config.getConfig();
-		return conf?.storeEnabled;
+		return !!conf?.storeEnabled;
 	}
 }

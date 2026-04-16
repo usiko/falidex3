@@ -3,19 +3,23 @@ import { Router } from '@angular/router';
 import { Subscription, timer } from 'rxjs';
 import { ILoadingBarState } from 'src/app/models/global.model';
 import { EventService } from 'src/app/services/event/event.service';
-
+import { IonProgressBar } from '@ionic/angular/standalone';
 @Component({
 	selector: 'app-animated-splashscreen',
 	templateUrl: './animated-splashscreen.component.html',
 	styleUrls: ['./animated-splashscreen.component.scss'],
+    imports:[
+        IonProgressBar
+    ]
 })
 export class AnimatedSplashscreenComponent implements OnInit, OnDestroy {
 	constructor(private events: EventService, private router: Router) {}
-	public loadingState: ILoadingBarState;
+	public loadingState: ILoadingBarState|undefined;
 	private subscription = new Subscription();
 	static loaded = false;
 
 	ngOnInit() {
+        console.log('reach splash!')
 		if (AnimatedSplashscreenComponent.loaded) {
 			this.router.navigateByUrl('/home');
 		} else {
@@ -44,7 +48,7 @@ export class AnimatedSplashscreenComponent implements OnInit, OnDestroy {
 		this.subscription.unsubscribe();
 		this.subscription = new Subscription();
 		this.subscription.add(
-			this.events.getObs('loadingBarState').subscribe((state: ILoadingBarState) => {
+			this.events.getObs('loadingBarState')?.subscribe((state: ILoadingBarState) => {
 				console.log(state);
 				if (state) {
 					this.loadingState = state;
@@ -56,7 +60,7 @@ export class AnimatedSplashscreenComponent implements OnInit, OnDestroy {
 		);
 		console.log('listen plashLeave');
 		this.subscription.add(
-			this.events.getObs('splashLeave', false).subscribe((value: boolean) => {
+			this.events.getObs('splashLeave', false)?.subscribe((value: boolean) => {
 				if (value) {
 					this.router.navigateByUrl('/home');
 				}

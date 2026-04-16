@@ -1,7 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { ICirculaire, ICollectionLink, IFiliere, ISignification, ISymbol } from 'src/app/models/linked-data-models';
-import { ISubBaseCirculaire, ISubBaseFiliere, ISubBaseSignification } from 'src/app/models/sub-base-data-models';
-import { ListItem } from '../../list-item';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { FaIconComponent } from "@fortawesome/angular-fontawesome";
+import { IonItem, IonLabel, IonSkeletonText, IonThumbnail } from "@ionic/angular/standalone";
+import { ImgLoaderComponent } from "src/app/components/shared/img-loader/img-loader.component";
+import { FilterLinkPipe } from 'src/app/components/shared/pipes/filter-links.pipe';
+import { ISymbol } from 'src/app/models/linked-data-models';
 
 /**
  * item block of symbole list showing
@@ -11,31 +15,32 @@ import { ListItem } from '../../list-item';
     templateUrl: './symbole-block-item-list.component.html',
     styleUrls: ['./symbole-block-item-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [IonItem, IonThumbnail, ImgLoaderComponent, IonLabel, FaIconComponent, IonSkeletonText, RouterModule,CommonModule,FilterLinkPipe],
 })
-export class SymbolBlockItemListComponent extends ListItem<ISymbol> implements OnInit {
+export class SymbolBlockItemListComponent {
     /**
      * symbole item to show
      */
-    @Input() item: ISymbol;
+    item = input.required<ISymbol>()
 
     /**
      * show if this item is specific
      * @deprecated (?)
      */
-    @Input() showSpe = true;
+    showSpe = input(true);
 
     /**
      * show navigation arrow
      */
-    @Input() navigation: string = null;
+    navigation =  input<string|null>(null)
 
-    constructor(protected changedetector: ChangeDetectorRef) {
-        super();
-    }
+    onclick = output<void>()
+
+    
 
     ngOnInit() {}
 
     click() {
-        this.onclick.emit();
+        this.onclick.emit(void 0);
     }
 }

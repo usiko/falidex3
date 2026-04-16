@@ -6,17 +6,17 @@
         <ion-title color="light" *ngIf="searchText==''">
             <div class="title-content">
                 <div class="titleStyle">{{title}}</div>
-                <ion-badge *ngIf="length!=undefined" mode="ios" color="dark">{{length}}</ion-badge>
+                <ion-badge *ngIf="length!=undefined" mode="ios" color="light">{{length}}</ion-badge>
             </div>
 
         </ion-title>
-        <ion-title *ngIf="searchText!=''">
+        <ion-title color="light"  *ngIf="searchText!=''">
             <div class="title-content">
                 <div class="titleStyle">Recherche {{title}}</div>
-                <ion-badge *ngIf="length!=undefined" mode="ios" color="dark">{{length}}</ion-badge>
+                <ion-badge *ngIf="length!=undefined" mode="ios" color="light">{{length}}</ion-badge>
             </div>
         </ion-title>
-        <ion-buttons slot="end">
+        <ion-buttons color="light" slot="end">
 
             <ion-button (click)="toggleSearch()">
                 <fa-icon class="light-color" [icon]="['fas', 'angle-up']" color="light" *ngIf="isSearching" slot="icon-only"></fa-icon>
@@ -38,9 +38,9 @@
 <ng-container *ngIf="!searchable">
     <ion-toolbar color="secondary">
         <ion-buttons slot="start">
-            <ion-menu-button menu="navigation"></ion-menu-button>
+            <ion-menu-button color="light" menu="navigation"></ion-menu-button>
         </ion-buttons>
-        <ion-title>
+        <ion-title color="light">
             <div class="title-content">
                 <div class="titleStyle">{{title}}</div>
                 <ion-badge *ngIf="length!=undefined" mode="ios" color="dark">{{length}}</ion-badge>

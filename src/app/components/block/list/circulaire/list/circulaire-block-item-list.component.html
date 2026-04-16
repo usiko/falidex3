@@ -1,40 +1,53 @@
-<ion-item *ngIf="item && navigation" lines="none" [routerLink]="[navigation,item.id]" (click)="click()" detail>
+@if(item() && navigation()) {
+<ion-item lines="none" [routerLink]="[navigation(),item().id]" (click)="click()" detail>
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </ion-item>
-<ion-item *ngIf="item && !navigation" lines="none" (click)="click()">
+}
+@if(item() && !navigation()) {
+<ion-item lines="none" (click)="click()">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </ion-item>
+}
 <ng-template #content>
-    <ion-label *ngIf="(item.links|filterLink:['filiere']) as filiereList">
+    @let filiereList = item().links|filterLink:['filiere'];
+    @if(filiereList) {
+    <ion-label>
 
-        <ng-container>
-            <app-circulaire-representation *ngIf="item.colors" [circulaire]="item" [cssClass]="'vertical'"></app-circulaire-representation>
-
-        </ng-container>
+        @if(item().colors) {
+            <app-circulaire-representation [circulaire]="item()" [cssClass]="'vertical'"></app-circulaire-representation>
+        }
         <div>
             <h3>
-                <div>{{item.name}}</div>
+                <div>{{item().name}}</div>
             </h3>
-            <p class="filiere" *ngIf="filiereList.length>1">
+            @if(filiereList.length>1) {
+            <p class="filiere">
                 {{filiereList.length}} filieres
             </p>
-            <ng-container *ngIf="filiereList.length==1">
+            }
+            @if(filiereList.length==1) {
                 <ng-container *ngTemplateOutlet="filiereTpl;context:{filiereLinks:filiereList}"></ng-container>
-            </ng-container>
+            }
         </div>
     </ion-label>
+    }
 </ng-template>
 <ng-template #filiereTpl let-filiereLinks="filiereLinks">
-    <p class="filiere" *ngFor="let filiereLink of filiereLinks">
+    @for(filiereLink of filiereLinks; track filiereLink) {
+    <p class="filiere">
         <span class="content">
-            <fa-icon  class="primary-color" *ngIf="filiereLink.spe && showSpe" [icon]="['fas', 'circle-exclamation']" ></fa-icon>
+            @if(filiereLink.spe && showSpe()) {
+            <fa-icon  class="primary-color" [icon]="['fas', 'circle-exclamation']" ></fa-icon>
+            }
         <span>
-            <span *ngIf="filiereLink.symbols">{{filiereLink.symbols.name}} pour</span> {{filiereLink.filiere.name}}
+            @if(filiereLink.symbols) {<span>{{filiereLink.symbols.name}} pour</span>} {{filiereLink.filiere.name}}
         </span>
         </span>
     </p>
+    }
 </ng-template>
-<ion-item *ngIf="!item">
+@if(!item()) {
+<ion-item>
     <ion-label>
         <h3>
             <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
@@ -44,3 +57,4 @@
         </p>
     </ion-label>
 </ion-item>
+}

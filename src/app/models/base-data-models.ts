@@ -6,7 +6,7 @@ export interface IBaseCollectionData {
 export interface IBaseCirculaire extends IBaseCollectionData {
 	//data linked
 
-	matiere: string;
+	matiere?: string;
 }
 
 export interface IBaseCirculaireColor extends IBaseCollectionData {
@@ -34,7 +34,7 @@ export interface IBaseSymbol extends IBaseCollectionData {
 }
 export interface IBaseSignification extends IBaseCollectionData {
 	//data linked
-	content: string;
+	content?: string;
 }
 
 export interface IBasePlacement extends IBaseCollectionData {
@@ -51,7 +51,7 @@ export interface IBaseSymbolAcessory extends IBaseCollectionData {
 }
 
 export interface IBaseCodeSpe extends IBaseCollectionData {
-	text: string;
+	text?: string;
 	article?: string;
 	note?: string;
 }

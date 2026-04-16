@@ -1,47 +1,69 @@
-import { Component, OnInit } from '@angular/core';
-import { IconName } from '@fortawesome/fontawesome-svg-core';
-import { BehaviorSubject } from 'rxjs';
-import { AuthService } from './services/auth/auth.service';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { IonApp, IonRouterOutlet, IonContent, IonMenu, IonHeader, IonToolbar, IonTitle, IonItem, IonSelect, IonSelectOption, SelectCustomEvent, IonLabel } from '@ionic/angular/standalone';
 import { CirculaireCollectionService } from './services/collection-item/circulaire/circulaire-collection.service';
 import { CodeSpeCollectionService } from './services/collection-item/code-spe/code-spe-collection.service';
 import { FiliereCollectionService } from './services/collection-item/filiere/filiere-collection.service';
 import { SignificationCollectionService } from './services/collection-item/signification/signification-collection.service';
 import { SymbolCollectionService } from './services/collection-item/symbol/symbol-collection.service';
-import { ConfigService } from './services/config/config.service';
 import { DataLoaderStoreService } from './services/data-store/loader/data-loader-store.service';
 import { SubStoreService } from './services/data-store/sub-store/sub-store.service';
 import { GlobalSearchService } from './services/globale-search/global-search.service';
 import { DataRelationsService } from './services/relations/data-relations.service';
-import { environment } from '../environments/environment';
-import { InstallAppService } from './services/install/install-app.service';
 import { SwService } from './services/service-worker/sw-service.service';
-
+import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import {FaIconComponent, FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { CommonModule } from '@angular/common';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { NavigationComponent } from "./components/sidebar/navigation/navigation.component";
+import { FiltresComponent } from "./components/sidebar/filtres/filtres.component";
+import packageJson from '../../package.json';
 @Component({
-    selector: 'app-root',
-    templateUrl: 'app.component.html',
-    styleUrls: ['app.component.scss'],
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  styleUrls: ['./app.component.scss'],
+  imports: [
+    IonApp,
+    IonRouterOutlet,
+    IonContent,
+    IonMenu,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonItem,
+    IonSelect,
+    IonSelectOption,
+    FaIconComponent,
+    FontAwesomeModule,
+    IonLabel,
+    CommonModule,
+    NavigationComponent,
+    FiltresComponent
+],
 })
 export class AppComponent implements OnInit {
-    public appPages: { title: string; url: string; icon?: IconName; src?: string; disabled?: boolean }[];
+    private loaderStoreService= inject(DataLoaderStoreService);
+    private circulaireService= inject(CirculaireCollectionService);
+    private significationsService= inject(SignificationCollectionService);
+    private filieresService= inject(FiliereCollectionService);
+    private symbolService= inject(SymbolCollectionService);
+    private codeSpeService= inject(CodeSpeCollectionService);
+    private globaleSearch= inject(GlobalSearchService);
+    private subStore= inject(SubStoreService);
+    private relationService= inject(DataRelationsService);
+    private updateService= inject(SwService);
+    private iconLibrary = inject(FaIconLibrary)
+
+    public appPages: { title: string; url: string; icon?:string; src?: string; disabled?: boolean }[] = []
 
     public relationsData$ = new BehaviorSubject<{ name: string; id: string }[]>([]);
-    public currentRelationsData$ = new BehaviorSubject<{ name: string; id: string }>(null);
+    public currentRelationsData$ = new BehaviorSubject<{ name: string; id: string }|null>(null);
     public menuFilters = false;
-
-    constructor(
-        private loaderStoreService: DataLoaderStoreService,
-        private circulaireService: CirculaireCollectionService,
-        private significationsService: SignificationCollectionService,
-        private filieresService: FiliereCollectionService,
-        private symbolService: SymbolCollectionService,
-        private codeSpeService: CodeSpeCollectionService,
-        private globaleSearch: GlobalSearchService,
-        private subStore: SubStoreService,
-        private relationService: DataRelationsService,
-        private updateService: SwService
-    ) {}
-
+    public version = signal<string|undefined>(undefined);
     ngOnInit() {
+        this.version.set(`${packageJson.name} v${packageJson.version}`);
+        this.initIcons();
         if (environment.production) {
             console.log('prod mode');
         } else {
@@ -59,8 +81,12 @@ export class AppComponent implements OnInit {
             this.relationsData$.next(items);
         });
         this.relationService.getCurrentRelation().subscribe((item) => {
-            this.currentRelationsData$.next(item);
-            this.setMenu();
+            if(item)
+            {
+                this.currentRelationsData$.next(item);
+                this.setMenu();
+            }
+            
         });
         this.globaleSearch.init();
         this.updateService.init().subscribe(() => {
@@ -69,7 +95,7 @@ export class AppComponent implements OnInit {
     }
 
     setMenu() {
-        const appPages: { title: string; url: string; icon?: IconName; src?: string; disabled?: boolean }[] = [
+        const appPages: { title: string; url: string; icon?: string; src?: string; disabled?: boolean }[] = [
             {
                 title: 'Acceuil',
                 url: '/home',
@@ -114,6 +140,11 @@ export class AppComponent implements OnInit {
         this.appPages = appPages;
     }
 
+    private initIcons()
+    {
+        this.iconLibrary.addIconPacks(fas)
+    }
+
     private initData() {
         this.circulaireService.init();
         this.significationsService.init();
@@ -124,7 +155,7 @@ export class AppComponent implements OnInit {
         this.loaderStoreService.loadData();
     }
 
-    public setCurrentRelation(event) {
+    public setCurrentRelation(event:SelectCustomEvent) {
         this.relationService.setCurrentRelation(event.detail.value);
     }
 }

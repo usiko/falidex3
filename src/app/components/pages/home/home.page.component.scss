@@ -19,12 +19,7 @@ ion-card.warning-card {
 .top-container {
     display: flex;
 }
-
-ion-slides {
+app-slider{
     height: 100%;
-    ion-slide {
-        display: block;
-        height: 100%;
-        text-align: left;
-    }
+    display: block;
 }

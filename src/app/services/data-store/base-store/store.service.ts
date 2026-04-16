@@ -38,7 +38,7 @@ export class StoreService {
     // links
 
     public dataRelations$ = new BehaviorSubject<IRelationData[]>([]);
-    public currentDataRelations$ = new BehaviorSubject<IRelationData>(null);
+    public currentDataRelations$ = new BehaviorSubject<IRelationData | null>(null);
 
     // spe code text
 

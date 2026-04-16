@@ -25,7 +25,8 @@ ion-tab-bar {
             font-size: 11px;
             margin-left: -15px;
             margin-top: -10px;
-            --background: var(--ion-color-dark-tint);
+            
+            --background: var(--ion-background-color);
         }
     }
 }

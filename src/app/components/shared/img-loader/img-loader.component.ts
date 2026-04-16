@@ -3,20 +3,24 @@ import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } 
 import { Subscription } from 'rxjs';
 import { ConfigService } from 'src/app/services/config/config.service';
 import { PictureService } from 'src/app/services/picture/picture.service';
+import { IonSpinner, IonImg } from "@ionic/angular/standalone";
+import { CommonModule } from '@angular/common';
+import { SatinizeUrlPipe } from '../pipes/satinize-url.pipe';
 
 @Component({
     selector: 'app-img-loader',
     templateUrl: './img-loader.component.html',
     styleUrls: ['./img-loader.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [IonSpinner, IonImg,CommonModule,SatinizeUrlPipe],
 })
 export class ImgLoaderComponent implements OnInit {
     public loading = false;
-    public ownSrc: string;
+    public ownSrc: string|undefined;
     public base64 = false;
 
     public subscriptions = new Subscription();
-    private _src: string;
+    private _src: string|undefined;;
     @Input() set src(src: string) {
         this._src = src;
         //console.log('img change', src, this.errorSrc, this.ownSrc);
@@ -65,7 +69,7 @@ export class ImgLoaderComponent implements OnInit {
 
     @Input() errorSrc = '/assets/not-found.svg';
 
-    @Input() errorIcon;
+    @Input() errorIcon:string|undefined;;
 
     @Input() objectFit = 'cover';
 
@@ -81,7 +85,7 @@ export class ImgLoaderComponent implements OnInit {
     }
 
     imgError() {
-        if (this.base64) {
+        if (this.base64 && this._src) {
             this.pictureService.deleteResource(this._src);
         }
         this.base64 = false;
@@ -125,6 +129,6 @@ export class ImgLoaderComponent implements OnInit {
 
     private getStorageEnabled(): boolean {
         const conf = this.configService.getConfig();
-        return conf?.storeEnabled;
+        return !!conf?.storeEnabled;
     }
 }

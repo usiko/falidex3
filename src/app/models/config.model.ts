@@ -60,8 +60,8 @@ export class GlobalConfig {
 	//[key: string]: any;
 	donate: boolean;
 	storeEnabled: boolean;
-	constructor(options?: IConfig) {
-		if (options) {
+	constructor(options: IConfig) {
+		
 			this.loadingSteps = options?.loadingSteps ? options.loadingSteps : [];
 			this.urls = options?.urls;
 			this.loadingErrorMessage = options?.loadingErrorMessage;
@@ -70,6 +70,6 @@ export class GlobalConfig {
 			this.pictureServerSalt = options?.pictureServerSalt;
 			this.donate = options?.donate;
 			this.storeEnabled = options?.storeEnabled;
-		}
+		
 	}
 }

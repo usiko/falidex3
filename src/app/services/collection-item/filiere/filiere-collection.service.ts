@@ -9,23 +9,23 @@ import { ICollectionItem } from '../collection.service';
     providedIn: 'root'
 })
 export class FiliereCollectionService extends ICollectionItem<ISubBaseFiliere, IFiliere>  {
-    protected baseCollection$ = this.store.filieres$;
-    constructor(protected store: SubStoreService) {
+    protected override baseCollection$ = this.store.filieres$;
+    constructor(protected override store: SubStoreService) {
         super();
 
     }
 
-    init() {
+    override init() {
         super.init();
         this.bindSubjectToBuild(this.store.positions$);
         this.bindSubjectToBuild(this.store.placements$);
         this.bindSubjectToBuild(this.store.symboles$);
-        this.bindSubjectToBuild(this.store.circulaires$);
+        this.bindSubjectToBuild(this.store.circulaires$ as any);
         this.bindSubjectToBuild(this.store.symbolesAccessories$);
         this.bindSubjectToBuild(this.store.symbolesSens$);
     }
 
-    protected linkFinder(item: ISubBaseFiliere, links: IRelationItem[]): IRelationItem[] {
+    protected override linkFinder(item: ISubBaseFiliere, links: IRelationItem[]): IRelationItem[] {
         const returned: IRelationItem[] = [];
         for (const rel of links) {
             //specfik

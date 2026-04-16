@@ -1,20 +1,24 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 //import { MenuController, Events } from '@ionic/angular';
-import { IonSearchbar, MenuController } from '@ionic/angular';
+import { InputCustomEvent, MenuController } from '@ionic/angular';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { EventService } from 'src/app/services/event/event.service';
 import { ILoadingBarState } from '../../../models/global.model';
+import { CommonModule } from '@angular/common';
+import { IonToolbar, IonButtons, IonMenuButton, IonTitle, IonBadge, IonButton, IonSearchbar, IonProgressBar, SearchbarCustomEvent } from "@ionic/angular/standalone";
+import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
+    imports: [CommonModule, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonBadge, IonButton, FaIconComponent, IonSearchbar, IonProgressBar]
 })
 export class HeaderComponent /* implements OnInit, AfterViewInit, OnDestroy*/ {
-    @ViewChild(IonSearchbar) searchBar: IonSearchbar;
-    @Input() title: string;
-    @Input() length: number;
+    @ViewChild(IonSearchbar) searchBar: IonSearchbar|undefined;;
+    @Input() title: string|undefined;;
+    @Input() length: number|undefined;;
     @Input() searchable = false;
     @Input() filterable = false;
     @Input() autoFocus = false;
@@ -26,14 +30,14 @@ export class HeaderComponent /* implements OnInit, AfterViewInit, OnDestroy*/ {
     public loadingState: ILoadingBarState = { enable: false };
 
     private searchDebouncer = new Subject<string>();
-    private searchSubscription: Subscription;
+    private searchSubscription = new Subscription()
     constructor(private events: EventService, private menuCtrl: MenuController) {}
 
     ngOnInit() {
         if (this.autoFocus && !this.isSearching) {
             this.toggleSearch();
         }
-        this.events.getObs('loadingBarState').subscribe((state: ILoadingBarState) => {
+        this.events.getObs('loadingBarState')?.subscribe((state: ILoadingBarState) => {
             console.log(state);
             if (state) {
                 this.loadingState = state;
@@ -48,8 +52,8 @@ export class HeaderComponent /* implements OnInit, AfterViewInit, OnDestroy*/ {
         }
     }
 
-    search(search) {
-        this.searchText = search.detail.value;
+    search(search:SearchbarCustomEvent) {
+        this.searchText = search.detail.value as string;
         this.searchDebouncer.next(this.searchText);
     }
     toggleSearch() {

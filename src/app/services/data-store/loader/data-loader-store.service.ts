@@ -1,16 +1,5 @@
 import { Injectable } from '@angular/core';
-import Circulaires from '../../mocks/item-data/circulaires.json';
-import CirculairesColors from '../../mocks/item-data/circulaires-colors.json';
-import Colors from '../../mocks/item-data/colors.json';
-import Filieres from '../../mocks/item-data/filieres.json';
-import Significations from '../../mocks/item-data/significations.json';
-import Symbols from '../../mocks/item-data/symboles.json';
-import SymbolsSens from '../../mocks/item-data/symboles-sens.json';
-import SymbolAccessory from '../../mocks/item-data/symbole-accessoire.json';
-import Placements from '../../mocks/item-data/placements.json';
-import Positions from '../../mocks/item-data/positions.json';
-import TLNRelation from '../../mocks/relations/toulon.json';
-import NATRelation from '../../mocks/relations/national.json';
+
 
 import {
     IBaseCirculaire,
@@ -60,7 +49,7 @@ export class DataLoaderStoreService {
             console.log('isallstored','splashLeave' )
             this.event.publish('splashLeave', true);
         }
-        this.loadingSteps = this.config.getConfig().loadingSteps;
+        this.loadingSteps = this.config.getConfig()?.loadingSteps??[];
 
         let currentStep = 1;
         this.displayStep(currentStep, this.numberOfSteps);
@@ -97,21 +86,21 @@ export class DataLoaderStoreService {
                     currentStep++;
                 }),
                 mergeMap(() => {
-                    return this.dispactIntoSubject(this.loadCirculaires(), this.store.circulaires$);
+                    return this.dispactIntoSubject(this.loadCirculaires(), this.store.circulaires$ as any);
                 }),
                 tap(() => {
                     this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
                 }),
                 mergeMap(() => {
-                    return this.dispactIntoSubject(this.loadCirculairesColors(), this.store.circulairesColors$);
+                    return this.dispactIntoSubject(this.loadCirculairesColors(), this.store.circulairesColors$ as any);
                 }),
                 tap(() => {
                     this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
                 }),
                 mergeMap(() => {
-                    return this.dispactIntoSubject(this.loadColors(), this.store.colors$);
+                    return this.dispactIntoSubject(this.loadColors(), this.store.colors$ as any);
                 }),
                 tap(() => {
                     this.displayStep(currentStep, this.numberOfSteps);
@@ -139,7 +128,7 @@ export class DataLoaderStoreService {
                     currentStep++;
                 }),
                 mergeMap(() => {
-                    return this.dispactIntoSubject(this.loadSignifications(), this.store.significations$);
+                    return this.dispactIntoSubject(this.loadSignifications(), this.store.significations$ as any);
                 }),
                 tap(() => {
                     this.displayStep(currentStep, this.numberOfSteps);
@@ -163,7 +152,7 @@ export class DataLoaderStoreService {
 
     private getStepMessage(stepNumber: number) {
         if (this.loadingSteps.length === 0) {
-            return null;
+            return undefined;
         } else {
             if (!this.loadingSteps[stepNumber]) {
                 return this.loadingSteps[this.loadingSteps.length - 1];
@@ -187,7 +176,7 @@ export class DataLoaderStoreService {
             value: lastvalue,
             error: false,
             buffer: nextvalue,
-            message: this.getStepMessage(currentStep) ? this.getStepMessage(currentStep).message : '',
+            message: this.getStepMessage(currentStep) ? (this.getStepMessage(currentStep)?.message??'') : '',
         });
         if (nextvalue === 1) {
             setTimeout(() => {
@@ -266,7 +255,7 @@ export class DataLoaderStoreService {
         //return this.httpData.getSymbols();
         return this.httpData.getSymbols().pipe(
             mergeMap((symbols: IBaseSymbol[]) => {
-                const pictures = Symbols.reduce((acc, symbol) => {
+                const pictures = symbols.reduce((acc:string[], symbol) => {
                     if (symbol.imgs) {
                         acc.push(...symbol.imgs.map((img) => img.url));
                     }

@@ -24,7 +24,7 @@ export class ListManagerService<Item extends ICollectionData> implements OnDestr
     /**
      * current active sort
      */
-    public currentSorts: Sort;
+    public currentSorts: Sort|undefined;
 
     /**
      * pagination size, number of element per adding
@@ -39,7 +39,7 @@ export class ListManagerService<Item extends ICollectionData> implements OnDestr
     /**
      * initial full true list of data
      */
-    public collection$: BehaviorSubject<Item[]>;
+    public collection$ =  new BehaviorSubject<Item[]>([]);
 
     /**
      * all subscriptions of page
@@ -54,7 +54,7 @@ export class ListManagerService<Item extends ICollectionData> implements OnDestr
     /**
      * subject fired when filtering is update
      */
-    public filterChange = new Subject<never>();
+    public filterChange = new Subject<void>();
 
     constructor(private filterService: FilterService<Item>) {}
 
@@ -68,7 +68,7 @@ export class ListManagerService<Item extends ICollectionData> implements OnDestr
 
         this.subscriptions.add(
             this.filterService.filteredCollection$.subscribe((filtered) => {
-                this.filterChange.next();
+                this.filterChange.next(void 0);
                 this.updateItems();
             })
         );
@@ -154,7 +154,7 @@ export class ListManagerService<Item extends ICollectionData> implements OnDestr
      * remove a filter from his index, applying on list data
      * @param  {number} index
      */
-    removeFilter(index) {
+    removeFilter(index:number) {
         this.filterService.removeCollectionFilter(index);
     }
 
@@ -163,7 +163,7 @@ export class ListManagerService<Item extends ICollectionData> implements OnDestr
      * @param  {IDisplayFilters<Item>[]} displayFilters
      */
     setDisplayFilters(displayFilters: IDisplayFilters<Item>[]) {
-        this.filterService.setDisplayFilters(displayFilters);
+        this.filterService.setDisplayFilters(displayFilters as IDisplayFilters<ICollectionData>[]);
     }
 
     /**
@@ -191,22 +191,27 @@ export class ListManagerService<Item extends ICollectionData> implements OnDestr
         let collection = this.filterService.filteredCollection$.getValue();
         if (this.currentSorts && this.currentSorts.property) {
             collection = collection.sort((a, b) => {
-                const aProp: string = a[this.currentSorts.property];
-                const bProp: string = b[this.currentSorts.property];
-                if (aProp.toLowerCase() < bProp.toLowerCase()) {
-                    if (this.currentSorts.order == SortEnum.asc) {
-                        return -1;
-                    } else {
-                        return 1;
+                if(this.currentSorts)
+                {
+                    const aProp: string = (a as any)[this.currentSorts.property];
+                    const bProp: string = (b as any)[this.currentSorts.property];
+                    if (aProp.toLowerCase() < bProp.toLowerCase()) {
+                        if (this.currentSorts.order == SortEnum.asc) {
+                            return -1;
+                        } else {
+                            return 1;
+                        }
+                    }
+                    if (aProp.toLowerCase() > bProp.toLowerCase()) {
+                        if (this.currentSorts.order == SortEnum.asc) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }
                     }
                 }
-                if (aProp.toLowerCase() > bProp.toLowerCase()) {
-                    if (this.currentSorts.order == SortEnum.asc) {
-                        return 1;
-                    } else {
-                        return -1;
-                    }
-                }
+                return 0
+
             });
         }
         this.dataSize = collection.length;

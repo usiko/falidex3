@@ -43,3 +43,6 @@ ion-toolbar {
         }
     }
 }
+ion-badge {
+    --background: var(--ion-background-color);
+}

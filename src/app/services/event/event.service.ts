@@ -21,7 +21,7 @@ export class EventService {
      */
     publish(topic: string, data?: any) {
         const subject = this.getTopic(topic);
-        subject.next(data);
+        subject?.next(data);
     }
     /**
      * get observable to subscribe from a ref topic
@@ -29,6 +29,6 @@ export class EventService {
      */
     getObs(topic: string, defaultValue?: any) {
         const subject = this.getTopic(topic, defaultValue);
-        return subject.asObservable();
+        return subject?.asObservable();
     }
 }

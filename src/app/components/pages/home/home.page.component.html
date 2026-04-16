@@ -4,8 +4,8 @@
 
 <ion-content [scrollX]="false" [scrollY]="false">
 
-    <ion-slides #slides (ionSlideDidChange)="slidesChange($event)" [pager]="false">
-        <ion-slide>
+    <app-slider [(index)]="activeSlide">
+        <ng-template appSlide>
             <div class="top-container" #topContainer>
                 <ion-card class="warning-card" color='secondary'>
                     <ion-card-content color='secondary'>
@@ -15,15 +15,15 @@
 
             </div>
             <app-home-search-result [ngStyle]="{'height':'calc(100% - '+topContainer.offsetHeight+'px)'}"></app-home-search-result>
-        </ion-slide>
-        <ion-slide>
+        </ng-template>
+        <ng-template appSlide>
             <app-home-about></app-home-about>
-        </ion-slide>
-    </ion-slides>
+        </ng-template>
+    </app-slider>
 </ion-content>
 <ion-footer class="ion-no-border">
 
-    <ion-tab-bar [selectedTab]="activeSlide">
+    <ion-tab-bar [selectedTab]="activeSlide()">
         <ion-tab-button (click)="switchTab(0)" tab="0">
             <fa-icon [icon]="['fas', 'house']" class="secondary-color"></fa-icon>
             <ion-label>Accueil</ion-label>

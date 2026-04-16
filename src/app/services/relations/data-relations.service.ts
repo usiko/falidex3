@@ -10,7 +10,7 @@ import { StorageService } from '../storage/storage.service';
 })
 export class DataRelationsService {
     private relations: BehaviorSubject<IRelationData[]> = this.store.dataRelations$;
-    private currentRelation$: BehaviorSubject<IRelationData> = this.store.currentDataRelations$;
+    private currentRelation$: BehaviorSubject<IRelationData | null> = this.store.currentDataRelations$;
     constructor(private store: SubStoreService, private storage: StorageService) {}
 
     getRelationList(): Observable<{ name: string; id: string }[]> {
@@ -26,7 +26,7 @@ export class DataRelationsService {
         );
     }
 
-    getCurrentRelation(): Observable<{ name: string; id: string }> {
+    getCurrentRelation(): Observable<{ name: string; id: string } | null> {
         return this.currentRelation$.pipe(
             filter((item) => {
                 return !!item;
@@ -38,10 +38,7 @@ export class DataRelationsService {
                         id: item.id,
                     };
                 } else {
-                    return {
-                        name: null,
-                        id: null,
-                    };
+                    return null;
                 }
             })
         );

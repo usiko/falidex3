@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, of, throwError } from 'rxjs';
-import { catchError, mergeMap, tap } from 'rxjs/operators';
+import { catchError, tap} from 'rxjs/operators';
 import { ConfigService } from '../config/config.service';
 import { HttpDataCollectionService } from '../data-store/http-data/http-data-collection.service';
 import { EventService } from '../event/event.service';
@@ -11,7 +11,7 @@ import { StorageService } from '../storage/storage.service';
     providedIn: 'root',
 })
 export class AuthService {
-    private token;
+    private token:string|undefined;
     constructor(private http: HttpClient, private configService: ConfigService, private storageService: StorageService, private httpData:HttpDataCollectionService, private eventService:EventService) {
 
     }
@@ -22,12 +22,12 @@ export class AuthService {
         const url = this.configService.getConfig()?.urls?.dataServer;
         //return throwError(null);
         return this.http
-            .post(url + '/auth/login', {
+            .post<{ access_token: string }>(url + '/auth/login', {
                 username: 'john',
                 password: 'changeme',
             })
             .pipe(
-                tap((data: { access_token: string }) => {
+                tap((data) => {
                     this.setToken(data.access_token);
                 }),
                 catchError((error) => {
@@ -45,11 +45,11 @@ export class AuthService {
             );
     }
 
-    private setToken(token: string) {
+    private setToken(token: string|undefined) {
         this.token = token;
     }
 
-    getToken(): string {
+    getToken(): string|undefined {
         return this.token;
     }
 }

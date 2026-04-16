@@ -13,7 +13,7 @@ export class ArrayGroupPipe implements PipeTransform {
         return acc;
     }
 
-    private getArray(acc, index, maxLength) {
+    private getArray(acc:any[], index:number, maxLength:number):any {
         if (!acc[index]) {
             acc[index] = [];
             return acc[index];

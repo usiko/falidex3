@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Injectable, ViewChild } from '@angular/core';
-import { IonContent } from '@ionic/angular';
 
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -11,45 +10,46 @@ import { ICollectionItem } from 'src/app/services/collection-item/collection.ser
 import { EventService } from 'src/app/services/event/event.service';
 import { ListManagerService } from 'src/app/services/list-manager/list-manager.service';
 import { IDisplayFilters } from '../../models/filters/filter-model';
+import { InfiniteScrollCustomEvent, IonContent } from '@ionic/angular/standalone';
 
 /**
  * Parent of all list pages
  */
 @Injectable()
-export class PageItemList<Item extends ICollectionData> {
+export abstract class PageItemList<Item extends ICollectionData> {
     /**
      * main page container
      */
-    public content: IonContent;
+    public abstract content: IonContent;
 
     /**
      * Must import service in child
      * data service
      */
-    protected collectionService: ICollectionItem<IBaseCollectionData, Item>;
+    protected abstract collectionService: ICollectionItem<IBaseCollectionData, Item>|undefined;
 
     /**
      * Must import service in child
      * list manager service
      */
-    protected listManagerService: ListManagerService<Item>;
+    protected abstract listManagerService: ListManagerService<Item>;
 
     /**
      * Must import service in child
      * angular changedetector, to update manualy view
      */
-    protected changeDetector: ChangeDetectorRef;
+    protected abstract changeDetector: ChangeDetectorRef;
 
     /**
      * Must import service in child
      * Global event service
      */
-    protected events: EventService;
+    protected abstract events: EventService;
 
     /**
      * collection subject of data to show, dircetly from data store,  without any change
      */
-    protected collection$: BehaviorSubject<Item[]>;
+    protected collection$: BehaviorSubject<Item[]>|undefined;
 
     //protected content;
 
@@ -66,7 +66,7 @@ export class PageItemList<Item extends ICollectionData> {
     /**
      * index of search filter, used to find, remove or update searh text filter
      */
-    private searchFilterIndex: number;
+    private  searchFilterIndex: number|undefined;
 
     // protected filterDebouncer: Subject<any> = new Subject();
 
@@ -93,24 +93,32 @@ export class PageItemList<Item extends ICollectionData> {
      */
     public items$ = new BehaviorSubject<Item[]>([]);
 
-    public emptyItems = [];
+    public emptyItems:null[] = [];
 
     /**
      * lentgh total of items
      * (probably useless now)
      */
-    public dataLength = null;
+    public dataLength:number|null = null;
 
     private subscription = new Subscription();
 
-    private targetScroll;
+    private targetScroll:HTMLIonInfiniteScrollElement|undefined;
 
     /**
      * init the the component
      */
     init() {
-        this.collection$ = this.collectionService.collection$;
-        this.listManagerService.init(this.collection$);
+        if(this.collectionService)
+        {
+            this.collection$ = this.collectionService.collection$;
+        }
+        if(this.collection$)
+        {
+            this.listManagerService.init(this.collection$);
+        }
+        
+        
         this.initLoading = true;
         this.loadingScroll = true;
         this.initEmptyList();
@@ -121,7 +129,7 @@ export class PageItemList<Item extends ICollectionData> {
                 this.loadingScroll = false;
                 if (this.targetScroll) {
                     this.targetScroll.complete();
-                    this.targetScroll = null;
+                    this.targetScroll = undefined;
                 }
                 if (this.dataLength > 0) {
                     this.initLoading = false;
@@ -232,7 +240,7 @@ export class PageItemList<Item extends ICollectionData> {
      * event loading infinite scroll trigered
      * @param  {InfiniteScrollCustomEvent} event
      */
-    getMore(event) {
+    getMore(event:InfiniteScrollCustomEvent) {
         this.targetScroll = event.target;
         console.log('get more');
         this.loadingScroll = true;
@@ -247,15 +255,5 @@ export class PageItemList<Item extends ICollectionData> {
      */
     setSort(property: string, order: SortEnum) {
         this.listManagerService.setSort(property, order);
-    }
-
-    /**
-     * track by forngfor list
-     * @param index number, index in list
-     * @param item Item current item iterrated
-     *
-     */
-    trackByFn(index: Number, item: Item) {
-        return item.id;
     }
 }
