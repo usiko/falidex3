@@ -56,8 +56,10 @@
         "placements": "collection/placements",
         "positions": "collection/positions",
         "dataLink": "collection/links",
-        "dataLinkItem": "collection/link"
+        "dataLinkItem": "collection/link",
+        "token":"token"
     },
+    "tokenHeader":"X-Token",
     "update": {
         "frequency": "auto",
         "clearCacheOnUpdate": false

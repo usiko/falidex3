@@ -7,7 +7,8 @@ import { AppComponent } from './app/app.component';
 import { provideAppInitializer, isDevMode } from '@angular/core';
 import { appInitiealizerFn } from './app/app.initializer';
 import { provideServiceWorker } from '@angular/service-worker';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { httpInterceptor } from './app/services/http-interceptor/http-interceptor.service';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -19,6 +20,6 @@ bootstrapApplication(AppComponent, {
             enabled: !isDevMode(),
             registrationStrategy: 'registerWhenStable:30000'
           }),
-    provideHttpClient()
+    provideHttpClient(withInterceptors([httpInterceptor]))
   ],
 });

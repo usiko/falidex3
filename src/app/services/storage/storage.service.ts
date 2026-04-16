@@ -31,13 +31,34 @@ export class StorageService {
 
     // Create and expose methods that users of this service can
     // call, for example:
-    public get(key: string, emptyValue: any): Observable<any> {
+    public get(key: string, emptyValue: any,ageProperty = 'age',maxAge?:number): Observable<any> {
         try {
             const data = localStorage.getItem(key);
             if (data === null) {
                 return of(emptyValue);
             } else {
-                return of(JSON.parse(data));
+                const storedAge = this.getAge(key);
+                
+                if(maxAge && storedAge)
+                {
+                    const ageDate = new Date(storedAge);
+                    const now = new Date();
+                    const diffInMs = now.getTime() - ageDate.getTime();
+                    
+                    // Si la donnée est trop vieille (maxAge en millisecondes)
+                    if (diffInMs > maxAge) {
+                        console.log(`⏰ Donnée expirée pour la clé "${key}" (${diffInMs}ms > ${maxAge}ms)`);
+                        return of(emptyValue);
+                    }
+                }
+                
+                // Parser les données et ajouter la propriété age
+                const parsedData = JSON.parse(data);
+                if (storedAge && typeof parsedData === 'object' && parsedData !== null) {
+                    parsedData[ageProperty] = storedAge;
+                }
+                
+                return of(parsedData);
             }
         } catch (error) {
             return of(emptyValue);
