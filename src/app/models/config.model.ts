@@ -27,6 +27,7 @@ export interface IConfig {
 	donate: boolean;
 	storeEnabled: boolean;
     tokenHeader:string;
+    tokenKey:string;
 	//[key: string]: any;
 }
 
@@ -64,6 +65,7 @@ export class GlobalConfig {
 	donate: boolean;
 	storeEnabled: boolean;
     tokenHeader:string;
+    tokenKey:string;
 	constructor(options: IConfig) {
 		
 			this.loadingSteps = options?.loadingSteps ? options.loadingSteps : [];
@@ -75,6 +77,7 @@ export class GlobalConfig {
 			this.donate = options?.donate;
 			this.storeEnabled = options?.storeEnabled;
 			this.tokenHeader = options?.tokenHeader;
+			this.tokenKey = options?.tokenKey;
 		
 	}
 }

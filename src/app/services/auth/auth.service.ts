@@ -139,9 +139,8 @@ export class AuthService {
      * Récupère la clé secrète pour le hash du token depuis les variables d'environnement
      */
     private getTokenHashKey(): string {
-        // Récupérer depuis process.env avec un fallback
-       
-        return 'default_dev_token_hash_please_change';
+       // Récupérer depuis process.env avec un fallback
+       return this.configService.getConfig()?.tokenKey??'default_dev_token_hash_please_change'
     }
 
     /**

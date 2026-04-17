@@ -41,7 +41,7 @@
     ],
     "loadingErrorMessage": "Echec du chargement",
     "urls": {
-        "dataServer": "http://localhost:3000",
+        "dataServer": "{ENV:DATA_SERVER}",
         "pictureServer": "https://resources.falidex.fr/index.php"
     },
     "paths": {
@@ -60,6 +60,7 @@
         "token":"token"
     },
     "tokenHeader":"X-Token",
+    "tokenKey":"{ENV:TOKEN_HASH_KEY}",
     "update": {
         "frequency": "auto",
         "clearCacheOnUpdate": false
