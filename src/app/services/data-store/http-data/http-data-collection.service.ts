@@ -187,14 +187,15 @@ export class HttpDataCollectionService {
 				}
 				return forkJoin(
 					items.map((item) => {
-						return this.getDataLinkItem(url!, item.id);
+						return this.getDataLinkItem(item.id);
 					})
 				);
 			})
 		) as Observable<IRelationData[]>;
 	}
 
-	getDataLinkItem(url: string, id: string): Observable<IRelationData> {
+	getDataLinkItem(id: string): Observable<IRelationData> {
+        const url = this.getUrl('dataLinkItem');
 		return this.http.get<IRelationData>(url + '/' + id).pipe(
 			tap((data) => {
 				this.storageService.set(url + '-' + id, data).subscribe();

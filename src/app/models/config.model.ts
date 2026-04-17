@@ -17,6 +17,7 @@ export interface IConfig {
 		positions: string;
 		colors: string;
 		dataLink: string;
+        token:string;
 	};
 	update: {
 		frequency: 'auto' | 'everytimes';
@@ -25,6 +26,8 @@ export interface IConfig {
 	pictureServerSalt: string;
 	donate: boolean;
 	storeEnabled: boolean;
+    tokenHeader:string;
+    tokenKey:string;
 	//[key: string]: any;
 }
 
@@ -51,6 +54,7 @@ export class GlobalConfig {
 		positions: string;
 		colors: string;
 		dataLink: string;
+        token:string;
 	};
 	update: {
 		frequency: 'auto' | 'everytimes';
@@ -60,6 +64,8 @@ export class GlobalConfig {
 	//[key: string]: any;
 	donate: boolean;
 	storeEnabled: boolean;
+    tokenHeader:string;
+    tokenKey:string;
 	constructor(options: IConfig) {
 		
 			this.loadingSteps = options?.loadingSteps ? options.loadingSteps : [];
@@ -70,6 +76,8 @@ export class GlobalConfig {
 			this.pictureServerSalt = options?.pictureServerSalt;
 			this.donate = options?.donate;
 			this.storeEnabled = options?.storeEnabled;
+			this.tokenHeader = options?.tokenHeader;
+			this.tokenKey = options?.tokenKey;
 		
 	}
 }
