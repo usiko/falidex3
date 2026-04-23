@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 
 import {
@@ -33,15 +33,13 @@ import { StorageService } from '../../storage/storage.service';
 export class DataLoaderStoreService {
     private loadingSteps: ILoadingSteps[] = [];
     private numberOfSteps = 12;
-    constructor(
-        private store: StoreService,
-        private event: EventService,
-        private config: ConfigService,
-        private authService: AuthService,
-        private httpData: HttpDataCollectionService,
-        private pictureService: PictureService,
-        private storageService: StorageService
-    ) {}
+    private authService = inject(AuthService);
+    private store = inject( StoreService);
+    private event = inject( EventService);
+    private config = inject( ConfigService);
+    private httpData = inject( HttpDataCollectionService);
+    private pictureService = inject( PictureService);
+    private storageService = inject( StorageService);
 
     loadData(): void {
         const isAllStored = this.httpData.isAllStored();
@@ -60,6 +58,9 @@ export class DataLoaderStoreService {
                     this.displayError();
                     return throwError(error);
                 }),*/
+                mergeMap(()=>{
+                    return this.authService.authToken()
+                }),
                 map(() => {
                     this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
@@ -142,11 +143,17 @@ export class DataLoaderStoreService {
                     this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
                 })
+                
             )
-            .subscribe(() => {
-                this.displayStep(currentStep, this.numberOfSteps);
-                currentStep++;
-                this.event.publish('splashLeave', true);
+            .subscribe({
+                next:()=>{ 
+                    this.displayStep(currentStep, this.numberOfSteps);
+                    currentStep++;
+                    this.event.publish('splashLeave', true);
+                },
+                error:()=>{
+                    this.displayError();
+                }
             });
     }
 
@@ -206,7 +213,7 @@ export class DataLoaderStoreService {
                 buffer: 0,
                 message: '',
             });
-        }, 3000);
+        }, 10000);
     }
 
     private loadRelations(): Observable<IRelationData[]> {

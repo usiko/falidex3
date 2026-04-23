@@ -16,7 +16,6 @@ export const httpInterceptor: HttpInterceptorFn = (
     const tokenPath = configService.getConfig()?.paths.token;
     
     // Si la requête ne commence pas par dataBaseUrl, on laisse passer sans modification
-    console.log('!!')
     if (!dataBaseUrl || !request.url.startsWith(dataBaseUrl)) {
         return next(request);
     }
@@ -48,7 +47,15 @@ export const httpInterceptor: HttpInterceptorFn = (
                             
                             // Refaire getToken() et retry la requête
                             return authService.authToken().pipe(
+                                switchMap(()=>{
+                                    return authService.getToken()
+                                }),
                                 switchMap(newToken => {
+                                    if(!newToken)
+                                    {
+                                        console.error("no token")
+                                        return throwError(() => "no token")
+                                    }
                                     const retryRequest = newToken
                                         ? request.clone({ headers: request.headers.set(tokenHeader, newToken) })
                                         : request;
