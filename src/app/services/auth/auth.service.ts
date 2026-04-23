@@ -97,7 +97,7 @@ export class AuthService {
         {
         const fullUrl =  `${url}/${tokenPath}`;
         const role = 'visitor';
-        const timestamp = Date.now();
+        const timestamp = Math.round(Date.now()/1000);
         return from(this.getHashToken(role,timestamp)).pipe(mergeMap((hash:string)=>{
                     return this.http.post<{token:string}>(fullUrl,{role,timestamp,hash}).pipe(
             tap((result)=>{

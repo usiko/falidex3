@@ -40,14 +40,14 @@ export const httpInterceptor: HttpInterceptorFn = (
                     if (error instanceof HttpErrorResponse) {
                         // Vérifier si l'erreur correspond à 'Missing X-Token header'
                         if (error.error?.error === 'UNAUTHORIZED' && 
-                            error.error?.message === 'Missing X-Token header') {
+                            (error.error?.message === 'Missing X-Token header'|| error.error?.message === 'Invalid or expired token')) {
                             console.error('🔒 Erreur détectée: Token X-Token manquant, retry...', {
                                 url: request.url,
                                 status: error.status
                             });
                             
                             // Refaire getToken() et retry la requête
-                            return authService.getToken().pipe(
+                            return authService.authToken().pipe(
                                 switchMap(newToken => {
                                     const retryRequest = newToken
                                         ? request.clone({ headers: request.headers.set(tokenHeader, newToken) })
