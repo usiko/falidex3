@@ -28,6 +28,7 @@ export interface IConfig {
 	storeEnabled: boolean;
     tokenHeader:string;
     tokenKey:string;
+    derivationTokenKey:string;
 	//[key: string]: any;
 }
 
@@ -66,6 +67,7 @@ export class GlobalConfig {
 	storeEnabled: boolean;
     tokenHeader:string;
     tokenKey:string;
+    derivationTokenKey:string;
 	constructor(options: IConfig) {
 		
 			this.loadingSteps = options?.loadingSteps ? options.loadingSteps : [];
@@ -78,6 +80,7 @@ export class GlobalConfig {
 			this.storeEnabled = options?.storeEnabled;
 			this.tokenHeader = options?.tokenHeader;
 			this.tokenKey = options?.tokenKey;
+			this.derivationTokenKey = options?.derivationTokenKey;
 		
 	}
 }
