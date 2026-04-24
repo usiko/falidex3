@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { AppConfigService } from '../config/app.config.service';
+import { environment } from 'src/environments/environment';
 
 export const httpInterceptor: HttpInterceptorFn = (
     request: HttpRequest<unknown>, 
@@ -11,7 +12,7 @@ export const httpInterceptor: HttpInterceptorFn = (
 ): Observable<HttpEvent<unknown>> => {
     const authService = inject(AuthService);
     const configService = inject(AppConfigService);
-    const tokenHeader = configService.getConfig()?.tokenHeader || 'X-Token';
+    const tokenHeader = environment.tokenHeader;
     const dataBaseUrl = configService.getConfig()?.urls.dataServer;
     const tokenPath = configService.getConfig()?.paths.token;
     

@@ -1,12 +1,13 @@
 {
   "name": "falidex",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "author": "Usiko",
   "homepage": "/",
   "scripts": {
     "ng": "ng",
+    "prebuild": "node prebuild.js",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "npm run prebuild && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
