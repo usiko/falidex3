@@ -2,9 +2,16 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
+import { IEnv } from "./model";
+
+export const environment:IEnv = {
   production: false,
-  configPaths: ["assets/config/config.json"]
+  configPaths: ["assets/config/config.json"],
+  tokenKey: "default_dev_token_hash_please_change",
+  token: "token",
+  derivationTokenKey: "default_dev_token_hash_please_change",
+  donate: false,
+  tokenHeader: "X-Token"
 };
 
 /*

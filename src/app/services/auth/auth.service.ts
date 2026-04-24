@@ -6,6 +6,7 @@ import { AppConfigService } from '../config/app.config.service';
 import { HttpDataCollectionService } from '../data-store/http-data/http-data-collection.service';
 import { EventService } from '../event/event.service';
 import { StorageService } from '../storage/storage.service';
+import { environment } from 'src/environments/environment';
 
 // Déclaration pour accéder aux variables d'environnement
 declare const process: any;
@@ -143,11 +144,11 @@ export class AuthService {
      */
     private getTokenHashKey(): string {
        // Récupérer depuis process.env avec un fallback
-       return this.configService.getConfig()?.tokenKey??'default_dev_token_hash_please_change'
+       return environment.tokenKey??'default_dev_token_hash_please_change'
     }
     private getDerivationTokenHashKey(): string {
        // Récupérer depuis process.env avec un fallback
-       return this.configService.getConfig()?.derivationTokenKey??'default_dev_token_hash_please_change'
+       return environment.derivationTokenKey??'default_dev_token_hash_please_change'
     }
 
     /**

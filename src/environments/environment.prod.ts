@@ -1,4 +1,11 @@
-export const environment = {
+import { IEnv } from "./model";
+
+export const environment:IEnv = {
   production: true,
-  configPaths: ["assets/config/config.json","assets/config/config.prod.json"]
+  configPaths: ["assets/config/config.json","assets/config/config.prod.json"],
+  tokenKey: "{ENV:TOKEN_HASH_KEY}",
+  token: "token",
+  derivationTokenKey: "{ENV:DERIVATED_TOKEN_HASH_KEY}",
+  donate: "{ENV:DONATE}",
+  tokenHeader: "X-Token"
 };

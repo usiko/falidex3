@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { IonCard, IonCardContent, IonText } from "@ionic/angular/standalone";
 import { AppConfigService } from 'src/app/services/config/app.config.service';
 import { PaypalDonateComponent } from "./paypal-donate/paypal-donate.component";
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-home-about',
@@ -14,7 +15,6 @@ export class HomeAbout {
     private configService = inject(AppConfigService);
     public showDonate = false;
     ngOnInit(): void {
-        const config = this.configService.getConfig();
-        this.showDonate = !!config?.donate;
+        this.showDonate = !!environment.donate;
     }
 }

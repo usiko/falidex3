@@ -17,18 +17,14 @@ export interface IConfig {
 		positions: string;
 		colors: string;
 		dataLink: string;
-        token:string;
+		token: string;
 	};
 	update: {
 		frequency: 'auto' | 'everytimes';
 		clearCacheOnUpdate: boolean;
 	};
 	pictureServerSalt: string;
-	donate: boolean;
 	storeEnabled: boolean;
-    tokenHeader:string;
-    tokenKey:string;
-    derivationTokenKey:string;
 	//[key: string]: any;
 }
 
