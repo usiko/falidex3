@@ -25,14 +25,26 @@
   <app-root></app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
   <!-- Google tag (gtag.js) -->
-    <!--<script async src="https://www.googletagmanager.com/gtag/js?id=G-42Z1X2BTJD"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+    const id = "{ENV:G-ANALYTICS-ID}";
+    const isValid = id && !id.includes("{");
+    if (isValid) {
+        const script = document.createElement("script");
+        script.async = true;
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
+        document.head.appendChild(script);
 
-    gtag('config', 'G-42Z1X2BTJD');
-    </script>-->
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+        gtag('config', id);
+    }
+    else{
+        console.warn('no analystics')
+    }
+   
+    </script>
 </body>
 
 </html>
