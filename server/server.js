@@ -35,11 +35,15 @@ app.use(express.static(pathDist));
 // Route pour servir index.html avec les variables d'environnement remplacées
 app.get('/*splat', (req, res) => {
     try {
+        console.log('try to replace env in index.html')
         const indexPath = path.join(__dirname, '..', pathDist, 'index.html');
         let indexContent = fs.readFileSync(indexPath, 'utf8');
 
         // Remplacer tous les {ENV:VARIABLE_NAME} par les valeurs d'environnement
         indexContent = indexContent.replace(/\{ENV:([^}]+)\}/g, (match, envVar) => {
+            if (!process.env[envVar]) {
+                console.log('want to replace', envVar, 'but not found in env');
+            }
             return process.env[envVar] || match;
         });
 
