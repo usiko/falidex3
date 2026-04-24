@@ -12,7 +12,7 @@ const configDist = `${pathDist}/assets/config/config.json`;
 console.log('dist path', pathDist);
 
 // Route spéciale pour servir config.json avec les variables d'environnement remplacées
-app.get('/assets/config/config.json', (req, res) => {
+app.get('/assets/config/config.prod.json', (req, res) => {
     try {
         const configPath = path.join(__dirname, '..', configDist);
         let configContent = fs.readFileSync(configPath, 'utf8');

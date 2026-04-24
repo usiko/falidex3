@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, Route, Router } from '@angular/router';
-import { ConfigService } from 'src/app/services/config/config.service';
-import { IonCard, IonCardContent, IonText } from "@ionic/angular/standalone";
-import { PaypalDonateComponent } from "./paypal-donate/paypal-donate.component";
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { IonCard, IonCardContent, IonText } from "@ionic/angular/standalone";
+import { AppConfigService } from 'src/app/services/config/app.config.service';
+import { PaypalDonateComponent } from "./paypal-donate/paypal-donate.component";
 
 @Component({
     selector: 'app-home-about',
@@ -12,7 +11,7 @@ import { CommonModule } from '@angular/common';
     imports: [IonCard, IonCardContent, IonText, PaypalDonateComponent,CommonModule],
 })
 export class HomeAbout {
-    constructor(private configService: ConfigService) {}
+    private configService = inject(AppConfigService);
     public showDonate = false;
     ngOnInit(): void {
         const config = this.configService.getConfig();

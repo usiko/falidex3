@@ -1,0 +1,14 @@
+{
+    "urls": {
+        "dataServer": {ENV:DATA_SERVER},
+        "pictureServer": {ENV:RESOURCES_SERVER}
+    },
+    "tokenKey":{ENV:TOKEN_HASH_KEY},
+    "derivationTokenKey":{ENV:DERIVATED_TOKEN_HASH_KEY},
+    "update": {
+        "frequency": "auto",
+        "clearCacheOnUpdate": false
+    },
+    "donate": {ENV:DONATE},
+    "storeEnabled": false
+}

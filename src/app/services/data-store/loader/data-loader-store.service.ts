@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 
 
+import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
+import { catchError, map, mergeMap, take, tap } from 'rxjs/operators';
 import {
     IBaseCirculaire,
     IBaseCirculaireColor,
@@ -14,18 +16,16 @@ import {
     IBaseSymbolAcessory,
     IBaseSymbolSens,
 } from 'src/app/models/base-data-models';
+import { IRelationData } from 'src/app/models/base-relations.models';
 import { ILoadingSteps } from '../../../models/config.model';
 import { ILoadingBarState } from '../../../models/global.model';
 import { AuthService } from '../../auth/auth.service';
-import { ConfigService } from '../../config/config.service';
+import { AppConfigService } from '../../config/app.config.service';
 import { EventService } from '../../event/event.service';
-import { IRelationData } from 'src/app/models/base-relations.models';
-import { StoreService } from '../base-store/store.service';
-import { HttpDataCollectionService } from '../http-data/http-data-collection.service';
-import { throwError, Observable, forkJoin, of, BehaviorSubject } from 'rxjs';
-import { catchError, map, mergeMap, tap, delay, take } from 'rxjs/operators';
 import { PictureService } from '../../picture/picture.service';
 import { StorageService } from '../../storage/storage.service';
+import { StoreService } from '../base-store/store.service';
+import { HttpDataCollectionService } from '../http-data/http-data-collection.service';
 
 @Injectable({
     providedIn: 'root',
@@ -36,7 +36,7 @@ export class DataLoaderStoreService {
     private authService = inject(AuthService);
     private store = inject( StoreService);
     private event = inject( EventService);
-    private config = inject( ConfigService);
+    private config = inject( AppConfigService);
     private httpData = inject( HttpDataCollectionService);
     private pictureService = inject( PictureService);
     private storageService = inject( StorageService);

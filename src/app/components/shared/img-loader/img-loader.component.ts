@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { ConfigService } from 'src/app/services/config/config.service';
-import { PictureService } from 'src/app/services/picture/picture.service';
-import { IonSpinner, IonImg } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { IonImg, IonSpinner } from "@ionic/angular/standalone";
+import { Subscription } from 'rxjs';
+import { AppConfigService } from 'src/app/services/config/app.config.service';
+import { PictureService } from 'src/app/services/picture/picture.service';
 import { SatinizeUrlPipe } from '../pipes/satinize-url.pipe';
 
 @Component({
@@ -77,7 +77,7 @@ export class ImgLoaderComponent implements OnInit {
         private changedetector: ChangeDetectorRef,
         private http: HttpClient,
         private pictureService: PictureService,
-        private configService: ConfigService
+        private configService: AppConfigService
     ) {}
 
     ngOnInit() {

@@ -3,27 +3,27 @@ import { Injectable } from '@angular/core';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import {
-	IBaseCirculaire,
-	IBaseCirculaireColor,
-	IBaseColor,
-	IBaseFiliere,
-	IBasePlacement,
-	IBasePosition,
-	IBaseSignification,
-	IBaseSymbol,
-	IBaseSymbolAcessory,
-	IBaseSymbolSens,
+    IBaseCirculaire,
+    IBaseCirculaireColor,
+    IBaseColor,
+    IBaseFiliere,
+    IBasePlacement,
+    IBasePosition,
+    IBaseSignification,
+    IBaseSymbol,
+    IBaseSymbolAcessory,
+    IBaseSymbolSens,
 } from 'src/app/models/base-data-models';
 import { IRelationData } from 'src/app/models/base-relations.models';
-import { ICirculaire, ISymbol } from 'src/app/models/linked-data-models';
-import { ConfigService } from '../../config/config.service';
+import { ISymbol } from 'src/app/models/linked-data-models';
+import { AppConfigService } from '../../config/app.config.service';
 import { StorageService } from '../../storage/storage.service';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class HttpDataCollectionService {
-	constructor(private config: ConfigService, private http: HttpClient, private storageService: StorageService) {}
+	constructor(private config: AppConfigService, private http: HttpClient, private storageService: StorageService) {}
 
 	isAllStored(): boolean {
 		console.log('isallStored', 'enabled', this.getStorageEnabled());

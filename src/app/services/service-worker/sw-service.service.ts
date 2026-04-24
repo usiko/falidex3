@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { from, Observable, of } from 'rxjs';
 import { catchError, mergeMap, tap } from 'rxjs/operators';
-import { ConfigService } from '../config/config.service';
+import { AppConfigService } from '../config/app.config.service';
 import { StorageService } from '../storage/storage.service';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { StorageService } from '../storage/storage.service';
 })
 export class SwService {
     private updates = inject(SwUpdate);
-    private configService = inject(ConfigService);
+    private configService = inject(AppConfigService);
     private storage = inject(StorageService);
 
     init() {

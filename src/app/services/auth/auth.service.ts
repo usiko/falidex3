@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { firstValueFrom, forkJoin, from, Observable, of, throwError, timer } from 'rxjs';
-import { catchError, tap, retry, map, switchMap, timestamp, mergeMap } from 'rxjs/operators';
-import { ConfigService } from '../config/config.service';
+import { from, Observable, of, throwError, timer } from 'rxjs';
+import { catchError, map, mergeMap, retry, switchMap, tap } from 'rxjs/operators';
+import { AppConfigService } from '../config/app.config.service';
 import { HttpDataCollectionService } from '../data-store/http-data/http-data-collection.service';
 import { EventService } from '../event/event.service';
 import { StorageService } from '../storage/storage.service';
@@ -16,7 +16,7 @@ declare const process: any;
 export class AuthService {
 
     private http= inject(HttpClient);
-    private configService= inject(ConfigService);
+    private configService= inject(AppConfigService);
     private storageService= inject(StorageService);
     private httpData=inject(HttpDataCollectionService);
     private eventService=inject(EventService);
