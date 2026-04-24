@@ -42,7 +42,7 @@ app.get('/*splat', (req, res) => {
         // Remplacer tous les {ENV:VARIABLE_NAME} par les valeurs d'environnement
         indexContent = indexContent.replace(/\{ENV:([^}]+)\}/g, (match, envVar) => {
             if (!process.env[envVar]) {
-                console.log('want to replace', envVar, 'but not found in env');
+                console.log('want to replace', envVar, 'but not found in env', process.env);
             }
             return process.env[envVar] || match;
         });
