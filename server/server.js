@@ -32,7 +32,24 @@ app.get('/assets/config/config.prod.json', (req, res) => {
 
 app.use(express.static(pathDist));
 
-app.get('/*splat', (req, res) => res.sendFile(path.join(__dirname, '..', pathDist, 'index.html')));
+// Route pour servir index.html avec les variables d'environnement remplacées
+app.get('/*splat', (req, res) => {
+    try {
+        const indexPath = path.join(__dirname, '..', pathDist, 'index.html');
+        let indexContent = fs.readFileSync(indexPath, 'utf8');
+
+        // Remplacer tous les {ENV:VARIABLE_NAME} par les valeurs d'environnement
+        indexContent = indexContent.replace(/\{ENV:([^}]+)\}/g, (match, envVar) => {
+            return process.env[envVar] || match;
+        });
+
+        res.setHeader('Content-Type', 'text/html');
+        res.send(indexContent);
+    } catch (error) {
+        console.error('Error loading index.html:', error);
+        res.status(500).send('Failed to load page');
+    }
+});
 
 const server = http.createServer(app);
 
