@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 //const pathDist = __dirname + '\\..\\www\\browser';
 const pathDist = 'www';
-const configDist = `${pathDist}/assets/config/config.json`;
+const configDist = `${pathDist}/assets/config/config.prod.json`;
 console.log('dist path', pathDist);
 
 // Route spéciale pour servir config.json avec les variables d'environnement remplacées
