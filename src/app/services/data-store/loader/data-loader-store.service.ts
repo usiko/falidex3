@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 
+import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
+import { catchError, map, mergeMap, take, tap } from 'rxjs/operators';
 import {
     IBaseCirculaire,
     IBaseCirculaireColor,
@@ -14,18 +16,16 @@ import {
     IBaseSymbolAcessory,
     IBaseSymbolSens,
 } from 'src/app/models/base-data-models';
+import { IRelationData } from 'src/app/models/base-relations.models';
 import { ILoadingSteps } from '../../../models/config.model';
 import { ILoadingBarState } from '../../../models/global.model';
 import { AuthService } from '../../auth/auth.service';
-import { ConfigService } from '../../config/config.service';
+import { AppConfigService } from '../../config/app.config.service';
 import { EventService } from '../../event/event.service';
-import { IRelationData } from 'src/app/models/base-relations.models';
-import { StoreService } from '../base-store/store.service';
-import { HttpDataCollectionService } from '../http-data/http-data-collection.service';
-import { throwError, Observable, forkJoin, of, BehaviorSubject } from 'rxjs';
-import { catchError, map, mergeMap, tap, delay, take } from 'rxjs/operators';
 import { PictureService } from '../../picture/picture.service';
 import { StorageService } from '../../storage/storage.service';
+import { StoreService } from '../base-store/store.service';
+import { HttpDataCollectionService } from '../http-data/http-data-collection.service';
 
 @Injectable({
     providedIn: 'root',
@@ -33,15 +33,13 @@ import { StorageService } from '../../storage/storage.service';
 export class DataLoaderStoreService {
     private loadingSteps: ILoadingSteps[] = [];
     private numberOfSteps = 12;
-    constructor(
-        private store: StoreService,
-        private event: EventService,
-        private config: ConfigService,
-        private authService: AuthService,
-        private httpData: HttpDataCollectionService,
-        private pictureService: PictureService,
-        private storageService: StorageService
-    ) {}
+    private authService = inject(AuthService);
+    private store = inject( StoreService);
+    private event = inject( EventService);
+    private config = inject( AppConfigService);
+    private httpData = inject( HttpDataCollectionService);
+    private pictureService = inject( PictureService);
+    private storageService = inject( StorageService);
 
     loadData(): void {
         const isAllStored = this.httpData.isAllStored();
@@ -60,6 +58,9 @@ export class DataLoaderStoreService {
                     this.displayError();
                     return throwError(error);
                 }),*/
+                mergeMap(()=>{
+                    return this.authService.authToken()
+                }),
                 map(() => {
                     this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
@@ -142,11 +143,17 @@ export class DataLoaderStoreService {
                     this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
                 })
+                
             )
-            .subscribe(() => {
-                this.displayStep(currentStep, this.numberOfSteps);
-                currentStep++;
-                this.event.publish('splashLeave', true);
+            .subscribe({
+                next:()=>{ 
+                    this.displayStep(currentStep, this.numberOfSteps);
+                    currentStep++;
+                    this.event.publish('splashLeave', true);
+                },
+                error:()=>{
+                    this.displayError();
+                }
             });
     }
 
@@ -206,7 +213,7 @@ export class DataLoaderStoreService {
                 buffer: 0,
                 message: '',
             });
-        }, 3000);
+        }, 10000);
     }
 
     private loadRelations(): Observable<IRelationData[]> {

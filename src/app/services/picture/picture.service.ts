@@ -2,14 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { identity, Observable, of, throwError } from 'rxjs';
 import { catchError, mergeMap, tap } from 'rxjs/operators';
-import { ConfigService } from '../config/config.service';
 import { StorageService } from '../storage/storage.service';
+import { AppConfigService } from '../config/app.config.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PictureService {
-    constructor(private config: ConfigService, private http: HttpClient, private storage: StorageService) {}
+    constructor(private config:AppConfigService, private http: HttpClient, private storage: StorageService) {}
     pictureIndexer: {
         [key: string]: number;
     } = {};

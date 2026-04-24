@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { firstValueFrom, forkJoin, from, Observable, of, throwError, timer } from 'rxjs';
-import { catchError, tap, retry, map, switchMap, timestamp, mergeMap } from 'rxjs/operators';
-import { ConfigService } from '../config/config.service';
+import { from, Observable, of, throwError, timer } from 'rxjs';
+import { catchError, map, mergeMap, retry, switchMap, tap } from 'rxjs/operators';
+import { AppConfigService } from '../config/app.config.service';
 import { HttpDataCollectionService } from '../data-store/http-data/http-data-collection.service';
 import { EventService } from '../event/event.service';
 import { StorageService } from '../storage/storage.service';
@@ -16,7 +16,7 @@ declare const process: any;
 export class AuthService {
 
     private http= inject(HttpClient);
-    private configService= inject(ConfigService);
+    private configService= inject(AppConfigService);
     private storageService= inject(StorageService);
     private httpData=inject(HttpDataCollectionService);
     private eventService=inject(EventService);
@@ -97,11 +97,14 @@ export class AuthService {
         {
         const fullUrl =  `${url}/${tokenPath}`;
         const role = 'visitor';
-        const timestamp = Date.now();
+        const timestamp = Math.floor(Date.now()/1000)-1;
         return from(this.getHashToken(role,timestamp)).pipe(mergeMap((hash:string)=>{
                     return this.http.post<{token:string}>(fullUrl,{role,timestamp,hash}).pipe(
-            tap((result)=>{
-                this.setToken(result.token);
+            mergeMap((result)=>{
+                return from(this.getHashDerivationToken(result.token))
+            }),
+            tap((derivatedToken)=>{
+                this.setToken(derivatedToken);
             }),
             retry({
                 count: 3,
@@ -142,6 +145,10 @@ export class AuthService {
        // Récupérer depuis process.env avec un fallback
        return this.configService.getConfig()?.tokenKey??'default_dev_token_hash_please_change'
     }
+    private getDerivationTokenHashKey(): string {
+       // Récupérer depuis process.env avec un fallback
+       return this.configService.getConfig()?.derivationTokenKey??'default_dev_token_hash_please_change'
+    }
 
     /**
      * Génère un hash SHA256 identique à celui du serveur
@@ -150,6 +157,25 @@ export class AuthService {
     async getHashToken(role: string, timestamp: number): Promise<string> {
         const secret = this.getTokenHashKey();
         const data = `${role}|${secret}|${timestamp}`;
+        
+        // Encoder la chaîne en bytes
+        const encoder = new TextEncoder();
+        const dataBytes = encoder.encode(data);
+        
+        // Calculer le hash SHA256
+        const hashBuffer = await crypto.subtle.digest('SHA-256', dataBytes);
+        
+        // Convertir le buffer en string hexadécimal
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        
+        return hashHex;
+    }
+
+    async getHashDerivationToken(token:string)
+    {
+        const secret = this.getDerivationTokenHashKey()
+        const data = `${token}|${secret}`;
         
         // Encoder la chaîne en bytes
         const encoder = new TextEncoder();
