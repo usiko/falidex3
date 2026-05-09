@@ -4,12 +4,16 @@ import { Subscription, timer } from 'rxjs';
 import { ILoadingBarState } from 'src/app/models/global.model';
 import { EventService } from 'src/app/services/event/event.service';
 import { IonProgressBar } from '@ionic/angular/standalone';
+import { ExplodeComponent } from '../explode/explode.component';
+import { CommonModule } from '@angular/common';
 @Component({
 	selector: 'app-animated-splashscreen',
 	templateUrl: './animated-splashscreen.component.html',
 	styleUrls: ['./animated-splashscreen.component.scss'],
     imports:[
-        IonProgressBar
+        IonProgressBar,
+        ExplodeComponent,
+        CommonModule
     ]
 })
 export class AnimatedSplashscreenComponent implements OnInit, OnDestroy {

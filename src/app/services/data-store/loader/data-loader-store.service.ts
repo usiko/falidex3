@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 
 
-import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of, timer } from 'rxjs';
 import { catchError, map, mergeMap, take, tap } from 'rxjs/operators';
 import {
     IBaseCirculaire,
@@ -26,13 +26,15 @@ import { PictureService } from '../../picture/picture.service';
 import { StorageService } from '../../storage/storage.service';
 import { StoreService } from '../base-store/store.service';
 import { HttpDataCollectionService } from '../http-data/http-data-collection.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root',
 })
 export class DataLoaderStoreService {
-    private loadingSteps: ILoadingSteps[] = [];
-    private numberOfSteps = 12;
+    private numberOfSteps = 13;
+    private randomSteps: ILoadingSteps[] = [];
+    private overloadMessage: ILoadingSteps|undefined;
     private authService = inject(AuthService);
     private store = inject( StoreService);
     private event = inject( EventService);
@@ -47,7 +49,6 @@ export class DataLoaderStoreService {
             console.log('isallstored','splashLeave' )
             this.event.publish('splashLeave', true);
         }
-        this.loadingSteps = this.config.getConfig()?.loadingSteps??[];
 
         let currentStep = 1;
         this.displayStep(currentStep, this.numberOfSteps);
@@ -149,7 +150,6 @@ export class DataLoaderStoreService {
                 next:()=>{ 
                     this.displayStep(currentStep, this.numberOfSteps);
                     currentStep++;
-                    this.event.publish('splashLeave', true);
                 },
                 error:()=>{
                     this.displayError();
@@ -157,16 +157,41 @@ export class DataLoaderStoreService {
             });
     }
 
-    private getStepMessage(stepNumber: number) {
-        if (this.loadingSteps.length === 0) {
-            return undefined;
-        } else {
-            if (!this.loadingSteps[stepNumber]) {
-                return this.loadingSteps[this.loadingSteps.length - 1];
-            } else {
-                return this.loadingSteps[stepNumber - 1];
+    private getStepMessage(stepNumber: number,overload?:boolean) {
+        let first = this.config.getConfig()?.steps.first;
+        let last = this.config.getConfig()?.steps.last;
+        if(this.randomSteps.length===0)
+        {
+             this.randomSteps = [...this.config.getConfig()?.steps.randoms??[]];
+        }
+        if(this.overloadMessage===undefined)
+        {
+            const messages = this.config.getConfig()?.steps.overloads??[]
+            const randomIndex = Math.floor(Math.random() * messages.length);
+            this.overloadMessage = messages[randomIndex];
+        }
+
+
+        if(overload)
+        {
+             return this.overloadMessage.message;
+        }
+        else{
+            if(stepNumber===1)
+            {
+                return first?.message;
+            }
+            else if(stepNumber>=this.numberOfSteps)
+            {
+                return last?.message;
+            }
+            else if(this.randomSteps.length>0)
+            {
+                // Retirer et retourner le premier élément du tableau
+                return this.randomSteps.shift()?.message;
             }
         }
+        return undefined;
     }
 
     private displayStep(currentStep: number, numberOfSteps: number) {
@@ -178,23 +203,79 @@ export class DataLoaderStoreService {
         if (lastvalue > 1) {
             lastvalue = 1;
         }
-        this.displayLoading({
-            enable: !!this.getStepMessage(currentStep),
-            value: lastvalue,
-            error: false,
-            buffer: nextvalue,
-            message: this.getStepMessage(currentStep) ? (this.getStepMessage(currentStep)?.message??'') : '',
-        });
-        if (nextvalue === 1) {
-            setTimeout(() => {
+       
+        if (nextvalue !== 1) {
+            this.displayLoading({
+                enable: !!this.getStepMessage(currentStep),
+                value: lastvalue,
+                error: false,
+                buffer: nextvalue,
+                message: this.getStepMessage(currentStep) ? (this.getStepMessage(currentStep)??'') : '',//!!
+            });
+        }
+        else{
+            
+            let factor = environment.overloadMessageRandFactor;
+            let showOverloadMessage = Math.round(Math.random()*(factor as number))===0 && window.location.pathname==="/" && typeof factor==='number';
+            if(!showOverloadMessage)
+            {
                 this.displayLoading({
-                    enable: false,
+                    enable: !!this.getStepMessage(currentStep),
+                    value: nextvalue,
                     error: false,
-                    value: 0,
-                    buffer: 0,
-                    message: '',
+                    buffer: nextvalue,
+                    message: this.getStepMessage(currentStep) ? (this.getStepMessage(currentStep)??'') : '',//!!
                 });
-            }, 750);
+                setTimeout(() => {
+                    this.displayLoading({
+                        enable: false,
+                        error: false,
+                        value: 0,
+                        buffer: 0,
+                        message: '',
+                    });
+                    this.event.publish('splashLeave', true);
+                }, 750);
+            }
+            else{
+                timer(0,250)
+                .pipe(take(7))
+                .subscribe((i)=>{
+                    switch (i)
+                    {
+                        case 0:
+                            this.displayLoading({
+                            enable: true,
+                            value: lastvalue,
+                            error: false,
+                            buffer: 1,
+                            message: this.getStepMessage(currentStep,true)??''
+                        });
+                        break;
+                        case 3:
+                             this.displayLoading({
+                                enable: true,
+                                value: 1,
+                                error: false,
+                                buffer: 1,
+                                overload:true,
+                                message: this.getStepMessage(currentStep,true)??''
+                            });
+                        break;
+                        case 6:
+                            this.displayLoading({
+                                enable: false,
+                                error: false,
+                                value: 0,
+                                buffer: 0,
+                                message: '',
+                            });
+                            this.event.publish('splashLeave', true);
+                        break;
+
+                    }
+                })
+            }
         }
     }
     private displayError() {
