@@ -1,5 +1,10 @@
 export interface IConfig {
-	loadingSteps: ILoadingSteps[];
+	steps:{
+        first:ILoadingSteps,
+        last:ILoadingSteps;
+        randoms:ILoadingSteps[];
+        overloads:ILoadingSteps[];
+    };
 	loadingErrorMessage: string;
 	urls: {
 		dataServer: string;

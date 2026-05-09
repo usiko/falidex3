@@ -4,4 +4,5 @@ export interface ILoadingBarState {
     value?: number;
     buffer?: number;
     message?: string;
+    overload?:boolean;
 }
