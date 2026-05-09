@@ -252,7 +252,7 @@ export class DataLoaderStoreService {
                             message: this.getStepMessage(currentStep,true)??''
                         });
                         break;
-                        case 5:
+                        case 3:
                              this.displayLoading({
                                 enable: true,
                                 value: 1,
