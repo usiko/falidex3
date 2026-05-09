@@ -1,43 +1,54 @@
 {
-    "loadingSteps": [{
-            "message": "Recherche du code"
+    "steps":{
+        "first":{
+            "message":"Recherche du code"
         },
-        {
-            "message": "Sécurisation des pin's"
+        "last":{
+            "message":"\"La fal c`est un truc serieux\""
         },
-        {
-            "message": "Accrochage des grelots"
-        },
-        {
-            "message": "Tocardisation des tocards"
-        },
-        {
-            "message": "Cuisson de la faluche"
-        },
-        {
-            "message": "Drama satin/velours"
-        },
-        {
-            "message": "Couture des circulaires"
-        },
-        {
-            "message": "Décuvage des PMs"
-        },
-        {
-            "message": "Décernement des singes"
-        },
-        {
-            "message": "Prépatation des pichets"
-        },
-        {
-            "message": "Tarte aux pommes"
-        },
-        {
-            "message": "Lecture du code"
-        },
-        {
-            "message": "\"La fal c`est un truc serieux\""
-        }
+        "randoms":[
+            {
+                "message": "Sécurisation des pin's"
+            },
+            {
+                "message": "Accrochage des grelots"
+            },
+            {
+                "message": "Tocardisation des tocards"
+            },
+            {
+                "message": "Cuisson de la faluche"
+            },
+            {
+                "message": "Drama satin/velours"
+            },
+            {
+                "message": "Couture des circulaires"
+            },
+            {
+                "message": "Décuvage des PMs"
+            },
+            {
+                "message": "Décernement des singes"
+            },
+            {
+                "message": "Prépatation des pichets"
+            },
+            {
+                "message": "Dynamisation des TNTs"
+            }
+        ],
+        "overloads":[
+            {
+                "message": "Chargement des BLs"
+            },
+            {
+                "message": "Chargement des ordres"
+            }
+        ]
+    },
+    "overloadSteps":[
+        "chargement des BLs"
     ],
     "loadingErrorMessage": "Echec du chargement",
     "urls": {

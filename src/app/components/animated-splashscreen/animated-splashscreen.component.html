@@ -98,7 +98,13 @@
     <div class="loadingInfo">
         <ng-container>
             <div class="message">{{loadingState.message}}</div>
-            <ion-progress-bar color="secondary" [value]="loadingState.value" [buffer]="loadingState.buffer"></ion-progress-bar>
+            <div class="progress-container">
+                <ion-progress-bar color="secondary" [class.overload]="loadingState.overload" [value]="loadingState.value" [buffer]="loadingState.buffer"></ion-progress-bar>
+                @if(loadingState.overload)
+                {
+                    <app-explode></app-explode>
+                }
+            </div>
         </ng-container>
     </div>
 }

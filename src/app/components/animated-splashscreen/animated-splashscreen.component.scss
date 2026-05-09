@@ -30,6 +30,17 @@
             color: var(--ion-color-secondary)
         }
     }
+    .overload{
+        width: 200%;
+    }
+    .progress-container{
+        position: relative;
+        app-explode{
+            position: absolute;
+            right: 0;
+            top: -14px;
+        }
+    }
 }
 
 
