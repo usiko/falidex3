@@ -8,5 +8,6 @@ export const environment:IEnv = {
   derivationTokenKey: "{ENV:DERIVATED_TOKEN_HASH_KEY}",
   donate: "{ENV:DONATE}",
   tokenHeader: "X-Token",
-  overloadMessageRandFactor:"{ENV:OVERLOAD_MESSAGE_RAND_FACTOR}"
+  overloadMessageRandFactor:"{ENV:OVERLOAD_MESSAGE_RAND_FACTOR}",
+  envDevPwd:"{ENV:DEV_PWD}"
 };
