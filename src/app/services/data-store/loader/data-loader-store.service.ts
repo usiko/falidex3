@@ -26,12 +26,13 @@ import { PictureService } from '../../picture/picture.service';
 import { StorageService } from '../../storage/storage.service';
 import { StoreService } from '../base-store/store.service';
 import { HttpDataCollectionService } from '../http-data/http-data-collection.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root',
 })
 export class DataLoaderStoreService {
-    private numberOfSteps = 12;
+    private numberOfSteps = 13;
     private randomSteps: ILoadingSteps[] = [];
     private overloadMessage: ILoadingSteps|undefined;
     private authService = inject(AuthService);
@@ -180,7 +181,7 @@ export class DataLoaderStoreService {
             {
                 return first?.message;
             }
-            else if(stepNumber===this.numberOfSteps)
+            else if(stepNumber>=this.numberOfSteps)
             {
                 return last?.message;
             }
@@ -214,13 +215,13 @@ export class DataLoaderStoreService {
         }
         else{
             
-
-            let showOverloadMessage = Math.round(Math.random()*5)===0||true;
+            let factor = environment.overloadMessageRandFactor;
+            let showOverloadMessage = Math.round(Math.random()*(factor as number))===0 && window.location.pathname==="/" && typeof factor==='number';
             if(!showOverloadMessage)
             {
                 this.displayLoading({
                     enable: !!this.getStepMessage(currentStep),
-                    value: lastvalue,
+                    value: nextvalue,
                     error: false,
                     buffer: nextvalue,
                     message: this.getStepMessage(currentStep) ? (this.getStepMessage(currentStep)??'') : '',//!!
@@ -238,7 +239,7 @@ export class DataLoaderStoreService {
             }
             else{
                 timer(0,250)
-                .pipe(take(5))
+                .pipe(take(7))
                 .subscribe((i)=>{
                     switch (i)
                     {
@@ -251,7 +252,7 @@ export class DataLoaderStoreService {
                             message: this.getStepMessage(currentStep,true)??''
                         });
                         break;
-                        case 1:
+                        case 5:
                              this.displayLoading({
                                 enable: true,
                                 value: 1,
@@ -261,7 +262,7 @@ export class DataLoaderStoreService {
                                 message: this.getStepMessage(currentStep,true)??''
                             });
                         break;
-                        case 4:
+                        case 6:
                             this.displayLoading({
                                 enable: false,
                                 error: false,

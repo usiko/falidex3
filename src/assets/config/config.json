@@ -17,7 +17,7 @@
                 "message": "Tocardisation des tocards"
             },
             {
-                "message": "Cuisson de la faluche"
+                "message": "vomit a travers la faluche"
             },
             {
                 "message": "Drama satin/velours"
@@ -30,6 +30,12 @@
             },
             {
                 "message": "Décernement des singes"
+            },
+            {
+                "message": "Déterrage des mamouths"
+            },
+            {
+                "message": "Inventaire des bouteilles de bdx"
             },
             {
                 "message": "Prépatation des pichets"
@@ -47,9 +53,6 @@
             }
         ]
     },
-    "overloadSteps":[
-        "chargement des BLs"
-    ],
     "loadingErrorMessage": "Echec du chargement",
     "urls": {
         "dataServer": "http://localhost:3000",
