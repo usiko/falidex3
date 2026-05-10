@@ -1,7 +1,7 @@
 export interface IConfig {
 	steps:{
-        first:ILoadingSteps,
-        last:ILoadingSteps;
+        first:ILoadingSteps[];
+        last:ILoadingSteps[];
         randoms:ILoadingSteps[];
         overloads:ILoadingSteps[];
     };

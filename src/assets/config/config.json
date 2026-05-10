@@ -1,23 +1,36 @@
 {
     "steps":{
-        "first":{
-            "message":"Recherche du code"
-        },
-        "last":{
-            "message":"\"La fal c`est un truc serieux\""
-        },
+        "first":[
+            {
+                "message":"Recherche du code"
+            }
+        ],
+        "last":[
+            {
+                "message":"\"La fal c`est un truc serieux\""
+            },
+            {
+                "message":"\"Sec bizut!\""
+            }
+        ],
         "randoms":[
             {
-                "message": "Sécurisation des pin's"
+                "message": "Sécurisation des fals"
             },
             {
                 "message": "Accrochage des grelots"
             },
             {
+                "message": "Forgeage des pins"
+            },
+            {
+                "message": "Concoction des punishers"
+            },
+            {
                 "message": "Tocardisation des tocards"
             },
             {
-                "message": "vomit a travers la faluche"
+                "message": "Vomit a travers la faluche"
             },
             {
                 "message": "Drama satin/velours"
