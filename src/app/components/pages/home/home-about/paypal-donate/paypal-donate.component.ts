@@ -14,6 +14,6 @@ export class PaypalDonateComponent implements OnInit {
     ngOnInit() {}
 
     openPaypal() {
-        window.open('https://bit.ly/3Pby21n', '_blank');
+        window.open('https://www.paypal.com/donate/?hosted_button_id=PA4W42QLPN4F2', '_blank');
     }
 }

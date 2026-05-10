@@ -11,6 +11,7 @@ export const environment:IEnv = {
   token: "token",
   derivationTokenKey: "default_dev_token_hash_please_change",
   donate: true,
+  donateUrl:"https://www.paypal.com/donate/?hosted_button_id=PA4W42QLPN4F2",
   tokenHeader: "X-Token",
   overloadMessageRandFactor: 0,
   envDevPwd:"1234"
