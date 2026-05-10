@@ -31,7 +31,7 @@
                 @if(circSymboles.length>2) {
                     <span class="content">
                         @if(circSymboles[0].spe && showSpe()) {
-                        <fa-icon  class="primary-color" [icon]="['fas', 'circle-exclamation']" ></fa-icon>
+                        <fa-icon  class="primary-color" [icon]="['fas', 'star']" ></fa-icon>
                         }
                             <span>@if(circSymboles[0].symbols) {<span>
                                 {{circSymboles[0].symbols.name}} sur
@@ -46,7 +46,7 @@
                     @for(circSymb of circSymboles; track circSymb) {
                     <span class="content">
                         @if(circSymb.spe && showSpe()) {
-                        <fa-icon  class="primary-color" [icon]="['fas', 'circle-exclamation']" ></fa-icon>
+                        <fa-icon  class="primary-color" [icon]="['fas', 'star']" ></fa-icon>
                         }
                             <span>@if(circSymb.symbols) {<span>
                                 {{circSymb.symbols.name}} sur

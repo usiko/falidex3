@@ -116,7 +116,7 @@ export class AppComponent implements OnInit {
             {
                 title: 'Toutes les spés',
                 url: '/spes',
-                icon: 'file-circle-exclamation',
+                icon: 'star',
                 disabled: false,
             },
             {

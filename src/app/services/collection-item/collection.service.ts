@@ -114,6 +114,8 @@ export class ICollectionItem<BaseModel extends ISubBaseCollectionData, LinkedMod
             }
             returned.spe = relation.spe;
             returned.note = relation.note;
+            returned.blame = relation.blame;
+            returned.absent = relation.absent;
 
             return returned;
         });

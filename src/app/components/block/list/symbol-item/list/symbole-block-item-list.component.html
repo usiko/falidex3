@@ -27,7 +27,7 @@
                     <div class="content">
                         <div class="flex">
                             @if(circFils[0].spe && showSpe()) {
-                            <fa-icon [icon]="['fas', 'circle-exclamation']" class="primary-color"></fa-icon>
+                            <fa-icon [icon]="['fas', 'star']" class="primary-color"></fa-icon>
                             }
                             <div>
                                 Sur {{circFils[0].circulaire?.name}}, {{circFils[0].filiere?.name}}
@@ -37,7 +37,7 @@
                     <div class="content">
                         <div class="flex">
                             <div>
-                                Et {{circFils.length-1}} autres circulaire et filières
+                                Et {{circFils.length-1}} autres circulaire/filières
                             </div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="content">
                         <div class="flex">
                             @if(circFil.spe && showSpe()) {
-                            <fa-icon class="primary-color" [icon]="['fas', 'circle-exclamation']"></fa-icon>
+                                <fa-icon class="primary-color" [icon]="['fas', 'star']"></fa-icon>
                             }
                             <div>sur {{circFil.circulaire?.name}}, {{circFil.filiere?.name}}</div>
                         </div>
@@ -65,16 +65,19 @@
                     <div class="content">
                         <div class="flex">
                             @if(significations[0].spe && showSpe()) {
-                            <fa-icon class="primary-color" [icon]="['fas', 'circle-exclamation']"></fa-icon>
+                                <fa-icon class="primary-color" [icon]="['fas', 'star']"></fa-icon>
+                            }
+                            @if(significations[0].blame===true) {
+                                <fa-icon class="primary-color" [icon]="['fas', 'circle-exclamation']"></fa-icon>
                             }
                             <div>
-                                @if(significations[0].position) {
-                                    {{significations[0].position.name}}
+                                @if(significations[0].placement) {
+                                    dec. {{significations[0].placement.name}}: 
                                 }
                                 @if(significations[0].symbolsens) {
                                     , {{significations[0].symbolsens.name}},
                                 }
-                                {{significations[0].signification?.name}}
+                                {{significations[0].signification?.content}}
                             </div>
 
 
@@ -93,16 +96,19 @@
                     <div class="content">
                         <div class="flex">
                             @if(signification.spe && showSpe()) {
-                            <fa-icon class="primary-color" [icon]="['fas', 'circle-exclamation']"></fa-icon>
+                                <fa-icon class="primary-color" [icon]="['fas', 'star']"></fa-icon>
+                            }
+                            @if(signification.blame===true) {
+                                <fa-icon class="primary-color" [icon]="['fas', 'circle-exclamation']"></fa-icon>
                             }
                             <div>
-                                @if(signification.position) {
-                                    {{signification.position.name}}
+                                @if(signification.placement) {
+                                     dec. {{signification.placement.name}}: 
                                     @if(signification.symbolsens) {
                                         , {{signification.symbolsens.name}},
                                     }
                                 }
-                                {{signification.signification?.name}}
+                                {{signification.signification?.content}}
                             </div>
 
                         </div>

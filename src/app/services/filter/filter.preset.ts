@@ -98,7 +98,7 @@ export class FilterPreset {
                     }),
                 }),
                 new DisplayToggleFilter<ICollectionLink>({
-                    icon: 'exclamation-circle',
+                    icon: 'star',
                     label: 'specifique',
                     enabled: true,
                     filter: new DifferentLinkFilter({
@@ -121,7 +121,7 @@ export class FilterPreset {
             label: title,
             filters: [
                 new DisplayToggleFilter<ICollectionLink>({
-                    icon: 'circle',
+                    icon: 'exclamation-circle',
                     label: 'blâme',
                     enabled: true,
                      filter: new DifferentLinkFilter({
@@ -132,7 +132,7 @@ export class FilterPreset {
                     }),
                 }),
                 new DisplayToggleFilter<ICollectionLink>({
-                    icon: 'exclamation-circle',
+                    icon: 'circle',
                     label: 'non blâme',
                     enabled: true,
                     filter: new EqualLinkFilter({
