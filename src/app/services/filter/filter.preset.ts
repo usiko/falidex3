@@ -111,4 +111,73 @@ export class FilterPreset {
             ],
         });
     }
+    /**
+     * present action toggle filterting on blame
+     * @param  {string} title
+     * @returns DisplayFilters
+     */
+    static getBlame(title: string): DisplayFilters<any> {
+        return new DisplayFilters({
+            label: title,
+            filters: [
+                new DisplayToggleFilter<ICollectionLink>({
+                    icon: 'circle',
+                    label: 'blâme',
+                    enabled: true,
+                     filter: new DifferentLinkFilter({
+                        values: [true],
+                        propertyGetter: (link) => {
+                            return link.blame;
+                        },
+                    }),
+                }),
+                new DisplayToggleFilter<ICollectionLink>({
+                    icon: 'exclamation-circle',
+                    label: 'non blâme',
+                    enabled: true,
+                    filter: new EqualLinkFilter({
+                        values: [true],
+                        propertyGetter: (link) => {
+                            return link.blame;
+                        },
+                    }),
+                }),
+            ],
+        });
+    }
+    /**
+     * present action toggle filterting on blame
+     * @param  {string} title
+     * @returns DisplayFilters
+     */
+    static getAbsent(title: string): DisplayFilters<any> {
+        return new DisplayFilters({
+            label: title,
+            filters: [
+                
+                new DisplayToggleFilter<ICollectionLink>({
+                    icon: 'exclamation-circle',
+                    label: 'present dans la ville',
+                    enabled: true,
+                    filter: new EqualLinkFilter({
+                        values: [false],
+                        propertyGetter: (link) => {
+                            return link.absent;
+                        },
+                    }),
+                }),
+                new DisplayToggleFilter<ICollectionLink>({
+                    icon: 'circle',
+                    label: 'absent de la ville',
+                    enabled: true,
+                    filter: new DifferentLinkFilter({
+                        values: [false],
+                        propertyGetter: (link) => {
+                            return link.absent;
+                        },
+                    }),
+                }),
+            ],
+        });
+    }
 }

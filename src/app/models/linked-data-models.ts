@@ -27,6 +27,8 @@ export interface ICollectionLink {
     symboleAccessory?: ISubBaseSymbolAcessory;
     note?: string;
     spe?: boolean;
+    absent?: boolean;
+    blame?: boolean;
 }
 
 export interface ICirculaire extends ICollectionData {

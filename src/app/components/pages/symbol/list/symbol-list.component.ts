@@ -44,6 +44,7 @@ export class SymbolListComponent extends PageItemList<ISymbol> implements OnInit
             FilterPreset.getDataType('Représente'),
             FilterPreset.getCirculaireType('Type de circulaire'),
             FilterPreset.getSpecificity('Specificité'),
+            FilterPreset.getBlame('Blâme'),
         ]);
     }
 }
