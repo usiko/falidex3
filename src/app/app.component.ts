@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { IonApp, IonRouterOutlet, IonContent, IonMenu, IonHeader, IonToolbar, IonTitle, IonItem, IonSelect, IonSelectOption, SelectCustomEvent, IonLabel } from '@ionic/angular/standalone';
 import { CirculaireCollectionService } from './services/collection-item/circulaire/circulaire-collection.service';
 import { CodeSpeCollectionService } from './services/collection-item/code-spe/code-spe-collection.service';
@@ -19,6 +19,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { NavigationComponent } from "./components/sidebar/navigation/navigation.component";
 import { FiltresComponent } from "./components/sidebar/filtres/filtres.component";
 import packageJson from '../../package.json';
+import { toSignal } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -57,10 +58,21 @@ export class AppComponent implements OnInit {
 
     public appPages: { title: string; url: string; icon?:string; src?: string; disabled?: boolean }[] = []
 
-    public relationsData$ = new BehaviorSubject<{ name: string; id: string }[]>([]);
-    public currentRelationsData$ = new BehaviorSubject<{ name: string; id: string }|null>(null);
+    //public relationsData$ = new BehaviorSubject<{ name: string; id: string }[]>([]);
+    protected relationList = toSignal(this.relationService.getRelationList())
+    protected currentRelation = toSignal(this.relationService.getCurrentRelation())
     public menuFilters = false;
     public version = signal<string|undefined>(undefined);
+    constructor()
+    {
+        effect(()=>{
+            const current= this.currentRelation();
+            if(current)
+            {
+                this.setMenu();
+            }
+        })
+    }
     ngOnInit() {
         this.version.set(`${packageJson.name} v${packageJson.version}`);
         this.initIcons();
@@ -75,18 +87,6 @@ export class AppComponent implements OnInit {
         });
         this.symbolService.collection$.subscribe((items) => {
             this.setMenu();
-        });
-
-        this.relationService.getRelationList().subscribe((items) => {
-            this.relationsData$.next(items);
-        });
-        this.relationService.getCurrentRelation().subscribe((item) => {
-            if(item)
-            {
-                this.currentRelationsData$.next(item);
-                this.setMenu();
-            }
-            
         });
         this.globaleSearch.init();
         this.updateService.init().subscribe(() => {
