@@ -19,7 +19,7 @@ export class HomeAbout {
     private clickTimestamps: number[] = [];
     
     ngOnInit(): void {
-        this.showDonate = !!environment.donate;
+        this.showDonate = !!environment.donate && !environment.donateUrl.startsWith("{ENV:");
     }
 
     onCardClick() {

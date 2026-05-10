@@ -1,12 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 //import { MenuController, Events } from '@ionic/angular';
-import { InputCustomEvent, MenuController } from '@ionic/angular';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { EventService } from 'src/app/services/event/event.service';
 import { ILoadingBarState } from '../../../models/global.model';
 import { CommonModule } from '@angular/common';
-import { IonToolbar, IonButtons, IonMenuButton, IonTitle, IonBadge, IonButton, IonSearchbar, IonProgressBar, SearchbarCustomEvent } from "@ionic/angular/standalone";
+import { IonToolbar, IonButtons, IonMenuButton, IonTitle, IonBadge, IonButton, IonSearchbar, IonProgressBar, SearchbarCustomEvent,MenuController } from "@ionic/angular/standalone";
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 
 @Component({

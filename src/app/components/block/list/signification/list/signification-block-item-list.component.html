@@ -44,7 +44,10 @@
             </div>
 
             @if(link.spe) {
-            <fa-icon class="primary-color" [icon]="['fas', 'circle-exclamation']"></fa-icon>
+                <fa-icon class="primary-color" [icon]="['fas', 'star']"></fa-icon>
+            }
+            @if(link.blame) {
+                <fa-icon class="primary-color" [icon]="['fas', 'circle-exclamation']"></fa-icon>
             }
         </div>
     </div>

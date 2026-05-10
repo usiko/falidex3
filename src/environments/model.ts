@@ -5,6 +5,7 @@ export interface IEnv {
   token:string,
   derivationTokenKey: string,
   donate: string|boolean,
+  donateUrl: string,
   tokenHeader: string
   overloadMessageRandFactor:string|number|boolean;
   envDevPwd:string;
