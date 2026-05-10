@@ -10,7 +10,7 @@ export const environment:IEnv = {
   tokenKey: "default_dev_token_hash_please_change",
   token: "token",
   derivationTokenKey: "default_dev_token_hash_please_change",
-  donate: false,
+  donate: true,
   tokenHeader: "X-Token",
   overloadMessageRandFactor: 0,
   envDevPwd:"1234"

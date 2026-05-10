@@ -16,6 +16,7 @@ import {FaIconComponent, FontAwesomeModule} from "@fortawesome/angular-fontaweso
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 import { NavigationComponent } from "./components/sidebar/navigation/navigation.component";
 import { FiltresComponent } from "./components/sidebar/filtres/filtres.component";
 import packageJson from '../../package.json';
@@ -143,6 +144,7 @@ export class AppComponent implements OnInit {
     private initIcons()
     {
         this.iconLibrary.addIconPacks(fas)
+        this.iconLibrary.addIconPacks(fab)
     }
 
     private initData() {
