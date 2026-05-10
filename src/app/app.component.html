@@ -3,14 +3,14 @@
     <ion-menu side="start" menuId="navigation" class="navigation-menu" contentId="main-content" type="overlay">
         <ion-header>
             <ion-toolbar>
-                @let relations = relationsData$|async;
+                @let relations = relationList();
                 @if(relations) {
-                    @if(relations && relations.length>1 && (currentRelationsData$|async)) {
+                    @if(relations && relations.length>1 && currentRelation()) {
                         <ion-item lines="none">
                             <fa-icon class="dark-color" [icon]="['fas', 'book']" slot="start"></fa-icon>
-                            <ion-select placeholder="changer" (ionChange)="setCurrentRelation($event)" [value]="(currentRelationsData$|async)?.id">
-                                @for(relation of (relationsData$|async); track relation) {
-                                <ion-select-option [value]="relation.id"> Code {{relation.name}}</ion-select-option>
+                            <ion-select placeholder="changer" (ionChange)="setCurrentRelation($event)" [value]="currentRelation()?.id">
+                                @for(relation of relations; track relation.id) {
+                                <ion-select-option [value]="relation.id">{{relation.name}} - {{relation.annee}}</ion-select-option>
                                 }
                             </ion-select>
                         </ion-item>

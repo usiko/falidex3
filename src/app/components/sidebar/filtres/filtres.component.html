@@ -10,11 +10,12 @@
                 <ion-toggle (ionChange)="filterChange()" slot="start" color="secondary" [(ngModel)]="filter.enabled"></ion-toggle>
 
                 <ion-label (click)="filter.enabled = !filter.enabled">
-                    @if(filter.icon) {
-                    <fa-icon [class.secondary-color]="filter.enabled" [class.dark-color]="!filter.enabled" [icon]="['fas', filter.icon]" slot="start"></fa-icon>
-                    }
+                    
                     <div class="title">{{filter.label}}</div>
                 </ion-label>
+                @if(filter.icon) {
+                    <fa-icon [class.secondary-color]="filter.enabled" [class.dark-color]="!filter.enabled" [icon]="['fas', filter.icon]" slot="end"></fa-icon>
+                }
 
                 <!--<ion-checkbox slot="start" color="secondary" [value]="filter.value"></ion-checkbox>-->
             </ion-item>
