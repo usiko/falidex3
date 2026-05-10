@@ -158,8 +158,11 @@ export class DataLoaderStoreService {
     }
 
     private getStepMessage(stepNumber: number,overload?:boolean) {
-        let first = this.config.getConfig()?.steps.first;
-        let last = this.config.getConfig()?.steps.last;
+        const firsts = this.config.getConfig()?.steps.first ?? [];
+        const lasts = this.config.getConfig()?.steps.last ?? [];
+        let first = firsts.length > 0 ? firsts[Math.floor(Math.random() * firsts.length)] : undefined;
+        let last = lasts.length > 0 ? lasts[Math.floor(Math.random() * lasts.length)] : undefined;
+        
         if(this.randomSteps.length===0)
         {
              this.randomSteps = [...this.config.getConfig()?.steps.randoms??[]];
