@@ -61,37 +61,17 @@
         @if(significations) {
             @if(significations.length>0) {
             <p class="signification">
-                @if(significations.length>2) {
+                @if(significations.length>1) {
+
                     <div class="content">
                         <div class="flex">
-                            @if(significations[0].spe && showSpe()) {
-                                <fa-icon class="primary-color" [icon]="['fas', 'star']"></fa-icon>
-                            }
-                            @if(significations[0].blame===true) {
-                                <fa-icon class="primary-color" [icon]="['fas', 'circle-exclamation']"></fa-icon>
-                            }
                             <div>
-                                @if(significations[0].placement) {
-                                    dec. {{significations[0].placement.name}}: 
-                                }
-                                @if(significations[0].symbolsens) {
-                                    , {{significations[0].symbolsens.name}},
-                                }
-                                {{significations[0].signification?.content}}
+                                {{significations.length}} significations
                             </div>
-
-
                         </div>
                     </div>
-                    <span class="content">
-                        <div class="flex">
-                            <div>
-                                Et {{significations.length-1}} autres significations
-                            </div>
-                        </div>
-                    </span>
                 }
-                @if(significations.length<=2) {
+                @else if(significations.length==1) {
                     @for(signification of significations; track signification) {
                     <div class="content">
                         <div class="flex">
@@ -103,9 +83,11 @@
                             }
                             <div>
                                 @if(signification.placement) {
-                                     dec. {{signification.placement.name}}: 
                                     @if(signification.symbolsens) {
-                                        , {{signification.symbolsens.name}},
+                                        {{signification.symbolsens.name}},
+                                    }
+                                    @if(signification.symboleAccessory) {
+                                        {{signification.symboleAccessory.name}},
                                     }
                                 }
                                 {{signification.signification?.content}}

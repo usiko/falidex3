@@ -34,6 +34,19 @@ ion-item {
             margin-left: 5px;
         }
     }
+    .bottom {
+       
+        color: var(--ion-color-dark-tint);
+        width: 100%;
+        font-size: 0.7em;
+        font-style: italic;
+        text-align: center;
+        margin-top: 15px;
+        &::first-letter {
+            text-transform: uppercase;
+        }
+    }
+    
     .text-content {
         font-size: 0.9em;
         font-style: italic;

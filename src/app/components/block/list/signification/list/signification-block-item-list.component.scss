@@ -29,7 +29,19 @@ ion-item {
             margin-left: 5px;
         }
     }
+    .decernement{
+        color: var(--ion-color-dark-tint);
+        margin-top: 15px;
+        font-style: italic;
+    }
     .text-title {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 100%;
+        overflow: hidden;
+        margin-bottom: 5px;
+        font-size: 0.9em;
+
         &::first-letter {
             text-transform: uppercase;
         }
