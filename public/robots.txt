@@ -14,9 +14,15 @@ Crawl-delay: 1
 # Google
 User-agent: Googlebot
 Allow: /
+Disallow: /admin
+Disallow: /private
+Disallow: /assets/js/
 Crawl-delay: 0
 
 # Bing
 User-agent: Bingbot
 Allow: /
+Disallow: /admin
+Disallow: /private
+Disallow: /assets/js/
 Crawl-delay: 1
