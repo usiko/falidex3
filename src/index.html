@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="utf-8"/>
-  <title>Falidex</title>
+  <title>Falidex - Le Codex de la Faluche</title>
+  <meta name="description" content="Falidex est le codex numérique de la faluche. Découvrez les traditions, les codes et l'histoire de la faluche étudiante. Application web progressive (PWA) pour tous les faluchards." />
+  <meta name="keywords" content="Falidex, faluche, codex, traditions étudiantes, faluche étudiante" />
+  <meta name="author" content="Falidex" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 
   <base href="/"/>
 
@@ -12,13 +16,53 @@
   <meta name="format-detection" content="telephone=no"/>
   <meta name="msapplication-tap-highlight" content="no"/>
 
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://app.falidex.fr/" />
+  <meta property="og:title" content="Falidex - Le Codex de la Faluche" />
+  <meta property="og:description" content="Le codex numérique de la faluche. Traditions, codes et histoire de la faluche étudiante en ligne." />
+  <meta property="og:image" content="https://app.falidex.fr/assets/icon/icon-192x192.png" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://app.falidex.fr/" />
+  <meta property="twitter:title" content="Falidex - Le Codex de la Faluche" />
+  <meta property="twitter:description" content="Le codex numérique de la faluche. Découvrez les traditions étudiantes." />
+  <meta property="twitter:image" content="https://app.falidex.fr/assets/icon/icon-192x192.png" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://app.falidex.fr/" />
+
+  <!-- PWA & Icon -->
   <link rel="icon" type="image/png" href="assets/icon/favicon.png"/>
+  <link rel="apple-touch-icon" href="assets/icon/icon-192x192.png" />
 
   <!-- add to homescreen for ios -->
   <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-  <meta name="theme-color" content="#1976d2">
+  <meta name="apple-mobile-web-app-title" content="Falidex"/>
+  <meta name="theme-color" content="#9E2C17">
   <link rel="manifest" href="manifest.webmanifest">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Falidex - Le Codex de la Faluche",
+    "description": "Le codex numérique de la faluche. Traditions et codes étudiants de la faluche en ligne.",
+    "url": "https://app.falidex.fr/",
+    "applicationCategory": "ReferenceApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    },
+    "inLanguage": "fr-FR"
+  }
+  </script>
 </head>
 
 <body>
