@@ -98,12 +98,12 @@ export class AppComponent implements OnInit {
     setMenu() {
         const appPages: { title: string; url: string; icon?: string; src?: string; disabled?: boolean }[] = [
             {
-                title: 'Acceuil',
+                title: 'Accueil',
                 url: '/home',
                 icon: 'house',
             },
             {
-                title: 'Insignes/emblemes',
+                title: 'Insignes/emblèmes',
                 url: 'symbols',
                 icon: 'award',
                 disabled: this.symbolService.collection$.getValue().length == 0,
@@ -121,7 +121,7 @@ export class AppComponent implements OnInit {
                 disabled: false,
             },
             {
-                title: 'Revisions',
+                title: 'Révisions',
                 url: '/revisions',
                 icon: 'lightbulb',
                 disabled: true,
