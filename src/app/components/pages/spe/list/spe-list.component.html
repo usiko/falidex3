@@ -22,7 +22,7 @@
                 <div class="code content">
                     <div #header1>
                         <ion-list-header color="tertiary">
-                            <ion-label>Toutes les spécifitées autres qu'insigne ou filières du code</ion-label>
+                            <ion-label>Toutes les spécificités autres qu'insignes ou filières du code</ion-label>
                             <div class="border-item"></div>
                         </ion-list-header>
                     </div>
@@ -39,7 +39,7 @@
                 <div class="filiere content">
                     <div #header2>
                         <ion-list-header color="tertiary">
-                            <ion-label>Toutes les spécifitées de filières</ion-label>
+                            <ion-label>Toutes les spécificités de filières</ion-label>
                             <div class="border-item"></div>
                         </ion-list-header>
                     </div>
@@ -57,7 +57,7 @@
                 <div class="signification content">
                     <div #header3>
                         <ion-list-header color="tertiary">
-                            <ion-label>Toutes les spécifitées d'insigne et signification</ion-label>
+                            <ion-label>Toutes les spécificités de significations</ion-label>
                             <div class="border-item"></div>
                         </ion-list-header>
                     </div>
@@ -77,18 +77,18 @@
         <ion-tab-bar [selectedTab]="activeSlide()">
             <ion-tab-button (click)="activeSlide.set(0)" tab="0">
                 <fa-icon [icon]="['fas', 'book-open']" class="secondary-color"></fa-icon>
-                <ion-label>Spé code</ion-label>
+                <ion-label>Code</ion-label>
                 <ion-badge>{{items?.length}}</ion-badge>
             </ion-tab-button>
             <ion-tab-button (click)="activeSlide.set(1)" tab="1">
                 <fa-icon [icon]="['fas', 'graduation-cap']" class="secondary-color"></fa-icon>
-                <ion-label>Spé filières</ion-label>
+                <ion-label>Filières</ion-label>
                 <ion-badge>{{(filieres$|async)?.length}}</ion-badge>
             </ion-tab-button>
 
             <ion-tab-button (click)="activeSlide.set(2)" tab="2">
                 <fa-icon [icon]="['fas', 'award']" class="secondary-color"></fa-icon>
-                <ion-label>Spé symboles</ion-label>
+                <ion-label>Symboles</ion-label>
                 <ion-badge>{{(symbols$|async)?.length}}</ion-badge>
             </ion-tab-button>
 

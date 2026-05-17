@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, model } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ICirculaire, ISignification } from 'src/app/models/linked-data-models';
+import { ISignification } from 'src/app/models/linked-data-models';
 import { IonCard, IonButton, IonCardHeader, IonCardTitle, IonCardContent } from "@ionic/angular/standalone";
 import { ImgLoaderComponent } from "src/app/components/shared/img-loader/img-loader.component";
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
