@@ -42,28 +42,15 @@
 4. Vérifier par XML
 ```
 
-### 3. **Dynamiser le Sitemap**
-Le sitemap.xml est actuellement statique. Créez une route dynamique :
+### 3. **Infrastructure Express.js / Heroku**
+Le serveur Express est maintenant configuré pour :
+- ✅ Générer `/robots.txt` dynamiquement
+- ✅ Générer `/sitemap.xml` dynamiquement
+- ✅ Servir les assets statiques avec cache optimisé
+- ✅ Ajouter les headers de sécurité
+- ✅ Supporter le Service Worker avec les bons headers
 
-```typescript
-// Dans votre backend (server.js ou fonction API)
-app.get('/sitemap.xml', (req, res) => {
-  res.type('text/xml');
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0">
-  <url>
-    <loc>https://app.falidex.fr/</loc>
-    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-    <mobile:mobile/>
-  </url>
-  <!-- Ajouter d'autres URLs dynamiques ici -->
-</urlset>`;
-  res.send(xml);
-});
-```
+Consulter [HEROKU_SEO_SETUP.md](HEROKU_SEO_SETUP.md) pour la configuration détaillée.
 
 ### 4. **Ajouter des Meta Tags Dynamiques pour chaque Page**
 Utilisez Angular Meta Service dans vos composants :
@@ -117,68 +104,6 @@ Pour être indexé correctement comme PWA :
 - ✓ Service Worker (ngsw-worker)
 - ✓ Icons d'au moins 192x192 px
 
-## 🔧 Configuration Serveur Recommandée (nginx)
-
-Si vous utilisez nginx au lieu d'Apache :
-
-```nginx
-server {
-    listen 443 ssl http2;
-    server_name app.falidex.fr;
-    
-    # HTTPS et SSL
-    ssl_certificate /path/to/cert.pem;
-    ssl_certificate_key /path/to/key.pem;
-    
-    # Cache
-    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|otf)$ {
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }
-    
-    # Service Worker
-    location = /ngsw-worker.js {
-        expires 1h;
-        add_header Service-Worker-Allowed "/";
-    }
-    
-    # Manifest
-    location = /manifest.webmanifest {
-        expires 1h;
-        add_header Content-Type "application/manifest+json";
-    }
-    
-    # HTML avec revalidation
-    location / {
-        expires 1h;
-        try_files $uri $uri/ /index.html;
-    }
-    
-    # Security headers
-    add_header X-Content-Type-Options "nosniff";
-    add_header X-Frame-Options "SAMEORIGIN";
-    add_header X-XSS-Protection "1; mode=block";
-}
-```
-
-## 📊 Checklist SEO
-
-- [ ] Meta tags complets dans index.html
-- [ ] Robots.txt soumis à Google
-- [ ] Sitemap.xml enregistré dans Search Console
-- [ ] HTTPS activé et valide
-- [ ] Mobile-friendly approuvé
-- [ ] PWA installable
-- [ ] Lighthouse score > 80/100
-- [ ] Core Web Vitals optimisés
-- [ ] Google Analytics 4 configuré
-- [ ] Schema.org structured data présent
-- [ ] Open Graph tags testés
-- [ ] Service Worker fonctionnel
-- [ ] Temps de réponse < 200ms
-- [ ] Images optimisées
-- [ ] Gzip compression activée
-
 ## 🧪 Outils de Vérification
 
 1. **Google Search Console** : https://search.google.com/search-console
@@ -190,12 +115,19 @@ server {
 
 ## 📝 Notes Importantes
 
-- Mettez à jour le sitemap.xml régulièrement avec vos nouvelles pages
+- ✅ Sitemap.xml est généré dynamiquement par Express (/sitemap.xml)
+- ✅ robots.txt est généré dynamiquement par Express (/robots.txt)
+- ✅ HTTPS activé automatiquement sur Heroku (app.falidex.fr)
+- ✅ Cache headers optimisés via Express middleware
+- ✅ Service Worker configuré avec les bons headers
+- Mettez à jour le code de sitemap.xml dans server.js si vous ajoutez de nouvelles pages
 - Revalidez périodiquement dans Search Console
 - Surveillez les erreurs d'indexation
 - Répondez aux Core Web Vitals metrics
 - Créez un contenu riche et informatif
 - Mettez à jour les mots-clés stratégiques
+- Consultez [HEROKU_SEO_SETUP.md](HEROKU_SEO_SETUP.md) pour les configurations détaillées
 
 ---
+**Infrastructure** : Node.js + Express.js sur Heroku
 **Dernière mise à jour** : 17 mai 2026
