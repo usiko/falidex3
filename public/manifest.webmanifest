@@ -1,11 +1,12 @@
 {
-    "name": "falidex",
-    "short_name": "falidex",
+    "name": "Falidex - Le Codex de la Faluche",
+    "short_name": "Falidex",
+    "description": "Le codex numérique de la faluche. Traditions et codes étudiants de la faluche.",
     "theme_color": "#9E2C17",
     "background_color": "#D0E0EB",
     "display": "standalone",
-    "scope": "./",
-    "start_url": "./",
+    "scope": "https://app.falidex.fr/",
+    "start_url": "https://app.falidex.fr/",
     "icons": [
         {
             "src": "assets/icons/icon-72x72.png",

@@ -1,0 +1,28 @@
+# robots.txt for Falidex PWA
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /private
+Disallow: /assets/js/
+
+# Sitemaps
+Sitemap: https://app.falidex.fr/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1
+
+# Google
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+Disallow: /private
+Disallow: /assets/js/
+Crawl-delay: 0
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Disallow: /admin
+Disallow: /private
+Disallow: /assets/js/
+Crawl-delay: 1
