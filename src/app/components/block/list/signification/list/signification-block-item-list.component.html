@@ -11,9 +11,9 @@
 <ng-template #content>
     <ion-label>
         <div>
-            <div class="text-title">{{item().name}}</div>
+            <div class="text-title">{{item().content}}</div>
         </div>
-        @let links = item().links|filterLink:['placement','position', 'symbolsens','symbols']:true;
+        @let links = displayLinks()|filterLink:['placement','position', 'symbolsens','symbols']:true;
         @if(links) {
             @for(link of links; track link) {
                 <ng-container *ngTemplateOutlet="linkTpl;context:{link:link}"></ng-container>
@@ -26,20 +26,11 @@
         <div class="title">
 
             <div>
-                @if(link.position) {
-                    <span class="subtitle">{{link.position.name}}</span>
-                }
-                {{(link.position && link.symbols)?', ':''}}
-                @if(link.symbols) {
-                    <span class="subtitle">{{link.symbols.name}}</span>
-                }
-                {{((link.symbol || link.position)&& link.symbolsens)?', ':''}}
-                @if(link.symbolsens) {
-                    <span class="subtitle">{{link.symbolsens.name}}</span>
-                }
-                {{((link.symbol || link.position ||link.symbolsens ) && link.placement)?', ':''}}
+                {{link.displayInfo}}
                 @if(link.placement) {
-                    décernm. <span class="subtitle">{{link.placement.name}}</span>
+                    <div class="decernement">
+                        décernement <span class="subtitle">{{link.placement.name}}</span>
+                    </div>
                 }
             </div>
 
