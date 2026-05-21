@@ -91,7 +91,7 @@ app.get('/sitemap.xml', (req, res) => {
 });
 
 // Serve index.html for all routes for Angular routing
-app.get('/*', (req, res) => {
+app.get('/*splat', (req, res) => {
     res.set('Cache-Control', 'public, max-age=3600');
     res.sendFile(path.join(__dirname, '..', pathDist, 'index.html'));
 });
