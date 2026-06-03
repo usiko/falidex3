@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input, Input, OnInit } from '@angular/core';
 import { IonImg, IonSpinner } from "@ionic/angular/standalone";
-import { Subscription } from 'rxjs';
+
 import { PictureService } from 'src/app/services/picture/picture.service';
 
 @Component({
@@ -16,39 +16,16 @@ export class ImgLoaderComponent implements OnInit {
     private pictureService = inject(PictureService);
     public loading = false;
     public ownSrc: string|undefined;
-    protected _src: string|undefined;
-    
-    @Input() set src(src: string) {
-        this._src = src;
-        let fullSrc = this.pictureService.getFullResourceUrl(src);
-        if (fullSrc !== this.ownSrc) {
+    src = input<(string|undefined)[]>([]);
+
+    constructor() {
+        effect(() => {
+            const srcs = this.src();
+            const fullSrcs = srcs.map(s => this.pictureService.getFullResourceUrl(s)).filter(Boolean) as string[];
             this.loading = true;
             this.changedetector.detectChanges();
-        }
-        
-        if (fullSrc) {
-            // Preload the image
-            const img = new Image();
-            
-            img.onload = () => {
-                this.ownSrc = fullSrc;
-                this.loading = false;
-                this.changedetector.detectChanges();
-            };
-            
-            img.onerror = () => {
-                console.warn('Error preloading image:', fullSrc);
-                this.ownSrc = this.errorSrc;
-                this.loading = false;
-                this.changedetector.detectChanges();
-            };
-            
-            img.src = fullSrc;
-        } else {
-            this.ownSrc = this.errorSrc;
-            this.loading = false;
-            this.changedetector.detectChanges();
-        }
+            this.tryPreloadImgs(fullSrcs);
+        });
     }
 
 
@@ -80,6 +57,33 @@ export class ImgLoaderComponent implements OnInit {
         /*if (!this.localPath) {
             this.pictureLoader.save(this.ownSrc);
         }*/
+    }
+
+    private preloadImg(fullSrc: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve();
+            img.onerror = () => reject();
+            img.src = fullSrc;
+        });
+    }
+
+    private async tryPreloadImgs(srcs: string[]): Promise<void> {
+        for (const src of srcs) {
+            try {
+                await this.preloadImg(src);
+                this.ownSrc = src;
+                this.loading = false;
+                this.changedetector.detectChanges();
+                return;
+            } catch {
+                console.warn('Error preloading image:', src);
+            }
+        }
+        // All failed
+        this.ownSrc = this.errorSrc;
+        this.loading = false;
+        this.changedetector.detectChanges();
     }
 
     imgLoading() {

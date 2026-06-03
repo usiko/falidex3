@@ -4,7 +4,7 @@
     <ion-card class="img-container">
         <div class="img-symbole">
             @let imgs = symbol.imgs;
-            <app-img-loader [resource]="true" [src]="(imgs && imgs[0])?imgs[0].url:''">
+            <app-img-loader [src]="[(imgs && imgs[0])?imgs[0].url:'']">
             </app-img-loader>
         </div>
     </ion-card>

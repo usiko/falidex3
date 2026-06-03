@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { IonItem, IonLabel, IonSkeletonText, IonThumbnail } from "@ionic/angular/standalone";
@@ -22,6 +22,14 @@ export class SymbolBlockItemListComponent {
      * symbole item to show
      */
     item = input.required<ISymbol>()
+
+    imgs = computed<(string|undefined)[]>(() => {
+        const item = this.item();
+        if (item && item.imgs && item.imgs.length > 0) {
+            return [item.imgs[0]?.thumbnail, item.imgs[0]?.url];
+        }
+        return [];
+    });
 
     /**
      * show if this item is specific

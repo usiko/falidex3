@@ -12,8 +12,7 @@
     @let circSymboles = item().links|filterLink:['circulaire','symbols'];
     @if(circSymboles.length>0) {
         <ion-thumbnail slot="start">
-            @let imgs = circSymboles[0].symbols?.imgs;
-            <app-img-loader [resource]="true" [src]="(imgs && imgs[0])?imgs[0].url:''">
+            <app-img-loader  [src]="imgs()">
             </app-img-loader>
         </ion-thumbnail>
     }

@@ -47,6 +47,7 @@ export interface ISymbol extends ICollectionData {
     imgs?: {
         id: string;
         url: string;
+        thumbnail?:string
     }[];
 }
 export interface ISignification extends ICollectionData {

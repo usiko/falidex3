@@ -4,10 +4,6 @@
         <ion-spinner color="light"></ion-spinner>
     </div>
     }
-
-    @if(ownSrc) {
-        <img [ngStyle]="{'object-fit':objectFit}" [class.img-hidden]="loading" [src]="ownSrc" (error)="imgError()" />
-    }
     @if(ownSrc) {
         <ion-img [ngStyle]="{'object-fit':objectFit}" [class.img-hidden]="loading" [src]="ownSrc" (ionImgWillLoad)="imgLoading()" (ionImgDidLoad)="imgLoaded()" (ionError)="imgError()"></ion-img>
     }

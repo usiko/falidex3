@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
+import { Component, ChangeDetectionStrategy, computed, input, output } from '@angular/core';
 import { IFiliere } from 'src/app/models/linked-data-models';
 import { IonItem, IonThumbnail, IonLabel, IonSkeletonText } from "@ionic/angular/standalone";
 import { ImgLoaderComponent } from "src/app/components/shared/img-loader/img-loader.component";
@@ -20,6 +20,18 @@ export class FiliereBlockItemListComponent {
     showSpe = input(true);
     navigation = input<string|null>(null);
     cssClass = input<string|undefined>();
+
+    imgs = computed<(string|undefined)[]>(() => {
+        const links = this.item()?.links;
+        if (!links) return [];
+        const circSymboles = links.filter(l => l.circulaire && l.symbols);
+        if (circSymboles.length === 0) return [];
+        const imgs = circSymboles[0].symbols?.imgs;
+        if (imgs && imgs.length > 0) {
+            return [imgs[0]?.thumbnail, imgs[0]?.url];
+        }
+        return [];
+    });
 
     onclick = output<void>();
 
