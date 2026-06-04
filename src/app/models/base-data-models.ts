@@ -29,6 +29,7 @@ export interface IBaseSymbol extends IBaseCollectionData {
 	imgs?: {
 		id: string;
 		url: string;
+        thumbnail?:string
 		modificationDate: Date;
 	}[];
 }

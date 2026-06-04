@@ -100,7 +100,7 @@ export class AuthService {
         const role = 'visitor';
         const timestamp = Math.floor(Date.now()/1000)-10;
         return from(this.getHashToken(role,timestamp)).pipe(mergeMap((hash:string)=>{
-                    return this.http.post<{token:string}>(fullUrl,{role,timestamp,hash}).pipe(
+            return this.http.post<{token:string}>(fullUrl,{role,timestamp,hash},{ withCredentials: true }).pipe(
             mergeMap((result)=>{
                 return from(this.getHashDerivationToken(result.token))
             }),

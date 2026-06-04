@@ -4,12 +4,8 @@
         <ion-spinner color="light"></ion-spinner>
     </div>
     }
-
-    @if(ownSrc && base64) {
-    <img [ngStyle]="{'object-fit':objectFit}" [class.img-hidden]="loading" [src]="ownSrc|satinizeUrl" (error)="imgError()" />
-    }
-    @if(ownSrc && !base64) {
-    <ion-img [ngStyle]="{'object-fit':objectFit}" [class.img-hidden]="loading" [src]="ownSrc" (ionImgWillLoad)="imgLoading()" (ionImgDidLoad)="imgLoaded()" (ionError)="imgError()"></ion-img>
+    @if(ownSrc) {
+        <ion-img [ngStyle]="{'object-fit':objectFit}" [class.img-hidden]="loading" [src]="ownSrc" (ionImgWillLoad)="imgLoading()" (ionImgDidLoad)="imgLoaded()" (ionError)="imgError()"></ion-img>
     }
 
 </div>

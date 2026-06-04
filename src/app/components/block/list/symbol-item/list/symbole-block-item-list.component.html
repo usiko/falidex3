@@ -12,8 +12,7 @@
 }
 <ng-template #content>
     <ion-thumbnail slot="start">
-        @let imgs = item().imgs;
-        <app-img-loader [resource]="true" [src]="(imgs && imgs[0])?imgs[0].url:''">
+        <app-img-loader  [src]="imgs()">  
         </app-img-loader>
     </ion-thumbnail>
     <ion-label>

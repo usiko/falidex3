@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 
 
-import { BehaviorSubject, forkJoin, Observable, of, timer } from 'rxjs';
+import { BehaviorSubject, Observable, of, timer } from 'rxjs';
 import { catchError, map, mergeMap, take, tap } from 'rxjs/operators';
 import {
     IBaseCirculaire,
@@ -17,16 +17,15 @@ import {
     IBaseSymbolSens,
 } from 'src/app/models/base-data-models';
 import { IRelationData } from 'src/app/models/base-relations.models';
+import { environment } from 'src/environments/environment';
 import { ILoadingSteps } from '../../../models/config.model';
 import { ILoadingBarState } from '../../../models/global.model';
 import { AuthService } from '../../auth/auth.service';
 import { AppConfigService } from '../../config/app.config.service';
 import { EventService } from '../../event/event.service';
-import { PictureService } from '../../picture/picture.service';
 import { StorageService } from '../../storage/storage.service';
 import { StoreService } from '../base-store/store.service';
 import { HttpDataCollectionService } from '../http-data/http-data-collection.service';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root',
@@ -40,7 +39,6 @@ export class DataLoaderStoreService {
     private event = inject( EventService);
     private config = inject( AppConfigService);
     private httpData = inject( HttpDataCollectionService);
-    private pictureService = inject( PictureService);
     private storageService = inject( StorageService);
 
     loadData(): void {
@@ -344,36 +342,7 @@ export class DataLoaderStoreService {
     }
     private loadSymbols(): Observable<IBaseSymbol[]> {
         //return this.httpData.getSymbols();
-        return this.httpData.getSymbols().pipe(
-            mergeMap((symbols: IBaseSymbol[]) => {
-                const pictures = symbols.reduce((acc:string[], symbol) => {
-                    if (symbol.imgs) {
-                        acc.push(...symbol.imgs.map((img) => img.url));
-                    }
-                    return acc;
-                }, []);
-                return forkJoin(pictures.map((pic) => this.pictureService.preload(pic))).pipe(
-                    map(() => {
-                        return symbols;
-                    })
-                );
-            })
-        );
-        /*return this.httpData.getSymbols().pipe(mergeMap((symbols => {
-            const pictures = Symbols.reduce(
-                (acc,
-                (symbol) => {
-                    if (symbol.imgs) {
-                        acc.push(symbol.imgs.map((img) => img.url));
-                    }
-                    return acc;
-                },
-                [])
-            );
-            return this.picturePrelaoder.preload(pictures).pipe(map(() => {
-                return symbols;
-            }));
-        })))*/
+        return this.httpData.getSymbols();
     }
     private loadSymbolsSens(): Observable<IBaseSymbolSens[]> {
         return this.httpData.getSymbolsSens();
